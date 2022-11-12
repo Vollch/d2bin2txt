@@ -208,9 +208,9 @@ typedef struct
     unsigned short vetype1;
     unsigned short vetype2;
     unsigned short vetype3;
-    unsigned short vetype4; //Êµ¼ÊÎŞÓÃ£¬binÎÄ¼ş²»Í¬²»ÓÃ¹Ü
+    unsigned short vetype4; //å®é™…æ— ç”¨ï¼Œbinæ–‡ä»¶ä¸åŒä¸ç”¨ç®¡
 
-    unsigned short vetype5; //Êµ¼ÊÎŞÓÃ£¬binÎÄ¼ş²»Í¬²»ÓÃ¹Ü
+    unsigned short vetype5; //å®é™…æ— ç”¨ï¼Œbinæ–‡ä»¶ä¸åŒä¸ç”¨ç®¡
     unsigned short vfrequency;
 
     unsigned int vdivide;

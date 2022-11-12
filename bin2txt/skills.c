@@ -813,843 +813,843 @@ CostAdd: This controls the additional amount of gold added to the price of an it
 */
 
 /*
-Ilvl = item level //��Ʒ�ȼ� 
-Clvl = character level //��ɫ�ȼ� 
-Blvl = base level //�������� ���ܻ����ȼ�,Ҳ���Ǽӵ���ȥ�ĵȼ� 
-lvl = skill level //��Ʒ���Ӻ��,���ܵȼ� 
-lvl = item-out level //�����Ʒ�ĵȼ� 
+Ilvl = item level //物品等级 
+Clvl = character level //角色等级 
+Blvl = base level //技能中是 技能基本等级,也就是加点上去的等级 
+lvl = skill level //物品叠加后的,技能等级 
+lvl = item-out level //输出物品的等级 
 //////////////////////////////////////////////// 
-���� Ilvl �� Clvl һ������ںϳɹ�ʽ��,�������ƺϳ���Ʒ 
-ԭ����->��ɫװ��,���������Ƶ�,,ֻ�е�������ܺϳɺõ�,Ilvl Clvl �е�30 50Ӧ����ռ��ԭ��Ʒ�ȼ� �� ��ɫ�ȼ��İ׷�֮30 50����˼, 
-Ilvl = 30 Clvl = 50; ������Ʒ50��,���� 60�� 
-�����Ʒ����Ϊ 50*0.3+60*0.5 = 45
+所以 Ilvl 和 Clvl 一般出现在合成公式中,用于限制合成物品 
+原暗黑->橙色装备,都是有限制的,,只有到级别才能合成好的,Ilvl Clvl 中的30 50应该是占用原物品等级 和 角色等级的白分之30 50的意思, 
+Ilvl = 30 Clvl = 50; 放入物品50级,人物 60级 
+输出物品上限为 50*0.3+60*0.5 = 45
 
-skill=�������ƣ�
+skill=技能名称；
 
-Id=���ܵ�ID���룻
+Id=技能的ID代码；
 
-charclass=��λ��ɫʹ�ô���ܣ�
+charclass=哪位角色使用此项技能；
 
-skilldesc=���ڼ��ܵ�˵����
+skilldesc=对于技能的说明；
 
-srvstfunc=���������ս�����ã�У��DLL�ļ����ڼ��ܵ������Ƿ���ȷ��
+srvstfunc=此列是针对战网所用，校验DLL文件关于技能的描述是否正确；
 
-srvdofunc=���������ս�����ã����У��DLL�ļ����ڼ��ܵ�������ȷ�Ļ��������ɫ�������Ϣ��
+srvdofunc=此列是针对战网所用，如果校验DLL文件关于技能的描述正确的话，载入角色的相关信息；
 
-prgstack=���̰���˵����������Ϸ���̵Ĳο�ֵ��
+prgstack=进程包，说明：关于游戏进程的参考值；
 
-srvprgfunc1,2,3=���������ս�����ã�������������Ϸ�Ľ��̵�����Ӧ��ɫ�Ĺ������ܣ�
+srvprgfunc1,2,3=此列是针对战网所用，服务器根据游戏的进程调整相应角色的攻击功能；
 
-prgcalc1,2,3=���̿͡��ļ��ܿ�����ֵ��
+prgcalc1,2,3=“刺客”的技能控制数值；
 
-prgdam=���̿͡����ͷŵ��������ܵ��˺�ֵ������
+prgdam=“刺客”所释放的能量技能的伤害值参数；
 
-srvmissile=���������ء�������Ĳ���������missiles.txt����
+srvmissile=服务器调控“箭”类的参数（根据missiles.txt）；
 
-decquant=�����Ӱ�����������˺�ֵ��
+decquant=受外界影响所削减的伤害值；
 
-lob=54X:��������ֱ�߻��������н���
+lob=54X:“箭”以直线还是曲线行进；
 
-srvmissilea,b,c=��������missile.txt�ļ��в��ҡ����������ͣ�
+srvmissilea,b,c=服务器从missile.txt文件中查找“箭”的类型；
 
-srvoverlay=�����������Ƶ�ͼ��ѡ�������
+srvoverlay=服务器所控制的图像选择参数；
 
-aurafilter=���������ڡ��⻷�����趨������
+aurafilter=服务器对于“光环”的设定参数；
 
-aurastate=��ɫ��ʹ�á��⻷��ħ��ʱ���ڽ�ɫ���Ƶ�Ӱ�죻
+aurastate=角色在使用“光环”魔法时对于角色名称的影响；
 
-auratargetstate=�������⻷��ħ�������ߵĽ�ɫ���Ƶ�Ӱ�죻
+auratargetstate=被动“光环”魔法收益者的角色名称的影响；
 
-auralencalc=���⻷����������ʱ�䣬ͬSkillcalc.txt�ļ�������
+auralencalc=“光环”所持续的时间，同Skillcalc.txt文件关联；
 
-aurarangecalc=���⻷��Ӱ��ķ�Χ��
+aurarangecalc=“光环”影响的范围；
 
-aurastat1-6=���⻷��Ӱ���µ�״̬��
+aurastat1-6=“光环”影响下的状态；
 
-aurastatcalc1-6=���⻷��Ӱ���µ�״̬���������
+aurastatcalc1-6=“光环”影响下的状态计算参数；
 
-auraevent1-3=���⻷��Ӱ���¿��ܷ������¼���ͬevents.txt�ļ�������
+auraevent1-3=“光环”影响下可能发生的事件，同events.txt文件关联；
 
-auraeventfunc1-3=��ʱ�䷢��ʱ���õĹ��ܲ�����
+auraeventfunc1-3=当时间发生时调用的功能参数；
 
-auratgtevent=δʹ�ò�����
+auratgtevent=未使用参数；
 
-auratgteventfunc=δʹ�ò�����
+auratgteventfunc=未使用参数；
 
-passivestate=���ܵ����ƣ�����states.txt����
+passivestate=技能的名称（来自states.txt）；
 
-passiveitype=���ܵ����ͣ�����weapons.txt����
+passiveitype=技能的类型（来自weapons.txt）；
 
-passivestat1-5=����������״̬����Ҫ����NEC���ٻ�ϵ�м��ܣ���
+passivestat1-5=被动攻击的状态（主要用于NEC的召唤系列技能）；
 
-passivecalc1-5=��μ���ÿһ�ֱ���״̬��ͬ����Ҫ����NEC����
+passivecalc1-5=如何计算每一种被动状态（同样主要用于NEC）；
 
-passiveevent=���ò�����
+passiveevent=无用参数；
 
-passiveeventfunc=���ò�����
+passiveeventfunc=无用参数；
 
-summon=�ٻ������ƣ�critter/spell/trap����
+summon=召唤的名称（critter/spell/trap）；
 
-pettype=���ٻ���������ͣ�ͬpettype.txt�ļ���������
+pettype=所召唤怪物的类型（同pettype.txt文件关联）；
 
-petmax=һ���ٻ������������������
+petmax=一次召唤所允许的最大数量；
 
-summode=���ٻ���������ͣ�ͬmonmode.txt�ļ���������
+summode=所召唤怪物的类型（同monmode.txt文件关联）；
 
-sumskill1-5=���ٻ�����ӵ�еļ��ܣ�
+sumskill1-5=所召唤怪物拥有的技能；
 
-sumsk1-5calc=���ٻ�����ӵ�еļ��ܼ���sumumod=�ٻ�������Ŀǰֻ��ԡ��̿͡��ļ��ܣ���
+sumsk1-5calc=所召唤怪物拥有的技能级别；sumumod=召唤参数（目前只针对“刺客”的技能）；
 
-sumoverlay=���ٻ������ͼ��
+sumoverlay=所召唤怪物的图像；
 
-stsuccessonly=�ٻ��ɹ����������
+stsuccessonly=召唤成功后的声音；
 
-stsound=��ʼ����
+stsound=开始音；
 
-stsoundclass=��ʼ������Ƶ��
+stsoundclass=开始音的音频；
 
-stsounddelay=��ʼ����������
+stsounddelay=开始音的祯数；
 
-weaponsnd=��ɫ��ʹ�ü���ʱ�������İ�����
+weaponsnd=角色在使用技能时，武器的伴音；
 
-dosound,a,b=����ʹ����Ϻ����������������ɹ�������;�������
+dosound,a,b=技能使用完毕后，所发出的声音（由怪物的类型决定）；
 
-tgtoverlay=����ɫ����ĳ��ܴ��ʱ����ʾ��ͼ��
+tgtoverlay=但角色遭受某项技能打击时所显示的图像；
 
-tgtsound=��������Ե���ʱ��������������
+tgtsound=技能在针对敌人时所发出的声音；
 
-prgoverlay=������ʩ�Ź����������õ�ͼ��
+prgoverlay=技能在施放过程中所采用的图像；
 
-prgsound=������ʩ�Ź����������õ�������
+prgsound=技能在施放过程中所采用的声音；
 
-castoverlay=������ʹ��ʱ��ɫ�������ı仯ͼ��
+castoverlay=技能在使用时角色所发生的变化图像；
 
-cltoverlaya,b=���ܷ���ʱ�û�������ʾ��ͼ��ͨ��ͬս���˽���У�ԣ���
+cltoverlaya,b=技能发出时用户端所显示的图像（通常同战网端进行校对）；
 
-cltstfunc=�ͻ��˵Ĺ��ܶΣ�
+cltstfunc=客户端的功能段；
 
-cltdofunc=�ͻ���ֱ�ӵ��ò����Ĺ��ܶΣ�
+cltdofunc=客户端直接调用参数的功能段；
 
-cltprgfunc1-3=�ͻ��˵ĳ�����̶Σ�
+cltprgfunc1-3=客户端的程序进程段；
 
-cltmissile -d=�ͻ��˵���Missile.txt�ļ�����У�ԣ�
+cltmissile -d=客户端调用Missile.txt文件进行校对；
 
-cltcalc1-3=�ɿͻ��˶Լ��ܵ�Ӱ��Ч������У�ԣ�
+cltcalc1-3=由客户端对技能的影响效果进行校对；
 
-*cltcalc1-3 desc=���ڼ��ܼ����������û��ʵ�ʵ����ã���
+*cltcalc1-3 desc=对于技能计算的描述（没有实际的作用）；
 
-warp=��ǰ�����Ƿ��ܹ�ת����ɫ��λ�ã�����˵��SOR��Teleport����
+warp=当前技能是否能够转换角色的位置（比如说：SOR的Teleport）；
 
-immediate=���⻷���Ƿ����̷������ã���1��ʾ���������ã�0��ʾ�񣩣�
+immediate=“光环”是否立刻发生作用，（1表示立刻起作用，0表示否）；
 
-enhanceable=�����ܷ�������1��ʾ�ܣ�0��ʾ���ܣ�
+enhanceable=技能能否被提升，1表示能，0表示不能；
 
-attackrank=���ò�����
+attackrank=无用参数；
 
-noammo=�����Ƿ�Я���С�װ����������˵��1������ħ�����Եļ���
+noammo=技能是否携带有“装备”，比如说：1代表无魔法属性的箭；
 
-range=���������ķ�Χ���ͣ�h2h=���ֹ�����rng=�����ķ�Χ��both=�������־��߱���none=δʹ�ã�
+range=物理攻击的范围类型，h2h=赤手攻击，rng=攻击的范围，both=以上两种均具备，none=未使用；
 
-weapsel=��ǰ�����Ƿ����ض�����װ����Ϊ���ƣ�
+weapsel=当前技能是否有特定武器装备作为限制；
 
-itypea1-3=����ʹ�õ�ǰ����ʱ��������������ͣ�
+itypea1-3=右手使用当前技能时所必需的武器类型；
 
-etypea1-2=�����ֽ��������Ĳ�����
+etypea1-2=左右手交换攻击的参数；
 
-itypeb1-3=����ʹ�õ�ǰ����ʱ��������������ͣ�
+itypeb1-3=左手使用当前技能时所必需的武器类型；
 
-etypeb1-2=δʹ�ò�����
+etypeb1-2=未使用参数；
 
-durability=ʹ�ô��༼���Ƿ�����ɫ�ġ�����ֵ���Ƿ�����Ҫ��1�������飻 
+durability=使用此类技能是否检验角色的“耐力值”是否满足要求，1代表检验； 
 
-TgtPlaceCheck=��ɫ����ʱ���ڼ���λ�õ�Ӱ�죻
+TgtPlaceCheck=角色复活时对于技能位置的影响；
 
-ItemEffect=���ּ����ܷ����ض�����Ʒ�ϳ��֣�����˵+2 War Cry��SC����
+ItemEffect=此种技能能否在特定的物品上出现（比如说+2 War Cry的SC）；
 
-ItemCltEffect=nova��frost nova��chain lightningר�õ��˺����������
+ItemCltEffect=nova、frost nova、chain lightning专用的伤害计算参数；
 
-ItemTgtDo=�����ܹ�ʹ����Ե���Ʒ��ĳЩ���飨E�İ��ע��˵ֻ���SOR��Teleport�������Ҿ��ö���NEC����ʯħҲӦ����Ч����
+ItemTgtDo=技能能够使所针对的物品做某些事情（E文版的注释说只针对SOR的Teleport，不过我觉得对于NEC的铁石魔也应该有效）；
 
-ItemTarget=���Ƽ�������Ե��ض���Ʒ���߹��
+ItemTarget=限制技能所针对的特定物品或者怪物；
 
-ItemCheckStart=���ò��������鲻Ҫ�޸ģ�
+ItemCheckStart=无用参数，建议不要修改；
 
-ItemCltCheckStart=���ò��������鲻Ҫ�޸ģ�
+ItemCltCheckStart=无用参数，建议不要修改；
 
-ItemCastSound=���������Դ��һ���ض���Ʒ�ĸ�������ʱ�������õ�������
+ItemCastSound=当此项技能来源于一个特定物品的附加属性时，所采用的声音；
 
-ItemCastOverlay=���������Դ��һ���ض���Ʒ�ĸ�������ʱ����ɫͼ���������ı仯��s
+ItemCastOverlay=当此项技能来源于一个特定物品的附加属性时，角色图像所发生的变化；s
 
-kpoints=δʹ�ò�����
+kpoints=未使用参数；
 
-reqlevel=ʹ�õ�ǰ��������Ҫ�Ľ�ɫ�ȼ���
+reqlevel=使用当前技能所需要的角色等级；
 
-maxlvl=��ǰ���������������ȼ���
+maxlvl=当前技能所允许的最大等级；
 
-reqstr=ʹ�õ�ǰ��������Ҫ�ġ�ǿ׳�����ԣ�
+reqstr=使用当前技能所需要的“强壮”属性；
 
-reqdex=ʹ�õ�ǰ��������Ҫ�ġ����ݡ����ԣ�
+reqdex=使用当前技能所需要的“敏捷”属性；
 
-reqint=ʹ�õ�ǰ��������Ҫ�ġ�ħ�������ԣ�
+reqint=使用当前技能所需要的“魔法”属性；
 
-reqvit=ʹ�õ�ǰ��������Ҫ�ġ����������ԣ�
+reqvit=使用当前技能所需要的“生命”属性；
 
-reqskill1-3=ʹ�ô˼���ǰ����ѧ��ļ��ܣ�
+reqskill1-3=使用此技能前必须学会的技能；
 
-restrict=Druidר�ò�����
+restrict=Druid专用参数；
 
-State1-3=ʹ�ô��������Ҫ���������أ�
+State1-3=使用此项技能所需要的其它因素；
 
-delay=ÿ��ʹ�ü��ܵ�����ʱ�䣻
+delay=每次使用技能的拖延时间；
 
-leftskill=�ܷ�������ļ��ܰ�ť��ʹ�ã�1��������ʹ�ã�
+leftskill=能否在左面的技能按钮上使用，1代表允许使用；
 
-repeat=��ʹ�ô����ʱ�������ť��������꣩���������£��Ƿ񲻼�ϵ�ʩ�ż��ܣ�1����������
+repeat=在使用此项技能时，如果按钮（或者鼠标）被持续按下，是否不间断的施放技能，1代表允许；
 
-checkfunc=ȷ����Ʒ�Ƿ���кϷ����ԣ�
+checkfunc=确定物品是否具有合法属性；
 
-nocostinstate=��³�����ǡ�����ר�ò�����1��ʾ�޼۸񣩣�
+nocostinstate=德鲁依变狼、变熊专用参数（1表示无价格）；
 
-usemanaondo=���һ�ּ��ܱ�������ʹ�ã��Ƿ����������ħ���ĵ�������������
+usemanaondo=如果一种技能被持续的使用，是否对其所消耗魔法的点数进行缩减；
 
-StartMana=�����Լ���ר�ã��ڿ�ʼʱ���ķѵ�ħ����ֵ��
+StartMana=持续性技能专用，在开始时所耗费的魔法数值；
 
-minmana=��ǰ���������ĵ���Сħ����ֵ��
+minmana=当前技能所消耗的最小魔法数值；
 
-manashift=ħ��������������������ħ����������
+manashift=魔法除数，用来计算消耗魔法的数量；
 
-mana=��ǰ���������ĵ�ħ����ֵ��
+mana=当前技能所消耗的魔法数值；
 
-lvlmana=ÿ����һ����������Ҫ��ħ����ֵ����������
+lvlmana=每提升一级技能所需要的魔法数值的增加量；
 
-interrupt=������ʩ�Ź������ܷ񱻴�ϣ�1��ʾ���ԣ���
+interrupt=技能在施放过程中能否被打断（1表示可以）；
 
-InTown=�����ܷ��ڳ�����ʹ�ã�1��ʾ���ԣ���
+InTown=技能能否在城镇中使用（1表示可以）；
 
-aura=��ǰ�����Ƿ�Ϊ���⻷�����ܣ�1��ʾ�ǣ���
+aura=当前技能是否为“光环”技能（1表示是）；
 
-periodic=����ʩ�ź��Ƿ�����Ľ��й�����1�����ǣ�����˵��SOR��thunderstorm��ASS��blade shield��
+periodic=技能施放后是否持续的进行攻击，1代表是，比如说：SOR的thunderstorm，ASS的blade shield；
 
-perdelay=������ת�������ּ��ܵ�ת��ʱ��
+perdelay=技能在转换中两种技能的转换时间差；
 
-finishing=���̿͡�����ר�ò�����
+finishing=“刺客”技能专用参数；
 
-passive=��ǰ�����Ƿ�Ϊ�������ܣ�1��ʾ�Ǳ������ܣ���
+passive=当前技能是否为被动技能（1表示是被动技能）；
 
-progressive=�����ܷ�������1��ʾ�ܣ���
+progressive=技能能否被提升（1表示能）；
 
-general=�Ƿ�ÿ����ɫ���ܹ�ʹ�õ�ǰ���ܣ�1��ʾ�ܣ���
+general=是否每个角色都能够使用当前技能（1表示能）；
 
-scroll=������Ƿ�ֻ���ɾ��ἤ����ֻ���ڼ����ͻسǣ���
+scroll=此项技能是否只能由卷轴激发（只用于鉴定和回城）；
 
-calc1-4=���ܼ��������
+calc1-4=技能计算参数；
 
-*calc1-4 desc=���ڼ��ܼ��������ע�ͣ�
+*calc1-4 desc=对于技能计算参数的注释；
 
-Param1-8=���ܲ������ã�
+Param1-8=技能参数设置；
 
-*Param1-8 Description=���ڼ��ܲ������õ�ע�ͣ�
+*Param1-8 Description=对于技能参数设置的注释；
 
-InGame=��������Ϸ���Ƿ���Ч��1������Ч����
+InGame=技能在游戏中是否起效（1代表起效）；
 
-ToHit=����Ϊ1��ʱ�������������ͣ�
+ToHit=技能为1级时的物理攻击奖赏；
 
-LevToHit=���ܶ������ԶԹ����Ľ��ͣ�
+LevToHit=技能额外属性对攻击的奖赏；
 
-ToHitCalc=����ʼ��������˵�������ҿ���������ֻ��Valkyrie�� bash��stun�ȼ�����Ч��
+ToHitCalc=打击率计算参数，说明：就我看来，好像只对Valkyrie、 bash和stun等技能有效；
 
-ResultFlags=���ܲ�����
+ResultFlags=技能参数；
 
-HitFlags=���ܲ�����
+HitFlags=技能参数；
 
-HitClass=���ܲ�����
+HitClass=技能参数；
 
-Kick=��ǰ�����Ƿ���á��ߡ����������Ϊ������ʽ��
+Kick=当前技能是否采用“踢”这个动作作为攻击方式；
 
-HitShift=�������������
+HitShift=攻击计算除数；
 
-SrcDam=�����˺�������
+SrcDam=技能伤害参数；
 
-MinDam=��ǰ������1��ʱ����С�˺�ֵ��
+MinDam=当前技能在1级时的最小伤害值；
 
-MinLevDam1-5=������С�˺��Ĳ��������
+MinLevDam1-5=对于最小伤害的补充参数；
 
-MaxDam=��ǰ������1��ʱ������˺�ֵ��
+MaxDam=当前技能在1级时的最大伤害值；
 
-MaxLevDam1-5=��������˺��Ĳ��������
+MaxLevDam1-5=对于最大伤害的补充参数；
 
-DmgSymPerCalc=���ڡ��⻷��ϵ�е��˺����������
+DmgSymPerCalc=对于“光环”系列的伤害补充参数；
 
-EType=���ܵ����ͣ��磺attack��fire��cold��ltng��pois��mag��
+EType=技能的类型，如：attack、fire、cold、ltng、pois、mag；
 
-EMin=������ļ�������1��ʱ����С�˺�ֵ��
+EMin=所定义的技能类型1级时的最小伤害值；
 
-EMinLev1-5=����������ļ���������С�˺��Ĳ��������
+EMinLev1-5=对于所定义的技能类型最小伤害的补充参数；
 
-EMax=������ļ�������1��ʱ������˺�ֵ��
+EMax=所定义的技能类型1级时的最大伤害值；
 
-EMaxLev1-5=����������ļ�����������˺��Ĳ��������
+EMaxLev1-5=对于所定义的技能类型最大伤害的补充参数；
 
-EDmgSymPerCalc=����������ļ�����������˺��Ĳ��������
+EDmgSymPerCalc=对于所定义的技能类型最大伤害的补充参数；
 
-ELen=�䶳���߶��صĳ���ʱ�䣨���������ļ������ͣ���
+ELen=冷冻或者毒素的持续时间（针对所定义的技能类型）；
 
-ELevLen1-3=������ļ�����������ʱ��ļ��ܲ�����
+ELevLen1-3=所定义的技能类型延续时间的技能参数；
 
-ELenSymPerCalc=����������ļ��������˺�ֵ�Ĳ��������
+ELenSymPerCalc=对于所定义的技能类型伤害值的补充参数；
 
-aitype=�����ɫ������������ô���������ڹ����������ӵ����ã�
+aitype=如果角色持有武器，那么这种武器在攻击中所发挥的作用；
 
-aibonus=�����ɫ������������ô���������ڹ��������������õĲ���ֵ��
+aibonus=如果角色持有武器，那么这种武器在攻击中所发挥作用的补充值；
 
-cost mult=���������ĳһ�ض�������װ���ϣ�����Ʒ�ļ۸�
+cost mult=如果技能在某一特定的武器装备上，此物品的价格；
 
-cost add=���������ĳһ�ض�������װ���ϣ�����Ʒ�����۸������
+cost add=如果技能在某一特定的武器装备上，此物品提升价格参数。
 
 
 */
 
 /*
-�ļ���������
-Skill(s)�����ܡ�
-���ļ���������Ϸ�����м��ܵĲ�����Ϣ��ÿһ�д���һ�����ܡ�
+文件名解析：
+Skill(s)：技能。
+此文件描述了游戏中所有技能的部分信息，每一行代表一个技能。
 
 
-�ظ�
+回复
 
-    2¥
+    2楼
     2012-01-05 16:37
 
-    �ٱ� |
+    举报 |
 
     zqtjingzi
-    С����
+    小吧主
     12
 
-ÿ�еĺ������£�
+每列的含义如下：
 
 
-�ظ�
+回复
 
-    3¥
+    3楼
     2012-01-05 16:37
 
-    �ٱ� |
+    举报 |
 
     zqtjingzi
-    С����
+    小吧主
     12
 
-Skill�����ܵ�����������
+Skill：技能的名字索引。
 
-Id�����ܵ�����������
+Id：技能的数字索引。
 
-CharClass�����������Ľ�ɫְҵ�����о����ˡ�+n ĳְҵ���ܡ����ԶԴ˼����Ƿ���Ч���Լ������Ƿ������ĳְҵ�ļ����б��С�
-����˵����ÿ��ְҵӵ�еļ�������������ȡ�
+CharClass：技能所属的角色职业。此列决定了“+n 某职业技能”属性对此技能是否有效，以及技能是否出现在某职业的技能列表中。
+补充说明：每个职业拥有的技能总数必须相等。
 
-SkillDesc������������������ָ��SkillDesc.txt��
+SkillDesc：技能描述的索引，指向SkillDesc.txt。
 
-SrvStFunc���������˵ļ�����ʼ�������������Ҽ����������ʱ�����˺�����
+SrvStFunc：服务器端的技能起始函数。当你点击右键（或左键）时触发此函数。
 
-SrvDoFunc���������˵ļ���ִ�к���������ʼ����ִ����Ϻ�ʼִ�С����㰴ס��겻��ʱ���ظ����ô˺���������ĳЩ���⼼�ܣ���⻷�༼�ܣ��������Ե����е��ô˺�����
+SrvDoFunc：服务器端的技能执行函数。在起始函数执行完毕后开始执行。当你按住鼠标不放时会重复调用此函数，对于某些特殊技能（如光环类技能）会周期性地自行调用此函数。
 
 
-�ظ�
+回复
 
-    4¥
+    4楼
     2012-01-05 16:38
 
-    �ٱ� |
+    举报 |
 
     zqtjingzi
-    С����
+    小吧主
     12
 
-PrgStack������ֵ��ֻ��Դ̿͵ľ������ܡ������˾����Ƿ���������������ͬ���ڡ���ʹ�ô˼��ܺ��Ƿ��ȡ��ԭ�еľ���Ч����������ֵΪ1�����ʾ�ɹ�ͬ���ڡ�
+PrgStack：布尔值。只针对刺客的聚气技能。决定此聚气是否能与其它聚气共同存在。即使用此技能后，是否会取代原有的聚气效果。若此列值为1，则表示可共同存在。
 
-SrvPrgFunc1-3����ǰ������Ϊ1-3ʱ��ʹ�ô˼��������õĺ�����ֻ��Դ̿͵ľ������ܡ�
+SrvPrgFunc1-3：当前聚气数为1-3时，使用此技能所调用的函数。只针对刺客的聚气技能。
 
-PrgCalc1-3����ǰ������Ϊ1-3ʱ��ʹ�ô˼���ʱ�Ĳ�����ֻ��Դ̿͵ľ������ܡ�
+PrgCalc1-3：当前聚气数为1-3时，使用此技能时的参数。只针对刺客的聚气技能。
 
-PrgDam��������������ص�һ�����ԣ��������ò��塣ֻ��Դ̿͵ľ������ܡ�
+PrgDam：跟聚气技能相关的一个属性，具体作用不清。只针对刺客的聚气技能。
 
 
-�ظ�
+回复
 
-    5¥
+    5楼
     2012-01-05 16:38
 
-    �ٱ� |
+    举报 |
 
     zqtjingzi
-    С����
+    小吧主
     12
 
-SrvMissile���������˵ĳ�ʼͶ���
+SrvMissile：服务器端的初始投射物。
 
-DecQuant���˼����Ƿ���������Ʒ�����������ʸ����ǹ��Ͷ��ҩ���ȣ���
+DecQuant：此技能是否会减少消耗品的数量（如箭矢、标枪、投掷药剂等）。
 
-Lob������ֵ���Ƿ�Ϊ����༼�ܡ�
+Lob：布尔值。是否为落地类技能。
 
-srvmissilea-c���������˵ĸ���Ͷ����a-c��
+srvmissilea-c：服务器端的辅助投射物a-c。
 
-srvoverlay���������˿��Ƶ���ʾЧ����
+srvoverlay：服务器端控制的显示效果。
 
 
-�ظ�
+回复
 
-    6¥
+    6楼
     2012-01-05 16:38
 
-    �ٱ� |
+    举报 |
 
     zqtjingzi
-    С����
+    小吧主
     12
 
-aurafilter������Ч����������������ǰ������Щ��λ��Ч��
+aurafilter：灵气效果过滤器。决定当前灵气对些单位有效。
 
-aurastate����ǰ������ʩ���߲�����״̬Ч������States.txt������
+aurastate：当前灵气对施放者产生的状态效果。与States.txt关联。
 
-auratargetstate����ǰ����������Ӱ���߲�����״̬Ч������States.txt������
+auratargetstate：当前灵气对灵气影响者产生的状态效果。与States.txt关联。
 
-auralencalc����ǰ����Ч������ʱ��ļ��㹫ʽ��
+auralencalc：当前灵气效果持续时间的计算公式。
 
-aurarangecalc����ǰ����Ӱ�췶Χ�ļ��㹫ʽ��
+aurarangecalc：当前灵气影响范围的计算公式。
 
-aurastat1-6������Ч��1-6����ItemStatCost.txt������
+aurastat1-6：灵气效果1-6。与ItemStatCost.txt关联。
 
-aurastatcalc1-6������Ч��1-6�ļ��㹫ʽ��
+aurastatcalc1-6：灵气效果1-6的计算公式。
 
-auraevent1-3������Ч�������¼�1-3����Events.txt������
+auraevent1-3：灵气效果触发事件1-3。与Events.txt关联。
 
-auraeventfunc1-3���¼�1-3��������Ч����ĵ��ú�����
+auraeventfunc1-3：事件1-3触发灵气效果后的调用函数。
 
-auratgtevent�����ò�����
+auratgtevent：无用参数。
 
-auratgteventfunc�����ò�����
+auratgteventfunc：无用参数。
 
 
-�ظ�
+回复
 
-    7¥
+    7楼
     2012-01-05 16:38
 
-    �ٱ� |
+    举报 |
 
     zqtjingzi
-    С����
+    小吧主
     12
 
-passivestate����ǰ���ܵı���״̬����ѧϰ���Զ���Ч��״̬��
+passivestate：当前技能的被动状态。即学习后自动生效的状态。
 
-passiveitype���˱���״̬��Ӧ���������͡���ItemTypes.txt������ֻ���Ұ���˵��������ռ��ܡ�
+passiveitype：此被动状态对应的武器类型。与ItemTypes.txt关联。只针对野蛮人的武器掌握技能。
 
-passivestat1-5����ǰ���ܵı�������1-5����ItemStatCost.txt������
+passivestat1-5：当前技能的被动属性1-5。与ItemStatCost.txt关联。
 
-passivecalc1-5����������1-5�ļ��㹫ʽ��
+passivecalc1-5：被动属性1-5的计算公式。
 
-passivevent�����ò�����
+passivevent：无用参数。
 
-passiveeventfunc�����ò�����
+passiveeventfunc：无用参数。
 
 
-�ظ�
+回复
 
-    8¥
+    8楼
     2012-01-05 16:39
 
-    �ٱ� |
+    举报 |
 
     zqtjingzi
-    С����
+    小吧主
     12
 
-summon���ٻ����Monstats.txt������
+summon：召唤物。与Monstats.txt关联。
 
-pettype���ٻ������͡���PetTyeps.txt������
+pettype：召唤物类型。与PetTyeps.txt关联。
 
-petmax�������ٻ������������Ϊ�ձ�ʾû�����ƣ����ǽ��
+petmax：最大可召唤数量。如此列为空表示没有限制，如骨墙。
 
-summode���ٻ���ĳ���������
+summode：召唤物的出生动作。
 
-sumskill1-5���ٻ��������յļ��ܡ���Skills.txt������
-����˵�������յļ��ܲ�һ����ʹ�á��ٻ���ʹ��ʲô������AI������
+sumskill1-5：召唤物所掌握的技能。与Skills.txt关联。
+补充说明：掌握的技能不一定会使用。召唤物使用什么技能由AI决定。
 
-sumsk1-5calc���ٻ��������ռ��ܵȼ��ļ��㹫ʽ��
+sumsk1-5calc：召唤物所掌握技能等级的计算公式。
 
-sumumod���ٻ���Ľ�ֽ������ԡ����ر���ٵȡ���MonUMod.txt������
-����˵��������һ���ǳ�����˼�Ĳ�����ͨ���޸Ĵ��п��������鷨ʦ�����þ������ƽ�ֵ����������Ч���ǳ�������
+sumumod：召唤物的金怪奖励属性。如特别快速等。与MonUMod.txt关联。
+补充说明：这是一个非常有意思的参数。通过修改此列可以让死灵法师的骷髅具有类似金怪的随机灵气，效果非常华丽。
 
 
 
-�ظ�
+回复
 
-    9¥
+    9楼
     2012-01-05 16:39
 
-    �ٱ� |
+    举报 |
 
     zqtjingzi
-    С����
+    小吧主
     12
 
-sumoverlay���ٻ���������
+sumoverlay：召唤物的外表。
 
 
-�ظ�
+回复
 
-    10¥
+    10楼
     2012-01-05 16:39
 
-    �ٱ� |
+    举报 |
 
     zqtjingzi
-    С����
+    小吧主
     12
 
-stsuccessonly������ֵ�������ܱ���Ϻ��Ƿ�����˼��ܵ�������ͼ��Ч����
+stsuccessonly：布尔值。当技能被打断后是否继续此技能的声音或图像效果。
 
-stsound��ʹ�ô˼���ʱ����������Sounds.txt������
+stsound：使用此技能时的声音。与Sounds.txt关联。
 
-stsoundclass���˼�������ְҵʹ�ô˼���ʱ��������Ϊ�����編ʦʹ�ú���༼��ʱ����Ұ���˵�����������Ч����
+stsoundclass：此技能所属职业使用此技能时的声音。为避免如法师使用吼叫类技能时发出野蛮人的声音这样的效果。
 
-stsounddelay�������Ƿ����ӳ١�
+stsounddelay：声音是否有延迟。
 
-weaponsnd������ֵ��ʹ�ô˼���ʱ�Ƿ񷢳�������صļ��ܡ�
+weaponsnd：布尔值。使用此技能时是否发出武器相关的技能。
 
-dosound������ִ��ʱ�����������ȳ�ÿ�δ������������
+dosound：技能执行时的声音。如热诚每次打击都有声音。
 
-dosound a/b������ִ��ʱ�ĸ�������a/b��
+dosound a/b：技能执行时的辅助声音a/b。
 
-tgtoverlay���˼����ڼ���Ŀ���ϵĶ���Ч����
+tgtoverlay：此技能在技能目标上的动画效果。
 
-tgtsound���˼����ڼ���Ŀ���ϵ�����Ч����
+tgtsound：此技能在技能目标上的声音效果。
 
-prgoverlay����������Ч����ֻ��Դ̿͵ľ������ܡ�
+prgoverlay：聚气动画效果。只针对刺客的聚气技能。
 
-prgsound����������Ч����ֻ��Դ̿͵ľ������ܡ�
+prgsound：聚气声音效果。只针对刺客的聚气技能。
 
-castoverlay��ʩ������Ч����
+castoverlay：施法动画效果。
 
-cltoverlaya/b����������Ч��a/b��
+cltoverlaya/b：辅助动画效果a/b。
 
 
-�ظ�
+回复
 
-    11¥
+    11楼
     2012-01-05 16:40
 
-    �ٱ� |
+    举报 |
 
     zqtjingzi
-    С����
+    小吧主
     12
 
-cltstfunc���ͻ��˵ļ�����ʼ������
+cltstfunc：客户端的技能起始函数。
 
-cltdofunc���ͻ��˵ļ���ִ�к�����
+cltdofunc：客户端的技能执行函数。
 
-cltprgfunc1-3����ǰ������Ϊ1-3ʱ��ʹ�ô˼����ڿͻ��������õĺ�����ֻ��Դ̿͵ľ������ܡ�
+cltprgfunc1-3：当前聚气数为1-3时，使用此技能在客户端所调用的函数。只针对刺客的聚气技能。
 
-cltmissile���ͻ��˵ĳ�ʼͶ���
+cltmissile：客户端的初始投射物。
 
-cltmissilea-d���ͻ��˵ĸ���Ͷ����a-d��
+cltmissilea-d：客户端的辅助投射物a-d。
 
-cltcalc1-3���ͻ��˵ļ��ܼ��㹫ʽ��
+cltcalc1-3：客户端的技能计算公式。
 
 
-�ظ�
+回复
 
-    12¥
+    12楼
     2012-01-05 16:40
 
-    �ٱ� |
+    举报 |
 
     zqtjingzi
-    С����
+    小吧主
     12
 
-warp������ֵ���Ƿ���λ�øı䡣
+warp：布尔值。是否有位置改变。
 
-immediate������ֵ�������Ƿ����̲���Ч����ֻ��������༼�ܡ�
+immediate：布尔值。灵气是否立刻产生效果。只针对灵气类技能。
 
-enhanceable������ֵ���˼����Ƿ�ɱ���ǿ��
+enhanceable：布尔值。此技能是否可被加强。
 
-attackrank���˼��ܵĹ����ȼ��������˹����ܵ��˼���Ч����ķ�Ӧ��
+attackrank：此技能的攻击等级。决定了怪物受到此技能效果后的反应。
 
-noammo������ֵ��ʹ�ô˼����Ƿ���Ҫ��ҩ��
-����˵��������noammo��decquant������noammo��������û�е�ҩʱ�ܷ�ʹ�ô˼��ܡ���decquant����ʹ�ô˼��ܺ��Ƿ���ٵ�ҩ������
+noammo：布尔值，使用此技能是否需要弹药。
+补充说明：关于noammo和decquant的区别。noammo决定当你没有弹药时能否使用此技能。而decquant决定使用此技能后是否减少弹药数量。
 
-range���˼��ܵĹ�����Χ��
+range：此技能的攻击范围。
 
-weapsel���˼���ʹ�õ���������Ϊ���֡����֡�˫�֡���������
+weapsel：此技能使用的武器。分为左手、单手、双手、非武器。
 
-itype1-3��ʹ�ô˼�����Ҫ��װ������1-3����ItemTypes.txt������
+itype1-3：使用此技能需要的装备类型1-3。与ItemTypes.txt关联。
 
-etype1-2������ʹ�ô˼��ܵ�װ�����͡�
+etype1-2：不能使用此技能的装备类型。
 
-itypeb1-3��ʹ�ô˼�����Ҫ�ĸ���װ�����͡�
+itypeb1-3：使用此技能需要的副手装备类型。
 
-etypeb1-2������ʹ�ô˼��ܵĸ���װ�����͡�
+etypeb1-2：不能使用此技能的副手装备类型。
 
-anim��ʹ�ô˼��ܶ�Ӧ�Ķ������͡���PlrMode.txt������
+anim：使用此技能对应的动作类型。与PlrMode.txt关联。
 
-seqtrans�����ò�����
+seqtrans：无用参数。
 
-monanim��Ӱ��ʹ�ô˼��ܶ�Ӧ�Ķ������͡�
+monanim：影子使用此技能对应的动作类型。
 
-seqnum���������Ķ������͡�
+seqnum：连续技的动作类型。
 
-seqinput����������ʱ������
+seqinput：连续技的时间间隔。
 
-durability������δ֪��
+durability：含义未知。
 
-UseAttackRate������ֵ���˼����Ƿ��õ�����׼ȷ�ʡ�
+UseAttackRate：布尔值。此技能是否用到攻击准确率。
 
-LineOfSight���Ƿ���������Ұ��Χ���ͷš����Ƿ��ܸ�ǽ�ͷš�
+LineOfSight：是否限制在视野范围内释放。如是否能隔墙释放。
 
-TargetableOnly������δ֪��
+TargetableOnly：含义未知。
 
-SearchEnemyXY������δ֪��
-SearchEnemyNear���Ƿ�Ѱ�Ҹ�����Ŀ�ꡣ
+SearchEnemyXY：含义未知。
+SearchEnemyNear：是否寻找附近的目标。
 
-SearchOpenXY���Ƿ�Ѱ�ҿ��еش���
+SearchOpenXY：是否寻找空闲地带。
 
-SelectProc��Ŀ��ʬ��ѡ�������
+SelectProc：目标尸体选择参数。
 
-TargetCorpse���Ƿ���ʬ��ΪĿ�ꡣ
+TargetCorpse：是否以尸体为目标。
 
-TargetPet���Ƿ������ٻ����Ӷ��ΪĿ�ꡣ
+TargetPet：是否能以召唤物或佣兵为目标。
 
-TargetAlly���Ƿ������������ΪĿ�ꡣ
+TargetAlly：是否能以其它玩家为目标。
 
-TargetItem���Ƿ�������ƷΪĿ�ꡣ
+TargetItem：是否能以物品为目标。
 
-TgtPlaceCheck���Ƿ���Ŀ��λ�á�
+TgtPlaceCheck：是否检查目标位置。
 
-AttackNoMana��ûħ��ʱ�Ƿ�תΪ��ͨ������
+AttackNoMana：没魔法时是否转为普通攻击。
 
-ItemEffect���������˵��˼��ܱ���Ʒ����ʱ��ִ�к�����
+ItemEffect：服务器端当此技能被物品触发时的执行函数。
 
-ItemCltEffect���ͻ��˵��˼��ܱ���Ʒ����ʱ��ִ�к�����
+ItemCltEffect：客户端当此技能被物品触发时的执行函数。
 
-ItemTarget�������Ŀ��ѡ��ʽ��
+ItemTarget：特殊的目标选择方式。
 
-ItemCheckStart������δ֪��
+ItemCheckStart：含义未知。
 
-ItemCltCheckStart������δ֪��
+ItemCltCheckStart：含义未知。
 
-ItemCastSound�����˼�������Ʒ����ʱ��������
+ItemCastSound：当此技能由物品触发时的声音。
 
-ItemCastOverlay�����˼�������Ʒ����ʱ�Ķ�����
+ItemCastOverlay：当此技能由物品触发时的动画。
 
 
-�ظ�
+回复
 
-    13¥
+    13楼
     2012-01-05 16:40
 
-    �ٱ� |
+    举报 |
 
     zqtjingzi
-    С����
+    小吧主
     12
 
-skpoints��������һ������Ҫ�ļ��ܵ�����
+skpoints：技能升一级所需要的技能点数。
 
-reqlevel��ѧϰ�˼�������Ҫ�ĵȼ���
+reqlevel：学习此技能所需要的等级。
 
-maxlvl���˼��ܿ�ͨ�����ܵ�ﵽ�����ȼ���
+maxlvl：此技能可通过技能点达到的最大等级。
 
-reqstr��ѧϰ�˼��ܵ�����Ҫ��
+reqstr：学习此技能的力量要求。
 
-reqdex��ѧϰ�˼��ܵ�����Ҫ��
+reqdex：学习此技能的敏捷要求。
 
-reqint��ѧϰ�˼��ܵľ���Ҫ��
+reqint：学习此技能的精力要求。
 
-reqvit��ѧϰ�˼��ܵ�����Ҫ��
+reqvit：学习此技能的体力要求。
 
-reqskill1-3��ѧϰ�˼��ܵ�ǰ�ü���1-3��
+reqskill1-3：学习此技能的前置技能1-3。
 
-restrict��ʹ�ô˼��ܵ�״̬���ơ�0=�ˣ�1=�˻���Σ�2=�̶�״̬��
+restrict：使用此技能的状态限制。0=人；1=人或变形；2=固定状态。
 
-state1-3��ʹ�ô˼��ܵĹ̶�״̬���ơ���States.txt������
+state1-3：使用此技能的固定状态限制。与States.txt关联。
 
 
-�ظ�
+回复
 
-    14¥
+    14楼
     2012-01-05 16:41
 
-    �ٱ� |
+    举报 |
 
     zqtjingzi
-    С����
+    小吧主
     12
 
-delay��������ȴʱ�䣬��֡Ϊ��λ��
+delay：技能冷却时间，以帧为单位。
 
-leftskill���Ƿ���������ʹ�á�
-����˵���������༼�ܼ�ʹ����������Ҳû��Ч����
+leftskill：是否能用左手使用。
+补充说明：灵气类技能即使被放在左手也没有效果。
 
-repeat���Ƿ�Ϊ�ظ��༼�ܣ��������
+repeat：是否为重复类技能，如地狱火。
 
-checkfunc��״̬��麯����
+checkfunc：状态检查函数。
 
-nocostinstate�������Ƿ�����ħ���������Ǳ���˲��ķ�ħ��ֵ��
+nocostinstate：变形是否不消耗魔法。即从狼变回人不耗费魔法值。
 
-usemanaondo������ʹ�ù������Ƿ�����ħ������������ڳ���ʹ�ù����л�����ħ��������Ϊ0��
+usemanaondo：持续使用过程中是否不消耗魔法。如地狱火在持续使用过程中会消耗魔法，此列为0。
 
-startmana��ʹ�ô�ħ��������ħ��Ҫ��
+startmana：使用此魔法的最少魔法要求。
 
-minmana��ʹ�ô˼��ܵ���Сħ�����ġ�
+minmana：使用此技能的最小魔法消耗。
 
-manashift���������ӡ�ʵ�ʷ�������Ϊshift = 2^(manashift-8)��
+manashift：放缩因子。实际放缩比例为shift = 2^(manashift-8)。
 
-mana����ʼħ�����ġ�
+mana：初始魔法消耗。
 
-lvlmana��ÿ��һ�����ӵ�ħ�����ġ�
-����˵��������ħ������ = max{ minmana, (mana+lvlmana*(sLvl-1)) * 2^(manashift-8) }
+lvlmana：每升一级增加的魔法消耗。
+补充说明：最终魔法消耗 = max{ minmana, (mana+lvlmana*(sLvl-1)) * 2^(manashift-8) }
 
-interrupt���Ƿ�ᱻ��ϡ��ͻ��˲�����
+interrupt：是否会被打断。客户端参数。
 
-InTown���Ƿ����ڳ���ʹ�á�
+InTown：是否能在城内使用。
 
-aura���Ƿ�Ϊ�����༼�ܡ�
+aura：是否为灵气类技能。
 
-periodic���Ƿ�Ϊ������ѭ�����ܡ�
+periodic：是否为周期性循环技能。
 
-perdelay�������༼���Լ�������ѭ�����ܵļ��������ɽ����Ʒ籩�ļ���ĵú�С�����ú�ˬ��
+perdelay：灵气类技能以及周期性循环技能的间隔。比如可将雷云风暴的间隔改得很小，会变得很爽。
 
-finishing���Ƿ�Ϊ����������Դ̿;�������
+finishing：是否为结束技。针对刺客聚气技。
 
-passive���Ƿ��Ǳ������ܣ����Ƿ�����������ֵļ����б��С�
+passive：是否是被动技能，即是否出现在左、右手的技能列表中。
 
-progressive�������Ǿ������ܡ�
+progressive：是事是聚气技能。
 
-general���Ƿ���ͨ�ü��ܡ�û���������ã�������ע�͡�
+general：是否是通用技能。没有明显作用，更像是注释。
 
-scroll���Ƿ��Ǿ����༼�ܡ�û���������ã�������ע�͡�
+scroll：是否是卷轴类技能。没有明显作用，更像是注释。
 
-calc1-4�����������ֵ�ļ��㹫ʽ���ɼ��ܺ������á�
+calc1-4：技能相关数值的计算公式。由技能函数调用。
 
-param1-8��������ز�����
+param1-8：技能相关参数。
 
-InGame���Ƿ�������Ϸ��ʹ�á��ܶ����һ����������ȷʵ�����á�
+InGame：是否能在游戏中使用。很多余的一个参数，但确实有作用。
 
 
-�ظ�
+回复
 
-    15¥
+    15楼
     2012-01-05 16:41
 
-    �ٱ� |
+    举报 |
 
     zqtjingzi
-    С����
+    小吧主
     12
 
-ToHit���˼������ӵĹ���׼ȷ��%��
+ToHit：此技能增加的攻击准确率%。
 
-LevToHit�����ܵȼ�ÿ���һ�����ӵĹ���׼ȷ��%��
+LevToHit：技能等级每提高一级增加的攻击准确率%。
 
-ToHitCalc���˼������ӵĹ���׼ȷ�ʹ�ʽ�������в�Ϊ��ʱǰ����ʧЧ��
+ToHitCalc：此技能增加的攻击准确率公式。当此列不为空时前两列失效。
 
-ResultFlags������δ֪��
+ResultFlags：含义未知。
 
-HitFlags������δ֪��
+HitFlags：含义未知。
 
-HitClass���������
+HitClass：击打类别。
 
-Kick���Ƿ����߻���ֻ��Դ̿͵��߻����ܡ�
+Kick：是否是踢击。只针对刺客的踢击技能。
 
-HitShift���˺��������ӡ�ʵ�ʷ�������shift = 2^(HitShift - 8)��
+HitShift：伤害放缩因子。实际放缩比例shift = 2^(HitShift - 8)。
 
-SrcDamage����ͨ�����˺����ӱ�������������Ϊ128��
+SrcDamage：普通攻击伤害附加比例。缩减因子为128。
 
-MinDam/MaxDam�����ܳ�ʼ�������˺���Сֵ�����ֵ��
+MinDam/MaxDam：技能初始的物理伤害最小值和最大值。
 
-Min/MaxLevDam1-5�����������˺���Сֵ�����ֵ�漼�ܵȼ������������1=2-8��2=9-16��3=17-22��4=23-28��5=29+��
+Min/MaxLevDam1-5：技能物理伤害最小值和最大值随技能等级的增加情况。1=2-8；2=9-16；3=17-22；4=23-28；5=29+。
 
-DmgSymPerCalc�����������˺�����ؼ��ܼӳɡ�
+DmgSymPerCalc：技能物理伤害的相关技能加成。
 
-EType��Ԫ���˺������ElemTypes.txt������
+EType：元素伤害类别。与ElemTypes.txt关联。
 
-EMin/Max�����ܳ�ʼ��Ԫ���˺���Сֵ�����ֵ��
+EMin/Max：技能初始的元素伤害最小值和最大值。
 
-EMin/MaxLev1-5������Ԫ���˺���Сֵ�����ֵ�漼�ܵȼ������������1=2-8��2=9-16��3=17-22��4=23-28��5=29+��
+EMin/MaxLev1-5：技能元素伤害最小值和最大值随技能等级的增加情况。1=2-8；2=9-16；3=17-22；4=23-28；5=29+。
 
-EDmgSymPerCalc������Ԫ���˺�����ؼ��ܼӳɡ�
+EDmgSymPerCalc：技能元素伤害的相关技能加成。
 
-ELen������Ԫ���˺��ĳ���ʱ�䡣
+ELen：技能元素伤害的持续时间。
 
-ELevLen1-5������Ԫ���˺��ĳ���ʱ���漼�ܵȼ����������
+ELevLen1-5：技能元素伤害的持续时间随技能等级增加情况。
 
-ELenSymPerCalc������Ԫ���˺��ĳ���ʱ�����ؼ��ܼӳɡ�
+ELenSymPerCalc：技能元素伤害的持续时间的相关技能加成。
 
 
-�ظ�
+回复
 
-    16¥
+    16楼
     2012-01-05 16:42
 
-    �ٱ� |
+    举报 |
 
     zqtjingzi
-    С����
+    小吧主
     12
 
-aitype����AIʹ�ô˼�����ء�
+aitype：与AI使用此技能相关。
 
-aibonus��AIʹ�ô˼��ܵĻ��ʽ�����
+aibonus：AI使用此技能的机率奖励。
 
-CostMult���˼�����Ϊ��Ʒ���Զ���Ʒ�۸������������
+CostMult：此技能作为物品属性对物品价格的提升比例。
 
-CostAdd���˼�����Ϊ��Ʒ���Զ���Ʒ�۸��������ֵ��
+CostAdd：此技能作为物品属性对物品价格的提升数值。
 
 
-�ظ�
+回复
 
-    17¥
+    17楼
     2012-01-05 16:42
 
-    �ٱ� |
+    举报 |
 
     firegunkho
-    ������ķ
+    萨卡兰姆
     8
 
-��ЩMOD��ûTXT�޸ĵ� �޸ĵ�BIN�ļ� ��ô��BIN�ļ� ��
+有些MOD是没TXT修改的 修改的BIN文件 怎么改BIN文件 ？
 
 
-�ظ�
+回复
 
-    18¥
+    18楼
     2012-01-05 16:42
 
-    �ٱ� |
+    举报 |
 
     zqtjingzi
-    С����
+    小吧主
     12
 
-���ڷ������˺Ϳͻ��˵Ĳ���˵����������ι����ľͲ���˵�ˣ���Ϊ����Ҫ��ֻҪ��ȷ���˺�Ч���йصĶ��ڷ������ˣ����ͻ��˻�����ֻ���𶯻�Ч����ʾ�͹��ˡ�
+关于服务器端和客户端的补充说明：具体如何工作的就不多说了，因为不重要。只要明确跟伤害效果有关的都在服务器端，而客户端基本上只负责动画效果显示就够了。
 
 
 
-�ظ�
+回复
 
-    19¥
+    19楼
     2012-01-05 16:42
 
-    �ٱ� |
+    举报 |
 
     zqtjingzi
-    С����
+    小吧主
     12
 
-����˵��������������Դ��Nepharius�ġ�SKILLS.TXT FILE GUIDE��
+特殊说明：部分资料来源于Nepharius的“SKILLS.TXT FILE GUIDE”
 
 */
 

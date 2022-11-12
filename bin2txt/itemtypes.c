@@ -17,127 +17,127 @@ By Nefarius (1.2 added further notes regarding socket caps and staffmodes brough
 
 
 
-ItemType ¨C A comment field that contains the ¡°internal name¡± of this iType, you can basically enter anything you wish here, but since you can add as many comment columns as you wish, there is no reason to use it for another purpose icon_razz.gif.
+ItemType â€“ A comment field that contains the â€œinternal nameâ€ of this iType, you can basically enter anything you wish here, but since you can add as many comment columns as you wish, there is no reason to use it for another purpose icon_razz.gif.
 
-Code ¨C The ID pointer of this ItemType, this pointer is used in many txt files (armor.txt, cubemain.txt, misc.txt, skills.txt, treasureclassex.txt, weapons.txt), never use the same ID pointer twice, the game will only use the first instance and ignore 
+Code â€“ The ID pointer of this ItemType, this pointer is used in many txt files (armor.txt, cubemain.txt, misc.txt, skills.txt, treasureclassex.txt, weapons.txt), never use the same ID pointer twice, the game will only use the first instance and ignore 
 all other occurrences. ID pointers are case sensitive, 3-4 chars long and can contain numbers, letters and symbols.
 
-Equiv1-2 ¨C This is used to define the parent iType, note that an iType can have multiple parents (as will be shown in the cladogram ¨C link below), the only thing you must avoid at all cost is creating infinite loops. I haven't ever tested what happens 
+Equiv1-2 â€“ This is used to define the parent iType, note that an iType can have multiple parents (as will be shown in the cladogram â€“ link below), the only thing you must avoid at all cost is creating infinite loops. I haven't ever tested what happens 
 when you create an iType loop, but infinite loops are something you should always avoid.
 
 Fig. 1 - ItemType Diagram by Paul Siramy
 
 
-Repair ¨C Boolean, 1=Merchants can repair this item type, 0=Merchants cannot repair this iType (note, this also refers to charges being rechargeable).
+Repair â€“ Boolean, 1=Merchants can repair this item type, 0=Merchants cannot repair this iType (note, this also refers to charges being rechargeable).
 
-Body ¨C Boolean, 1=The character can wear this iType, 0=This iType can only be carried in the inventory, cube or stash (and belt if it is set as ¡°beltable¡± in the other item related txt files)
+Body â€“ Boolean, 1=The character can wear this iType, 0=This iType can only be carried in the inventory, cube or stash (and belt if it is set as â€œbeltableâ€ in the other item related txt files)
 
-BodyLoc1-2 ¨C If you have set the previous column to 1, you need to specify the inventory slots in which the item has to be equipped. (the codes used by this field are read from BodyLocs.txt)
+BodyLoc1-2 â€“ If you have set the previous column to 1, you need to specify the inventory slots in which the item has to be equipped. (the codes used by this field are read from BodyLocs.txt)
 
-Shoots ¨C This column specifies which type of quiver (¡°ammo&rdquo this iType (in case it is a weapon) requires in order to shoot (you use the ID pointer of the quiver iType here).
+Shoots â€“ This column specifies which type of quiver (â€œammo&rdquo this iType (in case it is a weapon) requires in order to shoot (you use the ID pointer of the quiver iType here).
 
 Caution: The place it checks which missile to pick (either arrow, bolt, explosive arrow or magic arrow) is buried deep within D2Common.dll, the section can be modified, there is an extensive post discussing this in Code Editing. - Thanks go to Kingpin 
 for spotting a silly little mistake in here.
 
-Quiver ¨C The equivalent to the previous column, in here you specify which weapon this quiver is linked to. Make sure the two columns match. (this also uses the ID pointer of course).
+Quiver â€“ The equivalent to the previous column, in here you specify which weapon this quiver is linked to. Make sure the two columns match. (this also uses the ID pointer of course).
 
-Throwable ¨C Can this iType be thrown (determines whenever it uses the quantity and throwing damage columns in Weapons.txt for example).
+Throwable â€“ Can this iType be thrown (determines whenever it uses the quantity and throwing damage columns in Weapons.txt for example).
 
-Reload ¨C Can the this item be re-stacked via drag and drop. 1=Yes, 0=No.
+Reload â€“ Can the this item be re-stacked via drag and drop. 1=Yes, 0=No.
 
-ReEquip ¨C If the ammo runs out, the game will automatically pick the next item of the same iType to be equipped in it's place. 1=Yes, 0=No. (more clearly, when you use up all the arrows in a quiver, the next quiver, if available, will be equipped in 
+ReEquip â€“ If the ammo runs out, the game will automatically pick the next item of the same iType to be equipped in it's place. 1=Yes, 0=No. (more clearly, when you use up all the arrows in a quiver, the next quiver, if available, will be equipped in 
 its place).
 
-AutoStack ¨C Are identical stacks automatically combined when you pick the up? 1=Yes, 0=No. (for example, which you pick up throwing potions or normal javelins, they are automatically combined with those you already have)
+AutoStack â€“ Are identical stacks automatically combined when you pick the up? 1=Yes, 0=No. (for example, which you pick up throwing potions or normal javelins, they are automatically combined with those you already have)
 
-Magic ¨C Is this iType always Magic? 1=Yes, 0=No.
+Magic â€“ Is this iType always Magic? 1=Yes, 0=No.
 
-Rare ¨C Can this iType spawn as a rare item? 1=Yes, 0=No. Note: If you want an item that spawns only as magic or rare, you need to set the previous column to 1 as well.
+Rare â€“ Can this iType spawn as a rare item? 1=Yes, 0=No. Note: If you want an item that spawns only as magic or rare, you need to set the previous column to 1 as well.
 
-Normal ¨C Is this iType always Normal? 1=Yes, 0=No.
+Normal â€“ Is this iType always Normal? 1=Yes, 0=No.
 
-Charm ¨C Does this iType function as a charm? 1=Yes, 0=No. Note: This effect is hardcoded, if you need a new charm type, you must use the char iType in one of the equivs.
+Charm â€“ Does this iType function as a charm? 1=Yes, 0=No. Note: This effect is hardcoded, if you need a new charm type, you must use the char iType in one of the equivs.
 
-Gem ¨C Can this iType be inserted into sockets? 1=Yes, 0=No (Link your item to the sock iType instead to achieve this).
+Gem â€“ Can this iType be inserted into sockets? 1=Yes, 0=No (Link your item to the sock iType instead to achieve this).
 
-Beltable ¨C Can this iType be placed in your characters belt slots? 1=Yes, 0=No. (This requires further tweaking in other txt files).
+Beltable â€“ Can this iType be placed in your characters belt slots? 1=Yes, 0=No. (This requires further tweaking in other txt files).
 
-MaxSock1, MaxSock25, MaxSock40 ¨C Maximum sockets for iLvl 1-25, 26-40 and 40+. The range is hardcoded but the location is known, so you can alter around the range to your liking. On normal, items dropped from monsters are limited to 3, on nightmare to 
+MaxSock1, MaxSock25, MaxSock40 â€“ Maximum sockets for iLvl 1-25, 26-40 and 40+. The range is hardcoded but the location is known, so you can alter around the range to your liking. On normal, items dropped from monsters are limited to 3, on nightmare to 
 4 and on hell to 6 sockets, irregardless of this columns content.
 
-TreasureClass ¨C Can this iType ID Pointer be used as an auto TC in TreasureClassEx.txt. 1=Yes, 0=No. *Such as armo3-99 and weap3-99 etc.
+TreasureClass â€“ Can this iType ID Pointer be used as an auto TC in TreasureClassEx.txt. 1=Yes, 0=No. *Such as armo3-99 and weap3-99 etc.
 
-Rarity ¨C Dunno what it does, may have to do with the chance that an armor or weapon rack will pick items of this iType. If it works like other rarity fields, the chance is rarity / total_rarity * 100.
+Rarity â€“ Dunno what it does, may have to do with the chance that an armor or weapon rack will pick items of this iType. If it works like other rarity fields, the chance is rarity / total_rarity * 100.
 
-StaffMods ¨C Contains the class code for the character class that should get +skills from this iType (such as wands that can spawn with +Necromancer skills). Note, this only works if the item is not low quality, set or unique. Note, that this uses the 
+StaffMods â€“ Contains the class code for the character class that should get +skills from this iType (such as wands that can spawn with +Necromancer skills). Note, this only works if the item is not low quality, set or unique. Note, that this uses the 
 vanilla min/max skill IDs for each class as the range for the skill pool, so if you add new class skills to the end of the file, you should use automagic.txt instead
 
-CostFormula ¨C Does the game generate the sell/repair/buy prices of this iType based on its modifiers or does it use only the cost specific in the respective item txt files. 2=Organ (probably higher price based on unit that dropped the organ), 1=Yes, 0=
+CostFormula â€“ Does the game generate the sell/repair/buy prices of this iType based on its modifiers or does it use only the cost specific in the respective item txt files. 2=Organ (probably higher price based on unit that dropped the organ), 1=Yes, 0=
 No. Note: Only applies to items that are not unique or set, for those the price is solely controlled by the base item file and by the bonus to price given in SetItems and UniqueItems txt files. The exact functionality remains unknown, as for example 
 charms, have this disabled.
 
-Class ¨C Contains the class code for the class that should be able to use this iType (for class specific items).
+Class â€“ Contains the class code for the class that should be able to use this iType (for class specific items).
 
-VarInvGfx ¨C This column contains the sum of randomly picked inventory graphics this iType can have.
+VarInvGfx â€“ This column contains the sum of randomly picked inventory graphics this iType can have.
 
-InvGfx1-6 ¨C This column contains the file names of the inventory graphics that are randomly picked for this iType, so if you use columns 1-3, you will set VarInvGfx to 3 (duh).
+InvGfx1-6 â€“ This column contains the file names of the inventory graphics that are randomly picked for this iType, so if you use columns 1-3, you will set VarInvGfx to 3 (duh).
 
-StorePage ¨C The page code for the page a vendor should place this iType in when sold, if you enable the magic tab in D2Client.dll, you need to use the proper code here to put items in that tab. Right now the ones used are weap = weapons1 and 2, armo = 
+StorePage â€“ The page code for the page a vendor should place this iType in when sold, if you enable the magic tab in D2Client.dll, you need to use the proper code here to put items in that tab. Right now the ones used are weap = weapons1 and 2, armo = 
 armor and misc = miscellaneous.
 
-*eol ¨C Always needs to be filled with a value (doesn't have to be 0) in order to prevent M$ Excel and other ¡°re-format happy¡± spreadsheets from messing up the table bounds.
+*eol â€“ Always needs to be filled with a value (doesn't have to be 0) in order to prevent M$ Excel and other â€œre-format happyâ€ spreadsheets from messing up the table bounds.
 
 */
 
 typedef struct
 {
-    //ItemTypeÔÚbinÎÄ¼şÖĞÃ»ÓĞÌåÏÖ
-    unsigned char vCode[4]; //ÀàĞÍ´úÂë£¬»ò³ÆË÷Òı¡£ÔÚ¸÷txtÎÄ¼şÖĞ¶ÔÎïÆ·ÀàĞÍ½øĞĞÃèÊö¶¼Ó¦¸ÃÊ¹ÓÃ´ËÁĞµÄÖµ¡£
+    //ItemTypeåœ¨binæ–‡ä»¶ä¸­æ²¡æœ‰ä½“ç°
+    unsigned char vCode[4]; //ç±»å‹ä»£ç ï¼Œæˆ–ç§°ç´¢å¼•ã€‚åœ¨å„txtæ–‡ä»¶ä¸­å¯¹ç‰©å“ç±»å‹è¿›è¡Œæè¿°éƒ½åº”è¯¥ä½¿ç”¨æ­¤åˆ—çš„å€¼ã€‚
 
-    //Equiv1¡¢2£¬ĞèÒªµ½µÚ¶şÂÖ´¦Àí£¬ÒòÎªÒıÓÃÁË×ÔÉíµÄÆäËû×Ö¶Î
+    //Equiv1ã€2ï¼Œéœ€è¦åˆ°ç¬¬äºŒè½®å¤„ç†ï¼Œå› ä¸ºå¼•ç”¨äº†è‡ªèº«çš„å…¶ä»–å­—æ®µ
     unsigned short vEquiv1;
     unsigned short vEquiv2;
 
-    unsigned char vRepair;  //ÊÇ·ñ¿É±»ĞŞÀí¡£0´ú±í²»¿ÉÒÔ£¬1´ú±í¿ÉÒÔ¡£Ö»ÓĞ´ËÀà±ğÖĞµÄËùÓĞÎïÆ·¶¼¿ÉĞŞÀíÊ±´ËÀà±ğ²ÅËã×÷¿ÉĞŞÀí¡£
-    unsigned char vBody;    //ÊÇ·ñÊÇ´©ÔÚÉíÉÏµÄ×°±¸¡£0´ú±í²»ÊÇ£¬1´ú±íÊÇ¡£
-    unsigned char vBodyLoc1;    //×°±¸µÄÎ»ÖÃ1¡£ÓĞÈçÏÂ¼¸ÖÖÎ»ÖÃ£ºrarmÓÒÊÖ¡¢larm×óÊÖ¡¢torsÇû¸É¡¢rrinÓÒ½äÖ¸¡¢lrin×ó½äÖ¸¡¢neck²±×Ó¡¢feet½Å¡¢beltÑü´ø¡¢headÍ·²¿¡¢glovÊÖÌ×¡£
-    unsigned char vBodyLoc2;    //×°±¸µÄÎ»ÖÃ2¡£ÓĞÈçÏÂ¼¸ÖÖÎ»ÖÃ£ºrarmÓÒÊÖ¡¢larm×óÊÖ¡¢torsÇû¸É¡¢rrinÓÒ½äÖ¸¡¢lrin×ó½äÖ¸¡¢neck²±×Ó¡¢feet½Å¡¢beltÑü´ø¡¢headÍ·²¿¡¢glovÊÖÌ×¡£
+    unsigned char vRepair;  //æ˜¯å¦å¯è¢«ä¿®ç†ã€‚0ä»£è¡¨ä¸å¯ä»¥ï¼Œ1ä»£è¡¨å¯ä»¥ã€‚åªæœ‰æ­¤ç±»åˆ«ä¸­çš„æ‰€æœ‰ç‰©å“éƒ½å¯ä¿®ç†æ—¶æ­¤ç±»åˆ«æ‰ç®—ä½œå¯ä¿®ç†ã€‚
+    unsigned char vBody;    //æ˜¯å¦æ˜¯ç©¿åœ¨èº«ä¸Šçš„è£…å¤‡ã€‚0ä»£è¡¨ä¸æ˜¯ï¼Œ1ä»£è¡¨æ˜¯ã€‚
+    unsigned char vBodyLoc1;    //è£…å¤‡çš„ä½ç½®1ã€‚æœ‰å¦‚ä¸‹å‡ ç§ä½ç½®ï¼šrarmå³æ‰‹ã€larmå·¦æ‰‹ã€torsèº¯å¹²ã€rrinå³æˆ’æŒ‡ã€lrinå·¦æˆ’æŒ‡ã€neckè„–å­ã€feetè„šã€beltè…°å¸¦ã€headå¤´éƒ¨ã€glovæ‰‹å¥—ã€‚
+    unsigned char vBodyLoc2;    //è£…å¤‡çš„ä½ç½®2ã€‚æœ‰å¦‚ä¸‹å‡ ç§ä½ç½®ï¼šrarmå³æ‰‹ã€larmå·¦æ‰‹ã€torsèº¯å¹²ã€rrinå³æˆ’æŒ‡ã€lrinå·¦æˆ’æŒ‡ã€neckè„–å­ã€feetè„šã€beltè…°å¸¦ã€headå¤´éƒ¨ã€glovæ‰‹å¥—ã€‚
 
-    //Shoots¡¢Quiver£¬ĞèÒªµ½µÚ¶şÂÖ´¦Àí£¬ÒòÎªÒıÓÃÁË×ÔÉíµÄÆäËû×Ö¶Î
+    //Shootsã€Quiverï¼Œéœ€è¦åˆ°ç¬¬äºŒè½®å¤„ç†ï¼Œå› ä¸ºå¼•ç”¨äº†è‡ªèº«çš„å…¶ä»–å­—æ®µ
     unsigned short vShoots;
     unsigned short vQuiver;
 
-    unsigned char vThrowable;   //ÊÇ·ñÎªÍ¶ÖÀĞÍÎïÆ·¡£0±íÊ¾²»ÊÇ£¬1±íÊ¾ÊÇ¡£Èç½£´ËÁĞÎª0£¬±êÇ¹´ËÁĞÎª1¡£
-    unsigned char vReload;  //ÊÇ·ñ¿ÉÒÔ×Ô¶¯²¹³ä¡£0±íÊ¾²»¿ÉÒÔ£¬1±íÊ¾¿ÉÒÔ¡£Èç¼ıÊ¸ÉäÍêÒ»Í²ºó»á×Ô¶¯»»ĞÂµÄÒ»Í²£¨Èç¹ûÄã°üÀïÓĞ£©£¬¾ÍÊÇÒòÎª´ËÁĞÎª1¡£
-    unsigned char vReEquip; //ÊıÁ¿Ê¹ÓÃÍêºóÎïÆ·ÊÇ·ñÏûÊ§¡£0±íÊ¾ÊÇ£¬1±íÊ¾²»ÊÇ¡£Èç±êÇ¹´ËÁĞÎª1£¬ÄÇÃ´¼´Ê¹ÊıÁ¿ÓÃ¹âÁË±êÇ¹Ò²»¹ÔÚ¡£µ«¼ıÊ¸´ËÁĞÎª0£¬ËùÒÔÒ»¸ö¼ı´üÓÃÍêÁË´Ë¼ı´ü¾ÍÏûÊ§ÁË¡£
-    unsigned char vAutoStack;   //ÊÇ·ñ×Ô¶¯µş¼Ó¡£0´ú±í²»ÊÇ£¬1´ú±íÊÇ¡£±ÈÈçÄãÔ­À´±³°üÀïÓĞÒ»¸ö¼ı´ü£¬¼ñÁËÒ»¸öĞÂµÄ¼ı´üÖ®ºóÓÉ´ËÁĞ¾ö¶¨ÊÇ·ñ×Ô¶¯ÓëÔ­ÓĞµÄ¼ı´üºÏ²¢¡£
+    unsigned char vThrowable;   //æ˜¯å¦ä¸ºæŠ•æ·å‹ç‰©å“ã€‚0è¡¨ç¤ºä¸æ˜¯ï¼Œ1è¡¨ç¤ºæ˜¯ã€‚å¦‚å‰‘æ­¤åˆ—ä¸º0ï¼Œæ ‡æªæ­¤åˆ—ä¸º1ã€‚
+    unsigned char vReload;  //æ˜¯å¦å¯ä»¥è‡ªåŠ¨è¡¥å……ã€‚0è¡¨ç¤ºä¸å¯ä»¥ï¼Œ1è¡¨ç¤ºå¯ä»¥ã€‚å¦‚ç®­çŸ¢å°„å®Œä¸€ç­’åä¼šè‡ªåŠ¨æ¢æ–°çš„ä¸€ç­’ï¼ˆå¦‚æœä½ åŒ…é‡Œæœ‰ï¼‰ï¼Œå°±æ˜¯å› ä¸ºæ­¤åˆ—ä¸º1ã€‚
+    unsigned char vReEquip; //æ•°é‡ä½¿ç”¨å®Œåç‰©å“æ˜¯å¦æ¶ˆå¤±ã€‚0è¡¨ç¤ºæ˜¯ï¼Œ1è¡¨ç¤ºä¸æ˜¯ã€‚å¦‚æ ‡æªæ­¤åˆ—ä¸º1ï¼Œé‚£ä¹ˆå³ä½¿æ•°é‡ç”¨å…‰äº†æ ‡æªä¹Ÿè¿˜åœ¨ã€‚ä½†ç®­çŸ¢æ­¤åˆ—ä¸º0ï¼Œæ‰€ä»¥ä¸€ä¸ªç®­è¢‹ç”¨å®Œäº†æ­¤ç®­è¢‹å°±æ¶ˆå¤±äº†ã€‚
+    unsigned char vAutoStack;   //æ˜¯å¦è‡ªåŠ¨å åŠ ã€‚0ä»£è¡¨ä¸æ˜¯ï¼Œ1ä»£è¡¨æ˜¯ã€‚æ¯”å¦‚ä½ åŸæ¥èƒŒåŒ…é‡Œæœ‰ä¸€ä¸ªç®­è¢‹ï¼Œæ¡äº†ä¸€ä¸ªæ–°çš„ç®­è¢‹ä¹‹åç”±æ­¤åˆ—å†³å®šæ˜¯å¦è‡ªåŠ¨ä¸åŸæœ‰çš„ç®­è¢‹åˆå¹¶ã€‚
 
-    unsigned char vMagic;   //ÊÇ·ñÒ»¶¨ÊÇÄ§·¨ÎïÆ·£¨»òÒÔÉÏ¼¶±ğ£©¡£0´ú±í²»ÊÇ£¬1´ú±íÊÇ¡£Èç½äÖ¸Àà´ËÁĞ¾ÍÎª1£¬±íÊ¾²»»áÓĞ°×É«µÄ½äÖ¸¡£
-    unsigned char vRare;    //ÊÇ·ñÄÜÓĞÏ¡ÓĞ¼¶±ğµÄÎïÆ·¡£0´ú±í²»ÄÜ£¬1´ú±íÄÜ¡£Èç»¤Éí·û´ËÁĞÎª0£¬±íÊ¾²»¿ÉÄÜ³öÏÖÏ¡ÓĞ£¨ÁÁ½ğ£©µÄ»¤Éí·û¡£
-    unsigned char vNormal;  //ÊÇ·ñÖ»ÄÜÊÇÆÕÍ¨£¨°×É«£©ÎïÆ·¡£0´ú±í²»ÊÇ£¬1´ú±íÊÇ¡£Èç»Ø³Ç¾íÖá´ËÁĞÎª1£¬ÎäÆ÷´ËÁĞÎª0¡£
-    unsigned char vCharm;   //ÊÇ·ñÊÇ»¤Éí·û¡£0´ú±í²»ÊÇ£¬1´ú±íÊÇ¡£
+    unsigned char vMagic;   //æ˜¯å¦ä¸€å®šæ˜¯é­”æ³•ç‰©å“ï¼ˆæˆ–ä»¥ä¸Šçº§åˆ«ï¼‰ã€‚0ä»£è¡¨ä¸æ˜¯ï¼Œ1ä»£è¡¨æ˜¯ã€‚å¦‚æˆ’æŒ‡ç±»æ­¤åˆ—å°±ä¸º1ï¼Œè¡¨ç¤ºä¸ä¼šæœ‰ç™½è‰²çš„æˆ’æŒ‡ã€‚
+    unsigned char vRare;    //æ˜¯å¦èƒ½æœ‰ç¨€æœ‰çº§åˆ«çš„ç‰©å“ã€‚0ä»£è¡¨ä¸èƒ½ï¼Œ1ä»£è¡¨èƒ½ã€‚å¦‚æŠ¤èº«ç¬¦æ­¤åˆ—ä¸º0ï¼Œè¡¨ç¤ºä¸å¯èƒ½å‡ºç°ç¨€æœ‰ï¼ˆäº®é‡‘ï¼‰çš„æŠ¤èº«ç¬¦ã€‚
+    unsigned char vNormal;  //æ˜¯å¦åªèƒ½æ˜¯æ™®é€šï¼ˆç™½è‰²ï¼‰ç‰©å“ã€‚0ä»£è¡¨ä¸æ˜¯ï¼Œ1ä»£è¡¨æ˜¯ã€‚å¦‚å›åŸå·è½´æ­¤åˆ—ä¸º1ï¼Œæ­¦å™¨æ­¤åˆ—ä¸º0ã€‚
+    unsigned char vCharm;   //æ˜¯å¦æ˜¯æŠ¤èº«ç¬¦ã€‚0ä»£è¡¨ä¸æ˜¯ï¼Œ1ä»£è¡¨æ˜¯ã€‚
 
-    unsigned char vGem; //ÊÇ·ñÊÇ±¦Ê¯¡£0´ú±í²»ÊÇ£¬1´ú±íÊÇ¡£
-    unsigned char vBeltable;    //ÊÇ·ñÄÜ·ÅÈëÑü´ø¿Õ¼äÖĞ¡£0´ú±í²»ÊÇ£¬1´ú±íÊÇ¡£
-    unsigned char vMaxSock1;    //ÎïÆ·µÈ¼¶ÔÚ1-23Ö®¼äÊ±µÄ×î´ó¿×Êı¡£
-    unsigned char vMaxSock25;   //ÎïÆ·µÈ¼¶ÔÚ25-39Ö®¼äÊ±µÄ×î´ó¿×Êı¡£
+    unsigned char vGem; //æ˜¯å¦æ˜¯å®çŸ³ã€‚0ä»£è¡¨ä¸æ˜¯ï¼Œ1ä»£è¡¨æ˜¯ã€‚
+    unsigned char vBeltable;    //æ˜¯å¦èƒ½æ”¾å…¥è…°å¸¦ç©ºé—´ä¸­ã€‚0ä»£è¡¨ä¸æ˜¯ï¼Œ1ä»£è¡¨æ˜¯ã€‚
+    unsigned char vMaxSock1;    //ç‰©å“ç­‰çº§åœ¨1-23ä¹‹é—´æ—¶çš„æœ€å¤§å­”æ•°ã€‚
+    unsigned char vMaxSock25;   //ç‰©å“ç­‰çº§åœ¨25-39ä¹‹é—´æ—¶çš„æœ€å¤§å­”æ•°ã€‚
 
-    unsigned char vMaxSock40;   //ÎïÆ·µÈ¼¶´óÓÚ40¼¶Ê±µÄ×î´ó¿×Êı¡£
-    unsigned char vTreasureClass;   //²Æ±¦ÀàĞÍ£¨TC£©¡£ÊÇ·ñÄÜµ¥¶À×÷ÎªÒ»¸ö²Æ±¦ÀàĞÍ£¨TC£©£¬Êµ¼ÊÉÏÖ»ÓĞ5ÖÖ¿ÉÒÔ¡£ÎäÆ÷¡¢½üÕ½ÎäÆ÷¡¢×°¼×¡¢¹­¡¢ÑÇÂíÑ·¹­¡£
-    unsigned char vRarity;  //Ï¡ÓĞ¶È¡£ÔÚÍ¬Ò»TCÖĞ³öÏÖµÄ¸ÅÂÊ£¬ÖµÔ½´óµôÂäµÄ¸ÅÂÊÔ½´ó¡£Çë²Î¿¼ÎïÆ·µôÂäÔ­Àí¡£
-    unsigned char vStaffMods;   //ÕÈÉÏÃæ×Ô´øµÄ¼Óµ¥Ò»¼¼ÄÜÊôĞÔ¡£±ÈÈç·¨Ê¦µÄÕÈ»á¼Ó·¨Ê¦µÄ¼¼ÄÜ£¬¾ÍÊÇÒòÎªÕâÁĞÓĞsorÕâ¸öÖµ¡£¹ØÁªplayerclass.txt
+    unsigned char vMaxSock40;   //ç‰©å“ç­‰çº§å¤§äº40çº§æ—¶çš„æœ€å¤§å­”æ•°ã€‚
+    unsigned char vTreasureClass;   //è´¢å®ç±»å‹ï¼ˆTCï¼‰ã€‚æ˜¯å¦èƒ½å•ç‹¬ä½œä¸ºä¸€ä¸ªè´¢å®ç±»å‹ï¼ˆTCï¼‰ï¼Œå®é™…ä¸Šåªæœ‰5ç§å¯ä»¥ã€‚æ­¦å™¨ã€è¿‘æˆ˜æ­¦å™¨ã€è£…ç”²ã€å¼“ã€äºšé©¬é€Šå¼“ã€‚
+    unsigned char vRarity;  //ç¨€æœ‰åº¦ã€‚åœ¨åŒä¸€TCä¸­å‡ºç°çš„æ¦‚ç‡ï¼Œå€¼è¶Šå¤§æ‰è½çš„æ¦‚ç‡è¶Šå¤§ã€‚è¯·å‚è€ƒç‰©å“æ‰è½åŸç†ã€‚
+    unsigned char vStaffMods;   //æ–ä¸Šé¢è‡ªå¸¦çš„åŠ å•ä¸€æŠ€èƒ½å±æ€§ã€‚æ¯”å¦‚æ³•å¸ˆçš„æ–ä¼šåŠ æ³•å¸ˆçš„æŠ€èƒ½ï¼Œå°±æ˜¯å› ä¸ºè¿™åˆ—æœ‰sorè¿™ä¸ªå€¼ã€‚å…³è”playerclass.txt
 
-    unsigned char vCostFormula; //ÎïÆ·¼Û¸ñ¼ÆËã·½·¨£¨ÆäÊµÎÒ²»Ì«Ã÷°×ÕâÁĞµÄº¬Òå£©¡£
-    unsigned char vClass;   //Ö°ÒµÏŞÖÆ¡£Èç·¨ÇòÀà´ËÁĞµÄÖµÎªsor£¬±íÊ¾Ö»ÓĞ·¨Ê¦ÄÜÓÃ·¨Çò¡£¹ØÁªplayerclass.txt
-    unsigned char vStorePage;   //´ËÀà±ğÏÂ¾ßÌåÎïÆ·µÄĞÅÏ¢´æ´¢ÔÚÄÄ¸öÎÄ¼şÀï£¬»òÕßËµ´ËÀà±ğÊôÓÚÄÄ¸ö´óÀà¡£Ö»ÓĞ3¸ö´óÀà£¬·À¾ßarmo£¬ÎäÆ÷weap£¬ÔÓÎïmisc¡£
-    unsigned char vVarInvGfx;   //ÔÚÎïÆ·À¸ÖĞ¿ÉÄÜ³öÏÖµÄÍâ¹ÛÖÖÀà¡£Èç½äÖ¸Àà´ËÁĞÖµÎª5£¬¼´½äÖ¸¹²ÓĞ5ÖÖÍâ¹Û¡£
+    unsigned char vCostFormula; //ç‰©å“ä»·æ ¼è®¡ç®—æ–¹æ³•ï¼ˆå…¶å®æˆ‘ä¸å¤ªæ˜ç™½è¿™åˆ—çš„å«ä¹‰ï¼‰ã€‚
+    unsigned char vClass;   //èŒä¸šé™åˆ¶ã€‚å¦‚æ³•çƒç±»æ­¤åˆ—çš„å€¼ä¸ºsorï¼Œè¡¨ç¤ºåªæœ‰æ³•å¸ˆèƒ½ç”¨æ³•çƒã€‚å…³è”playerclass.txt
+    unsigned char vStorePage;   //æ­¤ç±»åˆ«ä¸‹å…·ä½“ç‰©å“çš„ä¿¡æ¯å­˜å‚¨åœ¨å“ªä¸ªæ–‡ä»¶é‡Œï¼Œæˆ–è€…è¯´æ­¤ç±»åˆ«å±äºå“ªä¸ªå¤§ç±»ã€‚åªæœ‰3ä¸ªå¤§ç±»ï¼Œé˜²å…·armoï¼Œæ­¦å™¨weapï¼Œæ‚ç‰©miscã€‚
+    unsigned char vVarInvGfx;   //åœ¨ç‰©å“æ ä¸­å¯èƒ½å‡ºç°çš„å¤–è§‚ç§ç±»ã€‚å¦‚æˆ’æŒ‡ç±»æ­¤åˆ—å€¼ä¸º5ï¼Œå³æˆ’æŒ‡å…±æœ‰5ç§å¤–è§‚ã€‚
 
-    unsigned char vInvGfx1[32];   //Íâ¹ÛÍ¼Æ¬Ö¸Õë¡£
-    unsigned char vInvGfx2[32];   //Íâ¹ÛÍ¼Æ¬Ö¸Õë¡£
-    unsigned char vInvGfx3[32];   //Íâ¹ÛÍ¼Æ¬Ö¸Õë¡£
-    unsigned char vInvGfx4[32];   //Íâ¹ÛÍ¼Æ¬Ö¸Õë¡£
-    unsigned char vInvGfx5[32];   //Íâ¹ÛÍ¼Æ¬Ö¸Õë¡£
-    unsigned char vInvGfx6[32];   //Íâ¹ÛÍ¼Æ¬Ö¸Õë¡£
+    unsigned char vInvGfx1[32];   //å¤–è§‚å›¾ç‰‡æŒ‡é’ˆã€‚
+    unsigned char vInvGfx2[32];   //å¤–è§‚å›¾ç‰‡æŒ‡é’ˆã€‚
+    unsigned char vInvGfx3[32];   //å¤–è§‚å›¾ç‰‡æŒ‡é’ˆã€‚
+    unsigned char vInvGfx4[32];   //å¤–è§‚å›¾ç‰‡æŒ‡é’ˆã€‚
+    unsigned char vInvGfx5[32];   //å¤–è§‚å›¾ç‰‡æŒ‡é’ˆã€‚
+    unsigned char vInvGfx6[32];   //å¤–è§‚å›¾ç‰‡æŒ‡é’ˆã€‚
 } ST_LINE_INFO;
 
 typedef struct

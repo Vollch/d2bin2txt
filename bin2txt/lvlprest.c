@@ -90,76 +90,76 @@ Credits:
 */
 
 /*
-�ļ���������
-Lvl��level������������ָ��ͼ��
-Prest��preset��Ԥ�衣
-���ļ����������е�ͼ��Ԥ����Ϣ��
+文件名解析：
+Lvl：level，级别，在这里指地图。
+Prest：preset，预设。
+本文件描述了所有地图的预设信息。
 
 
-�ظ�
+回复
 
-    2¥
+    2楼
     2011-09-28 23:55
 
-    �ٱ� |
+    举报 |
 
     zqtjingzi
-    С����
+    小吧主
     12
 
-ÿ�еĺ������£�
+每列的含义如下：
 
 
-�ظ�
+回复
 
-    3¥
+    3楼
     2011-09-28 23:55
 
-    �ٱ� |
+    举报 |
 
     zqtjingzi
-    С����
+    小吧主
     12
 
-Name����ͼ����������ע�͡�
+Name：地图名，仅用作注释。
 
-Def���ڱ��ļ��е�λ�á���0��ʼ������������
+Def：在本文件中的位置。从0开始的连续整数。
 
-LevelId����ͼ��š���Levels.txt������Ϊ0�ı�ʾ����Ԥ���ͼ��
+LevelId：地图编号。与Levels.txt关联。为0的表示不是预设地图。
 
-Populate���˵�ͼ���Ƿ��й������NPC����
+Populate：此地图中是否有怪物（包括NPC）。
 
-Logicals��ǽ���Ƿ��ͨ����
+Logicals：墙壁是否可通过。
 
-Outdoors���˵�ͼ�Ƿ��ڻ��⡣
+Outdoors：此地图是否在户外。
 
-Animate���˵�ͼ�Ƿ��ж�����
+Animate：此地图是否有动画。
 
-KillEdge���˵�ͼ�����·���ı߽��Ƿ�ɾ����
+KillEdge：此地图在右下方向的边界是否被删除。
 
-FillBlanks����ͼ�հ״��Ƿ�ɵ��
+FillBlanks：地图空白处是否可到达。
 
-SizeX����ͼ�ĺ����ꡣ
+SizeX：地图的横坐标。
 
-SizeY����ͼ�������ꡣ
+SizeY：地图的纵坐标。
 
-Automap���Ƿ��Զ����ɵ�ͼ����AutoMap.txt������
+Automap：是否自动生成地图，与AutoMap.txt关联。
 
-Scan����ͼ�Ƿ�ɾ�����
+Scan：地图是否可卷曲。
 
-Pops����֪��ʲô���塣
+Pops：不知道什么含义。
 
-PopPad����֪��ʲô���塣
+PopPad：不知道什么含义。
 
-Files���˵�ͼ�İ汾����
+Files：此地图的版本数。
 
-File1-6���˵�ͼ�����汾��Ӧ���ļ���
+File1-6：此地图各个版本对应的文件。
 
-Dt1mask��ָ��LvlTypes.txt�����֡�
+Dt1mask：指向LvlTypes.txt的数字。
 
-Beta�����ò���������ע�͡�
+Beta：无用参数，用作注释。
 
-Expansion���Ƿ�������Ƭ���С�
+Expansion：是否是资料片所有。
 */
 
 typedef struct

@@ -230,198 +230,198 @@ If (alvl>99) then {alvl=99}
 */
 
 /*
-name: ÎïÆ·µÄÖ¸µ¼Ãû×Ö£¬×¢ÊÍÓÃ£»
+name: ç‰©å“çš„æŒ‡å¯¼åå­—ï¼Œæ³¨é‡Šç”¨ï¼›
 
-type:itemtypes.txtÀïµÄ´úÂë£»
+type:itemtypes.txté‡Œçš„ä»£ç ï¼›
 
-type2: itemtypes.txtÀïµÄ´úÂë£»
+type2: itemtypes.txté‡Œçš„ä»£ç ï¼›
 
-code: ÎïÆ·´úÂë£¬²»ÄÜÖØ¸´£»3¸ö×ÖÄ¸»òÊý×Ö£»
+code: ç‰©å“ä»£ç ï¼Œä¸èƒ½é‡å¤ï¼›3ä¸ªå­—æ¯æˆ–æ•°å­—ï¼›
 
-alternategfx: ×°±¸ÉÏºó£¬½ÇÉ«µÄ¶¯»­¡£±ÈÈç£¬¸èµÂ¶ÜÅÆÕâÒ»ÁÐÊÇKIT£¬Ò°ÂùÈË£¨BA£©×°±¸ÁËÕâÖÖ¶ÜÅÆ
-£¨SH£©µÄÆÕÍ¨¹¥»÷¶¯»­£¨A1£©¾ÍÊÇBASHKITA11HS.DCC¡£×îºó3¸ö×ÖÄ¸¼ûWCLASSÁÐ£»
+alternategfx: è£…å¤‡ä¸ŠåŽï¼Œè§’è‰²çš„åŠ¨ç”»ã€‚æ¯”å¦‚ï¼Œæ­Œå¾·ç›¾ç‰Œè¿™ä¸€åˆ—æ˜¯KITï¼Œé‡Žè›®äººï¼ˆBAï¼‰è£…å¤‡äº†è¿™ç§ç›¾ç‰Œ
+ï¼ˆSHï¼‰çš„æ™®é€šæ”»å‡»åŠ¨ç”»ï¼ˆA1ï¼‰å°±æ˜¯BASHKITA11HS.DCCã€‚æœ€åŽ3ä¸ªå­—æ¯è§WCLASSåˆ—ï¼›
 
-namestr: ×Ö·û´®¼üÃû£»
+namestr: å­—ç¬¦ä¸²é”®åï¼›
 
-version: °æ±¾£»
+version: ç‰ˆæœ¬ï¼›
 
-compactsave: ´æµµÊÇ·ñÑ¹Ëõ£¨Èç¹ûÕâ¸öÎïÆ·µÄÊôÐÔÖ»ÓÐÒ»ÖÖ£¬¾Í²»ÓÃ¼ÇÂ¼ËüµÄÊôÐÔÁË£©£»
+compactsave: å­˜æ¡£æ˜¯å¦åŽ‹ç¼©ï¼ˆå¦‚æžœè¿™ä¸ªç‰©å“çš„å±žæ€§åªæœ‰ä¸€ç§ï¼Œå°±ä¸ç”¨è®°å½•å®ƒçš„å±žæ€§äº†ï¼‰ï¼›
 
-rarity: 0 = ´Ó×°±¸¼ÜÖÐÌÞ³ý´ËÀàÎïÆ·µÄÈÎºÎÐÅÏ¢£»1»òÕß¸ü´óµÄÊý×Ö¿ÉÒÔµ÷Õû´ËÀàÎïÆ·µÄµô±¦ÂÊ¡£ËµÃ÷£ºÄãÖÁÉÙÓ¦¸ÃÓµÓÐ1¸öÒÔÉÏµÄ´ËÏîÊýÖµ²»ÎªÁãµÄ×°±¸£¬·ñÔòÓÎÏ·¾Í»á³ö´í¶øÎÞ·¨Õý³£ÔËÐÐ£»
+rarity: 0 = ä»Žè£…å¤‡æž¶ä¸­å‰”é™¤æ­¤ç±»ç‰©å“çš„ä»»ä½•ä¿¡æ¯ï¼›1æˆ–è€…æ›´å¤§çš„æ•°å­—å¯ä»¥è°ƒæ•´æ­¤ç±»ç‰©å“çš„æŽ‰å®çŽ‡ã€‚è¯´æ˜Žï¼šä½ è‡³å°‘åº”è¯¥æ‹¥æœ‰1ä¸ªä»¥ä¸Šçš„æ­¤é¡¹æ•°å€¼ä¸ä¸ºé›¶çš„è£…å¤‡ï¼Œå¦åˆ™æ¸¸æˆå°±ä¼šå‡ºé”™è€Œæ— æ³•æ­£å¸¸è¿è¡Œï¼›
 
-spawnable: ÊÇ·ñÄÜ¹»±»NPC³öÊÛ¡£ËµÃ÷£ºÕâÀïÊÇÄÜ·ñ±»³öÊÛµÄ¹Ø¼üÉè¶¨£¬Ëü¸ßÓÚÆäËüÎ»ÖÃ£¨Ïà¹ØTXTÎÄ¼þ£©µÄÉè¶¨¡£1=ÄÜ¹»±»NPC³öÊÛ£¬0=ÎÞ·¨³öÊÛ£»
+spawnable: æ˜¯å¦èƒ½å¤Ÿè¢«NPCå‡ºå”®ã€‚è¯´æ˜Žï¼šè¿™é‡Œæ˜¯èƒ½å¦è¢«å‡ºå”®çš„å…³é”®è®¾å®šï¼Œå®ƒé«˜äºŽå…¶å®ƒä½ç½®ï¼ˆç›¸å…³TXTæ–‡ä»¶ï¼‰çš„è®¾å®šã€‚1=èƒ½å¤Ÿè¢«NPCå‡ºå”®ï¼Œ0=æ— æ³•å‡ºå”®ï¼›
 
-mindam: µ¥ÊÖ×îÐ¡ÉËº¦£»
+mindam: å•æ‰‹æœ€å°ä¼¤å®³ï¼›
 
-maxdam: µ¥ÊÖ×î´óÉËº¦£»
+maxdam: å•æ‰‹æœ€å¤§ä¼¤å®³ï¼›
 
-1or2handed: ¾ö¶¨Ò°ÂùÈËÄÜ·ñµ¥ÊÖÄÃÆðÒ»¼þË«ÊÖÎäÆ÷£»
+1or2handed: å†³å®šé‡Žè›®äººèƒ½å¦å•æ‰‹æ‹¿èµ·ä¸€ä»¶åŒæ‰‹æ­¦å™¨ï¼›
 
-2handed: ÊÇ·ñË«ÊÖÎäÆ÷£»
+2handed: æ˜¯å¦åŒæ‰‹æ­¦å™¨ï¼›
 
-2handmindam: Ë«ÊÖ×îÐ¡ÉËº¦£»
+2handmindam: åŒæ‰‹æœ€å°ä¼¤å®³ï¼›
 
-2handmaxdam: Ë«ÊÖ×î´óÉËº¦£»
+2handmaxdam: åŒæ‰‹æœ€å¤§ä¼¤å®³ï¼›
 
-minmisdam: Ô¶³Ì×îÐ¡ÉËº¦£»
+minmisdam: è¿œç¨‹æœ€å°ä¼¤å®³ï¼›
 
-maxmisdam: Ô¶³Ì×î´óÉËº¦£»
+maxmisdam: è¿œç¨‹æœ€å¤§ä¼¤å®³ï¼›
 
-rangeadder: ½üÕ½ÎäÆ÷µÄ¹¥»÷·¶Î§£¨¿ÕÊÖÊÇ1£©£»
+rangeadder: è¿‘æˆ˜æ­¦å™¨çš„æ”»å‡»èŒƒå›´ï¼ˆç©ºæ‰‹æ˜¯1ï¼‰ï¼›
 
-speed: Ó°Ïì½ÇÉ«±¼ÅÜËÙ¶È£¬Ô½Ð¡£¬ÅÜµÃÔ½¿ì£»
+speed: å½±å“è§’è‰²å¥”è·‘é€Ÿåº¦ï¼Œè¶Šå°ï¼Œè·‘å¾—è¶Šå¿«ï¼›
 
-StrBonus: ¼ÆËãÎïÀí¹¥»÷Á¦Ê±£¬Ã¿100µãÁ¦Á¿¼ÓStrBonus%³ËÒÔÎäÆ÷µÄ¹¥»÷Á¦£»
+StrBonus: è®¡ç®—ç‰©ç†æ”»å‡»åŠ›æ—¶ï¼Œæ¯100ç‚¹åŠ›é‡åŠ StrBonus%ä¹˜ä»¥æ­¦å™¨çš„æ”»å‡»åŠ›ï¼›
 
-DexBonus: ¼ÆËãÎïÀí¹¥»÷Á¦Ê±£¬Ã¿100µãÃô½Ý¼ÓDexBonus%³ËÒÔÎäÆ÷µÄ¹¥»÷Á¦£»
+DexBonus: è®¡ç®—ç‰©ç†æ”»å‡»åŠ›æ—¶ï¼Œæ¯100ç‚¹æ•æ·åŠ DexBonus%ä¹˜ä»¥æ­¦å™¨çš„æ”»å‡»åŠ›ï¼›
 
-reqstr: Á¦Á¿ÐèÒª£¨0-65535£¬³¬¹ý65535½«¼õÈ¥Ò»´Î65535£©£»
+reqstr: åŠ›é‡éœ€è¦ï¼ˆ0-65535ï¼Œè¶…è¿‡65535å°†å‡åŽ»ä¸€æ¬¡65535ï¼‰ï¼›
 
-reqdex: Ãô½ÝÐèÒª£¨0-65535£¬³¬¹ý65535½«¼õÈ¥Ò»´Î65535£©£»
+reqdex: æ•æ·éœ€è¦ï¼ˆ0-65535ï¼Œè¶…è¿‡65535å°†å‡åŽ»ä¸€æ¬¡65535ï¼‰ï¼›
 
-durability: ÄÍ¾Ã£¨0-255£¬³¬³öµÄ²¿·ÖÍ¬ÉÏ£©£»
+durability: è€ä¹…ï¼ˆ0-255ï¼Œè¶…å‡ºçš„éƒ¨åˆ†åŒä¸Šï¼‰ï¼›
 
-nodurability: Îª1Ê±£¬²»»áËð»µ£»
+nodurability: ä¸º1æ—¶ï¼Œä¸ä¼šæŸåï¼›
 
-level: µÈ¼¶£»
+level: ç­‰çº§ï¼›
 
-levelreq: µÈ¼¶ÐèÒª£»
+levelreq: ç­‰çº§éœ€è¦ï¼›
 
-cost:¼Û¸ñ£»
+cost:ä»·æ ¼ï¼›
 
-gamble cost:ÎÞÓÃ²ÎÊý£¬½ö×÷Îª²Î¿¼£»
+gamble cost:æ— ç”¨å‚æ•°ï¼Œä»…ä½œä¸ºå‚è€ƒï¼›
 
-magic lvl: ÎïÆ·Ä§·¨ÊôÐÔÐèÒªµÄ¼¶±ð£»
+magic lvl: ç‰©å“é­”æ³•å±žæ€§éœ€è¦çš„çº§åˆ«ï¼›
 
-auto prefix: ³É×éµÄÄ§·¨Ç°ºó×º£¬Í¬automagic.txtÎÄ¼þ¹ØÁª£»
+auto prefix: æˆç»„çš„é­”æ³•å‰åŽç¼€ï¼ŒåŒautomagic.txtæ–‡ä»¶å…³è”ï¼›
 
-OpenBetaGfx: ÎÞÓÃ²ÎÊý£»
+OpenBetaGfx: æ— ç”¨å‚æ•°ï¼›
 
-normcode/ubercode/ultracode: ÎïÆ·¶ÔÓ¦µÄÆÕÍ¨£¬À©Õ¹£¬¾«»ªÎïÆ·´úÂë£¬ÔÚÉý/½µ¼¶Ê±Ê¹ÓÃ£»
+normcode/ubercode/ultracode: ç‰©å“å¯¹åº”çš„æ™®é€šï¼Œæ‰©å±•ï¼Œç²¾åŽç‰©å“ä»£ç ï¼Œåœ¨å‡/é™çº§æ—¶ä½¿ç”¨ï¼›
 
-wclass/2handedwclass: ¾ö¶¨¹¥»÷¶¯»­ËùÓÃDCCÎÄ¼þÃûµÄ×îºó3¸ö×ÖÄ¸£»
+wclass/2handedwclass: å†³å®šæ”»å‡»åŠ¨ç”»æ‰€ç”¨DCCæ–‡ä»¶åçš„æœ€åŽ3ä¸ªå­—æ¯ï¼›
 
-component: ½ÇÉ«Ê¹ÓÃ´ËÎïÆ·Ê±£¬²ÉÓÃÄÄÒ»²ã£¨Layer£©£»Í¬composit.txtÎÄ¼þ¹ØÁª£»
+component: è§’è‰²ä½¿ç”¨æ­¤ç‰©å“æ—¶ï¼Œé‡‡ç”¨å“ªä¸€å±‚ï¼ˆLayerï¼‰ï¼›åŒcomposit.txtæ–‡ä»¶å…³è”ï¼›
 
-hit class: µÐÈË±»»÷ÖÐÊ±µÄÉù¹âÐ§¹û£»
+hit class: æ•Œäººè¢«å‡»ä¸­æ—¶çš„å£°å…‰æ•ˆæžœï¼›
 
-invwidth: ¿í£»
+invwidth: å®½ï¼›
 
-invheight: ¸ß£»
+invheight: é«˜ï¼›
 
-stackable: ÊÇ·ñÎªÒ»¸öÕûÌå£¨±ÈÈçËµ¡°¹­¼ý¡±£©£»1=ÊÇ£¬0=²»ÊÇ£»
+stackable: æ˜¯å¦ä¸ºä¸€ä¸ªæ•´ä½“ï¼ˆæ¯”å¦‚è¯´â€œå¼“ç®­â€ï¼‰ï¼›1=æ˜¯ï¼Œ0=ä¸æ˜¯ï¼›
 
-minstack:×÷ÎªÕûÌåµÄ×îÐ¡ÊýÄ¿£»
+minstack:ä½œä¸ºæ•´ä½“çš„æœ€å°æ•°ç›®ï¼›
 
-maxstack: ×÷ÎªÕûÌåµÄ×î´óÊýÄ¿£»
+maxstack: ä½œä¸ºæ•´ä½“çš„æœ€å¤§æ•°ç›®ï¼›
 
-spawnstack: Ëæ»úÉú³ÉÊ±µÄÊýÄ¿£»
+spawnstack: éšæœºç”Ÿæˆæ—¶çš„æ•°ç›®ï¼›
 
-flippyfile: µô³öÊ±µÄ¶¯»­£»
+flippyfile: æŽ‰å‡ºæ—¶çš„åŠ¨ç”»ï¼›
 
-invfile: ÔÚÎïÆ·À¸ÀïËùÓÃµÄÍ¼Ïó£»
+invfile: åœ¨ç‰©å“æ é‡Œæ‰€ç”¨çš„å›¾è±¡ï¼›
 
-uniqueinvfile: °µ½ðÎïÆ·ÔÚÎïÆ·À¸ÀïËùÓÃµÄÍ¼Ïó£»
+uniqueinvfile: æš—é‡‘ç‰©å“åœ¨ç‰©å“æ é‡Œæ‰€ç”¨çš„å›¾è±¡ï¼›
 
-setinvfile: Ì××°ÎïÆ·ÔÚÎïÆ·À¸ÀïËùÓÃµÄÍ¼Ïó£»
+setinvfile: å¥—è£…ç‰©å“åœ¨ç‰©å“æ é‡Œæ‰€ç”¨çš„å›¾è±¡ï¼›
 
-hasinv: ÄÜ·ñ´ò¿×£»
+hasinv: èƒ½å¦æ‰“å­”ï¼›
 
-gemsockets: ¿×µÄ×î´óÊýÄ¿£»
+gemsockets: å­”çš„æœ€å¤§æ•°ç›®ï¼›
 
-gemapplytype: ±¦Ê¯µÄÐ§¹û£º0ÎäÆ÷£¬1¼×ëÐºÍÃ±×Ó£¬2¶ÜÅÆ£»
+gemapplytype: å®çŸ³çš„æ•ˆæžœï¼š0æ­¦å™¨ï¼Œ1ç”²èƒ„å’Œå¸½å­ï¼Œ2ç›¾ç‰Œï¼›
 
-special: ÎÞÓÃ£»
+special: æ— ç”¨ï¼›
 
-useable: ÄÜ·ñÓÒ¼üÊ¹ÓÃ£»
+useable: èƒ½å¦å³é”®ä½¿ç”¨ï¼›
 
-dropsound: µôÏÂÊ±µÄÒôÐ§£»
+dropsound: æŽ‰ä¸‹æ—¶çš„éŸ³æ•ˆï¼›
 
-dropsfxframe: ÒôÐ§µÄÖ¡Êý£»
+dropsfxframe: éŸ³æ•ˆçš„å¸§æ•°ï¼›
 
-usesound: Ê¹ÓÃÊ±µÄÒôÐ§£»
+usesound: ä½¿ç”¨æ—¶çš„éŸ³æ•ˆï¼›
 
-unique: ÊÇ·ñ×ÜÊÇ°µ½ð¡£ÈÎÎñÎïÆ·×¨ÓÃ£»
+unique: æ˜¯å¦æ€»æ˜¯æš—é‡‘ã€‚ä»»åŠ¡ç‰©å“ä¸“ç”¨ï¼›
 
-transparent: Î´Öª£»
+transparent: æœªçŸ¥ï¼›
 
-transtbl: Î´Öª£»
+transtbl: æœªçŸ¥ï¼›
 
-quivered: ÊÇ·ñµ¯Ò©£»
+quivered: æ˜¯å¦å¼¹è¯ï¼›
 
-lightradius: ÎÞÓÃ£»
+lightradius: æ— ç”¨ï¼›
 
-belt:Í¬belts.txtÖÐµÄÊý×ÖID£¨¶¨ÒåÒ©Ë®µÄ·ÅÖÃÊýÁ¿£©£»
+belt:åŒbelts.txtä¸­çš„æ•°å­—IDï¼ˆå®šä¹‰è¯æ°´çš„æ”¾ç½®æ•°é‡ï¼‰ï¼›
 
-quest: ÈÎÎñID£¬ÈÎÎñÎïÆ·ÓÃ£»
+quest: ä»»åŠ¡IDï¼Œä»»åŠ¡ç‰©å“ç”¨ï¼›
 
-questdiffcheck: ÊÇ·ñÈÎÎñÎïÆ·£»
+questdiffcheck: æ˜¯å¦ä»»åŠ¡ç‰©å“ï¼›
 
-missiletype: Í¶ÖÀÊ±ÓÃµÄÍ¶ÉäÎï(missiles.txtÀïµÄID) £»
+missiletype: æŠ•æŽ·æ—¶ç”¨çš„æŠ•å°„ç‰©(missiles.txté‡Œçš„ID) ï¼›
 
-durwarning: Í¶ÖÀÊ±£¬Ê£ÏÂ¶àÉÙÊ±¾¯¸æ£»
+durwarning: æŠ•æŽ·æ—¶ï¼Œå‰©ä¸‹å¤šå°‘æ—¶è­¦å‘Šï¼›
 
-qntwarning: Í¶ÖÀÊ±£¬Ê£ÏÂ¶àÉÙÊ±¾¯¸æ£»
+qntwarning: æŠ•æŽ·æ—¶ï¼Œå‰©ä¸‹å¤šå°‘æ—¶è­¦å‘Šï¼›
 
-gemoffset: Î´Öª£»
+gemoffset: æœªçŸ¥ï¼›
 
-bitfield1: 1£¬Æ¤¸ïÖÆ£»3£¬½ðÊôÖÆ£»
+bitfield1: 1ï¼Œçš®é©åˆ¶ï¼›3ï¼Œé‡‘å±žåˆ¶ï¼›
 
-VendorsMin: NPC³öÊÛÕâ¼þÎïÆ·Ê±µÄ×îÐ¡ÊýÁ¿£»
+VendorsMin: NPCå‡ºå”®è¿™ä»¶ç‰©å“æ—¶çš„æœ€å°æ•°é‡ï¼›
 
-VendorsMax: NPC³öÊÛÕâ¼þÎïÆ·Ê±µÄ×î´óÊýÁ¿£»
+VendorsMax: NPCå‡ºå”®è¿™ä»¶ç‰©å“æ—¶çš„æœ€å¤§æ•°é‡ï¼›
 
-VendorsMagicMin: NPC³öÊÛÕâ¼þÎïÆ·Ê±ÆäËùÄÜ°üº¬µÄÄ§·¨ÊôÐÔµÄ×îÉÙÏî£»
+VendorsMagicMin: NPCå‡ºå”®è¿™ä»¶ç‰©å“æ—¶å…¶æ‰€èƒ½åŒ…å«çš„é­”æ³•å±žæ€§çš„æœ€å°‘é¡¹ï¼›
 
-VendorsMagicMax: NPC³öÊÛÕâ¼þÎïÆ·Ê±ÆäËùÄÜ°üº¬µÄÄ§·¨ÊôÐÔµÄ×î¶àÏî£»
+VendorsMagicMax: NPCå‡ºå”®è¿™ä»¶ç‰©å“æ—¶å…¶æ‰€èƒ½åŒ…å«çš„é­”æ³•å±žæ€§çš„æœ€å¤šé¡¹ï¼›
 
-vendorsMagicLvl: Ä§·¨ÀàÎïÆ·ÔÚ³öÊÛÊ±ËùÄÜ°üº¬µÄ×î´óµÄÄ§·¨Ç°ºó×º¼¶±ð¡£ËµÃ÷£ºÍ¬MagicPrefix.txt¡¢MagicSuffix¡¢AutoMagicÈý¸öÎÄ¼þ¹ØÁª£»
+vendorsMagicLvl: é­”æ³•ç±»ç‰©å“åœ¨å‡ºå”®æ—¶æ‰€èƒ½åŒ…å«çš„æœ€å¤§çš„é­”æ³•å‰åŽç¼€çº§åˆ«ã€‚è¯´æ˜Žï¼šåŒMagicPrefix.txtã€MagicSuffixã€AutoMagicä¸‰ä¸ªæ–‡ä»¶å…³è”ï¼›
 
-Source Art: ÎÞÓÃ²ÎÊý£»
+Source Art: æ— ç”¨å‚æ•°ï¼›
 
-Game Art: ÎÞÓÃ²ÎÊý£»
+Game Art: æ— ç”¨å‚æ•°ï¼›
 
-Transform and invTrans: Ë÷Òý£¬¸æËß³ÌÐòÊ¹ÓÃÄÄÒ»¸öÕûÌå¶¯×÷£»
+Transform and invTrans: ç´¢å¼•ï¼Œå‘Šè¯‰ç¨‹åºä½¿ç”¨å“ªä¸€ä¸ªæ•´ä½“åŠ¨ä½œï¼›
 
-SkipName: ÊÇ·ñÌø¹ý×î³õµÄÃû³Æ£¬±ÈÈçËµ£ºviper amulet£»
+SkipName: æ˜¯å¦è·³è¿‡æœ€åˆçš„åç§°ï¼Œæ¯”å¦‚è¯´ï¼šviper amuletï¼›
 
-NightmareUpgrade: ÔÚ¡°¶ñÃÎ¡±ÄÑ¶ÈÏÂ£¬´ËÖÖÎïÆ·µÄ³öÊÛ´úÂë£¨xxx=ÎÞ±ä»¯£©£»
+NightmareUpgrade: åœ¨â€œæ¶æ¢¦â€éš¾åº¦ä¸‹ï¼Œæ­¤ç§ç‰©å“çš„å‡ºå”®ä»£ç ï¼ˆxxx=æ— å˜åŒ–ï¼‰ï¼›
 
-HellUpgrade: ÔÚ¡°µØÓü¡±ÄÑ¶ÈÏÂ£¬´ËÖÖÎïÆ·µÄ³öÊÛ´úÂë£¨xxx=ÎÞ±ä»¯£©£»
+HellUpgrade: åœ¨â€œåœ°ç‹±â€éš¾åº¦ä¸‹ï¼Œæ­¤ç§ç‰©å“çš„å‡ºå”®ä»£ç ï¼ˆxxx=æ— å˜åŒ–ï¼‰ï¼›
 
-nameable: ÊÇ·ñÄÜ¹»±»ÖØÃüÃû£¨ÈçACT5ÖÐµÄQ3£©£»1=ÔÊÐí£»0=²»ÔÊÐí£»
+nameable: æ˜¯å¦èƒ½å¤Ÿè¢«é‡å‘½åï¼ˆå¦‚ACT5ä¸­çš„Q3ï¼‰ï¼›1=å…è®¸ï¼›0=ä¸å…è®¸ï¼›
 
-PermStoreItem: ÎïÆ·ÊÇ·ñ×ÜÓÐ³öÊÛ¡£
+PermStoreItem: ç‰©å“æ˜¯å¦æ€»æœ‰å‡ºå”®ã€‚
 */
 
 /*
-mindam£ºµ¥ÊÖ×îÐ¡ÉËº¦¡£
+mindamï¼šå•æ‰‹æœ€å°ä¼¤å®³ã€‚
 
-maxdam£ºµ¥ÊÖ×î´óÉËº¦¡£
+maxdamï¼šå•æ‰‹æœ€å¤§ä¼¤å®³ã€‚
 
-1or2handed£º¶ÔÓÚÒ°ÂùÈËÀ´ËµÄÜ·ñÓÃµ¥ÊÖÄÃÆðÕâ¼þË«ÊÖÎäÆ÷¡£0±íÊ¾²»ÄÜ£¬1±íÊ¾ÄÜ¡£
+1or2handedï¼šå¯¹äºŽé‡Žè›®äººæ¥è¯´èƒ½å¦ç”¨å•æ‰‹æ‹¿èµ·è¿™ä»¶åŒæ‰‹æ­¦å™¨ã€‚0è¡¨ç¤ºä¸èƒ½ï¼Œ1è¡¨ç¤ºèƒ½ã€‚
 
-2handed£ºÊÇ·ñÊÇË«ÊÖÎäÆ÷¡£0±íÊ¾²»ÊÇ£¬1±íÊ¾ÊÇ¡£
+2handedï¼šæ˜¯å¦æ˜¯åŒæ‰‹æ­¦å™¨ã€‚0è¡¨ç¤ºä¸æ˜¯ï¼Œ1è¡¨ç¤ºæ˜¯ã€‚
 
-2handmindam£ºË«ÊÖ×îÐ¡ÉËº¦¡£
+2handmindamï¼šåŒæ‰‹æœ€å°ä¼¤å®³ã€‚
 
-2handmaxdam£ºË«ÊÖ×î´óÉËº¦¡£
+2handmaxdamï¼šåŒæ‰‹æœ€å¤§ä¼¤å®³ã€‚
 
-minmisdam£ºÔ¶³Ì¹¥»÷Ê±µÄ×îÐ¡ÉËº¦¡£
+minmisdamï¼šè¿œç¨‹æ”»å‡»æ—¶çš„æœ€å°ä¼¤å®³ã€‚
 
-maxmisdam£ºÔ¶³Ì¹¥»÷Ê±µÄ×î´óÉËº¦¡£
+maxmisdamï¼šè¿œç¨‹æ”»å‡»æ—¶çš„æœ€å¤§ä¼¤å®³ã€‚
 
-rangeadder£º½üÕ½ÎäÆ÷µÄ¹¥»÷·¶Î§£¨¿ÕÊÖÊÇ1£©£»
+rangeadderï¼šè¿‘æˆ˜æ­¦å™¨çš„æ”»å‡»èŒƒå›´ï¼ˆç©ºæ‰‹æ˜¯1ï¼‰ï¼›
 
-reqdex£º×°±¸ËùÐèÃô½Ý¡£
+reqdexï¼šè£…å¤‡æ‰€éœ€æ•æ·ã€‚
 
-wclass£ºµ¥ÊÖ¹¥»÷Ê±µÄ¶¯»­¡£ÓëWeaponClass.txtÎÄ¼þ¹ØÁª¡£
+wclassï¼šå•æ‰‹æ”»å‡»æ—¶çš„åŠ¨ç”»ã€‚ä¸ŽWeaponClass.txtæ–‡ä»¶å…³è”ã€‚
 
-2handedwclass£ºË«ÊÖ¹¥»÷Ê±µÄ¶¯»­¡£ÓëWeaponClass.txtÎÄ¼þ¹ØÁª¡£
+2handedwclassï¼šåŒæ‰‹æ”»å‡»æ—¶çš„åŠ¨ç”»ã€‚ä¸ŽWeaponClass.txtæ–‡ä»¶å…³è”ã€‚
 
-hitclass£º´ò»÷Àà±ð¡£
+hitclassï¼šæ‰“å‡»ç±»åˆ«ã€‚
 
-questDiffCheck£ºÈÎÎñÄÑ¶È¼ì²é¡£¼´ÆÕÍ¨µÄ¼ªµÃ±¦²»ÄÜÓÃÀ´Íê³ÉµØÓüµÄÈÎÎñ¡£
+questDiffCheckï¼šä»»åŠ¡éš¾åº¦æ£€æŸ¥ã€‚å³æ™®é€šçš„å‰å¾—å®ä¸èƒ½ç”¨æ¥å®Œæˆåœ°ç‹±çš„ä»»åŠ¡ã€‚
 
 */
 

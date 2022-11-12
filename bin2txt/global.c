@@ -112,11 +112,11 @@ static int TXTBUF_ReplaceSpecialChar(char *key, char *acTempKey)
 }
 
 /*
-ºÏ²¢×Ö¶ÎÄÚÈİ:
-1¡¢¶Ô±íÍ·µÄ×Ö¶ÎÃû½øĞĞ×ª»»£¬¹ØÁªµ½½á¹¹ÌåµÄ×Ö¶ÎÃû£¬¿Õ¸ñ·ûÔÚ×Ö¶Î±äÁ¿ÃûÖĞÓÃmyspÌæ´ú
-2¡¢Èç¹ûbinÎÄ¼şÀïÓĞ¶¨ÒåµÄ»°£¬¾ÍÓÃbinÀï±ßµÄÖµ
-3¡¢·ñÔòÓÃÄ£°åÀïµÄÄÚÈİ
-4¡¢Çå³ıÖµ×Ö¶ÎÄ©Î²µÄËùÓĞ¿Õ¸ñ
+åˆå¹¶å­—æ®µå†…å®¹:
+1ã€å¯¹è¡¨å¤´çš„å­—æ®µåè¿›è¡Œè½¬æ¢ï¼Œå…³è”åˆ°ç»“æ„ä½“çš„å­—æ®µåï¼Œç©ºæ ¼ç¬¦åœ¨å­—æ®µå˜é‡åä¸­ç”¨myspæ›¿ä»£
+2ã€å¦‚æœbinæ–‡ä»¶é‡Œæœ‰å®šä¹‰çš„è¯ï¼Œå°±ç”¨biné‡Œè¾¹çš„å€¼
+3ã€å¦åˆ™ç”¨æ¨¡æ¿é‡Œçš„å†…å®¹
+4ã€æ¸…é™¤å€¼å­—æ®µæœ«å°¾çš„æ‰€æœ‰ç©ºæ ¼
 */
 static char * TXTBUF_FILL(char *key, ST_VALUE_MAP *map, int count, char *start, char *from, 
     ST_CALLBACK *callback, void *pvLineInfo, int iLineNo, int iFieldNo)
@@ -125,7 +125,7 @@ static char * TXTBUF_FILL(char *key, ST_VALUE_MAP *map, int count, char *start, 
     static char acTempKey[1024] = {0};
     static char acTempValue[1024] = {0};
 
-    //1¡¢¶Ô±íÍ·µÄ×Ö¶ÎÃû½øĞĞ×ª»»£¬¹ØÁªµ½½á¹¹ÌåµÄ×Ö¶ÎÃû£¬¿Õ¸ñ·ûÔÚ×Ö¶Î±äÁ¿ÃûÖĞÓÃmyspÌæ´ú
+    //1ã€å¯¹è¡¨å¤´çš„å­—æ®µåè¿›è¡Œè½¬æ¢ï¼Œå…³è”åˆ°ç»“æ„ä½“çš„å­—æ®µåï¼Œç©ºæ ¼ç¬¦åœ¨å­—æ®µå˜é‡åä¸­ç”¨myspæ›¿ä»£
     TXTBUF_ReplaceSpecialChar(key, acTempKey);
 
     for ( i = 0; i < count; i++ )
@@ -135,7 +135,7 @@ static char * TXTBUF_FILL(char *key, ST_VALUE_MAP *map, int count, char *start, 
             continue;
         }
 
-        //2¡¢Èç¹ûbinÎÄ¼şÀïÓĞ¶¨ÒåµÄ»°£¬¾ÍÓÃbinÀï±ßµÄÖµ
+        //2ã€å¦‚æœbinæ–‡ä»¶é‡Œæœ‰å®šä¹‰çš„è¯ï¼Œå°±ç”¨biné‡Œè¾¹çš„å€¼
         if ( 0 < iFieldNo )
         {
             *start = '\t';
@@ -178,7 +178,7 @@ static char * TXTBUF_FILL(char *key, ST_VALUE_MAP *map, int count, char *start, 
                 callback->pfnBitProc(pvLineInfo, key, acTempValue);
             }
 
-            //4¡¢Çå³ıÖµ×Ö¶ÎÄ©Î²µÄËùÓĞ¿Õ¸ñ
+            //4ã€æ¸…é™¤å€¼å­—æ®µæœ«å°¾çš„æ‰€æœ‰ç©ºæ ¼
             if ( 0 != acTempValue[0] && !('0' == acTempValue[0] && 0 == acTempValue[1] && EN_VALUE_STRING != map[i].enValueType) )
             {
                 String_Trim(acTempValue);
@@ -188,7 +188,7 @@ static char * TXTBUF_FILL(char *key, ST_VALUE_MAP *map, int count, char *start, 
         }
         else
         {
-            //4¡¢Çå³ıÖµ×Ö¶ÎÄ©Î²µÄËùÓĞ¿Õ¸ñ
+            //4ã€æ¸…é™¤å€¼å­—æ®µæœ«å°¾çš„æ‰€æœ‰ç©ºæ ¼
             if ( 0 != acTempValue[0] )
             {
                 String_Trim(acTempValue);
@@ -200,7 +200,7 @@ static char * TXTBUF_FILL(char *key, ST_VALUE_MAP *map, int count, char *start, 
         break;
     }
 
-    //3¡¢·ñÔòÓÃÄ£°åÀïµÄÄÚÈİ
+    //3ã€å¦åˆ™ç”¨æ¨¡æ¿é‡Œçš„å†…å®¹
     if ( i >= count )
     {
         if ( 0 < iFieldNo )
@@ -226,10 +226,10 @@ static int process_line_x(char *pcHeader, char *pcLineEnd, char *pcLineStart, ch
     int result = 1;
     int i = 0;
 
-    //Öğ×Ö¶Î´¦Àí
+    //é€å­—æ®µå¤„ç†
     do
     {
-        //ÕÒµ½±íÍ·×Ö¶ÎÎ²£¬tab¼üºÍ»Ø³µ»»ĞĞ£¬ÏÈµ½Îª×¼
+        //æ‰¾åˆ°è¡¨å¤´å­—æ®µå°¾ï¼Œtabé”®å’Œå›è½¦æ¢è¡Œï¼Œå…ˆåˆ°ä¸ºå‡†
         pcAnchor = strchr(pcHeader, '\t');
         pcAnchorTemp = strchr(pcHeader, '\r');
         if ( pcAnchor && pcAnchorTemp )
@@ -260,7 +260,7 @@ static int process_line_x(char *pcHeader, char *pcLineEnd, char *pcLineStart, ch
             break;
         }
 
-        //ÕÒµ½ÄÚÈİĞĞµÄ×Ö¶ÎÎ²£¬tab¼üºÍ»Ø³µ»»ĞĞ£¬ÏÈµ½Îª×¼
+        //æ‰¾åˆ°å†…å®¹è¡Œçš„å­—æ®µå°¾ï¼Œtabé”®å’Œå›è½¦æ¢è¡Œï¼Œå…ˆåˆ°ä¸ºå‡†
         pcAnchor2 = strchr(pcLineStart, '\t');
         pcAnchorTemp = strchr(pcLineStart, '\r');
         if ( pcAnchor2 && pcAnchorTemp )
@@ -294,7 +294,7 @@ static int process_line_x(char *pcHeader, char *pcLineEnd, char *pcLineStart, ch
         *pcAnchor = 0;
         *pcAnchor2 = 0;
 
-        //ºÏ²¢¸Ã×Ö¶ÎµÄÄÚÈİ
+        //åˆå¹¶è¯¥å­—æ®µçš„å†…å®¹
         pcTxt = TXTBUF_FILL(pcHeader, astValueMap, iCount, pcTxt, pcLineStart, pstCallback, pvLineInfo, iLineNo, i);
 
         *pcAnchor = bAnchor;
@@ -302,7 +302,7 @@ static int process_line_x(char *pcHeader, char *pcLineEnd, char *pcLineStart, ch
     } while ( (pcHeader = strchr(pcHeader, '\t')) && (pcLineStart = strchr(pcLineStart, '\t'))
             && pcHeader < pcLineEnd && pcHeader++ && pcLineStart++ && ++i );
 
-    //Ò»ĞĞ½áÊø£¬¼ÓÉÏ»Ø³µ»»ĞĞ
+    //ä¸€è¡Œç»“æŸï¼ŒåŠ ä¸Šå›è½¦æ¢è¡Œ
     *pcTxt = '\r';
     pcTxt++;
     *pcTxt = '\n';
@@ -344,7 +344,7 @@ static int Is_StringInList(char **ppcList, char *pcLookup)
     return 0;
 }
 
-//¼ì²éÄÄĞ©×Ö¶ÎÔÚbinÎÄ¼şÖĞÃ»ÓĞ¶ÁÈ¡³öÀ´µÄ
+//æ£€æŸ¥å“ªäº›å­—æ®µåœ¨binæ–‡ä»¶ä¸­æ²¡æœ‰è¯»å–å‡ºæ¥çš„
 static int check_missing(char *pcHeader, char *pcLineEnd, ST_VALUE_MAP *astValueMap, int iCount, char *pcFileName, ST_CALLBACK *pstCallback)
 {
     char *pcAnchor, *pcAnchorTemp;
@@ -353,10 +353,10 @@ static int check_missing(char *pcHeader, char *pcLineEnd, ST_VALUE_MAP *astValue
     int i;
     char acTempKey[256] = {0};
 
-    //Öğ×Ö¶Î´¦Àí
+    //é€å­—æ®µå¤„ç†
     do
     {
-        //ÕÒµ½±íÍ·×Ö¶ÎÎ²£¬tab¼üºÍ»Ø³µ»»ĞĞ£¬ÏÈµ½Îª×¼
+        //æ‰¾åˆ°è¡¨å¤´å­—æ®µå°¾ï¼Œtabé”®å’Œå›è½¦æ¢è¡Œï¼Œå…ˆåˆ°ä¸ºå‡†
         pcAnchor = strchr(pcHeader, '\t');
         pcAnchorTemp = strchr(pcHeader, '\r');
         if ( pcAnchor && pcAnchorTemp )
@@ -389,7 +389,7 @@ static int check_missing(char *pcHeader, char *pcLineEnd, ST_VALUE_MAP *astValue
 
         *pcAnchor = 0;
 
-        //¼ì²é×Ö¶ÎÊÇ·ñ´æÔÚ
+        //æ£€æŸ¥å­—æ®µæ˜¯å¦å­˜åœ¨
         TXTBUF_ReplaceSpecialChar(pcHeader, acTempKey);
         for ( i = 0; i < iCount; i++ )
         {
@@ -402,7 +402,7 @@ static int check_missing(char *pcHeader, char *pcLineEnd, ST_VALUE_MAP *astValue
         {
             if ( pstCallback && Is_StringInList(pstCallback->ppcKeyInternalProcess, pcHeader) )
             {
-                //ÒÑ±»ÄÚ²¿´¦Àí
+                //å·²è¢«å†…éƒ¨å¤„ç†
             }
             else if ( pstCallback && Is_StringInList(pstCallback->ppcKeyNotUsed, pcHeader) )
             {
@@ -434,10 +434,10 @@ static int process_line_withkey(char *acTplBuf, char *acTxtBuf, void *pvLineInfo
     char *pcTxt;
     int result = 1;
 
-    //ÕÒµ½txtÎÄ¼şÎ²
+    //æ‰¾åˆ°txtæ–‡ä»¶å°¾
     pcTxt = acTxtBuf + strlen(acTxtBuf);
 
-    //ÕÒµ½Ä£°åÎÄ¼şµÄµÚÒ»ĞĞ£¬¼´±íÍ·
+    //æ‰¾åˆ°æ¨¡æ¿æ–‡ä»¶çš„ç¬¬ä¸€è¡Œï¼Œå³è¡¨å¤´
     pcHeader = acTplBuf;
     pcLineEnd = strchr(pcHeader, '\r');
     if ( !pcLineEnd )
@@ -446,7 +446,7 @@ static int process_line_withkey(char *acTplBuf, char *acTxtBuf, void *pvLineInfo
         return 0;
     }
 
-    //ÕÒµ½keyËùÔÚµÄÄÇÒ»ĞĞÄ£°å
+    //æ‰¾åˆ°keyæ‰€åœ¨çš„é‚£ä¸€è¡Œæ¨¡æ¿
     sprintf(acKey, "\n%s\t", acClass);
     pcLineStart = strstr(acTplBuf, acKey);
     if ( !pcLineStart )
@@ -454,7 +454,7 @@ static int process_line_withkey(char *acTplBuf, char *acTxtBuf, void *pvLineInfo
         sprintf(acKey, "\n%s\r", acClass);
         pcLineStart = strstr(acTplBuf, acKey);
 #if 0
-        //ÔİÊ±Ö»ÄÜÖ§³Ö¶¥Í·µÄkey
+        //æš‚æ—¶åªèƒ½æ”¯æŒé¡¶å¤´çš„key
         if ( !pcLineStart )
         {
             sprintf(acKey, "\t%s\t", acClass);
@@ -472,7 +472,7 @@ static int process_line_withkey(char *acTplBuf, char *acTxtBuf, void *pvLineInfo
     {
         int i = 0;
 
-        //Èç¹ûÃ»ÓĞ¸Ãkey£¬ÔòËµÃ÷ÊÇbinÎÄ¼ş±ÈÄ£°åÎÄ¼ş¶à³öÀ´µÄÄÚÈİ£¬¹¹ÔìÒ»ĞĞ¿ÕÄ£°åĞĞ±ãÓÚºóĞø´¦Àí
+        //å¦‚æœæ²¡æœ‰è¯¥keyï¼Œåˆ™è¯´æ˜æ˜¯binæ–‡ä»¶æ¯”æ¨¡æ¿æ–‡ä»¶å¤šå‡ºæ¥çš„å†…å®¹ï¼Œæ„é€ ä¸€è¡Œç©ºæ¨¡æ¿è¡Œä¾¿äºåç»­å¤„ç†
         memset(m_acTempBuffer, 0, sizeof(m_acTempBuffer));
         pcLineStart = pcHeader;
 
@@ -493,7 +493,7 @@ static int process_line_withkey(char *acTplBuf, char *acTxtBuf, void *pvLineInfo
     }
     else
     {
-        //Ìø¹ı'\r'
+        //è·³è¿‡'\r'
         while ( '\n' != *pcLineStart )
         {
             pcLineStart--;
@@ -518,10 +518,10 @@ static int process_line_withoutkey(char *acTplBuf, char *acTxtBuf, void *pvLineI
 
     sprintf(acClass, "%d", iLineNo);
 
-    //ÕÒµ½txtÎÄ¼şÎ²
+    //æ‰¾åˆ°txtæ–‡ä»¶å°¾
     pcTxt = acTxtBuf + strlen(acTxtBuf);
 
-    //ÕÒµ½Ä£°åÎÄ¼şµÄµÚÒ»ĞĞ£¬¼´±íÍ·
+    //æ‰¾åˆ°æ¨¡æ¿æ–‡ä»¶çš„ç¬¬ä¸€è¡Œï¼Œå³è¡¨å¤´
     pcHeader = acTplBuf;
     pcLineEnd = strchr(pcHeader, '\r');
     if ( !pcLineEnd )
@@ -530,7 +530,7 @@ static int process_line_withoutkey(char *acTplBuf, char *acTxtBuf, void *pvLineI
         return 0;
     }
 
-    //ÕÒµ½ĞĞºÅ¶ÔÓ¦µÄĞĞ
+    //æ‰¾åˆ°è¡Œå·å¯¹åº”çš„è¡Œ
     if ( NULL == *ppcIterator )
     {
         pcLineStart = acTplBuf;
@@ -546,7 +546,7 @@ loop:
     {
         int j = 0;
 
-        //Èç¹ûÃ»ÓĞÏÂÒ»ĞĞÁË£¬ÔòËµÃ÷ÊÇbinÎÄ¼ş±ÈÄ£°åÎÄ¼ş¶à³öÀ´µÄÄÚÈİ£¬¹¹ÔìÒ»ĞĞ¿ÕÄ£°åĞĞ±ãÓÚºóĞø´¦Àí
+        //å¦‚æœæ²¡æœ‰ä¸‹ä¸€è¡Œäº†ï¼Œåˆ™è¯´æ˜æ˜¯binæ–‡ä»¶æ¯”æ¨¡æ¿æ–‡ä»¶å¤šå‡ºæ¥çš„å†…å®¹ï¼Œæ„é€ ä¸€è¡Œç©ºæ¨¡æ¿è¡Œä¾¿äºåç»­å¤„ç†
         memset(m_acTempBuffer, 0, sizeof(m_acTempBuffer));
         pcLineStart = pcHeader;
 
@@ -642,14 +642,14 @@ static int process_file_x(char *acTemplatePath, char *acBinPath, char *acTxtPath
         goto error;
     }
 
-    //ÏÈ°ÑÕû¸öÄ£°åÎÄ¼ş¶ÁÈëÄÚ´æ
+    //å…ˆæŠŠæ•´ä¸ªæ¨¡æ¿æ–‡ä»¶è¯»å…¥å†…å­˜
     if ( 0 >= fread(acTplBuf, 1, sizeof(acTplBuf), pfTplHandle) )
     {
         my_error("read template file fail\r\n");
         goto error;
     }
 
-    //ÕÒµ½ExpansionĞĞ£¬binÎÄ¼şÀï²»´æÔÚ£¬Ö±½ÓĞ´»Øtxt
+    //æ‰¾åˆ°Expansionè¡Œï¼Œbinæ–‡ä»¶é‡Œä¸å­˜åœ¨ï¼Œç›´æ¥å†™å›txt
     pcExpansion = strstr(acTplBuf, "\r\nExpansion");
     if ( NULL != pcExpansion )
     {
@@ -671,30 +671,30 @@ static int process_file_x(char *acTemplatePath, char *acBinPath, char *acTxtPath
         pcAnchor = strchr(pcExpansion, '\r');
     }
 
-    //¶ÁÈ¡Ä£°åÎÄ¼şµÄ±íÍ·£¬·ÅÈëtxt
+    //è¯»å–æ¨¡æ¿æ–‡ä»¶çš„è¡¨å¤´ï¼Œæ”¾å…¥txt
     fseek(pfTplHandle, 0, SEEK_SET);
     fgets(acTxtBuf, sizeof(acTxtBuf), pfTplHandle);
 
-    //¼ì²éÓĞÄÄĞ©×Ö¶ÎÃ»ÓĞ´¦Àí
+    //æ£€æŸ¥æœ‰å“ªäº›å­—æ®µæ²¡æœ‰å¤„ç†
     if ( 0 == check_missing(acTxtBuf, strchr(acTxtBuf, '\r'), pstValueMap, iValueCount, pcFilename, pstCallback) )
     {
         goto error;
     }
 
-    //¶ÁÈ¡binÎÄ¼şµÄÎÄ¼şÍ·
+    //è¯»å–binæ–‡ä»¶çš„æ–‡ä»¶å¤´
     if ( sizeof(stFileHeader) != fread(&stFileHeader, 1, sizeof(stFileHeader), pfBinHandle) )
     {
         my_error("read bin file head fail\r\n");
         goto error;
     }
 
-    //Í¨Öª¸ÃÄ£¿é£¬binÎÄ¼şµÄĞĞÊı£¬±ãÓÚ·ÖÅäÄÚ´æ
+    //é€šçŸ¥è¯¥æ¨¡å—ï¼Œbinæ–‡ä»¶çš„è¡Œæ•°ï¼Œä¾¿äºåˆ†é…å†…å­˜
     if ( pstCallback && pstCallback->pfnSetLines )
     {
         pstCallback->pfnSetLines(stFileHeader.iLines);
     }
 
-    //ÂÖÑ¯binÎÄ¼şµÄÃ¿Ò»ĞĞÄÚÈİ
+    //è½®è¯¢binæ–‡ä»¶çš„æ¯ä¸€è¡Œå†…å®¹
     iSuccess = 0;
     iFailed = 0;
     for ( i = 0; i < stFileHeader.iLines; i++ )
@@ -721,7 +721,7 @@ static int process_file_x(char *acTemplatePath, char *acBinPath, char *acTxtPath
             my_printf("%05d / %05d", i + 1, stFileHeader.iLines);
         }
 
-        //´ÓbinÎÄ¼şÒÀ´Î¶ÁÈ¡Ò»ĞĞÄÚÈİ
+        //ä»binæ–‡ä»¶ä¾æ¬¡è¯»å–ä¸€è¡Œå†…å®¹
         if ( iLineLength != fread(pvLineInfo, 1, iLineLength, pfBinHandle) )
         {
             my_error("read bin file line %d fail\r\n", i);
@@ -732,7 +732,7 @@ static int process_file_x(char *acTemplatePath, char *acBinPath, char *acTxtPath
         {
             int iKeyLen = 0;
 
-            //Èç¹ûÓĞgetkeyº¯Êı£¬¾Í±íÊ¾¸ÃÎÄ¼şÊÇÓĞkeyµÄ£¬binÎÄ¼şµÄÕâÒ»ĞĞÄÚÈİ£¬Ö±½ÓÓëÄ£°åÎÄ¼şÀïµÄÃ¿Ò»ĞĞ½øĞĞkeyÆ¥Åä£¬Æ¥ÅäÉÏ¾ÍºÏ²¢
+            //å¦‚æœæœ‰getkeyå‡½æ•°ï¼Œå°±è¡¨ç¤ºè¯¥æ–‡ä»¶æ˜¯æœ‰keyçš„ï¼Œbinæ–‡ä»¶çš„è¿™ä¸€è¡Œå†…å®¹ï¼Œç›´æ¥ä¸æ¨¡æ¿æ–‡ä»¶é‡Œçš„æ¯ä¸€è¡Œè¿›è¡ŒkeyåŒ¹é…ï¼ŒåŒ¹é…ä¸Šå°±åˆå¹¶
             pcKey = pstCallback->pfnGetKey(pvLineInfo, acBinFile, &iKeyLen);
             String_Trim(pcKey);
             if ( 1 != process_line_withkey(acTplBuf, acTxtBuf, pvLineInfo, iLineLength, pcKey, iKeyLen, 
@@ -748,7 +748,7 @@ static int process_file_x(char *acTemplatePath, char *acBinPath, char *acTxtPath
         }
         else
         {
-            //Ã»ÓĞgetkeyº¯Êı£¬¾Í±íÊ¾¸ÃÎÄ¼şÃ»ÓĞkey£¬binÎÄ¼şºÍÄ£°åÎÄ¼şÖ»ÄÜÖğĞĞºÏ²¢
+            //æ²¡æœ‰getkeyå‡½æ•°ï¼Œå°±è¡¨ç¤ºè¯¥æ–‡ä»¶æ²¡æœ‰keyï¼Œbinæ–‡ä»¶å’Œæ¨¡æ¿æ–‡ä»¶åªèƒ½é€è¡Œåˆå¹¶
             if ( 1 != process_line_withoutkey(acTplBuf, acTxtBuf, pvLineInfo, iLineLength, i, pstValueMap, iValueCount, 
                 pstCallback, pcFilename, &pcIterator) )
             {
@@ -765,17 +765,17 @@ static int process_file_x(char *acTemplatePath, char *acBinPath, char *acTxtPath
     my_printf("\b\b\b\b\b\b\b\b\b\b\b\b\b");
     my_printf("%05d / %05d", i, stFileHeader.iLines);
 
-    //Ğ´»ØtxtÎÄ¼ş
+    //å†™å›txtæ–‡ä»¶
     fwrite(acTxtBuf, 1, strlen(acTxtBuf), pfTxtHandle);
 
     if ( 0 < iFailed )
     {
-        my_error("\r\nfinished¡£¡£¡£total %d¡£¡£¡£success %d¡£¡£¡£failed %d!\r\n", 
+        my_error("\r\nfinished... total %d... success %d... failed %d!\r\n", 
             stFileHeader.iLines, iSuccess, iFailed);
     }
     else
     {
-        my_printf("\r\nfinished¡£¡£¡£total %d¡£¡£¡£success %d!\r\n", 
+        my_printf("\r\nfinished... total %d... success %d!\r\n", 
             stFileHeader.iLines, iSuccess);
     }
 
@@ -801,9 +801,9 @@ out:
         pfTxtHandle = NULL;
     }
 
-    //Í¨Öª¸ÃÄ£¿éÊÍ·ÅÄÚ´æ
+    //é€šçŸ¥è¯¥æ¨¡å—é‡Šæ”¾å†…å­˜
 #if 0
-    //ÔİÊ±²»ÄÜÊÍ·Å£¬ÒòÎªÆäËûÄ£¿é»¹ĞèÒª²éÑ¯
+    //æš‚æ—¶ä¸èƒ½é‡Šæ”¾ï¼Œå› ä¸ºå…¶ä»–æ¨¡å—è¿˜éœ€è¦æŸ¥è¯¢
     if ( pstCallback && pstCallback->pfnFinished )
     {
         pstCallback->pfnFinished();
@@ -821,7 +821,7 @@ int process_file(char *acTemplatePath, char *acBinPath, char *acTxtPath, char *p
         iLineLength, pstValueMap, iValueCount, pstCallback, "\\");
 }
 
-//binÎÄ¼şÃûÖ±½ÓÖ¸¶¨
+//binæ–‡ä»¶åç›´æ¥æŒ‡å®š
 int process_file_special_bin(char *acTemplatePath, char *acBinPath, char *acTxtPath, char *pcFilename,
     void *pvLineInfo, int iLineLength, ST_VALUE_MAP *pstValueMap, int iValueCount,
     ST_CALLBACK *pstCallback)

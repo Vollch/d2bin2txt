@@ -102,97 +102,97 @@ it from d2exp by hand.
 */
 
 /*
-ÎÄ¼þÃû½âÎö£º
-Quality£º¸ßÆ·ÖÊµÄ£¬¼´³¬Ç¿µÄ¡£
-Items£ºµÀ¾ß£¬¼´×°±¸¡£
-±¾ÎÄ¼þÃèÊöÁËËùÓÐ³¬Ç¿ÀàÐÍµÄ×°±¸µÄÐÅÏ¢¡£
-´ËÎÄ¼þÖÐµÄÃ¿Ò»ÐÐ±íÊ¾Ò»ÖÖ³¬Ç¿ÀàÐÍ¡£
+æ–‡ä»¶åè§£æžï¼š
+Qualityï¼šé«˜å“è´¨çš„ï¼Œå³è¶…å¼ºçš„ã€‚
+Itemsï¼šé“å…·ï¼Œå³è£…å¤‡ã€‚
+æœ¬æ–‡ä»¶æè¿°äº†æ‰€æœ‰è¶…å¼ºç±»åž‹çš„è£…å¤‡çš„ä¿¡æ¯ã€‚
+æ­¤æ–‡ä»¶ä¸­çš„æ¯ä¸€è¡Œè¡¨ç¤ºä¸€ç§è¶…å¼ºç±»åž‹ã€‚
 
 
-»Ø¸´
+å›žå¤
 
-    2Â¥
+    2æ¥¼
     2011-09-26 23:59
 
-    ¾Ù±¨ |
+    ä¸¾æŠ¥ |
 
     zqtjingzi
-    Ð¡°ÉÖ÷
+    å°å§ä¸»
     12
 
-Ã¿ÁÐµÄº¬ÒåÈçÏÂ£º
+æ¯åˆ—çš„å«ä¹‰å¦‚ä¸‹ï¼š
 
 
-»Ø¸´
+å›žå¤
 
-    3Â¥
+    3æ¥¼
     2011-09-26 23:59
 
-    ¾Ù±¨ |
+    ä¸¾æŠ¥ |
 
     zqtjingzi
-    Ð¡°ÉÖ÷
+    å°å§ä¸»
     12
 
-nummods£º´Ë³¬Ç¿ÀàÐÍÓÐ¼¸¸ö¸½¼ÓÊôÐÔ¡£Ö»ÄÜÎª1»òÕß2¡£
+nummodsï¼šæ­¤è¶…å¼ºç±»åž‹æœ‰å‡ ä¸ªé™„åŠ å±žæ€§ã€‚åªèƒ½ä¸º1æˆ–è€…2ã€‚
 
-mod1code£ºµÚ1¸ö¸½¼ÓÊôÐÔµÄÊôÐÔÃû£¬ÓëProperties.txt¹ØÁª¡£
+mod1codeï¼šç¬¬1ä¸ªé™„åŠ å±žæ€§çš„å±žæ€§åï¼Œä¸ŽProperties.txtå…³è”ã€‚
 
-mod1param£ºµÚ1¸ö¸½¼ÓÊôÐÔµÄ²ÎÊý¡£
+mod1paramï¼šç¬¬1ä¸ªé™„åŠ å±žæ€§çš„å‚æ•°ã€‚
 
-mod1min£ºµÚ1¸ö¸½¼ÓÊôÐÔµÄ×îÐ¡Öµ²ÎÊý¡£
+mod1minï¼šç¬¬1ä¸ªé™„åŠ å±žæ€§çš„æœ€å°å€¼å‚æ•°ã€‚
 
-mod1max£ºµÚ1¸ö¸½¼ÓÊôÐÔµÄ×î´óÖµ²ÎÊý¡£
+mod1maxï¼šç¬¬1ä¸ªé™„åŠ å±žæ€§çš„æœ€å¤§å€¼å‚æ•°ã€‚
 
-mod2code¡¢mod2param¡¢mod2min¡¢mod2maxº¬Òå²Î¿¼mod1¡£
+mod2codeã€mod2paramã€mod2minã€mod2maxå«ä¹‰å‚è€ƒmod1ã€‚
 
-ToHitMin£º½öÓÃ×÷×¢ÊÍ¡£
+ToHitMinï¼šä»…ç”¨ä½œæ³¨é‡Šã€‚
 
-ToHitMax£º½öÓÃ×÷×¢ÊÍ¡£
+ToHitMaxï¼šä»…ç”¨ä½œæ³¨é‡Šã€‚
 
-Dam%Min£º½öÓÃ×÷×¢ÊÍ¡£
+Dam%Minï¼šä»…ç”¨ä½œæ³¨é‡Šã€‚
 
-Dam%Max£º½öÓÃ×÷×¢ÊÍ¡£
+Dam%Maxï¼šä»…ç”¨ä½œæ³¨é‡Šã€‚
 
-AC%Min£º½öÓÃ×÷×¢ÊÍ¡£
+AC%Minï¼šä»…ç”¨ä½œæ³¨é‡Šã€‚
 
-AC%Max£º½öÓÃ×÷×¢ÊÍ¡£
+AC%Maxï¼šä»…ç”¨ä½œæ³¨é‡Šã€‚
 
-Dur%Min£º½öÓÃ×÷×¢ÊÍ¡£
+Dur%Minï¼šä»…ç”¨ä½œæ³¨é‡Šã€‚
 
-Dur%Max£º½öÓÃ×÷×¢ÊÍ¡£
+Dur%Maxï¼šä»…ç”¨ä½œæ³¨é‡Šã€‚
 
-effect1£ºÎÞÓÃ²ÎÊý£¬µ«±»ÓÎÏ·¶ÁÈë¡£
+effect1ï¼šæ— ç”¨å‚æ•°ï¼Œä½†è¢«æ¸¸æˆè¯»å…¥ã€‚
 
-effect2£ºÎÞÓÃ²ÎÊý£¬µ«±»ÓÎÏ·¶ÁÈë¡£
+effect2ï¼šæ— ç”¨å‚æ•°ï¼Œä½†è¢«æ¸¸æˆè¯»å…¥ã€‚
 
-armor£º´Ë³¬Ç¿ÀàÐÍÄÜ·ñ³öÏÖÔÚ·À¾ßÉÏ¡£
+armorï¼šæ­¤è¶…å¼ºç±»åž‹èƒ½å¦å‡ºçŽ°åœ¨é˜²å…·ä¸Šã€‚
 
-weapon£º´Ë³¬Ç¿ÀàÐÍÄÜ·ñ³öÏÖÔÚÎäÆ÷ÉÏ¡£
+weaponï¼šæ­¤è¶…å¼ºç±»åž‹èƒ½å¦å‡ºçŽ°åœ¨æ­¦å™¨ä¸Šã€‚
 
-shield£º´Ë³¬Ç¿ÀàÐÍÄÜ·ñ³öÏÖÔÚ¶ÜÅÆÉÏ¡£
+shieldï¼šæ­¤è¶…å¼ºç±»åž‹èƒ½å¦å‡ºçŽ°åœ¨ç›¾ç‰Œä¸Šã€‚
 
-thrown£º´Ë³¬Ç¿ÀàÐÍÄÜ·ñ³öÏÖÔÚÍ¶ÖÀÎäÆ÷ÉÏ¡£
+thrownï¼šæ­¤è¶…å¼ºç±»åž‹èƒ½å¦å‡ºçŽ°åœ¨æŠ•æŽ·æ­¦å™¨ä¸Šã€‚
 
-scepter£º´Ë³¬Ç¿ÀàÐÍÄÜ·ñ³öÏÖÔÚÈ¨ÕÈ£¨palÕÈ£©ÉÏ¡£
+scepterï¼šæ­¤è¶…å¼ºç±»åž‹èƒ½å¦å‡ºçŽ°åœ¨æƒæ–ï¼ˆpalæ–ï¼‰ä¸Šã€‚
 
-wand£º´Ë³¬Ç¿ÀàÐÍÄÜ·ñ³öÏÖÔÚ·¨ÕÈ£¨necÕÈ£©ÉÏ¡£
+wandï¼šæ­¤è¶…å¼ºç±»åž‹èƒ½å¦å‡ºçŽ°åœ¨æ³•æ–ï¼ˆnecæ–ï¼‰ä¸Šã€‚
 
-staff£º´Ë³¬Ç¿ÀàÐÍÄÜ·ñ³öÏÖÔÚÊÖÕÈ£¨sorÕÈ£©ÉÏ¡£
+staffï¼šæ­¤è¶…å¼ºç±»åž‹èƒ½å¦å‡ºçŽ°åœ¨æ‰‹æ–ï¼ˆsoræ–ï¼‰ä¸Šã€‚
 
-bow£º´Ë³¬Ç¿ÀàÐÍÄÜ·ñ³öÏÖÔÚ¹­ÉÏ¡£
+bowï¼šæ­¤è¶…å¼ºç±»åž‹èƒ½å¦å‡ºçŽ°åœ¨å¼“ä¸Šã€‚
 
-boots£º´Ë³¬Ç¿ÀàÐÍÄÜ·ñ³öÏÖÔÚÐ¬ÉÏ¡£
+bootsï¼šæ­¤è¶…å¼ºç±»åž‹èƒ½å¦å‡ºçŽ°åœ¨éž‹ä¸Šã€‚
 
-gloves£º´Ë³¬Ç¿ÀàÐÍÄÜ·ñ³öÏÖÔÚÊÖÌ×ÉÏ¡£
+glovesï¼šæ­¤è¶…å¼ºç±»åž‹èƒ½å¦å‡ºçŽ°åœ¨æ‰‹å¥—ä¸Šã€‚
 
-belt£º´Ë³¬Ç¿ÀàÐÍÄÜ·ñ³öÏÖÔÚÑü´øÉÏ¡£
+beltï¼šæ­¤è¶…å¼ºç±»åž‹èƒ½å¦å‡ºçŽ°åœ¨è…°å¸¦ä¸Šã€‚
 
-level£º´Ë³¬Ç¿ÀàÐÍ¶ÔÎïÆ·µÈ¼¶µÄÒªÇó¡£
+levelï¼šæ­¤è¶…å¼ºç±»åž‹å¯¹ç‰©å“ç­‰çº§çš„è¦æ±‚ã€‚
 
-multiply£º¼Û¸ñ·Å´óÒò×Ó¡£
+multiplyï¼šä»·æ ¼æ”¾å¤§å› å­ã€‚
 
-add£º¼Û¸ñÔö¼ÓÒò×Ó¡£
+addï¼šä»·æ ¼å¢žåŠ å› å­ã€‚
 */
 
 typedef struct

@@ -143,55 +143,55 @@ Do not remove this column ! Its purpose is to ensure the last column of the tabu
 */
 
 /*
-ÎÄ¼þÃû½âÎö£º
-Super£º³¬¼¶¡£
-Uniques£ºÎ¨Ò»¡£
-±¾ÎÄ¼þÃèÊöµÄÊÇËùÓÐ¹Ì¶¨£¨³¬¼¶£©½ð¹ÖµÄ×ÊÁÏ¡£
-´ËÎÄ¼þÖÐµÄÃ¿Ò»ÐÐ±íÊ¾Ò»¸ö¹Ì¶¨½ð¹Ö¡£
+æ–‡ä»¶åè§£æžï¼š
+Superï¼šè¶…çº§ã€‚
+Uniquesï¼šå”¯ä¸€ã€‚
+æœ¬æ–‡ä»¶æè¿°çš„æ˜¯æ‰€æœ‰å›ºå®šï¼ˆè¶…çº§ï¼‰é‡‘æ€ªçš„èµ„æ–™ã€‚
+æ­¤æ–‡ä»¶ä¸­çš„æ¯ä¸€è¡Œè¡¨ç¤ºä¸€ä¸ªå›ºå®šé‡‘æ€ªã€‚
 
 
-»Ø¸´
+å›žå¤
 
-    2Â¥
+    2æ¥¼
     2011-09-06 20:51
 
-    ¾Ù±¨ |
+    ä¸¾æŠ¥ |
 
     zqtjingzi
-    Ð¡°ÉÖ÷
+    å°å§ä¸»
     12
 
-Superunique£º¹ÖÎïµÄÃû×ÖË÷Òý¡£ÕâÀïµÄÃû³ÆÓÃÔÚTCExµÈÎÄ¼þÀï
+Superuniqueï¼šæ€ªç‰©çš„åå­—ç´¢å¼•ã€‚è¿™é‡Œçš„åç§°ç”¨åœ¨TCExç­‰æ–‡ä»¶é‡Œ
 
-Name£º¹ÖÎïµÄÓ¢ÎÄÃû×Ö£¬Ò²ÊÇtblÎÄ¼þÖÐµÄ¼üÃû¡£
+Nameï¼šæ€ªç‰©çš„è‹±æ–‡åå­—ï¼Œä¹Ÿæ˜¯tblæ–‡ä»¶ä¸­çš„é”®åã€‚
 
-Class£º¹ÖÎïÖÖÀà£¬Ò²¾ÍÊÇ½ð¹ÖµÄ±¾ÌåÐ¡¹ÖÊÇÊ²Ã´¡£ÓëMonstats.txtÏà¹ØÁª¡£
+Classï¼šæ€ªç‰©ç§ç±»ï¼Œä¹Ÿå°±æ˜¯é‡‘æ€ªçš„æœ¬ä½“å°æ€ªæ˜¯ä»€ä¹ˆã€‚ä¸ŽMonstats.txtç›¸å…³è”ã€‚
 
-hcldx£º¹ÖÎïµÄÊý×ÖË÷Òý¡£°µ½ð¹ÖµÄIDºÅ£¬ÔÚÌí¼ÓÐÂ¹ÖÎïÊ±Ò²ÓÃÓÚDS1ÎÄ¼þ£¨µÄ¶ÁÈ¡£©£»
+hcldxï¼šæ€ªç‰©çš„æ•°å­—ç´¢å¼•ã€‚æš—é‡‘æ€ªçš„IDå·ï¼Œåœ¨æ·»åŠ æ–°æ€ªç‰©æ—¶ä¹Ÿç”¨äºŽDS1æ–‡ä»¶ï¼ˆçš„è¯»å–ï¼‰ï¼›
 
-MonSound£º¹ÖÎïËù·¢³öµÄÉùÒô¡£ÕâÐ´ÉÏÄãÏ£Íû¹ÖÎïÊ¹ÓÃµÄÉùÒô¾ÍÐÐÁË£¬²»ÓÃÈ¥¸ÄDLLÁË
+MonSoundï¼šæ€ªç‰©æ‰€å‘å‡ºçš„å£°éŸ³ã€‚è¿™å†™ä¸Šä½ å¸Œæœ›æ€ªç‰©ä½¿ç”¨çš„å£°éŸ³å°±è¡Œäº†ï¼Œä¸ç”¨åŽ»æ”¹DLLäº†
 
-Mod1-3£º´Ë¹Ì¶¨½ð¹ÖÉíÉÏ¹Ì¶¨µÄÔö¼ÓÊôÐÔ£¬ÓëMonUMod.txt¹ØÁª¡£Èç±ÏÐë²©ÐëÓÐÁ½¸ö¹Ì»¯ÊôÐÔ£¬8£¨Ä§·¨µÖ¿¹£©ºÍ9£¨»ðÑæÇ¿»¯£©¡£
+Mod1-3ï¼šæ­¤å›ºå®šé‡‘æ€ªèº«ä¸Šå›ºå®šçš„å¢žåŠ å±žæ€§ï¼Œä¸ŽMonUMod.txtå…³è”ã€‚å¦‚æ¯•é¡»åšé¡»æœ‰ä¸¤ä¸ªå›ºåŒ–å±žæ€§ï¼Œ8ï¼ˆé­”æ³•æŠµæŠ—ï¼‰å’Œ9ï¼ˆç«ç„°å¼ºåŒ–ï¼‰ã€‚
 
-MinGrp/MaxGrp£ºÕâÁ½ÁÐÃèÊö´Ë¹Ì¶¨½ð¹ÖÉí±ß»á¶îÍâÔö¼Ó¼¸¸öÐ¡¹Ö¡£0µÄ»°±íÊ¾ÖÜÎ§Ã»ÓÐÐ¡¹Ö£¬ÈôÎª´ËÁ½ÁÐµÄÖµ¶¼Îªn£¬ÄÇÃ´Éí±ßÐ¡¹ÖÊýÎªn+m-1¡£ÆäÖÐmÓÉMonStats.txtÖÐMinGrp/MaxGrp¾ö¶¨¡£
+MinGrp/MaxGrpï¼šè¿™ä¸¤åˆ—æè¿°æ­¤å›ºå®šé‡‘æ€ªèº«è¾¹ä¼šé¢å¤–å¢žåŠ å‡ ä¸ªå°æ€ªã€‚0çš„è¯è¡¨ç¤ºå‘¨å›´æ²¡æœ‰å°æ€ªï¼Œè‹¥ä¸ºæ­¤ä¸¤åˆ—çš„å€¼éƒ½ä¸ºnï¼Œé‚£ä¹ˆèº«è¾¹å°æ€ªæ•°ä¸ºn+m-1ã€‚å…¶ä¸­mç”±MonStats.txtä¸­MinGrp/MaxGrpå†³å®šã€‚
 
-EClass£ºÊÇ·ñÊÇ×ÊÁÏÆ¬ÐÂ¼ÓµÄ¹ÖÎïÖÖÀà¡£
+EClassï¼šæ˜¯å¦æ˜¯èµ„æ–™ç‰‡æ–°åŠ çš„æ€ªç‰©ç§ç±»ã€‚
 
-AutoPos£ºÊÇ·ñÓÉ³ÌÐò×Ô¶¯Ö¸¶¨¹ÖÎïÎ»ÖÃ¡£0´ú±íÓÐ¹Ì¶¨Î»ÖÃ£¬1µÄ»°ÔòÓÐÒ»¶¨µÄËæ»úÐÔ¡£
+AutoPosï¼šæ˜¯å¦ç”±ç¨‹åºè‡ªåŠ¨æŒ‡å®šæ€ªç‰©ä½ç½®ã€‚0ä»£è¡¨æœ‰å›ºå®šä½ç½®ï¼Œ1çš„è¯åˆ™æœ‰ä¸€å®šçš„éšæœºæ€§ã€‚
 
-Stacks£ºÊÇ·ñ¼ÇÂ¼Ê×É±¡£0´ú±í²»¼ÇÂ¼£¬ÔòÃ¿´ÎÉ±ËÀ¶¼µÈÍ¬ÓÚÊ×É±£¬1Ôò´ú±í¼ÇÂ¼Ê×É±£¬¼´Ö®ºó¶¼Ã»ÓÐÊ×É±Ð§¹û¡££¨²»ÄÜÈ·¶¨£©
+Stacksï¼šæ˜¯å¦è®°å½•é¦–æ€ã€‚0ä»£è¡¨ä¸è®°å½•ï¼Œåˆ™æ¯æ¬¡æ€æ­»éƒ½ç­‰åŒäºŽé¦–æ€ï¼Œ1åˆ™ä»£è¡¨è®°å½•é¦–æ€ï¼Œå³ä¹‹åŽéƒ½æ²¡æœ‰é¦–æ€æ•ˆæžœã€‚ï¼ˆä¸èƒ½ç¡®å®šï¼‰
 
-Replaceable£º²»ÖªµÀÕâÒ»ÁÐÊÇÊ²Ã´ÒâË¼¡£
+Replaceableï¼šä¸çŸ¥é“è¿™ä¸€åˆ—æ˜¯ä»€ä¹ˆæ„æ€ã€‚
 
-Utrans/Utrans(N)/Utrans(H)£º´Ë°µ½ð¹ÖÔÚÈý¸öÄÑ¶ÈÏÂµÄÑÕÉ«±ä»¯¡£
+Utrans/Utrans(N)/Utrans(H)ï¼šæ­¤æš—é‡‘æ€ªåœ¨ä¸‰ä¸ªéš¾åº¦ä¸‹çš„é¢œè‰²å˜åŒ–ã€‚
 
-TC/TC(N)/TC(H)£º´Ë°µ½ð¹ÖÔÚÈý¸öÄÑ¶ÈÏÂµÄÎïÆ·µôÂäÀà±ð¡£TCµÄº¬Òå¿É²Î¿¼ÎïÆ·µôÂäÔ­Àí¡£
+TC/TC(N)/TC(H)ï¼šæ­¤æš—é‡‘æ€ªåœ¨ä¸‰ä¸ªéš¾åº¦ä¸‹çš„ç‰©å“æŽ‰è½ç±»åˆ«ã€‚TCçš„å«ä¹‰å¯å‚è€ƒç‰©å“æŽ‰è½åŽŸç†ã€‚
 
-Eol£ºÐÐÎ²±êÖ¾£¬±ØÐëÎª0¡£
+Eolï¼šè¡Œå°¾æ ‡å¿—ï¼Œå¿…é¡»ä¸º0ã€‚
 
-²¹³ä£º¾°Ê¥ÁÙ
+è¡¥å……ï¼šæ™¯åœ£ä¸´
 
-Superuniques.txtÖÐµÄMod1~3ÁÐÖÐµÄÄÚÈÝÓëMonumod.txtÖÐµÄuniquemodÁÐÖÐµÄÄÚÈÝ¶ÔÓ¦£¨¿É¹©Ñ¡Ôñ£©£¬Mod1~3ÊÇÖ¸¶¨°µ½ð¹ÖµÄ¹ÌÓÐ½±ÀøÊôÐÔ¡£
+Superuniques.txtä¸­çš„Mod1~3åˆ—ä¸­çš„å†…å®¹ä¸ŽMonumod.txtä¸­çš„uniquemodåˆ—ä¸­çš„å†…å®¹å¯¹åº”ï¼ˆå¯ä¾›é€‰æ‹©ï¼‰ï¼ŒMod1~3æ˜¯æŒ‡å®šæš—é‡‘æ€ªçš„å›ºæœ‰å¥–åŠ±å±žæ€§ã€‚
 */
 
 typedef struct

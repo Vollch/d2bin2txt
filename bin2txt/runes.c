@@ -38,56 +38,56 @@ eol: terminator field, not used in game, primary purpose is to keep Microsoft Ex
 */
 
 /*
-�ļ���������
-Rune(s)�����ģ��˴�����˼Ϊ����֮�
-���ļ���¼����Ϸ�����з���֮�ÿһ�д���һ����
+文件名解析：
+Rune(s)：符文，此处的意思为符文之语。
+此文件记录了游戏中所有符文之语，每一行代表一个。
 
 
-�ظ�
+回复
 
-    2¥
+    2楼
     2011-09-09 18:55
 
-    �ٱ� |
+    举报 |
 
     zqtjingzi
-    С����
+    小吧主
     12
 
-ÿ�еĺ������£�
-Name: ����֮��ı�ţ�ͳһ��Runeword*����ʽ��������ظ�
-Rune Name: �˷���֮������֣��羫����о���Spirit
-Complete: �Ƿ���ɣ����Ƿ������Ϸ��ʹ�á�1�������ԣ�0������
-Server: ���ò���
-iType1-6: �˷���֮�����õ�װ�����ͣ���ItemTypes.txt����
-eType1-3: �˷���֮�ﲻ���õ�װ�����ͣ�����ֵӦ��ĳһiType�������ͣ���ItemTypes.txt����
-�˷���֮���������õ�װ�����ͼ���Ϊ {x=����װ�����ͼ���|x����ĳһiType��x����������eType}
-��ĳһ�ַ���֮��������ó��˽�����������������Ǿ;���iType1��weap��eType1��swor
+每列的含义如下：
+Name: 符文之语的编号，统一以Runeword*的形式表达，不可重复
+Rune Name: 此符文之语的名字，如精神此列就是Spirit
+Complete: 是否完成，即是否可在游戏中使用。1代表可以，0不可以
+Server: 无用参数
+iType1-6: 此符文之语适用的装备类型，与ItemTypes.txt关联
+eType1-3: 此符文之语不适用的装备类型，所填值应是某一iType的子类型，与ItemTypes.txt关联
+此符文之语最终适用的装备类型集合为 {x=适用装备类型集合|x属于某一iType且x不属于任意eType}
+如某一种符文之语可能适用除了剑以外的所有武器，那就就在iType1填weap，eType1填swor
 
-*Runes �˷���֮���ע�ͣ�һ����˵����д�ɴ˷���֮���˳��
-��ĳ�����֮���У���Ҫ�������һ��Ҫ��˳��[�ӵ�һ���������~���һ���������������������6����]��
+*Runes 此符文之语的注释，一般来说都会写成此符文之语的顺序
+在某个神符之语中，需要的神符，一定要按顺序[从第一个需求神符~最后一个需求神符（总数不多于6个）]；
 
-Rune1-6 �˷���֮����ɷ��ĵĴ��룬��˳��Ҫ���羫����r07 r10 r09 r11
-T1Code1-7 ����1-7�Ĵ��룬��properties���� ĳ�����֮��Ĺ̶�ħ������
-T1Param1-7 ����1-7�Ĳ���
-T1Min1-7 ����1-7����Сֵ����
-T1Max1-7 ����1-7�����ֵ����
+Rune1-6 此符文之语组成符文的代码，有顺序要求，如精神是r07 r10 r09 r11
+T1Code1-7 属性1-7的代码，与properties关联 某个神符之语的固定魔法属性
+T1Param1-7 属性1-7的参数
+T1Min1-7 属性1-7的最小值参数
+T1Max1-7 属性1-7的最大值参数
 
-�ɴ˿�֪������֮��װ�������7�������
+由此可知，符文之语装备最多有7项附加属性
 
-�ظ�
+回复
 
-    3¥
+    3楼
     2011-09-09 18:55
 
-    �ٱ� |
+    举报 |
 
     zqtjingzi
-    С����
+    小吧主
     12
 
-������Ҫע����ǣ�ͨ���ҵ����飬�����������µķ���֮��ʱ��ͨ���¼�һ�еķ�ʽ�����ǲ��еģ�������Ϸ�����������ô�װ����˲�������������������������Լ��ķ���֮�����������Щcomplete�в�Ϊ1���У�Ȼ��ֻ����PatchString.tbl
-�н����еı�����¸���һ��������Ҫ���������ּ��ɡ�
+此外需要注意的是，通过我的试验，当你想增加新的符文之语时，通过新加一行的方式来做是不行的，会在游戏过程中制作好此装备的瞬间出错。所以如果我们想制作自己的符文之语，可以利用那些complete列不为1的行，然后只需在PatchString.tbl
+中将此行的编号重新赋予一个我们想要的中文名字即可。
 
 */
 

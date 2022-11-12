@@ -100,76 +100,76 @@ See that link for knowing how the columns works.
  */
 
 /*
-�ļ���������
-Difficulty Levels���Ѷȼ��𣬼���Ϸ�е���ͨ�����Ρ����������Ѷȡ�
-���Դ��ļ�����������Ϸ�������Ѷ��е�һЩ������Ϣ���翹�Գͷ���
-���ļ��е�ÿһ�б�ʾһ���Ѷȣ���ʵ�ܹ�Ҳ��3�С�
+文件名解析：
+Difficulty Levels：难度级别，即游戏中的普通、恶梦、地狱三个难度。
+所以此文件就是描述游戏中三个难度中的一些特殊信息，如抗性惩罚。
+此文件中的每一行表示一个难度，其实总共也就3行。
 
-Name���Ѷȵ����ơ�
+Name：难度的名称。
 
-ResistPenalty���ڴ��Ѷ��µĿ��Գͷ���
+ResistPenalty：在此难度下的抗性惩罚。
 
-DeathExpPenalty���ڴ��Ѷ���������ʧ�ľ���ֵ��
+DeathExpPenalty：在此难度下死亡损失的经验值。
 
-UberCodeOddsNormal�����ò�����
+UberCodeOddsNormal：无用参数。
 
-UberCodeOddsGood�����ò�����
+UberCodeOddsGood：无用参数。
 
-UltraCodeOddsNormal�����ò�����
+UltraCodeOddsNormal：无用参数。
 
-UltraCodeOddsGood�����ò�����
+UltraCodeOddsGood：无用参数。
 
-MonsterSkillBonus���ڴ��Ѷ��¹���ļ��ܵȼ�������
-ÿ���Ѷ�����Թ�����⸽�ӵļ��ܵ�������ӦMonStats.txt�жԹ��＼�ܵ��������������ڡ�����ϵħ����Ч��
+MonsterSkillBonus：在此难度下怪物的技能等级提升。
+每种难度下针对怪物额外附加的技能点数，对应MonStats.txt中对怪物技能的描述；不过对于“弓”系魔法无效。
 
-MonsterFreezeDivisor���ڴ��Ѷ��¹���Ķ���״̬����ʱ���˥�����ӡ�
-ÿ���Ѷ��¹������ħ���ĳ�������Ȼ�ǳ������Ͳ���Ϊ0���� 
+MonsterFreezeDivisor：在此难度下怪物的冻结状态持续时间的衰减因子。
+每中难度下怪物冰冻魔法的除数（既然是除数，就不能为0）。 
 
-MonsterColdDivisor���ڴ��Ѷ��¹���ı���״̬����ʱ���˥�����ӡ�
+MonsterColdDivisor：在此难度下怪物的冰冻状态持续时间的衰减因子。
 
-AiCurseDivisor���ڴ��Ѷ��¹���ı�����״̬����ʱ���˥�����ӡ�
+AiCurseDivisor：在此难度下怪物的被诅咒状态持续时间的衰减因子。
 
-LifeStealDivisor���ڴ��Ѷ��»��й�����͵ȡ������ֵ��˥�����ӡ�
-ÿ���Ѷ��¹�����䡱����͵Ѫ������͵ħ�������ܵĳ�����ͬ������Ϊ0��
+LifeStealDivisor：在此难度下击中怪物后的偷取生命数值的衰减因子。
+每种难度下怪物“诅咒”、“偷血”、“偷魔法”技能的除数，同样不能为0。
 
-ManaStealDivisor���ڴ��Ѷ��»��й�����͵ȡ������ֵ��˥�����ӡ�
+ManaStealDivisor：在此难度下击中怪物后的偷取法力数值的衰减因子。
 
-UniqueDamageBonus���ڴ��Ѷ��½���˺��Ķ��������ٷֱȡ�
+UniqueDamageBonus：在此难度下金怪伤害的额外提升百分比。
 
-ChampionDamageBonus���ڴ��Ѷ���ͷĿ���˺��Ķ��������ٷֱȡ�
+ChampionDamageBonus：在此难度下头目怪伤害的额外提升百分比。
 
-HireableBossDamagePercent���ڴ��Ѷ��¹�Ӷ����BOSS�˺���˥���ٷֱȡ�
-���ÿһ���е�BOSS���������Ӷ�����������˰ٷֱȣ����磺�ڡ��������Ѷ��µ���ֵΪ25����˼���Ƕ���BOSS����Ĺ���ֻ��1/4���˺���
+HireableBossDamagePercent：在此难度下雇佣兵对BOSS伤害的衰减百分比。
+针对每一关中的BOSS级别怪物，你的佣兵所做的损伤百分比；比如：在“地狱”难度下的数值为25，意思就是对于BOSS级别的怪物只做1/4的伤害。
 
-MonsterCEDamagePercent���ڴ��Ѷ��¹��ﱩʬ�˺���˥���ٷֱȡ�
-�����ʬ"���ܵİٷֱ����ƣ�˵��һ�£�ͨ���ġ���ʬ���˺��ʶ��Ǹ�����Ϸ�н�ɫ�����������ģ�������ֵ����˼�������ƹ���ı�ʬ���˺��ʡ� 
+MonsterCEDamagePercent：在此难度下怪物暴尸伤害的衰减百分比。
+怪物“暴尸"技能的百分比限制；说明一下，通常的“暴尸”伤害率都是根据游戏中角色的数量决定的，这列数值的意思就是限制过大的暴尸”伤害率。 
 
-StaticFieldMin���ڴ��Ѷ��¾�̬�������ܵ�ɱ��������������Ѷȴ���Ϊ50��Ҳ����˵��������ʣ����������50%ʱ����̬��������Ч��0����ʹ��Ĭ��ֵ��
-��̬�������ڹ������С�˺�ֵ����������Ѷ��¾��趨Ϊ0�Ļ������Է�����Ƭ��Ĭ��ֵΪ׼��
+StaticFieldMin：在此难度下静态力场技能的杀伤能力。如地狱难度此列为50，也就是说当怪物所剩的生命大于50%时，静态力场都有效。0代表使用默认值。
+静态攻击对于怪物的最小伤害值；如果三种难度下均设定为0的话，就以非资料片的默认值为准。
 
-GambleRare���Ĳ���ϡ�У�������Ʒ��Ƶ�ʡ�
+GambleRare：赌博出稀有（亮金）物品的频率。
 
-GambleSet���Ĳ�����װ����ɫ����Ʒ��Ƶ�ʡ�
+GambleSet：赌博出套装（绿色）物品的频率。
 
-GambleUnique���Ĳ���Ψһ��������Ʒ��Ƶ�ʡ�
+GambleUnique：赌博出唯一（暗金）物品的频率。
 
-GambleUber�����ò�����
+GambleUber：无用参数。
 
-GambleUltra�����ò�����
+GambleUltra：无用参数。
 
-*eol����β��־������Ϊ0��
+*eol：行尾标志，必须为0。
 
-����GambleUber��GambleUltra���е�˵���������޸����£�
+关于GambleUber和GambleUltra两列的说明有误，现修改如下：
 
-GambleUber���Ĳ�����չ����Ʒ�ĸ��ʡ� 1 + (ilvl - excep qlvl) * GambleUber / 100
+GambleUber：赌博出扩展级物品的概率。 1 + (ilvl - excep qlvl) * GambleUber / 100
 
-GambleUltra���Ĳ�����Ӣ����Ʒ�ĸ��ʡ�1 + (ilvl - elite qlvl) * GambleUltra / 100
+GambleUltra：赌博出精英级物品的概率。1 + (ilvl - elite qlvl) * GambleUltra / 100
 
-����������˵�����Ĳ���ɫ�жϵ�˳����Ӧ�������£�
-��ɫ = 100 - ((GambleRare + GambleSet + GambleUnique) / 1000)
-���� = (GambleRare - GambleSet - GambleUnique) / 1000
-��ɫ = (GambleSet + GambleUnique) / 1000
-���� = (GambleUnique) / 1000
+另外做补充说明，赌博成色判断的顺序及相应概率如下：
+蓝色 = 100 - ((GambleRare + GambleSet + GambleUnique) / 1000)
+暗金 = (GambleRare - GambleSet - GambleUnique) / 1000
+绿色 = (GambleSet + GambleUnique) / 1000
+亮金 = (GambleUnique) / 1000
 */
 
 typedef struct

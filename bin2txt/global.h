@@ -113,7 +113,7 @@ typedef enum
 
 typedef struct
 {
-    unsigned int iLines; //ÌõÄ¿ÊıÁ¿
+    unsigned int iLines; //æ¡ç›®æ•°é‡
 } ST_FILE_HEADER;
 
 typedef enum
@@ -234,18 +234,18 @@ extern void *MemMgr_Malloc(unsigned int size);
 extern void MemMgr_Free(void *pvAddr);
 extern void MemMgr_FreeAll();
 
-//»ñÈ¡Ã¿Ò»ĞĞµÄkey£¬ÓÃÓÚÔÚÄ£°åÎÄ¼şÖĞÕÒµ½¶ÔÓ¦µÄÄÚÈİ£¬²¢ºÍbinÎÄ¼şÖĞµÄ¶ÔÓ¦ĞĞ½øĞĞºÏ²¢
-//¶ÔÓÚÃ»ÓĞkeyµÄĞĞ£¬Ôò´«¿ÕÖ¸Õë£¬Ö»ÄÜ¸ù¾İĞĞºÅ¶ÔÓ¦ÁË
+//è·å–æ¯ä¸€è¡Œçš„keyï¼Œç”¨äºåœ¨æ¨¡æ¿æ–‡ä»¶ä¸­æ‰¾åˆ°å¯¹åº”çš„å†…å®¹ï¼Œå¹¶å’Œbinæ–‡ä»¶ä¸­çš„å¯¹åº”è¡Œè¿›è¡Œåˆå¹¶
+//å¯¹äºæ²¡æœ‰keyçš„è¡Œï¼Œåˆ™ä¼ ç©ºæŒ‡é’ˆï¼Œåªèƒ½æ ¹æ®è¡Œå·å¯¹åº”äº†
 typedef char * (*fnGetKey) (void *pvLineInfo, char *acKey, unsigned int *iKeyLen);
-//×ª»»valueµÄÄÚÈİ£¬±ÈÈç¸ù¾İË÷ÒıÖµ£¬µ½ÁíÒ»ÎÄ¼şÖĞ²éÕÒ¶ÔÓ¦µÄ×Ö·û´®
+//è½¬æ¢valueçš„å†…å®¹ï¼Œæ¯”å¦‚æ ¹æ®ç´¢å¼•å€¼ï¼Œåˆ°å¦ä¸€æ–‡ä»¶ä¸­æŸ¥æ‰¾å¯¹åº”çš„å­—ç¬¦ä¸²
 typedef int (*fnConvertValue) (void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput);
-//bitÎ»´¦Àí½Ó¿Ú
+//bitä½å¤„ç†æ¥å£
 typedef int (*fnBitProc) (void *pvLineInfo, char *acKey, char *acOutput);
-//ÌØÊâ×Ö¶Î´¦Àí½Ó¿Ú£¬µ±binÎÄ¼şÖĞÃ»ÓĞ´¦ÀíÄ³¸ö×Ö¶ÎµÄÊ±ºò£¬¿ÉÒÔÔÚÕâÀïÉú³ÉÖµ£¬·ñÔò¾ÍÖ±½ÓÊ¹ÓÃÄ£°åÎÄ¼şÀïµÄÄÚÈİ
+//ç‰¹æ®Šå­—æ®µå¤„ç†æ¥å£ï¼Œå½“binæ–‡ä»¶ä¸­æ²¡æœ‰å¤„ç†æŸä¸ªå­—æ®µçš„æ—¶å€™ï¼Œå¯ä»¥åœ¨è¿™é‡Œç”Ÿæˆå€¼ï¼Œå¦åˆ™å°±ç›´æ¥ä½¿ç”¨æ¨¡æ¿æ–‡ä»¶é‡Œçš„å†…å®¹
 typedef int (*fnFieldProc) (void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput);
-//Í¨Öª¸ÃÄ£¿é£¬binÎÄ¼şµÄĞĞÊı£¬±ãÓÚ·ÖÅäÄÚ´æ
+//é€šçŸ¥è¯¥æ¨¡å—ï¼Œbinæ–‡ä»¶çš„è¡Œæ•°ï¼Œä¾¿äºåˆ†é…å†…å­˜
 typedef void (*fnSetFileLines)(unsigned int uiLines);
-//Í¨Öª¸ÃÄ£¿éÊÍ·ÅÄÚ´æ
+//é€šçŸ¥è¯¥æ¨¡å—é‡Šæ”¾å†…å­˜
 typedef void (*fnFinished)();
 
 typedef struct
@@ -264,7 +264,7 @@ typedef struct
     char **ppcKeyInternalProcess;
 } ST_CALLBACK;
 
-//¹«¹²ÁÙÊ±buffer
+//å…¬å…±ä¸´æ—¶buffer
 #define MAX_FILE_SIZE   (10 * 1024 * 1024)
 #define m_iGlobaBufLength   MAX_FILE_SIZE
 extern char m_acGlobalBuffer[];
@@ -327,7 +327,7 @@ extern unsigned int Operater_GetOpLevel(ENUM_OPERATER_TYPE enOpType);
 extern ENUM_OPERATER_LEFTRIGHT Operater_GetLeftRight(ENUM_OPERATER_TYPE enOpType);
 extern ENUM_OPERATER_ARGNUM Operater_GetArgNum(ENUM_OPERATER_TYPE enOpType);
 
-//ÎÄ¼ş´¦ÀíÍ³Ò»Èë¿Ú£¬ºÏ²¢Ä£°åºÍbinÎÄ¼şµÄ¶ÔÓ¦ÄÚÈİ
+//æ–‡ä»¶å¤„ç†ç»Ÿä¸€å…¥å£ï¼Œåˆå¹¶æ¨¡æ¿å’Œbinæ–‡ä»¶çš„å¯¹åº”å†…å®¹
 extern int process_file(char *acTemplatePath, char *acBinPath, char *acTxtPath, char *pcFilename,
     void *pvLineInfo, int iLineLength, ST_VALUE_MAP *pstValueMap, int iValueCount,
     ST_CALLBACK *pstCallback);
@@ -344,7 +344,7 @@ extern int Stack_Push(void *pvStack, unsigned char *pcElement, unsigned int uiEl
 extern int Stack_Pop(void *pvStack, unsigned char **ppcElement);
 extern int Stack_IsEmpty(void *pvStack);
 
-//ÒÔÏÂÊÇ¸÷¸öÄ£¿éÌá¹©µÄÍâ²¿½Ó¿Ú
+//ä»¥ä¸‹æ˜¯å„ä¸ªæ¨¡å—æä¾›çš„å¤–éƒ¨æ¥å£
 extern int process_arena(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
 
 extern int process_automap(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);

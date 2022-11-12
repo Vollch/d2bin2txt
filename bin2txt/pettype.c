@@ -41,23 +41,23 @@ eol = end of line.
 */
 
 /*
-PetType.txt �������ٻ�ϵ����pet->����->�ٻ�ϵ��
-A.pet type = �ٻ�ϵ������������golem-ʯħ��skeleton-���ã���skills.txt�еġ�pettype���вο���ֵ��
-B.idx = �ٻ�ϵ������ID
-C.group = �ٻ�ϵ�����ĸ��飬ÿһ��������ֻ����һ�����͵��ٻ�ϵ����druid��spiritwolf/fenris/grizzly����ʵ�ϣ�����pettype.txt��Ҳ�ͽ���һ�顣
-D.basemax = �в���ȷ�������������1=һ��ӵ�еĸ��ٻ��������ĿΪ1����0=��ͨ�����ܸı䡣
-E.warp = �ٻ�ϵ�Ƿ�������һ���͡����·�㣬��Ѩ��ڣ�townportals��1=���ԣ�0=��
-F.range = ���ٻ�ϵ�Ƿ�ʹ�÷�Χ������1=�ǣ�0=��
-G.partysend = �ٻ�ϵͼ���Ƿ������Ͻ���ʾ��1=�ǣ�0=��
-H.unsummon = ���ٻ�ϵ�Ƿ���ͨ�����ܡ�unsummon����ɢ��������ٻ���1=���ԣ�0=��
-I,automap = ���ٻ�ϵ�Ƿ���ʾ�ڵ�ͼ�ϡ�1=�ǣ�0=��
-J.name = ��ʾ���ٻ�ϵͼ���·����ַ����ļ���
-K.drawhp = �ٻ�ϵ������ֵ�Ƿ���ͼ���·���ʾ��1=�ǣ�0=��
-L.icontype = ���ٻ�ϵ��ͼ�����͡����ܾ�����ͼ������Ļ���Ϸ�������˳��1=��ߣ�2=�м䣬3=�ұߡ�
-M.baseicon = ���ٻ�ϵͼ���ʹ�õ�dc6�ļ���λ�ڡ�data\global\ui\hireables\ ����
-N/P/R/T.mclass1-4 = ��ѡ��ģ�ͬ���ͣ��ٻ�ϵ��hcldx���֣���ʯħ��
-O/Q/S/U.micon1-4 = ��ѡ����ٻ�ϵͼ�꣬dc6��ʽ��
-v.eol = �н�������0��
+PetType.txt 导引（召唤系）（pet->宠物->召唤系）
+A.pet type = 召唤系的类型名（如golem-石魔，skeleton-骷髅），skills.txt中的‘pettype’列参考此值。
+B.idx = 召唤系的数字ID
+C.group = 召唤系属于哪个组，每一个组中你只能有一种类型的召唤系，如druid的spiritwolf/fenris/grizzly，事实上，整个pettype.txt中也就仅此一组。
+D.basemax = 尚不能确定。可能情况：1=一次拥有的该召唤的最大数目为1个；0=可通过技能改变。
+E.warp = 召唤系是否能随你一起传送。如踩路点，洞穴入口，townportals。1=可以，0=否。
+F.range = 该召唤系是否使用范围攻击。1=是，0=否。
+G.partysend = 召唤系图标是否在左上角显示。1=是，0=否。
+H.unsummon = 该召唤系是否能通过技能’unsummon（解散）‘解除召唤。1=可以，0=否。
+I,automap = 该召唤系是否显示在地图上。1=是，0=否。
+J.name = 显示在召唤系图标下方的字符串文件。
+K.drawhp = 召唤系的生命值是否在图标下方显示。1=是，0=否。
+L.icontype = 该召唤系的图标类型。可能决定了图标在屏幕左上方的排列顺序，1=左边，2=中间，3=右边。
+M.baseicon = 该召唤系图标的使用的dc6文件，位于’data\global\ui\hireables\ ‘。
+N/P/R/T.mclass1-4 = 供选择的（同类型）召唤系的hcldx数字，如石魔。
+O/Q/S/U.micon1-4 = 供选择的召唤系图标，dc6格式。
+v.eol = 行结束符‘0’
 */
 
 typedef struct

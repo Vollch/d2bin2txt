@@ -73,167 +73,167 @@ Add - The hard amount that is added to the price of this item when this affix is
 */
 
 /*
-�ļ���1��MagicPrefix.txt
-�ļ���2��MagicSuffix.txt
-�ļ�·�������������ļ���/data/global/excel/
+文件名1：MagicPrefix.txt
+文件名2：MagicSuffix.txt
+文件路径：暗黑所在文件夹/data/global/excel/
 
 
 ()
-����
+打赏
 
-    �ظ�
+    回复
 
-    1¥
+    1楼
     2011-09-16 23:28
 
-    �ٱ� |
+    举报 |
 
-���ɾ�Ʒ
-�������ԡ�Buildһ������Mana�Ķ���SOR
-�������������ߵ�2��BoxTool�������
-[���һˮ]DOS��Ϸ���ɴ��ͼ..
-���¾��䣺׷�䡶�����ƻ���1��
-���ɾ�Ʒ
-�����ʳ�Ʒ����������ȤMOD����~
-ʮ��֮���㻹�᲻��򿪰���2�������ڴ��Ŀ�ʼMFô
-�����벩������MOD��---------�������ƻ���---����桿
-��������solo���ܻ�ʥ��
+本吧精品
+【受属性】Build一个不掉Mana的顶球SOR
+大箱子整理工具第2版BoxTool终于完成
+[最后一水]DOS游戏怀旧大截图..
+重温经典：追忆《暗黑破坏神1》
+本吧精品
+【蚊帐出品】暗黑新乐趣MOD发布~
+十年之后，你还会不会打开暗黑2，满怀期待的开始MF么
+【毕须博须自制MOD】---------【暗吧破坏神---最初版】
+休闲娱乐solo：盾击圣骑
 
     zqtjingzi
-    С����
+    小吧主
     12
 
-�ļ���������
-Magic��ħ����������ָħ�����ԡ�
-Prefix��ǰ׺������ħ����׺�е�ǰ׺��
-Suffix����׺������ħ����׺�еĺ�׺��
-�����������ļ�����������ħ����׺ǰ׺���׺�������Ϣ��
-���ļ��е�ÿһ�б�ʾһ����׺ǰ׺���׺��
+文件名解析：
+Magic：魔法，在这里指魔法属性。
+Prefix：前缀，就是魔法词缀中的前缀。
+Suffix：后缀，就是魔法词缀中的后缀。
+所以这两个文件描述了所有魔法词缀前缀与后缀的相关信息。
+此文件中的每一行表示一个词缀前缀或后缀。
 
 
-�ظ�
+回复
 
-    2¥
+    2楼
     2011-09-16 23:29
 
-    �ٱ� |
+    举报 |
 
     zqtjingzi
-    С����
+    小吧主
     12
 
-����˵����֮���԰��������ļ�����һ��˵������Ϊ���������е��м�����һģһ���ġ�
+特殊说明：之所以把这两个文件放在一起说明是因为它们所含有的列几乎是一模一样的。
 
 
-�ظ�
+回复
 
-    3¥
+    3楼
     2011-09-16 23:29
 
-    �ٱ� |
+    举报 |
 
     zqtjingzi
-    С����
+    小吧主
     12
 
-ÿ�еĺ������£�
+每列的含义如下：
 
 
-�ظ�
+回复
 
-    4¥
+    4楼
     2011-09-16 23:29
 
-    �ٱ� |
+    举报 |
 
     zqtjingzi
-    С����
+    小吧主
     12
 
-Name��ǰ׺�����׺����
+Name：前缀名或后缀名。
 
-version�����õ������Ϸ�汾����0��-diabloԭ��;��100��-�ƻ�֮����
+version：适用的最低游戏版本。’0‘-diablo原版;‘100‘-破坏之王。
 
-spawnable���Ƿ������Ϸ�����ɡ�1=�ǣ�0=��
+spawnable：是否可在游戏中生成。1=是，0=否
 
-rare���˴�׺�Ƿ�����ϡ�У�������Ʒ�ϳ��֡���+3��ϵ���ܵĴ�׺����Ϊ0���������������Բ��ܳ�����ϡ�У�������Ʒ�ϡ�1=�ǣ�0=��
+rare：此词缀是否能在稀有（亮金）物品上出现。如+3单系技能的词缀此列为0，所以这样的属性不能出现在稀有（亮金）物品上。1=是，0=否
 
-level����׺�ȼ���ֻ�е���Ʒ�ȼ����ڴ˴�׺�Ĵ�׺�ȼ�ʱ���˴�׺�ſ��ܳ�������һ��Ʒ�ϡ�������ǰ׺������Ĺ��Ｖ��(������A)��
+level：词缀等级。只有当物品等级大于此词缀的词缀等级时，此词缀才可能出现在这一物品上。产生该前缀所必需的怪物级别(见附件A)。
 
-maxLevel����׺�ȼ����ޡ���������ֵʱ���˴�׺ֻ���������Ʒ�ȼ�С�ڴ˵ȼ�����Ʒ�ϡ���ǰ׺�ܲ�������󼶱��糬�������ٲ���(������A)��
+maxLevel：词缀等级上限。当此列有值时，此词缀只会出现在物品等级小于此等级的物品上。该前缀能产生的最大级别，如超过将不再产生(见附件A)。
 
-levelreq��ʹ�ô��д˴�׺��Ʒ�Ľ�ɫ�ȼ����󡣣������������ӻ�������
+levelreq：使用带有此词缀物品的角色等级需求。，可能用来增加基本需求
 
-classSpecfic���Ƿ�Ϊĳһְҵר�á�����Ϊ�ض���ɫ���ܲ�����ǰ׺(ama,sor,nec,pal,bar,dru,ass)��
+classSpecfic：是否为某一职业专用。设置为特定角色才能产生该前缀(ama,sor,nec,pal,bar,dru,ass)。
 
-class���Ƿ��ĳһְҵ�������ʹ�õȼ��������еĻ������е���дְҵ���롣�紫�;�����׺���Գ���ʦ�������ְҵʹ�õȼ�����Ϊ24��������ʦ18���͹��ˡ�
+class：是否对某一职业有特殊的使用等级需求。若有的话，此列当填写职业代码。如传送聚气词缀。对除法师外的所有职业使用等级至少为24级，而法师18级就够了。
 
-classLevelreq��������һ�У��ض�ְҵ������
+classLevelreq：紧跟上一列，特定职业的需求。
 
-frequency����ͬһ���׺�д˴�׺���ֵ�Ƶ�ʡ�
+frequency：在同一组词缀中此词缀出现的频率。
 
-group����׺�����Ĵ�׺�顣��ÿһ����Ʒ���ԣ�����ͬһ��׺��Ĵ�׺ֻ�ܳ���һ����
-�����Ƶ�����ǰ׺��ϣ��������伸��(������A)��
-M-X.(�ο������)
+group：词缀所属的词缀组。对每一个物品而言，属于同一词缀组的词缀只能出现一个。
+将类似的若干前缀组合，并计算其几率(见附件A)。
+M-X.(参考代码表)
 
-mod1Code���˴�׺�ĵ�1�����ԡ�
+mod1Code：此词缀的第1个属性。
 
-mod1Param���˴�׺�ĵ�1�����ԵĲ�����
+mod1Param：此词缀的第1个属性的参数。
 
-mod1Min���˴�׺�ĵ�1�����Ե���Сֵ������
+mod1Min：此词缀的第1个属性的最小值参数。
 
-mod1Max���˴�׺�ĵ�1�����Ե����ֵ������
+mod1Max：此词缀的第1个属性的最大值参数。
 
-���µ�mod2Code��mod3Max��8�зֱ��ʾ�˴�׺�ĵ�2��3�����ԣ����庬��ο���1�����ԵĽ��͡�
+以下的mod2Code至mod3Max这8列分别表示此词缀的第2、3个属性，具体含义参考第1条属性的解释。
 
 
 
-�ظ�
+回复
 
-    5¥
+    5楼
     2011-09-16 23:30
 
-    �ٱ� |
+    举报 |
 
     zqtjingzi
-    С����
+    小吧主
     12
 
-transform���˴�׺�Ƿ��ʹ��Ʒ��ɫ��1������ɫ��0��������ɫ��
+transform：此词缀是否会使物品变色。1代表变色，0代表不变色。
 
-transformColor�����˴�׺��ʹ��Ʒ��ɫʱ������Ʒ����ɵ���ɫ����Colors.txt������
+transformColor：当此词缀会使物品变色时，此物品所变成的颜色。与Colors.txt关联。
 
-itype1-7���˴�׺�����ڵĵ�1-7��װ�����͡�
+itype1-7：此词缀适用于的第1-7种装备类型。
 
-etype1-3(5)���˴�׺�����õĵ�1-3(5)��װ�����ͣ�����etypeӦ��ĳһitype�������͡�
+etype1-3(5)：此词缀不适用的第1-3(5)种装备类型，所有etype应是某一itype的子类型。
 
-˵������MagicPrefix.txt��etype����5�У���MagicSuffix.txt��etype����3�С�
-�˴�׺�����ܹ����õ�װ������Ϊsum(itype1-7) - sum(etype1-3(5))��������itype���ܺ��ٳ�ȥetype�е����͡�
+说明：在MagicPrefix.txt中etype共有5列，在MagicSuffix.txt中etype共有3列。
+此词缀最终能够适用的装备类型为sum(itype1-7) - sum(etype1-3(5))，即所有itype的总和再除去etype中的类型。
 
-divide���۸�����1������NPCʱ�ļ۸��������
+divide：价格因子1。卖给NPC时的价格减少因子
 
-multiply���۸�����2��
+multiply：价格因子2。
 
-add���۸�����3��
+add：价格因子3。
 
-*eol����β��־������Ϊ0��
+*eol：行尾标志，必须为0。
 
-����A -- �飬Ƶ�ʺ�ǰ׺�ľ����� 
+附件A -- 组，频率和前缀的决定： 
 
-#���ɸ����Ƶ�ǰ׺(һ��Ϊͬһ����,��Ȼ�����Ƿǵ����,)ͨ��һ�����ֱ�־���һ��Ⱥ�飬��121-152��32��ǰ׺������ͬһ��(101)������㶮һ��e�ĵĻ�����ᷢ�����Ƕ������ơ���ʥ��,ʥ��ġ�����˼(�确holy��,��saintly��)
-������Ϸ��Ѱ��һ�������õ�ǰ׺ʱ��ͬһ���е�ǰ׺��ֻ��ѡ��һ�����������Է�ֹǰ׺���ظ�(overlapping)������������+1 light radius��(��1������Χ)���������ʣ����Ƿǳ��˷ѵġ�
+#若干个类似的前缀(一般为同一类型,当然并不是非得如此,)通过一个数字标志组成一个群组，如121-152共32个前缀都属于同一组(101)，如果你懂一点e文的话，你会发现它们都有类似‘神圣的,圣洁的’的意思(如‘holy’,‘saintly’)
+！当游戏在寻找一个可利用的前缀时，同一组中的前缀它只会选择一个。这样可以防止前缀的重复(overlapping)，比如两个’+1 light radius‘(加1照亮范围)，毫无疑问，这是非常浪费的。
 
-#����Щǰ׺�ǿɻ�õġ���ͨ������ķ�ʽ����ó� ---- ��Ruvanal�ṩ
+#’哪些前缀是可获得的‘可通过下面的方式计算得出 ---- 由Ruvanal提供
 
-�Ƚ��ܼ������
-alvl = ǰ׺�ȼ�����һ����Ʒ���ԣ����������롮level���͡�maxlevel����ֵ���бȽ�(��level���͡�maxlevel��˵������,��Щ������ǰ׺�ͺ�׺���в鵽!)������ο�ĳ����ǰ׺/��׺��ʱ������ֵ���ڡ�level������
-ilvl = ���еȼ�(һ��ο���Ʒ�ȼ�(item level),��Ȼ�������Ʒ�Ĳ����ȼ�(item creation level)�Ļ������һЩ)����һ����Ʒ����(����˵������)ʱ�����ֵҲ��ͬʱ���趨�ˡ�
-mlvl = ����ȼ���
-clvl = ��ɫ�ȼ���
-qlvl = �����ȼ������ֵ������armor.txt,weapon.txt��misc.txt��level���鵽�����ֵ��������������(weapXX)�Ϳ���(armoXX)�ĲƸ�����(treasure classes)��
-magic_lvl = ĳЩ��Ʒ�ϵ�ħ���ȼ���������ĿǰΪֹ,ֻ��������Щ��Ʒ�����ֽ�����Ȩ��(��wands��,ֻ�ǡ���ͨ����չ����,��������),��(staves),����(��orbs��,ȡֵ1)��Ȧ��(��circlets��,circlet(ͷȦ)=3,Coronet(����)=8,Tiara(���ع�)=13,Diadem(����)=1.)��
+先介绍几个术语：
+alvl = 前缀等级。对一个物品而言，它被用来与‘level’和‘maxlevel’的值进行比较(‘level’和‘maxlevel’说明见上,这些可以在前缀和后缀表中查到!)。当你参考某个‘前缀/后缀’时，它的值就在‘level’栏。
+ilvl = 固有等级(一般参考物品等级(item level),当然如果是物品的产生等级(item creation level)的话会更好一些)。当一个物品产生(或者说被创造)时，这个值也就同时被设定了。
+mlvl = 怪物等级。
+clvl = 角色等级。
+qlvl = 质量等级。这个值可以在armor.txt,weapon.txt和misc.txt的level栏查到。这个值被用来产生武器(weapXX)和盔甲(armoXX)的财富级别(treasure classes)。
+magic_lvl = 某些物品上的魔法等级奖励。到目前为止,只有下面这些物品有这种奖励：权杖(‘wands’,只是‘普通和扩展级’,精华级无),杖(staves),天球(’orbs‘,取值1)和圈冠(‘circlets’,circlet(头圈)=3,Coronet(宝冠)=8,Tiara(三重冠)=13,Diadem(王冠)=1.)。
 
-��һ����ǰ׺����Ʒ����ʱ����alvl��ֵͨ������ķ����ӡ�ilvl���͡�qlvl��ֵ����õ�*��
+当一个有前缀的物品产生时，‘alvl’值通过下面的方法从‘ilvl’和‘qlvl’值计算得到*：
 If (ilvl>99) then {ilvl=99} 
 if (qlvl>ilvl) then {ilvl=qlvl} ;**
 if (magic_lvl>0) then {alvl=ilvl+magic_lvl} 
@@ -244,38 +244,38 @@ then {alvl=ilvl-qlvl/2}
 else {alvl=2*ilvl-99} 
 } 
 If (alvl>99) then {alvl=99} 
-*ע�����еļ�����(����ÿһ��)��ȡ������
-**ע������µġ�ilvl��ֵֻ�ڼ��������ʹ�á���������Ʒ�����ļ�(items data file)�еġ�ilvl��ֵ���ֲ��䡣 
+*注：所有的计算结果(包括每一步)均取整数。
+**注：这个新的‘ilvl’值只在计算过程中使用。储存在物品数据文件(items data file)中的‘ilvl’值保持不变。 
 
-#����Ϸ�Ѿ�֪����Щ��׺��������������ʱ������Ҫ֪����δӸ������ж���ѡ���ǰ׺����ѡ����ʵ�ǰ׺������������ɡ�frequency��(Ƶ��)������ɡ�
+#当游戏已经知道哪些词缀可以用来被分派时，它还要知道如何从给定的有多重选择的前缀组中选择合适的前缀。这个工作将由‘frequency’(频率)栏来完成。
 
-��Frequency��(Ƶ��)�����˸�ǰ׺��ѡ�еļ��ʣ�Ƶ��ֵԽ�߲�������Խ��
-�ٸ�����˵����
-���裺Mod1freq=5,Mod2freq=3,Mod3freq=2,Mod4freq=1
-���ֻ�ܲ���'Mod1'��'Mod2',��������ǵĸ������£�
+‘Frequency’(频率)决定了该前缀被选中的几率，频率值越高产生几率越大。
+举个例子说明：
+假设：Mod1freq=5,Mod2freq=3,Mod3freq=2,Mod4freq=1
+如果只能产生'Mod1'和'Mod2',则产生它们的概率如下：
 'Mod1' = 5/(5+3)=5/8=62.5%
 'Mod2' = 3/(5+3)=5/8=37.5%
-����ĸ����ξ��ܲ���,����Ӧ�ĸ������£�
+如果四个修饰均能产生,则相应的概率如下：
 'Mod1' = 5/(5+3+2+1) = 5/11=45.5%
 'Mod2' = 3/(5+3+2+1) = 3/11=27.3%
 'Mod3' = 2/(5+3+2+1) = 2/11=18.2%
 'Mod4' = 1/(5+3+2+1) = 1/11=9.1%
 
-��������Կ������������һ�����ߵĵȼ�(higher level)��ͨ��'maxlevel'������Щ������(lower quality)��ǰ׺�˵���ͨ���趨'maxlevel��ֵʹ����һ���������������ʹ��Щ���͵�ǰ׺�����еļ���(all levels)�϶����Ի�ã��Ӷ���Ч�ı�����Щǿ���(powerful)ǰ׺�ܾۼ�(
-pool)��һ��
+由上面可以看出，你可以在一个更高的等级(higher level)上通过'maxlevel'栏将那些低质量(lower quality)的前缀滤掉。通过设定'maxlevel‘值使其有一个交叠区，你可以使那些类型的前缀在所有的级别(all levels)上都可以获得，从而有效的保持那些强大的(powerful)前缀能聚集(
+pool)在一起。
 -------------------------------------------------------------------------------------
-����B -- itype & etype
+附件B -- itype & etype
 
-itype = Inclusion TYPE(��������) & etype = Exclusion TYPE(�ų�����)
+itype = Inclusion TYPE(包含类型) & etype = Exclusion TYPE(排除类型)
 
-���������һ�������Ĵ�׺������{itype}����������Ʒ�����ϲ����������ܲ�����{etype}����������Ʒ���͡�
+这个决定了一个给定的词缀可以在{itype}所包含的物品类型上产生，而不能产生于{etype}所包含的物品类型。
 
-���磺itype = {weap,armo} etype = {axe,helm,belt}
-�����ʾ�ô�׺���Բ��������е������Ϳ����ϣ������ڸ���,ͷ���������ϲ��ܲ�����
+比如：itype = {weap,armo} etype = {axe,helm,belt}
+这个表示该词缀可以产生在所有的武器和盔甲上，但是在斧子,头盔和腰带上不能产生。
 
-ͨ�����ַ���(�ڡ�itype���͡�etype�������趨��Ʒ����)������Կ���ĳ����Ʒ�Ƿ��ܲ���(����˵����)�ô�׺��������ĳ��(Щ)��׺ֻ���ڽ�(swords)�ϲ��������߲��������ڽ��ϲ�������Ȼ�����������֪������Ʒ�Ĵ��롣
+通过这种方法(在‘itype’和‘etype’里面设定物品类型)，你可以控制某类物品是否能产生(或者说接受)该词缀，比如让某个(些)词缀只能在剑(swords)上产生，或者不能让它在剑上产生。当然，首先你必须知道该物品的代码。
 
-ע�⣺���ϵ�˵��ͬ����Ӧ�������С�itype/etype����.txt�ļ�����automagic,rareprefix/suffix��
+注意：以上的说明同样适应于其他有‘itype/etype’的.txt文件，如automagic,rareprefix/suffix。
 
 */
 

@@ -465,184 +465,184 @@ Used by the reward of Anya's quest : is the Item Nameable ?
     0 = can't be personalized*/
 
 /*
-Name�����֣������ٶ�����˰ɣ���
+Name：名字（不用再多解释了吧）。
 
-Version����Ʒ�����ð汾�����Ắ��˵����0����1.07֮ǰ�İ汾��1����1.07֮��ķ�����Ƭ�汾��100��������Ƭ��
-    ��Ȼ����û����ôЩ�汾�ɹ�ʵ�飬�����������Ắ�Ļ���
-    �����һ����Ʒ�Ĵ�����ֵ���趨Ϊ100�Ļ�����ô�����޷���ԭ���г��֣���
+Version：物品所适用版本。按轻寒的说法是0代表1.07之前的版本，1代表1.07之后的非资料片版本，100代表资料片。
+    虽然本人没有那么些版本可供实验，但本人相信轻寒的话。
+    （如果一个物品的此项数值被设定为100的话，那么它将无法在原版中出现）。
 
-CompactSave������Ʒ�Ƿ�ѹ���洢��0������ѹ����1����ѹ��������ֻ��**��Կ��������û�б������ԵĽ�������Ϊ1���Խ�ʡ�洢�ռ䡣
+CompactSave：此物品是否被压缩存储。0代表不压缩，1代表压缩。往往只有**、钥匙这样的没有本身属性的将此列置为1，以节省存储空间。
 
-Rarity��ϡ�жȡ���ͬһTC�г��ֵĸ��ʣ�ֵԽ�����ĸ���Խ����ο���Ʒ����ԭ����
-    0 = ��װ�������޳�������Ʒ���κ���Ϣ��1���߸�������ֿ��Ե���������Ʒ�ĵ����ʡ�
-    ˵����������Ӧ��ӵ��1�����ϵĴ�����ֵ��Ϊ���װ����������Ϸ�ͻ�������޷��������С�
+Rarity：稀有度。在同一TC中出现的概率，值越大掉落的概率越大。请参考物品掉落原理。
+    0 = 从装备架中剔除此类物品的任何信息；1或者更大的数字可以调整此类物品的掉宝率。
+    说明：你至少应该拥有1个以上的此项数值不为零的装备，否则游戏就会出错而无法正常运行。
 
-Spawnable���Ƿ������Ϸ�����ɡ�1�������ԣ�0���������ԡ�����������ж���1��
-    �Ƿ��ܹ���NPC���ۡ�˵�����������ܷ񱻳��۵Ĺؼ��趨������������λ�ã����TXT�ļ������趨��1=�ܹ���NPC���ۣ�0=�޷����ۡ�
+Spawnable：是否可在游戏中生成。1代表可以，0代表不可以。不出意外此列都是1。
+    是否能够被NPC出售。说明：这里是能否被出售的关键设定，它高于其它位置（相关TXT文件）的设定。1=能够被NPC出售，0=无法出售。
 
-MinAc���˷��ߵķ���ֵ���ޡ�������õײĶ��Ǽ�Ʒ�Ļ��ͽ����и�Ϊ��MaxAcһ�����ɡ���ʵ��JPXXX������ô���ġ�
-    ��Ʒ����ͼ۸���Ҫע��ͬitemstatscost.txt�еĹ�����
+MinAc：此防具的防御值下限。如果想让底材都是极品的话就将此列改为和MaxAc一样即可。事实上JPXXX就是这么做的。
+    物品的最低价格；需要注意同itemstatscost.txt中的关联。
 
-MaxAc���˷��ߵķ���ֵ���ޡ�
-    ��Ʒ����߼۸���Ҫע��ͬitemstatscost.txt�еĹ�����
+MaxAc：此防具的防御值上限。
+    物品的最高价格；需要注意同itemstatscost.txt中的关联。
 
-Absorbs�����������е���˼��Ҳ��̫������²��Ƕ��˺�������Ч����
+Absorbs：惭愧，此列的意思我也不太清楚，猜测是对伤害的吸收效果。
 
-Speed���˷��߶��ٶȵĽ��ͳ̶ȡ�0���������ͣ�����Խ���ٶ�Խ����
-    �����ٶȵĲ�����Possitive value = �ٶȼ�����negative value = �����ٶȡ�
+Speed：此防具对速度的降低程度。0代表不降低，数字越大速度越慢。
+    控制速度的参数；Possitive value = 速度减慢，negative value = 提升速度。
 
-ReqStr��װ��������������Ҫ��ǿ׳����0-65535��
+ReqStr：装备的力量需求。需要的强壮点数0-65535。
 
-Block������ר�У������񵲸��ʡ������ʣ������ֵΪ75%����
+Block：盾牌专有，基础格挡概率。挡格率（最大数值为75%）。
 
-Durability���;ö����ޡ��;ö�0-255��
+Durability：耐久度上限。耐久度0-255。
 
-NoDurability��û���;öȣ��������޷��ƻ�����û�֮�У�����������ʱû�С�
-    �Ƿ��޷���1=�޷���, 0=ʹ�� ��durability�������á�
+NoDurability：没有耐久度，即天生无法破坏。如幻化之刃，但防具中暂时没有。
+    是否无法损坏1=无法损害, 0=使用 “durability”的设置。
 
-Level����Ʒ�ȼ���������ο��Ắ����Ʒ����ԭ����
+Level：物品等级。含义请参考轻寒的物品掉落原理。
 
-LevelReq��װ���ĵȼ����󡣽�ɫʹ����Ʒ����Ҫ�ļ���
+LevelReq：装备的等级需求。角色使用物品所需要的级别。
 
-Cost����Ʒ����ʱ�Ļ����۸�
+Cost：物品卖出时的基础价格。
 
-Gamble Cost��������Ӧ���Ǳ���������Ĳ�ʱ���ļ۸񣬵�ʵ����û��������ܣ����Դ���Ӧ��û�����á����Կ϶����Ǵ��в�Ӱ��Ĳ�ʱ�ļ۸�
+Gamble Cost：看名字应该是别人在你这赌博时出的价格，但实际上没有这个功能，所以此列应该没有作用。可以肯定的是此列不影响赌博时的价格。
 
-Code����Ʒ���롣�ڲ����룻Ϊ3���ֽڣ������Լ�����Ʒʱ�ر���
+Code：物品代码。内部代码；为3个字节，定制自己的物品时必备。
 
-NameStr��������������tbl�еļ�����ʵ������Code���Ǳ���һ�£�������ΪʲôҪ�������С�
-    ���������Ʒ���Ƶ���ӦTBL�ļ���û�ж������Ʒ�����ƣ��Ͳ�����������֡�
+NameStr：名字索引，即tbl中的键名，实际上与Code总是保持一致，不理解为什么要单做此列。
+    如果对于物品名称的相应TBL文件中没有定义此物品的名称，就采用这里的名字。
 
-Magic lvl����Ʒ��ħ���ȼ���������ο���Ʒ����ԭ������Ʒħ��������Ҫ�ļ���
+Magic lvl：物品的魔法等级。作用请参考物品掉落原理。物品魔法属性需要的级别。
 
-Auto prefix���Զ��������ԡ��編��ļ�Ѫ������ʥ��ר�öܵļ��˺���׼ȷ�ʡ���AutoMagic.txt������
+Auto prefix：自动附带属性。如法球的加血加蓝，圣骑专用盾的加伤害和准确率。与AutoMagic.txt关联。
 
-alternateGfx��DCC���롣����ɫʹ�ô���Ʒʱ�����õĶ�����
+alternateGfx：DCC代码。当角色使用此物品时所采用的动作。
 
-OpenBetaGfx��������û���Գ�������ʲô���á�
+OpenBetaGfx：惭愧，没测试出此列有什么作用。
 
-normcode������Ʒ����Ӧ����ͨ�������Ʒ�Ĵ��롣
+normcode：此物品所对应的普通级别的物品的代码。
 
-ubercode������Ʒ����Ӧ����չ�������Ʒ�Ĵ��롣
+ubercode：此物品所对应的扩展级别的物品的代码。
 
-ultracode������Ʒ����Ӧ�ľ����������Ʒ�Ĵ��롣
+ultracode：此物品所对应的精华级别的物品的代码。
 
-spelloffset����������Ч������ʵ���Ϻ���û�д�Ч��������Ҳû��ʹ�á�
+spelloffset：法术抵消效果。但实际上好像没有此效果，此列也没有使用。
 
-component����ɫʹ�ô���Ʒʱ��������һ�㣨Layer����ͬ�ļ������������ҳ����ģ���Ҳû���⡣
+component：角色使用此物品时，采用哪一层（Layer）；同文件关联。这是我抄来的，我也没理解。
 
-invwidth����Ʒ����Ʒ���еĿ��ȡ�
+invwidth：物品在物品栏中的宽度。
 
-invheight����Ʒ����Ʒ���еĸ߶ȡ�
+invheight：物品在物品栏中的高度。
 
-hasinv����Ʒ�Ƿ��ܹ�����ף�1�ܹ���ף�0���ܴ�ס�
-    ������Ե�itemtypes.txt�ļ��е�MaxSock������ȷ���׵�������һ�������õ���ֵΪ1/25/40����
+hasinv：物品是否能够被打孔；1能够打孔，0不能打孔。
+    （你可以到itemtypes.txt文件中的MaxSock参数下确定孔的数量，一般所采用的数值为1/25/40）。
 
-gemsockets����Ʒ�������������������ܳ�������Ʒ��������������������������Ϊ׼��
+gemsockets：物品所允许的最大孔数，不能超过此物品所属类别的最大孔数，否则以类别的为准。
 
-gemapplytype������Ʒ����Ƕ�ϱ�ʯ����Ʒ��ʹ�ñ�ʯ������Ч����0=������1=װ��/ͷ����2=���ߡ�
+gemapplytype：此物品在镶嵌上宝石类物品后使用宝石的那种效果：0=武器；1=装备/头盔；2=防具。
 
-flippyfile����Ʒ�����ʹ�õ�ͼ��ָ�롣����ʱ�����õ�Ӱ��
+flippyfile：物品外观所使用的图标指针。掉落时所采用的影象。
 
-invfile����Ʒ����Ʒ������ʹ�õ�ͼ��ָ�롣
+invfile：物品在物品栏中所使用的图标指针。
 
-uniqueinvfile����װ���ײĶ�Ӧ��Ψһ��Ʒ��������ʹ�õ�ͼ��ָ�롣
+uniqueinvfile：此装备底材对应的唯一物品（暗金）所使用的图标指针。
 
-setinvfile����װ���ײĶ�Ӧ����װ����Ʒ��ʹ�õ�ͼ��ָ�롣
+setinvfile：此装备底材对应的套装中物品所使用的图标指针。
 
-Character Armor gfx display:��ɫ���ô�����Ʒʱ�Ķ�����0=����ʾ��1=����װ����2=����װ������
-����6�б�ʾ��ɫ��װ����װ��������6����λ�ı仯��0��ʾû�仯��1��ʾ���ղ���װ���仯��2��ʾ��������װ���仯��
-rArm =����
-lArm =����
-Torso = ����
-Legs = ��
-rSPad = �Ҽ��
-lSPad = ����
+Character Armor gfx display:角色采用此种物品时的动作（0=无显示；1=布类装备；2=铁类装备）。
+此下6列表示角色在装备此装备后身上6个部位的变化。0表示没变化，1表示按照布类装备变化，2表示按照铁类装备变化。
+rArm =右手
+lArm =左手
+Torso = 盔甲
+Legs = 腿
+rSPad = 右肩膀
+lSPad = 左肩膀
 
-useable���ܷ����Ҽ�ʹ�á�0��ʾ�����ԣ�1��ʾ���ԡ�
+useable：能否用右键使用。0表示不可以，1表示可以。
 
-throwable���ܷ�Ͷ����0��ʾ�����ԣ�1��ʾ���ԡ�
+throwable：能否被投掷。0表示不可以，1表示可以。
 
-stackable��ͬ����Ʒ�ܷ���ӡ�0��ʾ�����ԣ�1��ʾ���ԡ����ʸ����Ϊ1��
+stackable：同种物品能否叠加。0表示不可以，1表示可以。如箭矢此列为1。
 
-minstack���ɵ�����Ʒ����ʱ����С������
+minstack：可叠加物品生成时的最小数量。
 
-maxstack���ɵ�����Ʒһ���ĵ����������
+maxstack：可叠加物品一摞的的最大数量。
 
-type���������͡�ͬitemtypes.txt������
+type：基本类型。同itemtypes.txt关联。
 
-type2����Ҫ���ͣ�ͬitemtypes.txt������
+type2：次要类型；同itemtypes.txt关联。
 
-dropsound����Ʒ����ʱ��������ͬsounds.txt������
+dropsound：物品掉落时的声音；同sounds.txt关联。
 
-dropsfxframe����Ʒ����ʱ������ռ��������
+dropsfxframe：物品掉落时动画所占的祯数。
 
-usesound����Ʒʹ��ʱ��������ͬsounds.txt������
+usesound：物品使用时的声音；同sounds.txt关联。
 
-unique������Ʒ�Ƿ�ֻ����Ψһ��������Ʒ��0��ʾ���ǣ�1�����ǡ��缪�ñ�����Ϊ1�����ڷ�����Ŀǰ��û����������Ʒ��
+unique：此物品是否只能是唯一（暗金）物品。0表示不是，1代表是。如吉得宝此列为1，但在防具中目前还没有这样的物品。
 
-transparent����֪��ʲô��˼�Ĳ�����������0��
+transparent：不知道什么意思的参数，但都填0。
 
-transtbl����֪��ʲô��˼�Ĳ�����������5��
+transtbl：不知道什么意思的参数，但都填5。
 
-quivered���Ƿ��ǳ��ײ���ʹ�õ���Ʒ��Ŀǰֻ�й������ǡ�1=�ǣ�0=��
+quivered：是否是成套才能使用的物品，目前只有弓和弩是。1=是，0=否。
 
-lightradius����֪��ʲô��˼�Ĳ�����
+lightradius：不知道什么意思的参数。
 
-belt������ר�ã���ʾ��belts.txt�е�λ�á�
+belt：腰带专用，表示在belts.txt中的位置。
 
-quest��������Ʒר�ã���������ı�š�
+quest：任务物品专用，所属任务的编号。
 
-missiletype��Ͷ����Ʒר�á�Ͷ��������Ʒ�����ͣ�ͬmissiles.txt�ļ�������
+missiletype：投掷物品专用。投掷出的物品的类型，同missiles.txt文件关联。
 
-durwarning�����;öȽ��͵�����ʱ������Ʒ����ʾ��������Ļ�ҷ���ͼ����ʾ����
+durwarning：在耐久度降低到多少时出现物品损坏提示（就是屏幕右方的图标提示）。
 
-qntwarning���ɵ�����Ʒר�ã����������½�������ʱ��������������ʾ��
+qntwarning：可叠加物品专用，在数量在下降到多少时出现数量不足提示。
 
-mindam����С�˺�ֵ��������ֻ�ж��ƣ��ܻ�����Ь�ӣ��߻���ʹ�ô����ԡ�
+mindam：最小伤害值。防具中只有盾牌（盾击）可鞋子（踢击）使用此属性。
 
-maxdam������˺�ֵ��������ֻ�ж��ƣ��ܻ�����Ь�ӣ��߻���ʹ�ô����ԡ�
+maxdam：最大伤害值。防具中只有盾牌（盾击）可鞋子（踢击）使用此属性。
 
-StrBonus�������Դ�װ���˺�ֵ��Ӱ�����ӡ���ɫ���á��ߡ��������ʱ����ǿ׳��Ӱ�졣
+StrBonus：力量对此装备伤害值的影响因子。角色采用“踢”这个动作时对于强壮的影响。
 
-DexBonus�����ݶԴ�װ���˺�ֵ��Ӱ�����ӡ���ɫ���á��ߡ��������ʱ�������ݵ�Ӱ�졣
+DexBonus：敏捷对此装备伤害值的影响因子。角色采用“踢”这个动作时对于敏捷的影响。
 
-gemoffset����֪��ʲô��˼�Ĳ�����������0��
+gemoffset：不知道什么意思的参数，但都填0。
 
-bitfield1��װ�����ڲ��������͡�˵����1Ϊ������Ʒ��3Ϊ������Ʒ��
+bitfield1：装备的内部定义类型。说明：1为布类物品；3为铁类物品。
 
-***Min��������***��NPC���������Ʒʱ����С������
+***Min：名字是***的NPC出售这件物品时的最小数量。
 
-***Max��������***��NPC���������Ʒʱ�����������
+***Max：名字是***的NPC出售这件物品时的最大数量。
 
-***MagicMin��NPC���������Ʒʱ�����ܰ�����ħ�����Ե���������Ϊ0��NPC�Ż����ħ����Ʒ��
+***MagicMin：NPC出售这件物品时其所能包含的魔法属性的最少项。此项不为0，NPC才会出售魔法物品。
 
-***MagicMax��NPC���������Ʒʱ�����ܰ�����ħ�����Ե������������1��NPC�Ż������2�����Ե�ħ����Ʒ��
+***MagicMax：NPC出售这件物品时其所能包含的魔法属性的最多项。此项大于1，NPC才会出售有2个属性的魔法物品。
 
-***MagicLvl��ħ����Ʒ�ڳ���ʱ���ܰ���������ħ��ǰ��׺����˵����ͬMagicPrefix.txt��MagicSuffix��AutoMagic�����ļ�������
+***MagicLvl：魔法物品在出售时所能包含的最大的魔法前后缀级别。说明：同MagicPrefix.txt、MagicSuffix、AutoMagic三个文件关联。
 
-Source Art����ʲôʲô��˼�Ĳ����������
+Source Art：不什么什么意思的参数，都不填。
 
-Game Art����֪��ʲô��˼�Ĳ����������
+Game Art：不知道什么意思的参数，都不填。
 
 
-Transform������������
-invTrans������������
-�������о�˵ҪЭͬʹ�á����������߳���ʹ����һ�����嶯����
+Transform：动作索引。
+invTrans：动作索引。
+以上两列据说要协同使用。索引，告诉程序使用哪一个整体动作。
 
-SkipName���Ƿ���ʾ�ײĵ����֡��缪�ñ���
+SkipName：是否不显示底材的名字。如吉得宝。
 
-NightmareUpgrade���ڡ����Ρ��Ѷ��£�����������Ʒ��NPC����ʲô��Ʒ��xxx��ʾ���������������΢����ҩ��hp1�ڴ��е�ֵΪhp4����ʾ����ͨ�Ѷ�����΢����ҩ����NPC�ڶ����Ѷȸ���ǿ��ҩ���ˡ�
+NightmareUpgrade：在“恶梦”难度下，会卖这种物品的NPC改卖什么物品（xxx表示还卖这个）。如轻微治疗药剂hp1在此列的值为hp4，表示在普通难度卖轻微治疗药剂的NPC在恶梦难度改卖强力药剂了。
 
-HellUpgrade���ڡ��������Ѷ��£�����������Ʒ��NPC����ʲô��Ʒ��xxx��ʾ���������������΢����ҩ��hp1�ڴ��е�ֵΪhp5����ʾ����ͨ�Ѷ�����΢����ҩ����NPC�ڶ����Ѷȸ�����������ҩ���ˡ�
+HellUpgrade：在“地狱”难度下，会卖此种物品的NPC改卖什么物品（xxx表示还卖这个）。如轻微治疗药剂hp1在此列的值为hp5，表示在普通难度卖轻微治疗药剂的NPC在恶梦难度改卖超级治疗药剂了。
 
-mindam����֪��ʲô��˼�Ĳ��������Ƕ���0��
+mindam：不知道什么意思的参数，但是都填0。
 
-PermStoreItem���Ƿ�����NPC���г��ۡ�
+PermStoreItem：是否总在NPC处有出售。
 
-maxdam����֪��ʲô��˼�Ĳ��������Ƕ���0��
+maxdam：不知道什么意思的参数，但是都填0。
 
-nameable���Ƿ��ܹ��������������ܷ񱻸��˻���0��ʾ���ܣ�1��ʾ�ܡ���ACT5�е�Q3
+nameable：是否能够被重命名，即能否被个人化。0表示不能，1表示能。如ACT5中的Q3
 
 */
 
@@ -1018,7 +1018,7 @@ static int Armor_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, c
     }
     else if ( !strcmp(acKey, "mindam") )
     {
-        //�ڶ���mindam���ã�ͳһ��0
+        //第二组mindam无用，统一填0
         if ( 0 == m_iMinDamFlag )
         {
             m_iMinDamFlag = 1;
@@ -1032,7 +1032,7 @@ static int Armor_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, c
     }
     else if ( !strcmp(acKey, "maxdam") )
     {
-        //�ڶ���maxdam���ã�ͳһ��0
+        //第二组maxdam无用，统一填0
         if ( 0 == m_iMaxDamFlag )
         {
             m_iMaxDamFlag = 1;

@@ -7,7 +7,7 @@
 #define STACK_HEAD  4
 
 /*
-ÓÅÏÈ¼¶´ı´¦Àí
+ä¼˜å…ˆçº§å¾…å¤„ç†
 
 par1
 04 08 00
@@ -1062,7 +1062,7 @@ int SkillsCode_ParseBin(char *acTemplatePath, char *acBinPath, char*acTxtPath)
         {
             case 0x04:
             case 0x07:
-                //byteĞÍÊı¾İ
+                //byteå‹æ•°æ®
                 if ( 1 != SkillsCode_ReadFile(&acTempBuf[STACK_HEAD], 1, sizeof(unsigned char), pfBinHandle) )
                 {
                     my_error("invalid tag %x\r\n", acTempBuf[0]);
@@ -1072,7 +1072,7 @@ int SkillsCode_ParseBin(char *acTemplatePath, char *acBinPath, char*acTxtPath)
                 break;
 
             case 0x08:
-                //shortĞÍÊı¾İ
+                //shortå‹æ•°æ®
                 if ( 2 != SkillsCode_ReadFile(&acTempBuf[STACK_HEAD], 1, sizeof(unsigned short), pfBinHandle) )
                 {
                     my_error("invalid tag %x\r\n", acTempBuf[0]);
@@ -1082,7 +1082,7 @@ int SkillsCode_ParseBin(char *acTemplatePath, char *acBinPath, char*acTxtPath)
                 break;
 
             case 0x09:
-                //intĞÍÊı¾İ
+                //intå‹æ•°æ®
                 if ( 4 != SkillsCode_ReadFile(&acTempBuf[STACK_HEAD], 1, sizeof(unsigned int), pfBinHandle) )
                 {
                     my_error("invalid tag %x\r\n", acTempBuf[0]);
@@ -1092,7 +1092,7 @@ int SkillsCode_ParseBin(char *acTemplatePath, char *acBinPath, char*acTxtPath)
                 break;
 
             case 0x00:
-                //±í´ïÊ½½áÊø
+                //è¡¨è¾¾å¼ç»“æŸ
                 Stack_Pop(m_pvStack, &pcTemp);
 
                 if ( 0 == Stack_IsEmpty(m_pvStack) )
@@ -1182,7 +1182,7 @@ int SkillsCode_ParseBin(char *acTemplatePath, char *acBinPath, char*acTxtPath)
         }
     }
 
-    //Ğ´»ØbinÎÄ¼ş
+    //å†™å›binæ–‡ä»¶
     for ( i = 0; i < m_uiSkillCodeCount; i++ )
     {
         memset(m_acGlobalBuffer, 0, m_iGlobaBufLength);

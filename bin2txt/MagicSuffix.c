@@ -3,148 +3,148 @@
 #define FILE_PREFIX "MagicSuffix"
 
 /*
-�ļ���1��MagicSuffix.txt
-�ļ���2��MagicSuffix.txt
-�ļ�·�������������ļ���/data/global/excel/
+文件名1：MagicSuffix.txt
+文件名2：MagicSuffix.txt
+文件路径：暗黑所在文件夹/data/global/excel/
 
 
 ()
-����
+打赏
 
-    �ظ�
+    回复
 
-    1¥
+    1楼
     2011-09-16 23:28
 
-    �ٱ� |
+    举报 |
 
-���ɾ�Ʒ
-�������ԡ�Buildһ������Mana�Ķ���SOR
-�������������ߵ�2��BoxTool�������
-[���һˮ]DOS��Ϸ���ɴ��ͼ..
-���¾��䣺׷�䡶�����ƻ���1��
-���ɾ�Ʒ
-�����ʳ�Ʒ����������ȤMOD����~
-ʮ��֮���㻹�᲻��򿪰���2�������ڴ��Ŀ�ʼMFô
-�����벩������MOD��---------�������ƻ���---����桿
-��������solo���ܻ�ʥ��
+本吧精品
+【受属性】Build一个不掉Mana的顶球SOR
+大箱子整理工具第2版BoxTool终于完成
+[最后一水]DOS游戏怀旧大截图..
+重温经典：追忆《暗黑破坏神1》
+本吧精品
+【蚊帐出品】暗黑新乐趣MOD发布~
+十年之后，你还会不会打开暗黑2，满怀期待的开始MF么
+【毕须博须自制MOD】---------【暗吧破坏神---最初版】
+休闲娱乐solo：盾击圣骑
 
     zqtjingzi
-    С����
+    小吧主
     12
 
-�ļ���������
-Magic��ħ����������ָħ�����ԡ�
-Suffix��ǰ׺������ħ����׺�е�ǰ׺��
-Suffix����׺������ħ����׺�еĺ�׺��
-�����������ļ�����������ħ����׺ǰ׺���׺�������Ϣ��
-���ļ��е�ÿһ�б�ʾһ����׺ǰ׺���׺��
+文件名解析：
+Magic：魔法，在这里指魔法属性。
+Suffix：前缀，就是魔法词缀中的前缀。
+Suffix：后缀，就是魔法词缀中的后缀。
+所以这两个文件描述了所有魔法词缀前缀与后缀的相关信息。
+此文件中的每一行表示一个词缀前缀或后缀。
 
 
-�ظ�
+回复
 
-    2¥
+    2楼
     2011-09-16 23:29
 
-    �ٱ� |
+    举报 |
 
     zqtjingzi
-    С����
+    小吧主
     12
 
-����˵����֮���԰��������ļ�����һ��˵������Ϊ���������е��м�����һģһ���ġ�
+特殊说明：之所以把这两个文件放在一起说明是因为它们所含有的列几乎是一模一样的。
 
 
-�ظ�
+回复
 
-    3¥
+    3楼
     2011-09-16 23:29
 
-    �ٱ� |
+    举报 |
 
     zqtjingzi
-    С����
+    小吧主
     12
 
-ÿ�еĺ������£�
+每列的含义如下：
 
 
-�ظ�
+回复
 
-    4¥
+    4楼
     2011-09-16 23:29
 
-    �ٱ� |
+    举报 |
 
     zqtjingzi
-    С����
+    小吧主
     12
 
-Name��ǰ׺�����׺����
+Name：前缀名或后缀名。
 
-version�����õ������Ϸ�汾��
+version：适用的最低游戏版本。
 
-spawnable���Ƿ������Ϸ�����ɡ�
+spawnable：是否可在游戏中生成。
 
-rare���˴�׺�Ƿ�����ϡ�У�������Ʒ�ϳ��֡���+3��ϵ���ܵĴ�׺����Ϊ0���������������Բ��ܳ�����ϡ�У�������Ʒ�ϡ�
+rare：此词缀是否能在稀有（亮金）物品上出现。如+3单系技能的词缀此列为0，所以这样的属性不能出现在稀有（亮金）物品上。
 
-level����׺�ȼ���ֻ�е���Ʒ�ȼ����ڴ˴�׺�Ĵ�׺�ȼ�ʱ���˴�׺�ſ��ܳ�������һ��Ʒ�ϡ�
+level：词缀等级。只有当物品等级大于此词缀的词缀等级时，此词缀才可能出现在这一物品上。
 
-maxLevel����׺�ȼ����ޡ���������ֵʱ���˴�׺ֻ���������Ʒ�ȼ�С�ڴ˵ȼ�����Ʒ�ϡ�
+maxLevel：词缀等级上限。当此列有值时，此词缀只会出现在物品等级小于此等级的物品上。
 
-levelreq��ʹ�ô��д˴�׺��Ʒ�Ľ�ɫ�ȼ�����
+levelreq：使用带有此词缀物品的角色等级需求。
 
-classSpecfic���Ƿ�Ϊĳһְҵר�á�
+classSpecfic：是否为某一职业专用。
 
-class���Ƿ��ĳһְҵ�������ʹ�õȼ��������еĻ������е���дְҵ���롣�紫�;�����׺���Գ���ʦ�������ְҵʹ�õȼ�����Ϊ24��������ʦ18���͹��ˡ�
+class：是否对某一职业有特殊的使用等级需求。若有的话，此列当填写职业代码。如传送聚气词缀。对除法师外的所有职业使用等级至少为24级，而法师18级就够了。
 
-classLevelreq��������һ�У��ض�ְҵ������
+classLevelreq：紧跟上一列，特定职业的需求。
 
-frequency����ͬһ���׺�д˴�׺���ֵ�Ƶ�ʡ�
+frequency：在同一组词缀中此词缀出现的频率。
 
-group����׺�����Ĵ�׺�顣��ÿһ����Ʒ���ԣ�����ͬһ��׺��Ĵ�׺ֻ�ܳ���һ����
+group：词缀所属的词缀组。对每一个物品而言，属于同一词缀组的词缀只能出现一个。
 
-mod1Code���˴�׺�ĵ�1�����ԡ�
+mod1Code：此词缀的第1个属性。
 
-mod1Param���˴�׺�ĵ�1�����ԵĲ�����
+mod1Param：此词缀的第1个属性的参数。
 
-mod1Min���˴�׺�ĵ�1�����Ե���Сֵ������
+mod1Min：此词缀的第1个属性的最小值参数。
 
-mod1Max���˴�׺�ĵ�1�����Ե����ֵ������
+mod1Max：此词缀的第1个属性的最大值参数。
 
-���µ�mod2Code��mod3Max��8�зֱ��ʾ�˴�׺�ĵ�2��3�����ԣ����庬��ο���1�����ԵĽ��͡�
+以下的mod2Code至mod3Max这8列分别表示此词缀的第2、3个属性，具体含义参考第1条属性的解释。
 
 
 
-�ظ�
+回复
 
-    5¥
+    5楼
     2011-09-16 23:30
 
-    �ٱ� |
+    举报 |
 
     zqtjingzi
-    С����
+    小吧主
     12
 
-transform���˴�׺�Ƿ��ʹ��Ʒ��ɫ��1������ɫ��0��������ɫ��
+transform：此词缀是否会使物品变色。1代表变色，0代表不变色。
 
-transformColor�����˴�׺��ʹ��Ʒ��ɫʱ������Ʒ����ɵ���ɫ����Colors.txt������
+transformColor：当此词缀会使物品变色时，此物品所变成的颜色。与Colors.txt关联。
 
-itype1-7���˴�׺�����ڵĵ�1-7��װ�����͡�
+itype1-7：此词缀适用于的第1-7种装备类型。
 
-etype1-3(5)���˴�׺�����õĵ�1-3(5)��װ�����ͣ�����etypeӦ��ĳһitype�������͡�
+etype1-3(5)：此词缀不适用的第1-3(5)种装备类型，所有etype应是某一itype的子类型。
 
-˵������MagicSuffix.txt��etype����5�У���MagicSuffix.txt��etype����3�С�
-�˴�׺�����ܹ����õ�װ������Ϊsum(itype1-7) - sum(etype1-3(5))��������itype���ܺ��ٳ�ȥetype�е����͡�
+说明：在MagicSuffix.txt中etype共有5列，在MagicSuffix.txt中etype共有3列。
+此词缀最终能够适用的装备类型为sum(itype1-7) - sum(etype1-3(5))，即所有itype的总和再除去etype中的类型。
 
-divide���۸�����1��
+divide：价格因子1。
 
-multiply���۸�����2��
+multiply：价格因子2。
 
-add���۸�����3��
+add：价格因子3。
 
-*eol����β��־������Ϊ0��
+*eol：行尾标志，必须为0。
 */
 
 typedef struct

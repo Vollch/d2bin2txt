@@ -73,154 +73,154 @@ Selling price is not influenced by the amount of durability, it used to be like 
 */
 
 /*
-Npc.txtÎÄ¼þÒýµ¼¡£
+Npc.txtæ–‡ä»¶å¼•å¯¼ã€‚
 
-npc : NPCµÄÃû×Ö£»
+npc : NPCçš„åå­—ï¼›
 
-buy mult : NPC´ÓÍæ¼ÒÊÖÖÐ¹ºÂòÎïÆ·µÄ¼Û¸ñ±ÈÀý£»
+buy mult : NPCä»ŽçŽ©å®¶æ‰‹ä¸­è´­ä¹°ç‰©å“çš„ä»·æ ¼æ¯”ä¾‹ï¼›
 
-sell mult : NPCÏòÍæ¼Ò³öÂôÎïÆ·µÄ¼Û¸ñ±ÈÀý£»
+sell mult : NPCå‘çŽ©å®¶å‡ºå–ç‰©å“çš„ä»·æ ¼æ¯”ä¾‹ï¼›
 
-rep mult : NPCÐÞ¸´Íæ¼ÒÎïÆ·µÄ¼Û¸ñ±ÈÀý£»
+rep mult : NPCä¿®å¤çŽ©å®¶ç‰©å“çš„ä»·æ ¼æ¯”ä¾‹ï¼›
 
-questflag A : ÓÉÓÚÍê³ÉÁËNPCËùÖ¸¶¨µÄÈÎÎñ¶øÊ¹µÃNPCµÄ¼Û¸ñ±ÈÀý×÷³öµ÷Õû£»±ÈÈçËµ£¬¡°9¡±Õâ¸öÊýÖµ¾Í±íÊ¾ÄãÍê³ÉACT2µÄQ1ºóNPC¶ÔÆä¼Û¸ñ±ÈÀý×÷³öÁËµ÷Õû£»
+questflag A : ç”±äºŽå®Œæˆäº†NPCæ‰€æŒ‡å®šçš„ä»»åŠ¡è€Œä½¿å¾—NPCçš„ä»·æ ¼æ¯”ä¾‹ä½œå‡ºè°ƒæ•´ï¼›æ¯”å¦‚è¯´ï¼Œâ€œ9â€è¿™ä¸ªæ•°å€¼å°±è¡¨ç¤ºä½ å®ŒæˆACT2çš„Q1åŽNPCå¯¹å…¶ä»·æ ¼æ¯”ä¾‹ä½œå‡ºäº†è°ƒæ•´ï¼›
 
-questbuymult A : Íê³ÉÌØ¶¨ÈÎÎñºóNPC´ÓÍæ¼ÒÊÖÖÐ¹ºÂòÎïÆ·µÄ¼Û¸ñ±ÈÀý£»
+questbuymult A : å®Œæˆç‰¹å®šä»»åŠ¡åŽNPCä»ŽçŽ©å®¶æ‰‹ä¸­è´­ä¹°ç‰©å“çš„ä»·æ ¼æ¯”ä¾‹ï¼›
 
-questsellmult A : Íê³ÉÌØ¶¨ÈÎÎñºóNPCÏòÍæ¼Ò³öÂôÎïÆ·µÄ¼Û¸ñ±ÈÀý£»
+questsellmult A : å®Œæˆç‰¹å®šä»»åŠ¡åŽNPCå‘çŽ©å®¶å‡ºå–ç‰©å“çš„ä»·æ ¼æ¯”ä¾‹ï¼›
 
-questreplmult A : Íê³ÉÌØ¶¨ÈÎÎñºóNPCÐÞ¸´Íæ¼ÒÎïÆ·µÄ¼Û¸ñ±ÈÀý£»
+questreplmult A : å®Œæˆç‰¹å®šä»»åŠ¡åŽNPCä¿®å¤çŽ©å®¶ç‰©å“çš„ä»·æ ¼æ¯”ä¾‹ï¼›
 
-questflag B : ÓÉÓÚÍê³ÉÁËNPCËùÖ¸¶¨µÄÈÎÎñ£¨µÚ¶þ¸öÈÎÎñ£©¶øÊ¹µÃNPCµÄ¼Û¸ñ±ÈÀý×÷³öµ÷Õû£»
+questflag B : ç”±äºŽå®Œæˆäº†NPCæ‰€æŒ‡å®šçš„ä»»åŠ¡ï¼ˆç¬¬äºŒä¸ªä»»åŠ¡ï¼‰è€Œä½¿å¾—NPCçš„ä»·æ ¼æ¯”ä¾‹ä½œå‡ºè°ƒæ•´ï¼›
 
-questbuymult B : Íê³ÉÌØ¶¨ÈÎÎñ£¨µÚ¶þ¸öÈÎÎñ£©ºóNPC´ÓÍæ¼ÒÊÖÖÐ¹ºÂòÎïÆ·µÄ¼Û¸ñ±ÈÀý£»
+questbuymult B : å®Œæˆç‰¹å®šä»»åŠ¡ï¼ˆç¬¬äºŒä¸ªä»»åŠ¡ï¼‰åŽNPCä»ŽçŽ©å®¶æ‰‹ä¸­è´­ä¹°ç‰©å“çš„ä»·æ ¼æ¯”ä¾‹ï¼›
 
-questsellmult B : Íê³ÉÌØ¶¨ÈÎÎñ£¨µÚ¶þ¸öÈÎÎñ£©ºóNPCÏòÍæ¼Ò³öÂôÎïÆ·µÄ¼Û¸ñ±ÈÀý£»
+questsellmult B : å®Œæˆç‰¹å®šä»»åŠ¡ï¼ˆç¬¬äºŒä¸ªä»»åŠ¡ï¼‰åŽNPCå‘çŽ©å®¶å‡ºå–ç‰©å“çš„ä»·æ ¼æ¯”ä¾‹ï¼›
 
-questreplmult B : Íê³ÉÌØ¶¨ÈÎÎñ£¨µÚ¶þ¸öÈÎÎñ£©ºóNPCÐÞ¸´Íæ¼ÒÎïÆ·µÄ¼Û¸ñ±ÈÀý£»
+questreplmult B : å®Œæˆç‰¹å®šä»»åŠ¡ï¼ˆç¬¬äºŒä¸ªä»»åŠ¡ï¼‰åŽNPCä¿®å¤çŽ©å®¶ç‰©å“çš„ä»·æ ¼æ¯”ä¾‹ï¼›
 
-questflag C : ÓÉÓÚÍê³ÉÁËNPCËùÖ¸¶¨µÄÈÎÎñ£¨µÚÈý¸öÈÎÎñ£©¶øÊ¹µÃNPCµÄ¼Û¸ñ±ÈÀý×÷³öµ÷Õû£»
+questflag C : ç”±äºŽå®Œæˆäº†NPCæ‰€æŒ‡å®šçš„ä»»åŠ¡ï¼ˆç¬¬ä¸‰ä¸ªä»»åŠ¡ï¼‰è€Œä½¿å¾—NPCçš„ä»·æ ¼æ¯”ä¾‹ä½œå‡ºè°ƒæ•´ï¼›
 
-questbuymult C : Íê³ÉÌØ¶¨ÈÎÎñ£¨µÚÈý¸öÈÎÎñ£©ºóNPC´ÓÍæ¼ÒÊÖÖÐ¹ºÂòÎïÆ·µÄ¼Û¸ñ±ÈÀý£»
+questbuymult C : å®Œæˆç‰¹å®šä»»åŠ¡ï¼ˆç¬¬ä¸‰ä¸ªä»»åŠ¡ï¼‰åŽNPCä»ŽçŽ©å®¶æ‰‹ä¸­è´­ä¹°ç‰©å“çš„ä»·æ ¼æ¯”ä¾‹ï¼›
 
-questsellmult C : Íê³ÉÌØ¶¨ÈÎÎñ£¨µÚÈý¸öÈÎÎñ£©ºóNPCÏòÍæ¼Ò³öÂôÎïÆ·µÄ¼Û¸ñ±ÈÀý£»
+questsellmult C : å®Œæˆç‰¹å®šä»»åŠ¡ï¼ˆç¬¬ä¸‰ä¸ªä»»åŠ¡ï¼‰åŽNPCå‘çŽ©å®¶å‡ºå–ç‰©å“çš„ä»·æ ¼æ¯”ä¾‹ï¼›
 
-questreplmult C : Íê³ÉÌØ¶¨ÈÎÎñ£¨µÚÈý¸öÈÎÎñ£©ºóNPCÐÞ¸´Íæ¼ÒÎïÆ·µÄ¼Û¸ñ±ÈÀý£»
+questreplmult C : å®Œæˆç‰¹å®šä»»åŠ¡ï¼ˆç¬¬ä¸‰ä¸ªä»»åŠ¡ï¼‰åŽNPCä¿®å¤çŽ©å®¶ç‰©å“çš„ä»·æ ¼æ¯”ä¾‹ï¼›
 
-max buy : NPCÔÚ¡°ÆÕÍ¨¡±¼¶±ðÏÂ¹ºÂòÍæ¼ÒÎïÆ·µÄ¼Û¸ñÉÏÏÞ£»
+max buy : NPCåœ¨â€œæ™®é€šâ€çº§åˆ«ä¸‹è´­ä¹°çŽ©å®¶ç‰©å“çš„ä»·æ ¼ä¸Šé™ï¼›
 
-max buy (N) : NPCÔÚ¡°¶ñÃÎ¡±¼¶±ðÏÂ¹ºÂòÍæ¼ÒÎïÆ·µÄ¼Û¸ñÉÏÏÞ£»
+max buy (N) : NPCåœ¨â€œæ¶æ¢¦â€çº§åˆ«ä¸‹è´­ä¹°çŽ©å®¶ç‰©å“çš„ä»·æ ¼ä¸Šé™ï¼›
 
-max buy (H) : NPCÔÚ¡°µØÓü¡±¼¶±ðÏÂ¹ºÂòÍæ¼ÒÎïÆ·µÄ¼Û¸ñÉÏÏÞ¡£
+max buy (H) : NPCåœ¨â€œåœ°ç‹±â€çº§åˆ«ä¸‹è´­ä¹°çŽ©å®¶ç‰©å“çš„ä»·æ ¼ä¸Šé™ã€‚
 */
 
 /*
-ÎÄ¼þÃû½âÎö£º
-Npc£ºÍæÓÎÏ·µÄÓ¦¸Ã¶¼ÖªµÀÕâ¸ö´ÊµÄÒâË¼£¬ÕâÀïµ¥Ö¸¿ÉÒÔ³öÊÛ¶«Î÷µÄNPC¡£
-±¾ÎÄ¼þÃèÊöÁËËùÒÔ¿ÉÒÔ³öÊÛ¶«Î÷µÄNPCµÄÐÐÇé¡£
-´ËÎÄ¼þÖÐµÄÃ¿Ò»ÐÐ±íÊ¾Ò»¸öNPC¡£
+æ–‡ä»¶åè§£æžï¼š
+Npcï¼šçŽ©æ¸¸æˆçš„åº”è¯¥éƒ½çŸ¥é“è¿™ä¸ªè¯çš„æ„æ€ï¼Œè¿™é‡Œå•æŒ‡å¯ä»¥å‡ºå”®ä¸œè¥¿çš„NPCã€‚
+æœ¬æ–‡ä»¶æè¿°äº†æ‰€ä»¥å¯ä»¥å‡ºå”®ä¸œè¥¿çš„NPCçš„è¡Œæƒ…ã€‚
+æ­¤æ–‡ä»¶ä¸­çš„æ¯ä¸€è¡Œè¡¨ç¤ºä¸€ä¸ªNPCã€‚
 
 
-»Ø¸´
+å›žå¤
 
-    2Â¥
+    2æ¥¼
     2011-09-24 21:20
 
-    ¾Ù±¨ |
+    ä¸¾æŠ¥ |
 
     zqtjingzi
-    Ð¡°ÉÖ÷
+    å°å§ä¸»
     12
 
-Ã¿ÁÐµÄº¬ÒåÈçÏÂ£º
+æ¯åˆ—çš„å«ä¹‰å¦‚ä¸‹ï¼š
 
 
-»Ø¸´
+å›žå¤
 
-    3Â¥
+    3æ¥¼
     2011-09-24 21:20
 
-    ¾Ù±¨ |
+    ä¸¾æŠ¥ |
 
     zqtjingzi
-    Ð¡°ÉÖ÷
+    å°å§ä¸»
     12
 
-npc£º´ËNPCµÄÃû×Ö£¬Ò²monstats.txt¹ØÁª¡£
+npcï¼šæ­¤NPCçš„åå­—ï¼Œä¹Ÿmonstats.txtå…³è”ã€‚
 
-buy mult£ºÔÚ´ËNPC´¦³öÊÛÎïÆ·Ê±µÄ¼Û¸ñ»ùÊý¡£¼Ç×÷b0¡£
+buy multï¼šåœ¨æ­¤NPCå¤„å‡ºå”®ç‰©å“æ—¶çš„ä»·æ ¼åŸºæ•°ã€‚è®°ä½œb0ã€‚
 
-sell mult£ºÔÚ´ËNPC´¦¹ºÂòÎïÆ·Ê±µÄ¼Û¸ñ»ùÊý¡£¼Ç×÷c0¡£
+sell multï¼šåœ¨æ­¤NPCå¤„è´­ä¹°ç‰©å“æ—¶çš„ä»·æ ¼åŸºæ•°ã€‚è®°ä½œc0ã€‚
 
-rep mult£ºÔÚ´ËNPC´¦ÐÞÀíÎïÆ·Ê±µÄ¼Û¸ñ»ùÊý¡£¼Ç×÷r0¡£
+rep multï¼šåœ¨æ­¤NPCå¤„ä¿®ç†ç‰©å“æ—¶çš„ä»·æ ¼åŸºæ•°ã€‚è®°ä½œr0ã€‚
 
-questflag A£ºÄÄ¸öÈÎÎñ»áÓ°Ïì´ËNPCµÄ¼Û¸ñ»ùÊý¡£¼Ç×÷ÈÎÎñA¡£
+questflag Aï¼šå“ªä¸ªä»»åŠ¡ä¼šå½±å“æ­¤NPCçš„ä»·æ ¼åŸºæ•°ã€‚è®°ä½œä»»åŠ¡Aã€‚
 
-questbuymult A£ºÍê³ÉÈÎÎñAºóÔÚ´ËNPC´¦³öÊÛÎïÆ·Ê±µÄ¶îÍâ¼Û¸ñ»ùÊý¡£¼Ç×÷bA¡£
+questbuymult Aï¼šå®Œæˆä»»åŠ¡AåŽåœ¨æ­¤NPCå¤„å‡ºå”®ç‰©å“æ—¶çš„é¢å¤–ä»·æ ¼åŸºæ•°ã€‚è®°ä½œbAã€‚
 
-questsellmult A£ºÍê³ÉÈÎÎñAºóÔÚ´ËNPC´¦¹ºÂòÎïÆ·Ê±µÄ¶îÍâ¼Û¸ñ»ùÊý¡£¼Ç×÷sA¡£
+questsellmult Aï¼šå®Œæˆä»»åŠ¡AåŽåœ¨æ­¤NPCå¤„è´­ä¹°ç‰©å“æ—¶çš„é¢å¤–ä»·æ ¼åŸºæ•°ã€‚è®°ä½œsAã€‚
 
-questreplmult A£ºÍê³ÉÈÎÎñAºóÔÚ´ËNPC´¦ÐÞÀíÎïÆ·Ê±µÄ¶îÍâ¼Û¸ñ»ùÊý¡£¼Ç×÷rA¡£
+questreplmult Aï¼šå®Œæˆä»»åŠ¡AåŽåœ¨æ­¤NPCå¤„ä¿®ç†ç‰©å“æ—¶çš„é¢å¤–ä»·æ ¼åŸºæ•°ã€‚è®°ä½œrAã€‚
 
-questflag B£º»¹ÓÐÄÄ¸öÈÎÎñ»áÓ°Ïì´ËNPCµÄ¼Û¸ñ»ùÊý¡£¼Ç×÷ÈÎÎñB¡£
+questflag Bï¼šè¿˜æœ‰å“ªä¸ªä»»åŠ¡ä¼šå½±å“æ­¤NPCçš„ä»·æ ¼åŸºæ•°ã€‚è®°ä½œä»»åŠ¡Bã€‚
 
-questbuymult B£ºÍê³ÉÈÎÎñBºóÔÚ´ËNPC´¦³öÊÛÎïÆ·Ê±µÄ¶îÍâ¼Û¸ñ»ùÊý¡£¼Ç×÷bB¡£
+questbuymult Bï¼šå®Œæˆä»»åŠ¡BåŽåœ¨æ­¤NPCå¤„å‡ºå”®ç‰©å“æ—¶çš„é¢å¤–ä»·æ ¼åŸºæ•°ã€‚è®°ä½œbBã€‚
 
-questsellmult B£ºÍê³ÉÈÎÎñBºóÔÚ´ËNPC´¦³öÊÛÎïÆ·Ê±µÄ¶îÍâ¼Û¸ñ»ùÊý¡£¼Ç×÷sB¡£
+questsellmult Bï¼šå®Œæˆä»»åŠ¡BåŽåœ¨æ­¤NPCå¤„å‡ºå”®ç‰©å“æ—¶çš„é¢å¤–ä»·æ ¼åŸºæ•°ã€‚è®°ä½œsBã€‚
 
-questreplmult B£ºÍê³ÉÈÎÎñBºóÔÚ´ËNPC´¦³öÊÛÎïÆ·Ê±µÄ¶îÍâ¼Û¸ñ»ùÊý¡£¼Ç×÷rB¡£
+questreplmult Bï¼šå®Œæˆä»»åŠ¡BåŽåœ¨æ­¤NPCå¤„å‡ºå”®ç‰©å“æ—¶çš„é¢å¤–ä»·æ ¼åŸºæ•°ã€‚è®°ä½œrBã€‚
 
-questflag C£ºÓÖÓÐÄÄ¸öÈÎÎñ»áÓ°Ïì´ËNPCµÄ¼Û¸ñ»ùÊý¡£¼Ç×÷ÈÎÎñC¡£
+questflag Cï¼šåˆæœ‰å“ªä¸ªä»»åŠ¡ä¼šå½±å“æ­¤NPCçš„ä»·æ ¼åŸºæ•°ã€‚è®°ä½œä»»åŠ¡Cã€‚
 
-questbuymult C£ºÍê³ÉÈÎÎñCºóÔÚ´ËNPC´¦³öÊÛÎïÆ·Ê±µÄ¶îÍâ¼Û¸ñ»ùÊý¡£¼Ç×÷bC¡£
+questbuymult Cï¼šå®Œæˆä»»åŠ¡CåŽåœ¨æ­¤NPCå¤„å‡ºå”®ç‰©å“æ—¶çš„é¢å¤–ä»·æ ¼åŸºæ•°ã€‚è®°ä½œbCã€‚
 
-questsellmult C£ºÍê³ÉÈÎÎñCºóÔÚ´ËNPC´¦³öÊÛÎïÆ·Ê±µÄ¶îÍâ¼Û¸ñ»ùÊý¡£¼Ç×÷sC¡£
+questsellmult Cï¼šå®Œæˆä»»åŠ¡CåŽåœ¨æ­¤NPCå¤„å‡ºå”®ç‰©å“æ—¶çš„é¢å¤–ä»·æ ¼åŸºæ•°ã€‚è®°ä½œsCã€‚
 
-questreplmult C£ºÍê³ÉÈÎÎñCºóÔÚ´ËNPC´¦³öÊÛÎïÆ·Ê±µÄ¶îÍâ¼Û¸ñ»ùÊý¡£¼Ç×÷rC¡£
+questreplmult Cï¼šå®Œæˆä»»åŠ¡CåŽåœ¨æ­¤NPCå¤„å‡ºå”®ç‰©å“æ—¶çš„é¢å¤–ä»·æ ¼åŸºæ•°ã€‚è®°ä½œrCã€‚
 
-max buy£ºÆÕÍ¨ÄÑ¶ÈÏÂÔÚ´ËNPC´¦³öÊÛÎïÆ·Ê±µÄ×î¸ß¼Û¸ñ¡£
+max buyï¼šæ™®é€šéš¾åº¦ä¸‹åœ¨æ­¤NPCå¤„å‡ºå”®ç‰©å“æ—¶çš„æœ€é«˜ä»·æ ¼ã€‚
 
-max buy (N)£º¶ñÃÎÄÑ¶ÈÏÂÔÚ´ËNPC´¦³öÊÛÎïÆ·Ê±µÄ×î¸ß¼Û¸ñ¡£
+max buy (N)ï¼šæ¶æ¢¦éš¾åº¦ä¸‹åœ¨æ­¤NPCå¤„å‡ºå”®ç‰©å“æ—¶çš„æœ€é«˜ä»·æ ¼ã€‚
 
-max buy (H)£ºµØÓüÄÑ¶ÈÏÂÔÚ´ËNPC´¦³öÊÛÎïÆ·Ê±µÄ×î¸ß¼Û¸ñ¡£
+max buy (H)ï¼šåœ°ç‹±éš¾åº¦ä¸‹åœ¨æ­¤NPCå¤„å‡ºå”®ç‰©å“æ—¶çš„æœ€é«˜ä»·æ ¼ã€‚
 
 
-»Ø¸´
+å›žå¤
 
-    4Â¥
+    4æ¥¼
     2011-09-24 21:21
 
-    ¾Ù±¨ |
+    ä¸¾æŠ¥ |
 
     zqtjingzi
-    Ð¡°ÉÖ÷
+    å°å§ä¸»
     12
 
-²¹³äËµÃ÷1£º
-×îÖÕ¼Û¸ñµÄ¼ÆËã£º
-¼ÙÉèA¡¢B¡¢C¶¼²»Îª0¡£Ôò£º
-³öÊÛ¼Û¸ñ = Ô­ÎïÆ·¼Û¸ñ * (b0 / 1024) * (bA / 1024) * (bB / 1024) * (bC / 1024) //³öÊÛÊ±²»ÊÜÄÍ¾Ã¶ÈÓ°Ïì¡£
-¹ºÂò¼Û¸ñ = Ô­ÎïÆ·¼Û¸ñ * (s0 / 1024) * (sA / 1024) * (sB / 1024) * (sC / 1024) //¹ºÂòÊ±ÄÍ¾Ã¶È¶¼ÎªÂúÖµ¡£
-ÐÞÀí¼Û¸ñ = Ô­ÎïÆ·¼Û¸ñ * (ÒÑÈ±Ê§µÄÄÍ¾Ã¶È / ×ÜÄÍ¾Ã¶È) * (r0 / 1024) * (rA / 1024) * (rB / 1024) * (rC / 1024)
+è¡¥å……è¯´æ˜Ž1ï¼š
+æœ€ç»ˆä»·æ ¼çš„è®¡ç®—ï¼š
+å‡è®¾Aã€Bã€Céƒ½ä¸ä¸º0ã€‚åˆ™ï¼š
+å‡ºå”®ä»·æ ¼ = åŽŸç‰©å“ä»·æ ¼ * (b0 / 1024) * (bA / 1024) * (bB / 1024) * (bC / 1024) //å‡ºå”®æ—¶ä¸å—è€ä¹…åº¦å½±å“ã€‚
+è´­ä¹°ä»·æ ¼ = åŽŸç‰©å“ä»·æ ¼ * (s0 / 1024) * (sA / 1024) * (sB / 1024) * (sC / 1024) //è´­ä¹°æ—¶è€ä¹…åº¦éƒ½ä¸ºæ»¡å€¼ã€‚
+ä¿®ç†ä»·æ ¼ = åŽŸç‰©å“ä»·æ ¼ * (å·²ç¼ºå¤±çš„è€ä¹…åº¦ / æ€»è€ä¹…åº¦) * (r0 / 1024) * (rA / 1024) * (rB / 1024) * (rC / 1024)
 
-³öÊÛ¡¢¹ºÂò¡¢ÐÞÀíµÄÖ÷Óï¶¼ÎªÍæ¼Ò¡£
+å‡ºå”®ã€è´­ä¹°ã€ä¿®ç†çš„ä¸»è¯­éƒ½ä¸ºçŽ©å®¶ã€‚
 
-Ô­ÎïÆ·¼Û¸ñÓÉÁ½²¿·Ö×é³É£º(1) ÓÉWeapons.txt¡¢Armor.txt¡¢Misc.txt¾ö¶¨µÄµ×²Ä¼Û¸ñ(2) ÓÉItemStatCost.txt¾ö¶¨µÄÊôÐÔ¼Û¸ñ¡£
+åŽŸç‰©å“ä»·æ ¼ç”±ä¸¤éƒ¨åˆ†ç»„æˆï¼š(1) ç”±Weapons.txtã€Armor.txtã€Misc.txtå†³å®šçš„åº•æä»·æ ¼(2) ç”±ItemStatCost.txtå†³å®šçš„å±žæ€§ä»·æ ¼ã€‚
 
 
-»Ø¸´
+å›žå¤
 
-    5Â¥
+    5æ¥¼
     2011-09-24 21:21
 
-    ¾Ù±¨ |
+    ä¸¾æŠ¥ |
 
     zqtjingzi
-    Ð¡°ÉÖ÷
+    å°å§ä¸»
     12
 
-²¹³äËµÃ÷2£º
-ÔÚNPC´¦£¬³ý¶Ä²©ÍâµÄÒ»ÇÐ¼Û¸ñ×îÉÙÎª1£¬²»»áÓÐÃâ·ÑµÄÎïÆ·¡£
+è¡¥å……è¯´æ˜Ž2ï¼š
+åœ¨NPCå¤„ï¼Œé™¤èµŒåšå¤–çš„ä¸€åˆ‡ä»·æ ¼æœ€å°‘ä¸º1ï¼Œä¸ä¼šæœ‰å…è´¹çš„ç‰©å“ã€‚
 
 */
 

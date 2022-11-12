@@ -1,4 +1,4 @@
-// bin2txt.cpp : ¶¨Òå¿ØÖÆÌ¨Ó¦ÓÃ³ÌĞòµÄÈë¿Úµã¡£
+// bin2txt.cpp : å®šä¹‰æ§åˆ¶å°åº”ç”¨ç¨‹åºçš„å…¥å£ç‚¹ã€‚
 //
 
 #include "stdafx.h"
@@ -268,11 +268,11 @@ static ENUM_MODULE_ID Get_ModuleId(char *pcModuleName)
 static void usage(int argc, char* argv[])
 {
 /*
--templateÖ¸¶¨Ä£°åÎÄ¼şÂ·¾¶
--binÖ¸¶¨binÎÄ¼şÂ·¾¶
--outputÖ¸¶¨Êä³ötxtÎÄ¼şµÄÂ·¾¶
--all´¦ÀíËùÓĞµÄbinÎÄ¼ş
--fileÖ¸¶¨´¦ÀíÄ³Ò»¸öbinÎÄ¼ş
+-templateæŒ‡å®šæ¨¡æ¿æ–‡ä»¶è·¯å¾„
+-binæŒ‡å®šbinæ–‡ä»¶è·¯å¾„
+-outputæŒ‡å®šè¾“å‡ºtxtæ–‡ä»¶çš„è·¯å¾„
+-allå¤„ç†æ‰€æœ‰çš„binæ–‡ä»¶
+-fileæŒ‡å®šå¤„ç†æŸä¸€ä¸ªbinæ–‡ä»¶
 */
     char *pcExeName;
 
@@ -332,10 +332,10 @@ int main(int argc, char* argv[])
     }
 
     //for test
-    //iCount = 161;    //Ô­°æ
-    //iCount = 321;  //Ä§µçv15
+    //iCount = 161;    //åŸç‰ˆ
+    //iCount = 321;  //é­”ç”µv15
 #ifdef _DEBUG
-    iCount = 193;  //±¦ÈÕ8.4
+    iCount = 193;  //å®æ—¥8.4
 #endif
     my_printf("    tc offset %u\r\n", iCount);
     TreasureClassEx_SetOffset(iCount);
@@ -547,12 +547,12 @@ int main(int argc, char* argv[])
 
     if ( 0 < iFail )
     {
-        my_error("finished¡£¡£¡£total %d¡£¡£¡£success %d¡£¡£¡£failed %d!\r\n", iCount, iSuccess, iFail);
+        my_error("finished... total %d... success %d... failed %d!\r\n", iCount, iSuccess, iFail);
         my_error("Failed list:\r\n%s\r\n", acFailedList);
     }
     else
     {
-        my_printf("finished¡£¡£¡£total %d¡£¡£¡£success %d!\r\n", iCount, iSuccess);
+        my_printf("finished... total %d... success %d!\r\n", iCount, iSuccess);
     }
     my_printf("press RETURN to exit!\r\n");
 

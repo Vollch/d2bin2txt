@@ -3,97 +3,97 @@
 #define FILE_PREFIX "RarePrefix"
 
 /*
-�ļ���������
-Rare��ϡ�еģ��ڰ�����ָ����ġ�
-Prefix��ǰ׺�����Ǵ�׺�е�ǰ׺��
-Suffix����׺�����Ǵ�׺�еĺ�׺��
-�����������ļ��������������𼶴�׺��ǰ׺���׺�������Ϣ��
-���ļ��е�ÿһ�б�ʾһ����׺ǰ׺���׺��
+文件名解析：
+Rare：稀有的，在暗黑里指亮金的。
+Prefix：前缀，就是词缀中的前缀。
+Suffix：后缀，就是词缀中的后缀。
+所以这两个文件描述了所有亮金级词缀的前缀与后缀的相关信息。
+此文件中的每一行表示一个词缀前缀或后缀。
 
 
-�ظ�
+回复
 
-    2¥
+    2楼
     2011-09-30 22:15
 
-    �ٱ� |
+    举报 |
 
     zqtjingzi
-    С����
+    小吧主
     12
 
-ÿ�еĺ������£�
+每列的含义如下：
 
 
-�ظ�
+回复
 
-    3¥
+    3楼
     2011-09-30 22:16
 
-    �ٱ� |
+    举报 |
 
     zqtjingzi
-    С����
+    小吧主
     12
 
-Name��ǰ׺�����׺������ϡ����Ʒǰ׺���ַ�����ֵ(string key),tbl�ļ���������
+Name：前缀名或后缀名。该稀有物品前缀的字符串键值(string key),tbl文件的左端入口
 
-version�����õ������Ϸ�汾��'0'-diablo2ԭ��,��1��-�ƻ�֮��
+version：适用的最低游戏版本。'0'-diablo2原版,‘1‘-破坏之王
 
-itype1-7���˴�׺�����ڵĵ�1-7��װ�����͡�������Ʒ����(����¼)��
+itype1-7：此词缀适用于的第1-7种装备类型。包含物品类型(见附录)。
 
-etype1-4���˴�׺�����õĵ�1-4��װ�����ͣ�����etypeӦ��ĳһitype�������͡��ų���Ʒ����(����¼)��
+etype1-4：此词缀不适用的第1-4种装备类型，所有etype应是某一itype的子类型。排除物品类型(见附录)。
 
-�˴�׺�����ܹ����õ�װ������Ϊsum(itype1-7) - sum(etype1-4)��������itype���ܺ��ٳ�ȥetype�е����͡�
+此词缀最终能够适用的装备类型为sum(itype1-7) - sum(etype1-4)，即所有itype的总和再除去etype中的类型。
 
-add���۸��������ӡ�����NPCʱ�۸���������(������?)����skills.txt������
+add：价格增加因子。卖给NPC时价格增加因子(和因子?)，与skills.txt中类似
 
-divide���۸�Լ�����ӡ�����NPCʱ�ļ۸��������(������?)��
+divide：价格约束因子。卖给NPC时的价格减少因子(除因子?)。
 
-multiply���۸�Ŵ����ӡ��۸���������(������?)����skills.txt������
+multiply：价格放大因子。价格增加因子(乘因子?)，与skills.txt中类似
 
 
-�ظ�
+回复
 
-    4¥
+    4楼
     2011-09-30 22:16
 
-    �ٱ� |
+    举报 |
 
     zqtjingzi
-    С����
+    小吧主
     12
 
-����˵��1��
-֮���԰��������ļ�����һ��˵������Ϊ���������е�����һģһ���ġ�
+特殊说明1：
+之所以把这两个文件放在一起说明是因为它们所含有的列是一模一样的。
 
 
-�ظ�
+回复
 
-    5¥
+    5楼
     2011-09-30 22:16
 
-    �ٱ� |
+    举报 |
 
     zqtjingzi
-    С����
+    小吧主
     12
 
-����˵��2��
-�������𼶴�׺��û�����ԣ�ֻ�����ֺ����õ�װ�����͡�Ҳ����˵ĳһ���𼶴�׺�Ƿ����ֻ��װ���ײ������йأ�������ͬ���Ե�װ����׺������ȫ��һ������֮Ҳ�ǣ���ͬ���ֵ�����װ�����Կ�����ȫ��һ����
+特殊说明2：
+所有亮金级词缀都没有属性，只有名字和适用的装备类型。也就是说某一亮金级词缀是否出现只与装备底材类型有关，而且相同属性的装备词缀可能完全不一样。反之也是，相同名字的亮金装备属性可能完全不一样。
 
-��¼:itype & etype
+附录:itype & etype
 
-itype = Inclusion TYPE(��������) & etype = Exclusion TYPE(�ų�����)
+itype = Inclusion TYPE(包含类型) & etype = Exclusion TYPE(排除类型)
 
-���������һ�������Ĵ�׺������{itype}����������Ʒ�����ϲ����������ܲ�����{etype}����������Ʒ���͡�
+这个决定了一个给定的词缀可以在{itype}所包含的物品类型上产生，而不能产生于{etype}所包含的物品类型。
 
-���磺itype = {weap,armo} etype = {axe,helm,belt}
-�����ʾ�ô�׺���Բ��������е������Ϳ����ϣ������ڸ���,ͷ���������ϲ��ܲ�����
+比如：itype = {weap,armo} etype = {axe,helm,belt}
+这个表示该词缀可以产生在所有的武器和盔甲上，但是在斧子,头盔和腰带上不能产生。
 
-ͨ�����ַ���(�ڡ�itype���͡�etype�������趨��Ʒ����)������Կ���ĳ����Ʒ�Ƿ��ܲ���(����˵����)�ô�׺��������ĳ��(Щ)��׺ֻ���ڽ�(swords)�ϲ��������߲��������ڽ��ϲ�������Ȼ�����������֪������Ʒ�Ĵ��롣
+通过这种方法(在‘itype’和‘etype’里面设定物品类型)，你可以控制某类物品是否能产生(或者说接受)该词缀，比如让某个(些)词缀只能在剑(swords)上产生，或者不能让它在剑上产生。当然，首先你必须知道该物品的代码。
 
-ע�⣺���ϵ�˵��ͬ����Ӧ�������С�itype/etype����.txt�ļ�����automagic,rareprefix/suffix��
+注意：以上的说明同样适应于其他有‘itype/etype’的.txt文件，如automagic,rareprefix/suffix。
 */
 
 typedef struct

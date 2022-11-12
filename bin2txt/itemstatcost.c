@@ -221,425 +221,425 @@ works like the constants column in MonUMod.txt and has no other relation to Item
 */
 
 /*
-A.Stat = ÊôÐÔÃû¡£
-B.ID = ÊôÐÔID¡£
-C.Send Other = ºÜ¿ÉÄÜÓÃÀ´¾ö¶¨ÔÚÁª»úÓÎÏ·Ê±£¬´ËÊôÐÔÊÇ·ñ·¢ËÍ¸øÆäËûÈË,Ö»Õë¶ÔÄÇÐ©¶ÔÍ¼ÏóÒªÇó½Ï¸ßµÄÊôÐÔ(faster attack/cast/gethit rate)¡£ÓÉÓÚÄ³Ð©Ô­Òò,Ãô½Ý(dexterity)ºÍÁ¦Á¿(strength)Ò²Í¬Ê±±»·¢ËÍ¡£ÁôÒâÒ»ÏÂtxtÎÄ¼þ¼´Öª¡£
-D.Signed = ¸ÃÊôÐÔÖµÊÇ·ñÎªÓÐ·ûºÅÊý¡£Ò²¾ÍÊÇËµ¸ÃÊôÐÔÊÇ·ñÄÜÎª¸ºÖµ(negative)¡£
-E.Sendbits = ÔÚ¿Í»§¶ËºÍ·þÎñÆ÷Ö®¼ä´«ËÍ´ËÖµÊ±ËùÓÃµÄÎ»³¤¡£
-F.Send Param = Óë¿Í»§¶ËºÍ·þÎñÆ÷ÓÐ¹ØµÄ²ÎÊý¡£
-G.UpdateAnimateRate = ???¡£¿ÉÄÜÇé¿ö£ºÈ¡²¼¶ûÖµ£¬¸æËß¿Í»§¶Ë¸üÐÂ½ÇÉ«¶¯»­µÄËÙÂÊ¡£
-H.Saved = ½ÇÉ«´æµµÊ±¸ÃÊôÐÔÊÇ·ñÍ¬Ê±±»±£´æ¡£ÎïÆ·ÉÏµÄÊôÐÔËæÎïÆ·Ò»Æð±£´æ¡£
-I.CSvSigned = ÔÚ½ÇÉ«´æµµÊÇ·ñ²ÉÓÃÓÐ·ûºÅÊýÀ´±£´æ¸ÃÊôÐÔ¡£1=ÊÇ,0=·ñ¡£
-J.CSvBits = ´æ´¢Î»³¤,ÔÚ½ÇÉ«´æµµÖÐ²ÉÈ¡¶àÉÙÎ»±£´æ¡£ÄÜ¹»±£´æµÄ×î´óÖµÎª''2^CSvBits-1''¡£
-K.CSvParam = ´æ´¢²ÎÊý,Óë±£´æÄ³Ð©ÊôÐÔµÄ²ÎÊýÓÐ¹Ø¡£
+A.Stat = å±žæ€§åã€‚
+B.ID = å±žæ€§IDã€‚
+C.Send Other = å¾ˆå¯èƒ½ç”¨æ¥å†³å®šåœ¨è”æœºæ¸¸æˆæ—¶ï¼Œæ­¤å±žæ€§æ˜¯å¦å‘é€ç»™å…¶ä»–äºº,åªé’ˆå¯¹é‚£äº›å¯¹å›¾è±¡è¦æ±‚è¾ƒé«˜çš„å±žæ€§(faster attack/cast/gethit rate)ã€‚ç”±äºŽæŸäº›åŽŸå› ,æ•æ·(dexterity)å’ŒåŠ›é‡(strength)ä¹ŸåŒæ—¶è¢«å‘é€ã€‚ç•™æ„ä¸€ä¸‹txtæ–‡ä»¶å³çŸ¥ã€‚
+D.Signed = è¯¥å±žæ€§å€¼æ˜¯å¦ä¸ºæœ‰ç¬¦å·æ•°ã€‚ä¹Ÿå°±æ˜¯è¯´è¯¥å±žæ€§æ˜¯å¦èƒ½ä¸ºè´Ÿå€¼(negative)ã€‚
+E.Sendbits = åœ¨å®¢æˆ·ç«¯å’ŒæœåŠ¡å™¨ä¹‹é—´ä¼ é€æ­¤å€¼æ—¶æ‰€ç”¨çš„ä½é•¿ã€‚
+F.Send Param = ä¸Žå®¢æˆ·ç«¯å’ŒæœåŠ¡å™¨æœ‰å…³çš„å‚æ•°ã€‚
+G.UpdateAnimateRate = ???ã€‚å¯èƒ½æƒ…å†µï¼šå–å¸ƒå°”å€¼ï¼Œå‘Šè¯‰å®¢æˆ·ç«¯æ›´æ–°è§’è‰²åŠ¨ç”»çš„é€ŸçŽ‡ã€‚
+H.Saved = è§’è‰²å­˜æ¡£æ—¶è¯¥å±žæ€§æ˜¯å¦åŒæ—¶è¢«ä¿å­˜ã€‚ç‰©å“ä¸Šçš„å±žæ€§éšç‰©å“ä¸€èµ·ä¿å­˜ã€‚
+I.CSvSigned = åœ¨è§’è‰²å­˜æ¡£æ˜¯å¦é‡‡ç”¨æœ‰ç¬¦å·æ•°æ¥ä¿å­˜è¯¥å±žæ€§ã€‚1=æ˜¯,0=å¦ã€‚
+J.CSvBits = å­˜å‚¨ä½é•¿,åœ¨è§’è‰²å­˜æ¡£ä¸­é‡‡å–å¤šå°‘ä½ä¿å­˜ã€‚èƒ½å¤Ÿä¿å­˜çš„æœ€å¤§å€¼ä¸º''2^CSvBits-1''ã€‚
+K.CSvParam = å­˜å‚¨å‚æ•°,ä¸Žä¿å­˜æŸäº›å±žæ€§çš„å‚æ•°æœ‰å…³ã€‚
 L.fCallback = ???
 M.fMin = ???
 N.MinAccr = ???
-O.Encode = Óë±àÂë·½Ê½ÓÐ¹Ø¡£
-P/Q/R.Add/Multiply/Divide = ¼ÆËãÎïÆ·¼Û¸ñÊ±µÄ²ÎÊýÖµ¡£(ÆäËûtxtÎÄ¼þÍ¬)
-S.ValShift = ¾ö¶¨ÖµÒÔ¶à´óµÄ¾«¶È±ä»¯?¡£¡¯1¡®±íÊ¾ÓÐ2^1=2½×¾«¶È,¡¯2¡®ÔòÓÐ2^2=4½×¾«¶È,¡¯8¡®¾ßÓÐ2^8=256½×¾«¶È,±ÈÈçÉúÃüµã¾Í°´1/256µÄ¾«¶È½øÐÐ¼ÆËã¡£
-T/U.1.09-Save Bits/1.09-Save Add = ÔÚ1.09°æÖÐµÄ´æ´¢Î»³¤/Ïà¶Ô1.09µÄÔö¼ÓÖµ¡£¿ÉÄÜÓë½ÇÉ«×ª»»ÓÐ¹Ø,¼´1.09µÄ´æµµµ¼Èë1.10¡£
-V/W.Save Bits/Save Add = ÓÃÀ´´¦ÀíÎïÆ·ÉÏÊýÖµµÄ±£´æ¡£Í¬Ê±Ò²¾ö¶¨ÁË¸ÃÊôÐÔ¿ÉÄÜµÄ×îÐ¡ºÍ×î´óÖµ¡£ÆäÖÐ,¡®¡¯Save Bits¡®¡¯¾ö¶¨ÁËÊôÐÔÖµµÄ´æ´¢Î»³¤,¡®¡¯Save Add¡®¡¯¾ö¶¨ÁË×îÐ¡Öµ,ÇÒºÍ''Save Bits'Ò»Æð¾ö¶¨×î´óÖµ¡£
-½á¹ûÎª:stat×îÐ¡Öµ = - [Save Add];
-stat×î´óÖµ = 2^[Save Bits] - [Save Add] - 1;
-±ÈÈç:"Save Add'' = 32,"Save Bits = 8"
-ÔòÓÐ:×îÐ¡Öµ = - 32;
-×î´óÖµ = 2^8 - 32 -1 = 256 - 33 = 223
-X.SaveParamBits = ¾ö¶¨²ÎÊýÒÔ¶àÉÙÎ»(bits)±£´æ(???)¡£
-Y.keepzero = ²¼¶ûÖµ£¬¿ØÖÆ¸ÃÊôÐÔÄÜ·ñ³öÏÖ¸ºÖµ(»òÕßÀí½âÎªÓÐÏû¼«Ð§¹û)¡£1=²»ÄÜ¡£
-Z.op = ²Ù×÷ÊýID¡£ÓÃÀ´¼ÆËã¸ÃÊôÐÔ²úÉúµÄÐ§¹û¡£
-ÒÑÖªµÄID¼°ÆäÐ§¹û:
-1 : op ×´Ì¬°´ [statvalue] °Ù·Ö±ÈÔö¼Ó£¨op stats are increased by [statvalue] percent£©
-2 : op ×´Ì¬°´ [statvalue] * [op base] / 2^[op param]Ôö¼Ó£¨op stats are increased by [statvalue] * [op base] / 2^[op param]£©
-3 : Î´Ê¹ÓÃ£¬Ð§¹ûÎ´Öª£¨not used, effect unknown£©
-4 : ËÆºõÊÇºÍ2µÄÐ§¹ûÏàÍ¬£¨seems to have the same effect as 2£©
-5 : op ×´Ì¬°´ [statvalue] * [op base] / 2^[op param]°Ù·Ö±ÈÔö¼Ó£¨op stats are increased by [statvalue] * [op base] / 2^[op param] percent£©
-6 : op ×´Ì¬°´Ê±¼äÔö¼Ó£¨op stats are increased by time£©
-7 : op ×´Ì¬°´Ê±¼äºÍ°Ù·Ö±ÈÔö¼Ó£¨op stats are increased by time and percent£©
-8 : ÓÃÀ´¼ÆËã·¨Á¦Öµ»ùÓÚÄÜÁ¿ÖµµÄÔö¼Ó£¨used to calculate the mana based on energy£©
-9 : ÓÃÀ´¼ÆËãÉúÃüÁ¦ºÍÌåÁ¦Öµ»ùÓÚ»îÁ¦ÖµµÄÔö¼Ó£¨used to calculate the hitpoints and stamina based on vitality£©
-AA.op param = ¼û¡¯op¡®¡£
-AB.op base = ¼û¡¯op¡®¡£
-AC/AD/AE.op stat1-op stat3 = ¿ØÖÆ×´Ì¬,¼û¡¯op¡®¡£
-AF.direct = Èç¹û¸ÃÊôÐÔÄÜ¼Ó³Éµ½ÆäËûÊôÐÔÉÏ,´Ë´¦ÉèÖÃÎª1¡£±ÈÈçµ±×°±¸ÉÏÒ»¸ö+30manaµÄÎïÆ·Ê±,ÄãµÄ×î´ómanaÖµÒ²»áÍ¬Ê±Ôö¼Ó¡£
-AG.maxstat = µ±¡®¡¯direct=1¡®¡¯Ê±,¸ÃÊôÐÔÄÜ¼Ó³Éµ½µÄ×î´óÊôÐÔ¡£
-AH.itemspecific = ¸ÃÊôÐÔÊÇ·ñÎªÄ³Àà(¸ö)ÎïÆ·¶ÀÓÐ(ÇÒÖ»ÄÜÓ°Ïì´ËÀà/¸öÎïÆ·),±ÈÈçÄÍ¾Ã¶È,¿×ÊýµÈ¡£±ÈÈçÄã¿ÉÒÔÔÚÕâÀïÉèÖÃÊ¹ÄãµÄµÚ¶þ¼þÎäÆ÷²»»áÔö¼ÓµÚÒ»¼þÎäÆ÷µÄ¹¥»÷ËÙ¶È¡£
-AI.damagerelated = ¸ÃÊôÐÔÊÇ·ñÓë¡®¡¯ÉËº¦¡®¡¯(damage)ÓÐ¹Ø¡£1=ÊÇ¡£(Ð§¹ûÎ´Öª)
-AJ.itemevent1 = µ±ÊÂ¼þ(event)·¢ÉúÊ±,´¥·¢¡®¡¯intemeventfuc1¡®¡¯(¼ûÏÂ)¡£ 
-AK.itemeventfunc1 = ×÷ÓÃÔÚ¡®¡¯itemevent1¡®¡¯ÉÏµÄº¯Êý¡£Ê¹ÓÃµÄº¯ÊýÈçÏÂ:
-6:attacker takes damage of [statvalue] // ¹¥»÷Õß»ñµÃÉËº¦
-7:knockback // µ¯»Ø
-8:howl effect // barµÄºð½ÐÐ§¹û
-9:stupidity effect // ÖÂÃ¤Ð§¹û
-10:attacker takes lightning damage of [statvalue] // ¹¥»÷Õß»ñµÃÉÁµçÉËº¦
-14:freeze effect // ±ù¶³Ð§¹û
-15: openwounds effect // ËºÁÑÉË¿ÚÐ§¹û
-16:crushing blow // Ò»»÷ÖÂÃü(»òÕß¡¯·ÛËéÐÔ´ò»÷¡®?!)
-17:get mana (after kill) // Ã¿É±ËÀÒ»¸ö¹ÖÎïµÃµ½Ä§·¨Öµ
+O.Encode = ä¸Žç¼–ç æ–¹å¼æœ‰å…³ã€‚
+P/Q/R.Add/Multiply/Divide = è®¡ç®—ç‰©å“ä»·æ ¼æ—¶çš„å‚æ•°å€¼ã€‚(å…¶ä»–txtæ–‡ä»¶åŒ)
+S.ValShift = å†³å®šå€¼ä»¥å¤šå¤§çš„ç²¾åº¦å˜åŒ–?ã€‚â€™1â€˜è¡¨ç¤ºæœ‰2^1=2é˜¶ç²¾åº¦,â€™2â€˜åˆ™æœ‰2^2=4é˜¶ç²¾åº¦,â€™8â€˜å…·æœ‰2^8=256é˜¶ç²¾åº¦,æ¯”å¦‚ç”Ÿå‘½ç‚¹å°±æŒ‰1/256çš„ç²¾åº¦è¿›è¡Œè®¡ç®—ã€‚
+T/U.1.09-Save Bits/1.09-Save Add = åœ¨1.09ç‰ˆä¸­çš„å­˜å‚¨ä½é•¿/ç›¸å¯¹1.09çš„å¢žåŠ å€¼ã€‚å¯èƒ½ä¸Žè§’è‰²è½¬æ¢æœ‰å…³,å³1.09çš„å­˜æ¡£å¯¼å…¥1.10ã€‚
+V/W.Save Bits/Save Add = ç”¨æ¥å¤„ç†ç‰©å“ä¸Šæ•°å€¼çš„ä¿å­˜ã€‚åŒæ—¶ä¹Ÿå†³å®šäº†è¯¥å±žæ€§å¯èƒ½çš„æœ€å°å’Œæœ€å¤§å€¼ã€‚å…¶ä¸­,â€˜â€™Save Bitsâ€˜â€™å†³å®šäº†å±žæ€§å€¼çš„å­˜å‚¨ä½é•¿,â€˜â€™Save Addâ€˜â€™å†³å®šäº†æœ€å°å€¼,ä¸”å’Œ''Save Bits'ä¸€èµ·å†³å®šæœ€å¤§å€¼ã€‚
+ç»“æžœä¸º:statæœ€å°å€¼ = - [Save Add];
+statæœ€å¤§å€¼ = 2^[Save Bits] - [Save Add] - 1;
+æ¯”å¦‚:"Save Add'' = 32,"Save Bits = 8"
+åˆ™æœ‰:æœ€å°å€¼ = - 32;
+æœ€å¤§å€¼ = 2^8 - 32 -1 = 256 - 33 = 223
+X.SaveParamBits = å†³å®šå‚æ•°ä»¥å¤šå°‘ä½(bits)ä¿å­˜(???)ã€‚
+Y.keepzero = å¸ƒå°”å€¼ï¼ŒæŽ§åˆ¶è¯¥å±žæ€§èƒ½å¦å‡ºçŽ°è´Ÿå€¼(æˆ–è€…ç†è§£ä¸ºæœ‰æ¶ˆæžæ•ˆæžœ)ã€‚1=ä¸èƒ½ã€‚
+Z.op = æ“ä½œæ•°IDã€‚ç”¨æ¥è®¡ç®—è¯¥å±žæ€§äº§ç”Ÿçš„æ•ˆæžœã€‚
+å·²çŸ¥çš„IDåŠå…¶æ•ˆæžœ:
+1 : op çŠ¶æ€æŒ‰ [statvalue] ç™¾åˆ†æ¯”å¢žåŠ ï¼ˆop stats are increased by [statvalue] percentï¼‰
+2 : op çŠ¶æ€æŒ‰ [statvalue] * [op base] / 2^[op param]å¢žåŠ ï¼ˆop stats are increased by [statvalue] * [op base] / 2^[op param]ï¼‰
+3 : æœªä½¿ç”¨ï¼Œæ•ˆæžœæœªçŸ¥ï¼ˆnot used, effect unknownï¼‰
+4 : ä¼¼ä¹Žæ˜¯å’Œ2çš„æ•ˆæžœç›¸åŒï¼ˆseems to have the same effect as 2ï¼‰
+5 : op çŠ¶æ€æŒ‰ [statvalue] * [op base] / 2^[op param]ç™¾åˆ†æ¯”å¢žåŠ ï¼ˆop stats are increased by [statvalue] * [op base] / 2^[op param] percentï¼‰
+6 : op çŠ¶æ€æŒ‰æ—¶é—´å¢žåŠ ï¼ˆop stats are increased by timeï¼‰
+7 : op çŠ¶æ€æŒ‰æ—¶é—´å’Œç™¾åˆ†æ¯”å¢žåŠ ï¼ˆop stats are increased by time and percentï¼‰
+8 : ç”¨æ¥è®¡ç®—æ³•åŠ›å€¼åŸºäºŽèƒ½é‡å€¼çš„å¢žåŠ ï¼ˆused to calculate the mana based on energyï¼‰
+9 : ç”¨æ¥è®¡ç®—ç”Ÿå‘½åŠ›å’Œä½“åŠ›å€¼åŸºäºŽæ´»åŠ›å€¼çš„å¢žåŠ ï¼ˆused to calculate the hitpoints and stamina based on vitalityï¼‰
+AA.op param = è§â€™opâ€˜ã€‚
+AB.op base = è§â€™opâ€˜ã€‚
+AC/AD/AE.op stat1-op stat3 = æŽ§åˆ¶çŠ¶æ€,è§â€™opâ€˜ã€‚
+AF.direct = å¦‚æžœè¯¥å±žæ€§èƒ½åŠ æˆåˆ°å…¶ä»–å±žæ€§ä¸Š,æ­¤å¤„è®¾ç½®ä¸º1ã€‚æ¯”å¦‚å½“è£…å¤‡ä¸Šä¸€ä¸ª+30manaçš„ç‰©å“æ—¶,ä½ çš„æœ€å¤§manaå€¼ä¹Ÿä¼šåŒæ—¶å¢žåŠ ã€‚
+AG.maxstat = å½“â€˜â€™direct=1â€˜â€™æ—¶,è¯¥å±žæ€§èƒ½åŠ æˆåˆ°çš„æœ€å¤§å±žæ€§ã€‚
+AH.itemspecific = è¯¥å±žæ€§æ˜¯å¦ä¸ºæŸç±»(ä¸ª)ç‰©å“ç‹¬æœ‰(ä¸”åªèƒ½å½±å“æ­¤ç±»/ä¸ªç‰©å“),æ¯”å¦‚è€ä¹…åº¦,å­”æ•°ç­‰ã€‚æ¯”å¦‚ä½ å¯ä»¥åœ¨è¿™é‡Œè®¾ç½®ä½¿ä½ çš„ç¬¬äºŒä»¶æ­¦å™¨ä¸ä¼šå¢žåŠ ç¬¬ä¸€ä»¶æ­¦å™¨çš„æ”»å‡»é€Ÿåº¦ã€‚
+AI.damagerelated = è¯¥å±žæ€§æ˜¯å¦ä¸Žâ€˜â€™ä¼¤å®³â€˜â€™(damage)æœ‰å…³ã€‚1=æ˜¯ã€‚(æ•ˆæžœæœªçŸ¥)
+AJ.itemevent1 = å½“äº‹ä»¶(event)å‘ç”Ÿæ—¶,è§¦å‘â€˜â€™intemeventfuc1â€˜â€™(è§ä¸‹)ã€‚ 
+AK.itemeventfunc1 = ä½œç”¨åœ¨â€˜â€™itemevent1â€˜â€™ä¸Šçš„å‡½æ•°ã€‚ä½¿ç”¨çš„å‡½æ•°å¦‚ä¸‹:
+6:attacker takes damage of [statvalue] // æ”»å‡»è€…èŽ·å¾—ä¼¤å®³
+7:knockback // å¼¹å›ž
+8:howl effect // barçš„å¼å«æ•ˆæžœ
+9:stupidity effect // è‡´ç›²æ•ˆæžœ
+10:attacker takes lightning damage of [statvalue] // æ”»å‡»è€…èŽ·å¾—é—ªç”µä¼¤å®³
+14:freeze effect // å†°å†»æ•ˆæžœ
+15: openwounds effect // æ’•è£‚ä¼¤å£æ•ˆæžœ
+16:crushing blow // ä¸€å‡»è‡´å‘½(æˆ–è€…â€™ç²‰ç¢Žæ€§æ‰“å‡»â€˜?!)
+17:get mana (after kill) // æ¯æ€æ­»ä¸€ä¸ªæ€ªç‰©å¾—åˆ°é­”æ³•å€¼
 18:get life (after demon kill) 
-19:slow effect // ³Ù»ºÐ§¹û
-20:skill is released // ¼¼ÄÜÊÍ·Å,´¥·¢ÊÂ¼þ:±»Î§¹¥&É±ËÀ¹ÖÎïµÈ
-21:skill is released //ÀàËÆ20?!
-28:get life (after kill) // Ã¿É±ËÀÒ»¸ö¹ÖÎïµÃµ½ÉúÃüÖµ
-29:slain monster rests in peace // É±ËÀ¹ÖÎï»Ø¸´Æ½¾²
-30:skill is released // ÊÍ·Å¼¼ÄÜ,´¥·¢ÊÂ¼þ:±»É±ËÀ&Éý¼¶
-31:reanimate slain monster // É±ËÀ¹ÖÎïºó±»¹ÄÎè
-AL.itemevent2 = µ±ÊÂ¼þ(event)·¢ÉúÊ±,Ö´ÐÐ¡®¡¯intemeventfuc2¡®¡¯
-AM.itemeventfunc2 = ×÷ÓÃÔÚ¡®¡¯itemevent2¡®¡¯ÉÏµÄº¯Êý¡£
-AN.descpriority =¿ØÖÆ¸ÃÊôÐÔÔÚÎïÆ·ÉÏÏÔÊ¾µÄÓÅÏÈ¼¶¡£ÖµÔ½¸ß,ÔÚÎïÆ·ÉÏ³öÏÖµÃÔ½Ôç¡£(ÉÐ²»ÄÜÈ·¶¨)
-AO.descfunc = ¿ØÖÆÊôÐÔÏÔÊ¾·½Ê½µÄº¯Êý¡£ÒÔÏÂÊÇÆäÖÐµÄÒ»Ð©:
-1 : + [ÊýÖµ] [×Ö·û´®]£¨+[value] [string]£©
-2 : [ÊýÖµ]% [×Ö·û´®]£¨[value]% [string]£©
-3 : [ÊýÖµ] [×Ö·û´®]£¨[value] [string]£©
-4 : + [ÊýÖµ]% [×Ö·û´®]£¨+[value]% [string]£©
-5 : [ÊýÖµ/1.28]% [×Ö·û´®]£¬Ò°ÂùÈËµÄºð½Ð¼¼ÄÜÊ¹ÓÃ£¨[value/1.28]% [string] // used for howl£©
-6 : + [ÊýÖµ] [×Ö·û´®] (»ùÓÚ½ÇÉ«µÈ¼¶)£¨+[value] [string] (based on character level)£©
-7 : [ÊýÖµ]% [×Ö·û´®] (»ùÓÚ½ÇÉ«µÈ¼¶)£¨[value]% [string] (based on character level)£©
-8 : + [ÊýÖµ]% [×Ö·û´®] (»ùÓÚ½ÇÉ«µÈ¼¶)£¨+[value]% [string] (based on character level)£©
-9 : [ÊýÖµ] [×Ö·û´®] (»ùÓÚ½ÇÉ«µÈ¼¶)£¨[value] [string] (based on character level)£©
-10 : [ÊýÖµ/1.28]% [×Ö·û´®] (»ùÓÚ½ÇÉ«µÈ¼¶)£¨[value/1.28]% [string] (based on character level)£©
-11 : Ã¿ [100/ÊýÖµ] Ãë×Ô¶¯ÐÞ¸´1µãÄÍ¾Ã¶È£¨Repairs 1 durability in [100/value] seconds£©
-12 : + [ÊýÖµ] [×Ö·û´®]£¬ÖÂÃ¤ºÍ±ù¶³Ê¹ÓÃ£¨+[value] [string] // used for stupidity, freeze£©
-13 : + [ÊýÖµ] µ½ [½ÇÉ«] ¼¼ÄÜµÈ¼¶£¨+[value] to [class] skill levels£©
-14 : + [ÊýÖµ] µ½ [½ÇÉ«¼¼ÄÜÒ³] (½öÏÞ[½ÇÉ«])£¨+[value] to [skilltab] skills ([class] only)£©
-16 : ×°±¸Ê±ÏÔÏÖµÈ¼¶ %d %s ÁéÆø£¨Level %d %s Aura When Equipped£©
+19:slow effect // è¿Ÿç¼“æ•ˆæžœ
+20:skill is released // æŠ€èƒ½é‡Šæ”¾,è§¦å‘äº‹ä»¶:è¢«å›´æ”»&æ€æ­»æ€ªç‰©ç­‰
+21:skill is released //ç±»ä¼¼20?!
+28:get life (after kill) // æ¯æ€æ­»ä¸€ä¸ªæ€ªç‰©å¾—åˆ°ç”Ÿå‘½å€¼
+29:slain monster rests in peace // æ€æ­»æ€ªç‰©å›žå¤å¹³é™
+30:skill is released // é‡Šæ”¾æŠ€èƒ½,è§¦å‘äº‹ä»¶:è¢«æ€æ­»&å‡çº§
+31:reanimate slain monster // æ€æ­»æ€ªç‰©åŽè¢«é¼“èˆž
+AL.itemevent2 = å½“äº‹ä»¶(event)å‘ç”Ÿæ—¶,æ‰§è¡Œâ€˜â€™intemeventfuc2â€˜â€™
+AM.itemeventfunc2 = ä½œç”¨åœ¨â€˜â€™itemevent2â€˜â€™ä¸Šçš„å‡½æ•°ã€‚
+AN.descpriority =æŽ§åˆ¶è¯¥å±žæ€§åœ¨ç‰©å“ä¸Šæ˜¾ç¤ºçš„ä¼˜å…ˆçº§ã€‚å€¼è¶Šé«˜,åœ¨ç‰©å“ä¸Šå‡ºçŽ°å¾—è¶Šæ—©ã€‚(å°šä¸èƒ½ç¡®å®š)
+AO.descfunc = æŽ§åˆ¶å±žæ€§æ˜¾ç¤ºæ–¹å¼çš„å‡½æ•°ã€‚ä»¥ä¸‹æ˜¯å…¶ä¸­çš„ä¸€äº›:
+1 : + [æ•°å€¼] [å­—ç¬¦ä¸²]ï¼ˆ+[value] [string]ï¼‰
+2 : [æ•°å€¼]% [å­—ç¬¦ä¸²]ï¼ˆ[value]% [string]ï¼‰
+3 : [æ•°å€¼] [å­—ç¬¦ä¸²]ï¼ˆ[value] [string]ï¼‰
+4 : + [æ•°å€¼]% [å­—ç¬¦ä¸²]ï¼ˆ+[value]% [string]ï¼‰
+5 : [æ•°å€¼/1.28]% [å­—ç¬¦ä¸²]ï¼Œé‡Žè›®äººçš„å¼å«æŠ€èƒ½ä½¿ç”¨ï¼ˆ[value/1.28]% [string] // used for howlï¼‰
+6 : + [æ•°å€¼] [å­—ç¬¦ä¸²] (åŸºäºŽè§’è‰²ç­‰çº§)ï¼ˆ+[value] [string] (based on character level)ï¼‰
+7 : [æ•°å€¼]% [å­—ç¬¦ä¸²] (åŸºäºŽè§’è‰²ç­‰çº§)ï¼ˆ[value]% [string] (based on character level)ï¼‰
+8 : + [æ•°å€¼]% [å­—ç¬¦ä¸²] (åŸºäºŽè§’è‰²ç­‰çº§)ï¼ˆ+[value]% [string] (based on character level)ï¼‰
+9 : [æ•°å€¼] [å­—ç¬¦ä¸²] (åŸºäºŽè§’è‰²ç­‰çº§)ï¼ˆ[value] [string] (based on character level)ï¼‰
+10 : [æ•°å€¼/1.28]% [å­—ç¬¦ä¸²] (åŸºäºŽè§’è‰²ç­‰çº§)ï¼ˆ[value/1.28]% [string] (based on character level)ï¼‰
+11 : æ¯ [100/æ•°å€¼] ç§’è‡ªåŠ¨ä¿®å¤1ç‚¹è€ä¹…åº¦ï¼ˆRepairs 1 durability in [100/value] secondsï¼‰
+12 : + [æ•°å€¼] [å­—ç¬¦ä¸²]ï¼Œè‡´ç›²å’Œå†°å†»ä½¿ç”¨ï¼ˆ+[value] [string] // used for stupidity, freezeï¼‰
+13 : + [æ•°å€¼] åˆ° [è§’è‰²] æŠ€èƒ½ç­‰çº§ï¼ˆ+[value] to [class] skill levelsï¼‰
+14 : + [æ•°å€¼] åˆ° [è§’è‰²æŠ€èƒ½é¡µ] (ä»…é™[è§’è‰²])ï¼ˆ+[value] to [skilltab] skills ([class] only)ï¼‰
+16 : è£…å¤‡æ—¶æ˜¾çŽ°ç­‰çº§ %d %s çµæ°”ï¼ˆLevel %d %s Aura When Equippedï¼‰
 AP.descval = 
-0:²»ÏÔÊ¾Öµ¡£
-1:ÖµÏÈÏÔÊ¾,¼´ÏÔÊ¾Ë³ÐòÎª¡®¡¯Öµ+×Ö·û´®¡®¡¯¡£±ÈÈç¡°+5 to strength¡®¡¯(¼Ó5µ½Á¦Á¿)¡£
-2:×Ö·û´®ÏÈÏÔÊ¾,È»ºó²ÅÊÇÖµ,¼´¡®¡¯×Ö·û´®+Öµ¡®¡¯¡£±ÈÈç¡®¡¯strenght +5¡®¡¯(Á¦Á¿¼Ó5)¡£
-AQ.descstrpos = ÖµÎªÕýÊ±Ê¹ÓÃµÄÃèÊöÐÔ×Ö·û´®¡£
-AR.descstrneg = ÖµÎª¸ºÊ±Ê¹ÓÃµÄÃèÊöÐÔ×Ö·û´®¡£
-AS.descstr2 = µÚ¶þ¸öÏÔÊ¾×Ö·û(Óë¡¯¡®attributes/per level¡¯¡®ÓÐ¹Ø--ËæµÈ¼¶Ôö³¤ÊôÐÔ,Èç¡¯¡®item-resist-cold-perlevel,ID=230¡¯¡®)¡£
-AT.dgrp = ÏÔÊ¾×é¡£Í¬Ò»ÏÔÊ¾×éÖÐµÄÏàÍ¬ÊôÐÔ½«Ò»ÆðÏÔÊ¾¡£
-ËµÃ÷:¸ÃtxtÔ´ÎÄ¼þÖÐÒ»¹²Ö»ÓÐÁ½×é,Ã¿×éº¬ËÄ¸öÊôÐÔ¡£
-×éÒ»:¡¯¡®dgrp=1¡¯¡®,°üÀ¨¡¯¡®strength(Á¦Á¿,ID=0)¡¯¡®,¡¯¡®energy(¾«Á¦,ID=1)¡¯¡®,¡¯¡®dexterity(Ãô½Ý,ID=2)'',''vitality(ÉúÃü,ID=3)''¡£
-×é¶þ:''dgrp=2'',°üÀ¨¡¯¡®fireresist(¿¹»ð,ID=39)'',''lightresist(¿¹ÉÁµç,ID=41)'',''coldresist(¿¹º®,ID=43)'',''poisonresist(¿¹¶¾,ID=45)''¡£
-AU.dgrpfunc = Óë¡®¡¯descfunc¡®¡®Í¬,¿ØÖÆÏÔÊ¾×é(display groups)µÄÏÔÊ¾·½Ê½¡£
-AV.dgrpval = Óë¡®¡¯descval¡®¡¯Í¬,Õë¶ÔÏÔÊ¾×é¡£
-AW.dgrpstrpos = Óë¡¯¡®descstrpos¡¯¡®Í¬,Õë¶ÔÏÔÊ¾×é¡£
-AX.dgrpstrneg = Óë¡¯¡®descstrneg¡¯¡®Í¬,Õë¶ÔÏÔÊ¾×é¡£
-AY.dgrpstr2 = Óë¡¯¡®descstr2¡¯¡®Í¬,Õë¶ÔÏÔÊ¾×é¡£
+0:ä¸æ˜¾ç¤ºå€¼ã€‚
+1:å€¼å…ˆæ˜¾ç¤º,å³æ˜¾ç¤ºé¡ºåºä¸ºâ€˜â€™å€¼+å­—ç¬¦ä¸²â€˜â€™ã€‚æ¯”å¦‚â€œ+5 to strengthâ€˜â€™(åŠ 5åˆ°åŠ›é‡)ã€‚
+2:å­—ç¬¦ä¸²å…ˆæ˜¾ç¤º,ç„¶åŽæ‰æ˜¯å€¼,å³â€˜â€™å­—ç¬¦ä¸²+å€¼â€˜â€™ã€‚æ¯”å¦‚â€˜â€™strenght +5â€˜â€™(åŠ›é‡åŠ 5)ã€‚
+AQ.descstrpos = å€¼ä¸ºæ­£æ—¶ä½¿ç”¨çš„æè¿°æ€§å­—ç¬¦ä¸²ã€‚
+AR.descstrneg = å€¼ä¸ºè´Ÿæ—¶ä½¿ç”¨çš„æè¿°æ€§å­—ç¬¦ä¸²ã€‚
+AS.descstr2 = ç¬¬äºŒä¸ªæ˜¾ç¤ºå­—ç¬¦(ä¸Žâ€™â€˜attributes/per levelâ€™â€˜æœ‰å…³--éšç­‰çº§å¢žé•¿å±žæ€§,å¦‚â€™â€˜item-resist-cold-perlevel,ID=230â€™â€˜)ã€‚
+AT.dgrp = æ˜¾ç¤ºç»„ã€‚åŒä¸€æ˜¾ç¤ºç»„ä¸­çš„ç›¸åŒå±žæ€§å°†ä¸€èµ·æ˜¾ç¤ºã€‚
+è¯´æ˜Ž:è¯¥txtæºæ–‡ä»¶ä¸­ä¸€å…±åªæœ‰ä¸¤ç»„,æ¯ç»„å«å››ä¸ªå±žæ€§ã€‚
+ç»„ä¸€:â€™â€˜dgrp=1â€™â€˜,åŒ…æ‹¬â€™â€˜strength(åŠ›é‡,ID=0)â€™â€˜,â€™â€˜energy(ç²¾åŠ›,ID=1)â€™â€˜,â€™â€˜dexterity(æ•æ·,ID=2)'',''vitality(ç”Ÿå‘½,ID=3)''ã€‚
+ç»„äºŒ:''dgrp=2'',åŒ…æ‹¬â€™â€˜fireresist(æŠ—ç«,ID=39)'',''lightresist(æŠ—é—ªç”µ,ID=41)'',''coldresist(æŠ—å¯’,ID=43)'',''poisonresist(æŠ—æ¯’,ID=45)''ã€‚
+AU.dgrpfunc = ä¸Žâ€˜â€™descfuncâ€˜â€˜åŒ,æŽ§åˆ¶æ˜¾ç¤ºç»„(display groups)çš„æ˜¾ç¤ºæ–¹å¼ã€‚
+AV.dgrpval = ä¸Žâ€˜â€™descvalâ€˜â€™åŒ,é’ˆå¯¹æ˜¾ç¤ºç»„ã€‚
+AW.dgrpstrpos = ä¸Žâ€™â€˜descstrposâ€™â€˜åŒ,é’ˆå¯¹æ˜¾ç¤ºç»„ã€‚
+AX.dgrpstrneg = ä¸Žâ€™â€˜descstrnegâ€™â€˜åŒ,é’ˆå¯¹æ˜¾ç¤ºç»„ã€‚
+AY.dgrpstr2 = ä¸Žâ€™â€˜descstr2â€™â€˜åŒ,é’ˆå¯¹æ˜¾ç¤ºç»„ã€‚
 AZ.stuff = ???
-BA.*eol = ÐÐ½áÊø·û¡¯0¡®¡£
+BA.*eol = è¡Œç»“æŸç¬¦â€™0â€˜ã€‚
 
-×¢: op²ÎÊýºÍÏÔÊ¾·½Ê½²Î¿¼ÁËSloovyµÄÌû×Ó,ÔÚ´Ë±íÊ¾¸ÐÐ»£¡
+æ³¨: opå‚æ•°å’Œæ˜¾ç¤ºæ–¹å¼å‚è€ƒäº†Sloovyçš„å¸–å­,åœ¨æ­¤è¡¨ç¤ºæ„Ÿè°¢ï¼
 */
 
 /*
-ÎÄ¼þÃû½âÎö£º
-Item£ºµÀ¾ß£¬ÔÚÕâÀï±íÊ¾×°±¸¡£
-Stat£º×´Ì¬£¬ÔÚÕâÀï±íÊ¾ÊôÐÔ¡£
-Cost£º¿ªÏú£¬ÔÚÕâÀï±íÊ¾Ä³Ð©Ïà¹ØÐÅÏ¢¡£
-ËùÒÔ´ËÎÄ¼þ¾ÍÊÇÃèÊöËùÓÐ¿ÉÄÜÔÚ×°±¸³öÏÖµÄÊôÐÔµÄÏà¹ØÐÅÏ¢¡£1.10°æ±¾ÒÔºó´ËÎÄ¼þÖÐÓÖ¼ÓÈëÁËÈËÎïÊôÐÔµÄÒ»Ð©ÐÅÏ¢¡£
-´ËÎÄ¼þÖÐµÄÃ¿Ò»ÐÐ±íÊ¾Ò»ÌõÊôÐÔ¡£
+æ–‡ä»¶åè§£æžï¼š
+Itemï¼šé“å…·ï¼Œåœ¨è¿™é‡Œè¡¨ç¤ºè£…å¤‡ã€‚
+Statï¼šçŠ¶æ€ï¼Œåœ¨è¿™é‡Œè¡¨ç¤ºå±žæ€§ã€‚
+Costï¼šå¼€é”€ï¼Œåœ¨è¿™é‡Œè¡¨ç¤ºæŸäº›ç›¸å…³ä¿¡æ¯ã€‚
+æ‰€ä»¥æ­¤æ–‡ä»¶å°±æ˜¯æè¿°æ‰€æœ‰å¯èƒ½åœ¨è£…å¤‡å‡ºçŽ°çš„å±žæ€§çš„ç›¸å…³ä¿¡æ¯ã€‚1.10ç‰ˆæœ¬ä»¥åŽæ­¤æ–‡ä»¶ä¸­åˆåŠ å…¥äº†äººç‰©å±žæ€§çš„ä¸€äº›ä¿¡æ¯ã€‚
+æ­¤æ–‡ä»¶ä¸­çš„æ¯ä¸€è¡Œè¡¨ç¤ºä¸€æ¡å±žæ€§ã€‚
 
 
-»Ø¸´
+å›žå¤
 
-    2Â¥
+    2æ¥¼
     2011-09-20 23:48
 
-    ¾Ù±¨ |
+    ä¸¾æŠ¥ |
 
     zqtjingzi
-    Ð¡°ÉÖ÷
+    å°å§ä¸»
     12
 
-Ã¿ÁÐµÄº¬ÒåÈçÏÂ£º
+æ¯åˆ—çš„å«ä¹‰å¦‚ä¸‹ï¼š
 
 
-»Ø¸´
+å›žå¤
 
-    3Â¥
+    3æ¥¼
     2011-09-20 23:48
 
-    ¾Ù±¨ |
+    ä¸¾æŠ¥ |
 
-    ³æÊ¦ÁÖÈô
-    ÌìÌÃÐÅÍ½
+    è™«å¸ˆæž—è‹¥
+    å¤©å ‚ä¿¡å¾’
     11
 
-ÁôÃû
+ç•™å
 
 
-»Ø¸´
+å›žå¤
 
-    4Â¥
+    4æ¥¼
     2011-09-20 23:49
 
-    ¾Ù±¨ |
+    ä¸¾æŠ¥ |
 
     zqtjingzi
-    Ð¡°ÉÖ÷
+    å°å§ä¸»
     12
 
-Stat£ºÊôÐÔÃû¡£ËùÒÔÆäËüÎÄ¼þÖÐ¶¼Ê¹ÓÃ´ËÁÐµÄÃû×ÖÀ´Ö¸Ã÷Ä³ÌõÊôÐÔ¡£
+Statï¼šå±žæ€§åã€‚æ‰€ä»¥å…¶å®ƒæ–‡ä»¶ä¸­éƒ½ä½¿ç”¨æ­¤åˆ—çš„åå­—æ¥æŒ‡æ˜ŽæŸæ¡å±žæ€§ã€‚
 
-ID£ºÊôÐÔ±àºÅ¡£Êµ¼ÊÉÏÃ»ÓÐÓÃµ½¡£
+IDï¼šå±žæ€§ç¼–å·ã€‚å®žé™…ä¸Šæ²¡æœ‰ç”¨åˆ°ã€‚
 
-Send Other£º¿ØÖÆÊÇ·ñ½«´ËÊôÐÔ·¢ËÍ¸øÆäËüÈË£¬µ«´ó¶àÊýÊ±ºò¶¼ÓÉÓ²´úÂëÐ´Ã÷¡£
+Send Otherï¼šæŽ§åˆ¶æ˜¯å¦å°†æ­¤å±žæ€§å‘é€ç»™å…¶å®ƒäººï¼Œä½†å¤§å¤šæ•°æ—¶å€™éƒ½ç”±ç¡¬ä»£ç å†™æ˜Žã€‚
 
-Signed£º´ËÊôÐÔÖµÊÇ·ñÎªÓÐ·ûºÅÊý£¬µ«¾­±¾ÈË²âÊÔ²¢ÎÞÐ§¹û£¬ÊÇÓÉÓ²´úÂëÐ´Ã÷µÄ¡£¾ÝËµÔÚÁªÍø´«ÊäÊ±»áÓÃµ½´ËÁÐ¡£
+Signedï¼šæ­¤å±žæ€§å€¼æ˜¯å¦ä¸ºæœ‰ç¬¦å·æ•°ï¼Œä½†ç»æœ¬äººæµ‹è¯•å¹¶æ— æ•ˆæžœï¼Œæ˜¯ç”±ç¡¬ä»£ç å†™æ˜Žçš„ã€‚æ®è¯´åœ¨è”ç½‘ä¼ è¾“æ—¶ä¼šç”¨åˆ°æ­¤åˆ—ã€‚
 
-Sendbits£ºÁªÍø´«Êä´ËÊôÐÔÊ±ËùÓÃµÄÎ»³¤£¬µ«´ó¶àÊýÊ±ºò¶¼ÓÉÓ²´úÂëÐ´Ã÷¡£Èç¹û´ËÊôÐÔÖµÎªÓÐ·ûºÅÊý£¬Ôò´ËÁÐµÄÖµ×îºÃÎªSave Bits + 1£¬ÇÒ²»Òª³¬¹ý32¡£
+Sendbitsï¼šè”ç½‘ä¼ è¾“æ­¤å±žæ€§æ—¶æ‰€ç”¨çš„ä½é•¿ï¼Œä½†å¤§å¤šæ•°æ—¶å€™éƒ½ç”±ç¡¬ä»£ç å†™æ˜Žã€‚å¦‚æžœæ­¤å±žæ€§å€¼ä¸ºæœ‰ç¬¦å·æ•°ï¼Œåˆ™æ­¤åˆ—çš„å€¼æœ€å¥½ä¸ºSave Bits + 1ï¼Œä¸”ä¸è¦è¶…è¿‡32ã€‚
 
-Send Param£ºÁªÍø´«Êä´ËÊôÐÔµÄ²ÎÊýÊ±ËùÓÃµÄÎ»³¤£¬µ«´ó¶àÊýÊ±ºò¶¼ÓÉÓ²´úÂëÐ´Ã÷¡£ÓÉÓÚParam×ÜÎªÓÐ·ûºÅÊý£¬ËùÒÔ´ËÁÐµÄÖµ×îºÃÎªSave Param Bits + 1ÇÒ²»Òª³¬¹ý32¡£
+Send Paramï¼šè”ç½‘ä¼ è¾“æ­¤å±žæ€§çš„å‚æ•°æ—¶æ‰€ç”¨çš„ä½é•¿ï¼Œä½†å¤§å¤šæ•°æ—¶å€™éƒ½ç”±ç¡¬ä»£ç å†™æ˜Žã€‚ç”±äºŽParamæ€»ä¸ºæœ‰ç¬¦å·æ•°ï¼Œæ‰€ä»¥æ­¤åˆ—çš„å€¼æœ€å¥½ä¸ºSave Param Bits + 1ä¸”ä¸è¦è¶…è¿‡32ã€‚
 
-UpdateAnimateRate£ºµ±´ËÊôÐÔ±ä»¯Ê±ÊÇ·ñ¶ÀÁ¢ÓÚ¼ì²âÑ­»·Íâ¸üÐÂ£¨¿ÉÄÜ»á¸ü¿ìµÄ»ñµÃÐ§¹û£©£¬µ«´ó¶àÊýÊ±ºò¶¼ÓÉÓ²´úÂëÐ´Ã÷¡£
+UpdateAnimateRateï¼šå½“æ­¤å±žæ€§å˜åŒ–æ—¶æ˜¯å¦ç‹¬ç«‹äºŽæ£€æµ‹å¾ªçŽ¯å¤–æ›´æ–°ï¼ˆå¯èƒ½ä¼šæ›´å¿«çš„èŽ·å¾—æ•ˆæžœï¼‰ï¼Œä½†å¤§å¤šæ•°æ—¶å€™éƒ½ç”±ç¡¬ä»£ç å†™æ˜Žã€‚
 
-Saved£º´ËÊôÐÔµÄÖµÊÇ·ñ´æÈë.d2sÎÄ¼þÖÐ£¬»ù±¾Ö»ÓÃÓÚÈËÎïÊôÐÔ¡£
+Savedï¼šæ­¤å±žæ€§çš„å€¼æ˜¯å¦å­˜å…¥.d2sæ–‡ä»¶ä¸­ï¼ŒåŸºæœ¬åªç”¨äºŽäººç‰©å±žæ€§ã€‚
 
-CSvSigned£ºÈô´ËÊôÐÔ´æÈë.d2sÎÄ¼þÖÐ£¬ÊÇ·ñÊ¹ÓÃÓÐ·ûºÅÊý´æ´¢¡£´ó¶àÊýÊ±ºòÓÉÓ²´úÂëÐ´Ã÷¡£
+CSvSignedï¼šè‹¥æ­¤å±žæ€§å­˜å…¥.d2sæ–‡ä»¶ä¸­ï¼Œæ˜¯å¦ä½¿ç”¨æœ‰ç¬¦å·æ•°å­˜å‚¨ã€‚å¤§å¤šæ•°æ—¶å€™ç”±ç¡¬ä»£ç å†™æ˜Žã€‚
 
-CSvBits£ºÈô´ËÊôÐÔ´æÈë.d2sÎÄ¼þÖÐ£¬´æ´¢µÄÎ»ÊýÊÇ¶àÉÙ¡£
+CSvBitsï¼šè‹¥æ­¤å±žæ€§å­˜å…¥.d2sæ–‡ä»¶ä¸­ï¼Œå­˜å‚¨çš„ä½æ•°æ˜¯å¤šå°‘ã€‚
 
-CSvParam£ºÈô´ËÊôÐÔ´æÈë.d2sÎÄ¼þÖÐ£¬´ËÊôÐÔ²ÎÊýµÄ´æ´¢Î»ÊýÊÇ¶àÉÙ¡£
+CSvParamï¼šè‹¥æ­¤å±žæ€§å­˜å…¥.d2sæ–‡ä»¶ä¸­ï¼Œæ­¤å±žæ€§å‚æ•°çš„å­˜å‚¨ä½æ•°æ˜¯å¤šå°‘ã€‚
 
-fCallback£ºµ±´ËÊôÐÔ±ä»¯Ê±£¬ÊÇ·ñµ÷ÓÃ·´À¡º¯ÊýÒÔ´ïµ½´ËÊôÐÔµÄÐ§¹û£¨ÈçÔö¼ÓÄ³Ò»¼¼ÄÜ£¬»áÐÞ¸ÄÈËÎï¼¼ÄÜÁÐ±í£©¡£
+fCallbackï¼šå½“æ­¤å±žæ€§å˜åŒ–æ—¶ï¼Œæ˜¯å¦è°ƒç”¨åé¦ˆå‡½æ•°ä»¥è¾¾åˆ°æ­¤å±žæ€§çš„æ•ˆæžœï¼ˆå¦‚å¢žåŠ æŸä¸€æŠ€èƒ½ï¼Œä¼šä¿®æ”¹äººç‰©æŠ€èƒ½åˆ—è¡¨ï¼‰ã€‚
 
-fMin£º´ËÊôÐÔµÄÖµÊÇ·ñ±»ÏÞ¶¨ÔÚÒ»¶¨·¶Î§ÄÚ¡£
+fMinï¼šæ­¤å±žæ€§çš„å€¼æ˜¯å¦è¢«é™å®šåœ¨ä¸€å®šèŒƒå›´å†…ã€‚
 
-MinAccr£ºÈô´ËÊôÐÔµÄÖµÊÜÏÞ£¬ÄÇÃ´Æä×îÐ¡ÖµÊÇ¶àÉÙ¡£Êµ¼ÊÉÏ´ËÁÐ²»Æð×÷ÓÃ£¬ÓÉÓ²´úÂëÐ´Ã÷¡£
+MinAccrï¼šè‹¥æ­¤å±žæ€§çš„å€¼å—é™ï¼Œé‚£ä¹ˆå…¶æœ€å°å€¼æ˜¯å¤šå°‘ã€‚å®žé™…ä¸Šæ­¤åˆ—ä¸èµ·ä½œç”¨ï¼Œç”±ç¡¬ä»£ç å†™æ˜Žã€‚
 
-Encode£ºµ±´ËÊôÐÔµÄ²ÎÊý½ÏÎª¸´ÔÓÊ±£¨Èç´ò»÷´¥·¢¼¼ÄÜ£©£¬Ê¹ÓÃºÎÖÖ±àÂë·½Ê½´æ´¢ÊôÐÔ²ÎÊý¡£
+Encodeï¼šå½“æ­¤å±žæ€§çš„å‚æ•°è¾ƒä¸ºå¤æ‚æ—¶ï¼ˆå¦‚æ‰“å‡»è§¦å‘æŠ€èƒ½ï¼‰ï¼Œä½¿ç”¨ä½•ç§ç¼–ç æ–¹å¼å­˜å‚¨å±žæ€§å‚æ•°ã€‚
 
-Add£º¼Û¸ñÔö¼ÓÒò×Óa¡£
+Addï¼šä»·æ ¼å¢žåŠ å› å­aã€‚
 
-Multiply£º¼Û¸ñÔö¼ÓÒò×Ób¡£
+Multiplyï¼šä»·æ ¼å¢žåŠ å› å­bã€‚
 
-Divide£º¼Û¸ñ¼ÆËãµ×Êý£¬È«Îª1024£¬Êµ¼ÊÉÏ¶¼²»Æð×÷ÓÃ£¬Ó²´úÂëÖÐÐ´Ã÷ÊÇ1024¡£
+Divideï¼šä»·æ ¼è®¡ç®—åº•æ•°ï¼Œå…¨ä¸º1024ï¼Œå®žé™…ä¸Šéƒ½ä¸èµ·ä½œç”¨ï¼Œç¡¬ä»£ç ä¸­å†™æ˜Žæ˜¯1024ã€‚
 
-´ËÊôÐÔ¶ÔÎïÆ·¼Û¸ñµÄÓ°ÏìÓ¦Îª cost * (1 + value * multiply / 1024) + add¡£
+æ­¤å±žæ€§å¯¹ç‰©å“ä»·æ ¼çš„å½±å“åº”ä¸º cost * (1 + value * multiply / 1024) + addã€‚
 
-ValShift£º´ËÊôÐÔÖµµÄ¾«¶È¡£¹«Ê½Îª1/2^n£¬nÎª´ËÁÐµÄÖµ¡£
+ValShiftï¼šæ­¤å±žæ€§å€¼çš„ç²¾åº¦ã€‚å…¬å¼ä¸º1/2^nï¼Œnä¸ºæ­¤åˆ—çš„å€¼ã€‚
 
-1.09-Save Bits£ºÔÚ1.07-1.09°æÖÐµÄ´æ´¢Î»³¤¡£
+1.09-Save Bitsï¼šåœ¨1.07-1.09ç‰ˆä¸­çš„å­˜å‚¨ä½é•¿ã€‚
 
-1.09-Save Add£ºÔÚ1.07-1.09°æÖÐµÄ´æ´¢Æ«ÒÆÁ¿¡£
+1.09-Save Addï¼šåœ¨1.07-1.09ç‰ˆä¸­çš„å­˜å‚¨åç§»é‡ã€‚
 
-Save Bits£º´æ´¢Î»³¤¡£Ó²´úÂëÖÐÒÑÐ´Ã÷£¬ÇÒÓÎÏ·¿ªÊ¼Ê±»á¼ì²â£¬ÈôÐÞ¸ÄÔò»áµ¼ÖÂÓÎÏ·³ö´í¡£
-Save Add£º´æ´¢Æ«ÒÆÁ¿¡£
+Save Bitsï¼šå­˜å‚¨ä½é•¿ã€‚ç¡¬ä»£ç ä¸­å·²å†™æ˜Žï¼Œä¸”æ¸¸æˆå¼€å§‹æ—¶ä¼šæ£€æµ‹ï¼Œè‹¥ä¿®æ”¹åˆ™ä¼šå¯¼è‡´æ¸¸æˆå‡ºé”™ã€‚
+Save Addï¼šå­˜å‚¨åç§»é‡ã€‚
 
-´ËÊôÐÔ¿ÉÄÜ´æÔÚµÄÖµÊÜÒÔÉÏÁ½ÁÐÏÞÖÆ£¬×îÐ¡ÖµÎª-1 * SaveAdd£¬×î´óÖµÎª 2^SaveBits - SaveAdd - 1¡£
+æ­¤å±žæ€§å¯èƒ½å­˜åœ¨çš„å€¼å—ä»¥ä¸Šä¸¤åˆ—é™åˆ¶ï¼Œæœ€å°å€¼ä¸º-1 * SaveAddï¼Œæœ€å¤§å€¼ä¸º 2^SaveBits - SaveAdd - 1ã€‚
 
-SaveParamBits£ºParam²ÎÊýµÄ´æ´¢Î»³¤¡£
+SaveParamBitsï¼šParamå‚æ•°çš„å­˜å‚¨ä½é•¿ã€‚
 
-keepzero£º´ËÊôÐÔÊÇ·ñÄÜ³öÏÖ¸ºÖµ¡£µ«Êµ¼ÊÉÏ²¢Ã»ÓÐ×÷ÓÃ¡£
-
-
+keepzeroï¼šæ­¤å±žæ€§æ˜¯å¦èƒ½å‡ºçŽ°è´Ÿå€¼ã€‚ä½†å®žé™…ä¸Šå¹¶æ²¡æœ‰ä½œç”¨ã€‚
 
 
-»Ø¸´
 
-    5Â¥
+
+å›žå¤
+
+    5æ¥¼
     2011-09-20 23:49
 
-    ¾Ù±¨ |
+    ä¸¾æŠ¥ |
 
     zqtjingzi
-    Ð¡°ÉÖ÷
+    å°å§ä¸»
     12
 
-op£º´ËÊôÐÔÖµµÄ¼ÆËã¹«Ê½£¬ºóÃæ»áÁÐ³öopµÄÈ¡Öµ**¼°¶ÔÓ¦µÄ¼ÆËã¹«Ê½¡£
+opï¼šæ­¤å±žæ€§å€¼çš„è®¡ç®—å…¬å¼ï¼ŒåŽé¢ä¼šåˆ—å‡ºopçš„å–å€¼**åŠå¯¹åº”çš„è®¡ç®—å…¬å¼ã€‚
 
-op param£º¼ÆËã¹«Ê½ÖÐµÄ²ÎÊý¡£
+op paramï¼šè®¡ç®—å…¬å¼ä¸­çš„å‚æ•°ã€‚
 
-op base£º¼ÆËã¹«Ê½ÖÐµÄ²ÎÊý¡£
+op baseï¼šè®¡ç®—å…¬å¼ä¸­çš„å‚æ•°ã€‚
 
-op stat1£º´ËÊôÐÔËùÓ°ÏìµÄÊôÐÔ1¡£
+op stat1ï¼šæ­¤å±žæ€§æ‰€å½±å“çš„å±žæ€§1ã€‚
 
-op stat2£º´ËÊôÐÔËùÓ°ÏìµÄÊôÐÔ2¡£
+op stat2ï¼šæ­¤å±žæ€§æ‰€å½±å“çš„å±žæ€§2ã€‚
 
-op stat3£º´ËÊôÐÔËùÓ°ÏìµÄÊôÐÔ3¡£
+op stat3ï¼šæ­¤å±žæ€§æ‰€å½±å“çš„å±žæ€§3ã€‚
 
-direct£º´ËÊôÐÔÊÇ·ñÓÐ¹ØÁªµÄ×î´óÖµÊôÐÔ¡£
+directï¼šæ­¤å±žæ€§æ˜¯å¦æœ‰å…³è”çš„æœ€å¤§å€¼å±žæ€§ã€‚
 
-maxstat£º´ËÊôÐÔËù¹ØÁªµÄ×î´óÖµÊôÐÔ£¬½öµ±direct=1Ê±ÓÐ×÷ÓÃ¡£
+maxstatï¼šæ­¤å±žæ€§æ‰€å…³è”çš„æœ€å¤§å€¼å±žæ€§ï¼Œä»…å½“direct=1æ—¶æœ‰ä½œç”¨ã€‚
 
-itemspecific£º´ËÊôÐÔÊÇ·ñÖ»×÷ÓÃÓÚµ¥Ò»ÎïÆ·£¬ÊÖÌ×ÉÏÔö¼ÓÄÍ¾Ã¶ÈµÄÊôÐÔ²»»á¸Ä±äÐ¬×ÓµÄÄÍ¾Ã¶È¡£
+itemspecificï¼šæ­¤å±žæ€§æ˜¯å¦åªä½œç”¨äºŽå•ä¸€ç‰©å“ï¼Œæ‰‹å¥—ä¸Šå¢žåŠ è€ä¹…åº¦çš„å±žæ€§ä¸ä¼šæ”¹å˜éž‹å­çš„è€ä¹…åº¦ã€‚
 
-damagerelated£º´ËÊôÐÔÊÇ·ñÖ»×÷ÓÃÓÚµ¥Ò»ÎäÆ÷£¬ÈçµÚ¶þ¼þÎäÆ÷ÉÏµÄ»ðÑæÉËº¦²»»á¼Óµ½µÚÒ»¼þÎäÆ÷ÉÏ¡£
+damagerelatedï¼šæ­¤å±žæ€§æ˜¯å¦åªä½œç”¨äºŽå•ä¸€æ­¦å™¨ï¼Œå¦‚ç¬¬äºŒä»¶æ­¦å™¨ä¸Šçš„ç«ç„°ä¼¤å®³ä¸ä¼šåŠ åˆ°ç¬¬ä¸€ä»¶æ­¦å™¨ä¸Šã€‚
 
-itemevent1£º´¥·¢´ËÊôÐÔº¯Êý1µÄÊÂ¼þ£¬ÓëEvents.txt¹ØÁª¡£ÈçCBÐèÒªÏÈ»÷ÖÐ¹ÖÎï²ÅÄÜ´¥·¢¡£
+itemevent1ï¼šè§¦å‘æ­¤å±žæ€§å‡½æ•°1çš„äº‹ä»¶ï¼Œä¸ŽEvents.txtå…³è”ã€‚å¦‚CBéœ€è¦å…ˆå‡»ä¸­æ€ªç‰©æ‰èƒ½è§¦å‘ã€‚
 
-itemeventfunc1£ºÊÂ¼þ1·¢ÉúÊ±´¥·¢µÄº¯Êý¡£º¯ÊýµÄÈ¡Öµ**ºÍ×÷ÓÃÔÚºóÃæ¼¯ÖÐËµÃ÷¡£
+itemeventfunc1ï¼šäº‹ä»¶1å‘ç”Ÿæ—¶è§¦å‘çš„å‡½æ•°ã€‚å‡½æ•°çš„å–å€¼**å’Œä½œç”¨åœ¨åŽé¢é›†ä¸­è¯´æ˜Žã€‚
 
-itemevent2£º´¥·¢´ËÊôÐÔº¯Êý2µÄÊÂ¼þ£¬ÓëEvents.txt¹ØÁª¡£
+itemevent2ï¼šè§¦å‘æ­¤å±žæ€§å‡½æ•°2çš„äº‹ä»¶ï¼Œä¸ŽEvents.txtå…³è”ã€‚
 
-itemeventfunc2£ºÊÂ¼þ2·¢ÉúÊ±´¥·¢µÄº¯Êý¡£
+itemeventfunc2ï¼šäº‹ä»¶2å‘ç”Ÿæ—¶è§¦å‘çš„å‡½æ•°ã€‚
 
-descpriority£ºÎïÆ·ÊôÐÔÏÔÊ¾Ê±µÄÓÅÏÈ¼¶£¬´ËÁÐµÄÖµÔ½¸ßÔò´ËÊôÐÔÔÚ×°±¸µÄÊôÐÔÁÐ±íÖÐÔ½¿¿ÉÏ£¬È¡Öµ·¶Î§Îª0-255¡£
+descpriorityï¼šç‰©å“å±žæ€§æ˜¾ç¤ºæ—¶çš„ä¼˜å…ˆçº§ï¼Œæ­¤åˆ—çš„å€¼è¶Šé«˜åˆ™æ­¤å±žæ€§åœ¨è£…å¤‡çš„å±žæ€§åˆ—è¡¨ä¸­è¶Šé ä¸Šï¼Œå–å€¼èŒƒå›´ä¸º0-255ã€‚
 
-descfunc£ºÎÄ×ÖÃèÊö´ËÊôÐÔµÄ·½Ê½£¬È¡Öµ**ºÍ¶ÔÓ¦ÃèÊö·½Ê½ºóÃæ¼¯ÖÐËµÃ÷¡£
+descfuncï¼šæ–‡å­—æè¿°æ­¤å±žæ€§çš„æ–¹å¼ï¼Œå–å€¼**å’Œå¯¹åº”æè¿°æ–¹å¼åŽé¢é›†ä¸­è¯´æ˜Žã€‚
 
-descval£ºÈçºÎÏÔÊ¾´ËÊôÐÔµÄÖµ¡£0±íÊ¾²»ÏÔÊ¾Öµ£»1±íÊ¾ÏÈÏÔÊ¾Öµ£¬Èç+5Á¦Á¿£»2±íÊ¾ºóÏÔÊ¾Öµ£¬ÈçÁ¦Á¿+5¡£
+descvalï¼šå¦‚ä½•æ˜¾ç¤ºæ­¤å±žæ€§çš„å€¼ã€‚0è¡¨ç¤ºä¸æ˜¾ç¤ºå€¼ï¼›1è¡¨ç¤ºå…ˆæ˜¾ç¤ºå€¼ï¼Œå¦‚+5åŠ›é‡ï¼›2è¡¨ç¤ºåŽæ˜¾ç¤ºå€¼ï¼Œå¦‚åŠ›é‡+5ã€‚
 
-descstrpos£ºÊôÐÔÖµÎªÕýÊýÊ±µÄÃèÊöÓï¾ä¡£
+descstrposï¼šå±žæ€§å€¼ä¸ºæ­£æ•°æ—¶çš„æè¿°è¯­å¥ã€‚
 
-descstrneg£ºÊôÐÔÖµÎª¸ºÊýÊ±µÄÃèÊöÓï¾ä¡£
+descstrnegï¼šå±žæ€§å€¼ä¸ºè´Ÿæ•°æ—¶çš„æè¿°è¯­å¥ã€‚
 
-descstr2£ºÃèÊö·½Ê½ÖÐµÄÓï¾ä2¡£
+descstr2ï¼šæè¿°æ–¹å¼ä¸­çš„è¯­å¥2ã€‚
 
-dgrp£º´ËÊôÐÔËùÊôµÄÃèÊö×é±ð¡£ÏàÍ¬×é±ðµÄÊôÐÔÈôÊôÐÔÖµÏàµÈ»áÍ³Ò»ÏÔÊ¾£¬Èç+1Á¦Á¿¡¢+1Ãô½Ý¡¢+1¾«Á¦¡¢+1ÌåÁ¦»á±ä³É+1ËùÓÐÊôÐÔ¡£¿¹ÐÔÒ²Ò»Ñù¡£Ä¿Ç°Ö»ÓÐÕâÁ½ÖÖ×éÖÐ¼áÁ¦Á¿¡£
+dgrpï¼šæ­¤å±žæ€§æ‰€å±žçš„æè¿°ç»„åˆ«ã€‚ç›¸åŒç»„åˆ«çš„å±žæ€§è‹¥å±žæ€§å€¼ç›¸ç­‰ä¼šç»Ÿä¸€æ˜¾ç¤ºï¼Œå¦‚+1åŠ›é‡ã€+1æ•æ·ã€+1ç²¾åŠ›ã€+1ä½“åŠ›ä¼šå˜æˆ+1æ‰€æœ‰å±žæ€§ã€‚æŠ—æ€§ä¹Ÿä¸€æ ·ã€‚ç›®å‰åªæœ‰è¿™ä¸¤ç§ç»„ä¸­åšåŠ›é‡ã€‚
 
-dgrpfunc£ºº¬ÒåÍ¬descfunc£¬ÓÃÔÚ×éÏÔÊ¾ÖÐ¡£
+dgrpfuncï¼šå«ä¹‰åŒdescfuncï¼Œç”¨åœ¨ç»„æ˜¾ç¤ºä¸­ã€‚
 
-dgrpval£ºº¬ÒåÍ¬descval£¬ÓÃÔÚ×éÏÔÊ¾ÖÐ¡£
+dgrpvalï¼šå«ä¹‰åŒdescvalï¼Œç”¨åœ¨ç»„æ˜¾ç¤ºä¸­ã€‚
 
-dgrpstrpos£ºº¬ÒåÍ¬descstrpos£¬ÓÃÔÚ×éÏÔÊ¾ÖÐ¡£
+dgrpstrposï¼šå«ä¹‰åŒdescstrposï¼Œç”¨åœ¨ç»„æ˜¾ç¤ºä¸­ã€‚
 
-dgrpstrneg£ºº¬ÒåÍ¬descstrneg£¬ÓÃÔÚ×éÏÔÊ¾ÖÐ¡£
+dgrpstrnegï¼šå«ä¹‰åŒdescstrnegï¼Œç”¨åœ¨ç»„æ˜¾ç¤ºä¸­ã€‚
 
-dgrpstr2£ºº¬ÒåÍ¬descstr2£¬ÓÃÔÚ×éÏÔÊ¾ÖÐ¡£
+dgrpstr2ï¼šå«ä¹‰åŒdescstr2ï¼Œç”¨åœ¨ç»„æ˜¾ç¤ºä¸­ã€‚
 
-stuff£ºÈç¹ûÄã²»ÊÇ±©Ñ©µÄ¹¤×÷ÈËÔ±µÄ»°Çë²»Òª¶¯ÕâÒ»ÁÐ¡£binÎÄ¼þÉú³ÉÊ±ÓÐÓÃ¡£
+stuffï¼šå¦‚æžœä½ ä¸æ˜¯æš´é›ªçš„å·¥ä½œäººå‘˜çš„è¯è¯·ä¸è¦åŠ¨è¿™ä¸€åˆ—ã€‚binæ–‡ä»¶ç”Ÿæˆæ—¶æœ‰ç”¨ã€‚
 
-*eol£ºÐÐÎ²±êÖ¾£¬±ØÐëÎª0¡£
+*eolï¼šè¡Œå°¾æ ‡å¿—ï¼Œå¿…é¡»ä¸º0ã€‚
 
 
-»Ø¸´
+å›žå¤
 
-    6Â¥
+    6æ¥¼
     2011-09-20 23:49
 
-    ¾Ù±¨ |
+    ä¸¾æŠ¥ |
 
     zqtjingzi
-    Ð¡°ÉÖ÷
+    å°å§ä¸»
     12
 
-ËµÃ÷1£ºopµÄÈ¡Öµ·¶Î§¼°¼ÆËã·½Ê½£º
-Éèop param = p£¬op base = b£¬Ô­ÊôÐÔÖµÎªv£¬×îÖÕÊôÐÔÖµÎªs¡£
-op = 1 ¡ª¡ª s = b * v / 100
-op = 2 ¡ª¡ª s = b * v / 2^p
-op = 3 ¡ª¡ª s = b * v / 2^p ÓÃÓÚ°´°Ù·Ö±ÈÔö¼ÓµÄÊôÐÔ¡£
-op = 4 ¡ª¡ª s = b * v / 2^p ÓÃÓÚ×÷ÓÃÓÚ×°±¸µÄÊôÐÔ¡£
-op = 4 ¡ª¡ª s = b * v / 2^p ÓÃÓÚ°´°Ù·Ö±ÈÔö¼ÓÇÒ×÷ÓÃÓÚ×°±¸µÄÊôÐÔ¡£
-op = 6 ¡ª¡ª ÓÃÓÚËæÊ±¼ä±ä»¯µÄÊôÐÔ£¬ÒÑ¾­Ã»ÓÃÁË¡£
-op = 7 ¡ª¡ª ÓÃÓÚËæÊ±¼ä±ä»¯ÇÒ°´°Ù·Ö±ÈÔö¼ÓµÄÊôÐÔ£¬ÒÑ¾­Ã»ÓÃÁË¡£
-op = 8 ¡ª¡ª Ö»ÓÃÓÚ¾«Á¦ÊôÐÔ£¬»á¸ù¾ÝCharStats.txtÖÐµÄÊôÐÔ¶Ô²»Í¬µÄ½ÇÉ«¼Ó²»Í¬µÄ×î´óÄ§·¨Öµ¡£
-op = 9 ¡ª¡ª Ö»ÓÃÓÚÌåÁ¦ÊôÐÔ£¬»á¸ù¾ÝCharStats.txtÖÐµÄÊôÐÔ¶Ô²»Í¬µÄ½ÇÉ«¼Ó²»Í¬µÄ×î´óÉúÃüÖµºÍ×î´óÄÍÁ¦Öµ¡£
-op = 11¡ª¡ª s = b * v / 100 ±È1¶àÁËÒ»Ð©Ïà¹ØµÄ¼ì²é¡£
-op = 13¡ª¡ª s = b * v / 100 ÓÃÓÚ½ö×÷ÓÃÓÚÒ»¼þ×°±¸µÄÊôÐÔ¡£
+è¯´æ˜Ž1ï¼šopçš„å–å€¼èŒƒå›´åŠè®¡ç®—æ–¹å¼ï¼š
+è®¾op param = pï¼Œop base = bï¼ŒåŽŸå±žæ€§å€¼ä¸ºvï¼Œæœ€ç»ˆå±žæ€§å€¼ä¸ºsã€‚
+op = 1 â€”â€” s = b * v / 100
+op = 2 â€”â€” s = b * v / 2^p
+op = 3 â€”â€” s = b * v / 2^p ç”¨äºŽæŒ‰ç™¾åˆ†æ¯”å¢žåŠ çš„å±žæ€§ã€‚
+op = 4 â€”â€” s = b * v / 2^p ç”¨äºŽä½œç”¨äºŽè£…å¤‡çš„å±žæ€§ã€‚
+op = 4 â€”â€” s = b * v / 2^p ç”¨äºŽæŒ‰ç™¾åˆ†æ¯”å¢žåŠ ä¸”ä½œç”¨äºŽè£…å¤‡çš„å±žæ€§ã€‚
+op = 6 â€”â€” ç”¨äºŽéšæ—¶é—´å˜åŒ–çš„å±žæ€§ï¼Œå·²ç»æ²¡ç”¨äº†ã€‚
+op = 7 â€”â€” ç”¨äºŽéšæ—¶é—´å˜åŒ–ä¸”æŒ‰ç™¾åˆ†æ¯”å¢žåŠ çš„å±žæ€§ï¼Œå·²ç»æ²¡ç”¨äº†ã€‚
+op = 8 â€”â€” åªç”¨äºŽç²¾åŠ›å±žæ€§ï¼Œä¼šæ ¹æ®CharStats.txtä¸­çš„å±žæ€§å¯¹ä¸åŒçš„è§’è‰²åŠ ä¸åŒçš„æœ€å¤§é­”æ³•å€¼ã€‚
+op = 9 â€”â€” åªç”¨äºŽä½“åŠ›å±žæ€§ï¼Œä¼šæ ¹æ®CharStats.txtä¸­çš„å±žæ€§å¯¹ä¸åŒçš„è§’è‰²åŠ ä¸åŒçš„æœ€å¤§ç”Ÿå‘½å€¼å’Œæœ€å¤§è€åŠ›å€¼ã€‚
+op = 11â€”â€” s = b * v / 100 æ¯”1å¤šäº†ä¸€äº›ç›¸å…³çš„æ£€æŸ¥ã€‚
+op = 13â€”â€” s = b * v / 100 ç”¨äºŽä»…ä½œç”¨äºŽä¸€ä»¶è£…å¤‡çš„å±žæ€§ã€‚
 
 
-»Ø¸´
+å›žå¤
 
-    7Â¥
+    7æ¥¼
     2011-09-20 23:49
 
-    ¾Ù±¨ |
+    ä¸¾æŠ¥ |
 
     zqtjingzi
-    Ð¡°ÉÖ÷
+    å°å§ä¸»
     12
 
-ËµÃ÷2£ºItemEventFuncµÄÈ¡Öµ·¶Î§¼°º¯Êý×÷ÓÃ£º
-func = 1 ¡ª¡ª µ±ÓÐÔ¶³Ì¹¥»÷ÃüÖÐÄãÊ±·¢ÉäÒ»¸öµ¼µ¯£¬Èçº®±ù×°¼×¡£
-func = 2 ¡ª¡ª ¶³½á½üÉí¹¥»÷ÄãµÄÈË¡£
-func = 3 ¡ª¡ª ¶Ô½üÉí¹¥»÷ÄãµÄÈËÔì³ÉÒ»¶¨µÄ±ùÀäÉËº¦¡£
-func = 4 ¡ª¡ª °´±ÈÀý·´µ¯½üÉí¹¥»÷¶ÔÄãÔì³ÉµÄÉËº¦¡£
-func = 5 ¡ª¡ª °´±ÈÀý½«¶ÔµÐÈËµÄÉËº¦×ª»¯ÎªÉúÃü¡£
-func = 6 ¡ª¡ª ¹¥»÷ÕßÊÜµ½ÉËº¦¡£
-func = 7 ¡ª¡ª »÷ÍË¡£
-func = 8 ¡ª¡ª ¿Ö¾å¡£
-func = 9 ¡ª¡ª ÖÂÃ¤¡£
-func = 10¡ª¡ª ¹¥»÷ÕßÊÜµ½ÉÁµçÉËº¦¡£
-func = 11¡ª¡ª ¹¥»÷ÕßÊÜµ½»ðÑæÉËº¦¡£
-func = 12¡ª¡ª ¹¥»÷ÕßÊÜµ½±ùÀäÉËº¦¡£
-func = 13¡ª¡ª ½«ÊÜËðµÄÉúÃü×ª»¯Îª·¨Á¦¡£
-func = 14¡ª¡ª ¶³½áÄ¿±ê¡£
-func = 15¡ª¡ª Ëº¿ªÉË¿Ú¡£
-func = 16¡ª¡ª Ñ¹ËéÐÔ´ò»÷¡£
-func = 17¡ª¡ª É±ËÀ¹ÖÎï»ñµÃ·¨Á¦¡£
-func = 18¡ª¡ª É±ËÀ¶ñÄ§Ê±»ñµÃÉúÃü¡£
-func = 19¡ª¡ª ¼õËÙ¡£
-func = 20¡ª¡ª ¶ÔÊôÐÔÓµÓÐÕßµÄ¹¥»÷¶ÔÏóÊ©·Å·¨Êõ¡£
-func = 21¡ª¡ª ¶Ô¹¥»÷ÊôÐÔÓµÓÐÕßµÄ¶ÔÏóÊ©·Å·¨Êõ¡£
-func = 22¡ª¡ª ÎüÊÕÎïÀíÉËº¦¡£
-func = 23¡ª¡ª ½«ÕÙ»½ÎïÔì³ÉµÄÉËº¦×ªµ½½ÇÉ«ÉíÉÏ¡£
-func = 24¡ª¡ª ÓÃ·¨Á¦µÖÏûÉËº¦¡£
-func = 25¡ª¡ª ÎüÊÕÔªËØÉËº¦¡£
-func = 26¡ª¡ª ½«ÕÙ»½ÎïÊÜµ½µÄÉËº¦×ªµ½½ÇÉ«ÉíÉÏ¡£
-func = 27¡ª¡ª ¶ÔÉËº¦µ½´ËÊôÐÔÓµÓÐÕßµÄ»ò´ËÊôÐÔÓµÓÐÕßÉËº¦µ½µÄ¼õËÙ¡£
-func = 28¡ª¡ª É±ËÀ¹ÖÎïÊ±»ñµÃÉúÃü¡£
-func = 29¡ª¡ª É±ËÀ¹ÖÎï»Ö¸´Æ½¾²¡£
-func = 30¡ª¡ª ÔÚÄ³Ò»ÊÂ¼þ·¢ÉúÊ±Ê©·Å¼¼ÄÜ£¬²»ÓÃÑ¡ÔñÊ©·Å¶ÔÏó¡£
-func = 31¡ª¡ª ¸´»îÄ¿±ê³ÉÎªÄ³Ò»Ö¸¶¨Ä¿±ê¡£
+è¯´æ˜Ž2ï¼šItemEventFuncçš„å–å€¼èŒƒå›´åŠå‡½æ•°ä½œç”¨ï¼š
+func = 1 â€”â€” å½“æœ‰è¿œç¨‹æ”»å‡»å‘½ä¸­ä½ æ—¶å‘å°„ä¸€ä¸ªå¯¼å¼¹ï¼Œå¦‚å¯’å†°è£…ç”²ã€‚
+func = 2 â€”â€” å†»ç»“è¿‘èº«æ”»å‡»ä½ çš„äººã€‚
+func = 3 â€”â€” å¯¹è¿‘èº«æ”»å‡»ä½ çš„äººé€ æˆä¸€å®šçš„å†°å†·ä¼¤å®³ã€‚
+func = 4 â€”â€” æŒ‰æ¯”ä¾‹åå¼¹è¿‘èº«æ”»å‡»å¯¹ä½ é€ æˆçš„ä¼¤å®³ã€‚
+func = 5 â€”â€” æŒ‰æ¯”ä¾‹å°†å¯¹æ•Œäººçš„ä¼¤å®³è½¬åŒ–ä¸ºç”Ÿå‘½ã€‚
+func = 6 â€”â€” æ”»å‡»è€…å—åˆ°ä¼¤å®³ã€‚
+func = 7 â€”â€” å‡»é€€ã€‚
+func = 8 â€”â€” ææƒ§ã€‚
+func = 9 â€”â€” è‡´ç›²ã€‚
+func = 10â€”â€” æ”»å‡»è€…å—åˆ°é—ªç”µä¼¤å®³ã€‚
+func = 11â€”â€” æ”»å‡»è€…å—åˆ°ç«ç„°ä¼¤å®³ã€‚
+func = 12â€”â€” æ”»å‡»è€…å—åˆ°å†°å†·ä¼¤å®³ã€‚
+func = 13â€”â€” å°†å—æŸçš„ç”Ÿå‘½è½¬åŒ–ä¸ºæ³•åŠ›ã€‚
+func = 14â€”â€” å†»ç»“ç›®æ ‡ã€‚
+func = 15â€”â€” æ’•å¼€ä¼¤å£ã€‚
+func = 16â€”â€” åŽ‹ç¢Žæ€§æ‰“å‡»ã€‚
+func = 17â€”â€” æ€æ­»æ€ªç‰©èŽ·å¾—æ³•åŠ›ã€‚
+func = 18â€”â€” æ€æ­»æ¶é­”æ—¶èŽ·å¾—ç”Ÿå‘½ã€‚
+func = 19â€”â€” å‡é€Ÿã€‚
+func = 20â€”â€” å¯¹å±žæ€§æ‹¥æœ‰è€…çš„æ”»å‡»å¯¹è±¡æ–½æ”¾æ³•æœ¯ã€‚
+func = 21â€”â€” å¯¹æ”»å‡»å±žæ€§æ‹¥æœ‰è€…çš„å¯¹è±¡æ–½æ”¾æ³•æœ¯ã€‚
+func = 22â€”â€” å¸æ”¶ç‰©ç†ä¼¤å®³ã€‚
+func = 23â€”â€” å°†å¬å”¤ç‰©é€ æˆçš„ä¼¤å®³è½¬åˆ°è§’è‰²èº«ä¸Šã€‚
+func = 24â€”â€” ç”¨æ³•åŠ›æŠµæ¶ˆä¼¤å®³ã€‚
+func = 25â€”â€” å¸æ”¶å…ƒç´ ä¼¤å®³ã€‚
+func = 26â€”â€” å°†å¬å”¤ç‰©å—åˆ°çš„ä¼¤å®³è½¬åˆ°è§’è‰²èº«ä¸Šã€‚
+func = 27â€”â€” å¯¹ä¼¤å®³åˆ°æ­¤å±žæ€§æ‹¥æœ‰è€…çš„æˆ–æ­¤å±žæ€§æ‹¥æœ‰è€…ä¼¤å®³åˆ°çš„å‡é€Ÿã€‚
+func = 28â€”â€” æ€æ­»æ€ªç‰©æ—¶èŽ·å¾—ç”Ÿå‘½ã€‚
+func = 29â€”â€” æ€æ­»æ€ªç‰©æ¢å¤å¹³é™ã€‚
+func = 30â€”â€” åœ¨æŸä¸€äº‹ä»¶å‘ç”Ÿæ—¶æ–½æ”¾æŠ€èƒ½ï¼Œä¸ç”¨é€‰æ‹©æ–½æ”¾å¯¹è±¡ã€‚
+func = 31â€”â€” å¤æ´»ç›®æ ‡æˆä¸ºæŸä¸€æŒ‡å®šç›®æ ‡ã€‚
 
 
-»Ø¸´
+å›žå¤
 
-    8Â¥
+    8æ¥¼
     2011-09-20 23:50
 
-    ¾Ù±¨ |
+    ä¸¾æŠ¥ |
 
     zqtjingzi
-    Ð¡°ÉÖ÷
+    å°å§ä¸»
     12
 
-ËµÃ÷3£ºdescfuncµÄÈ¡Öµ·¶Î§¼°ÊôÐÔÃèÊö·½Ê½£º
-valueÎªÊôÐÔµÄÖµ£¬string1Îª´ËÊôÐÔ±¾Éí¶ÔÓ¦µÄ×Ö·û´®£¬string2Îªdescstr2ÖÐ¶ÔÓ¦µÄ×Ö·û´®¡£
-func = 1 ¡ª¡ª +[value] [string1]
-func = 2 ¡ª¡ª [value]% [string1]
-func = 3 ¡ª¡ª [value] [string1]
-func = 4 ¡ª¡ª +[value]% [string1]
-func = 5 ¡ª¡ª [value*100/128]% [string1]
-func = 6 ¡ª¡ª +[value] [string1] [string2]
-func = 7 ¡ª¡ª [value]% [string1] [string2]
-func = 8 ¡ª¡ª +[value]% [string1] [string2]
-func = 9 ¡ª¡ª [value] [string1] [string2]
-func = 10¡ª¡ª [value*100/128]% [string1] [string2]
-func = 11¡ª¡ª »Ø¸´×°±¸ÄÍ¾Ã¶È 1 ÓÚ [100/value] ÃëÄÚ
-func = 12¡ª¡ª +[value] [string1]
-func = 13¡ª¡ª +[value] [Ä³Ò»Ö°Òµ] ¼¼ÄÜµÈ¼¶
-func = 14¡ª¡ª +[value] [Ä³Ò»Ïµ] Ïµ¼¼ÄÜ
-func = 15¡ª¡ª [µ±Ä³Ò»ÊÂ¼þ·¢ÉúÊ±ÓÐ] [chance]% »ú»áÊ©Õ¹µÈ¼¶ [¼¼ÄÜµÈ¼¶] [¼¼ÄÜÃû]
-func = 16¡ª¡ª ¸³ÓèµÈ¼¶ [value] [ÁéÆøÃû] ÁéÆø
-func = 17¡ª¡ª [value] [string1] "(Increases near" [time] ")"
-func = 18¡ª¡ª [value]% [string1] "(Increases near" [time] ")"
-func = 20¡ª¡ª [value * -1]% [string1]
-func = 21¡ª¡ª [value * -1] [string1]
-func = 22¡ª¡ª [value]% [string1] [montype]
-func = 23¡ª¡ª [value]% [string1] [monster]
-func = 24¡ª¡ª µÈ¼¶ [¼¼ÄÜµÈ¼¶] ([Ê£Óà¾ÛÆøÊý/×Ü¾ÛÆøÊý] ¾ÛÆø )
-func = 27¡ª¡ª +[value] [¼¼ÄÜÃû] (ÏÞ[Ä³Ò»Ö°Òµ]Ê¹ÓÃ)
-func = 28¡ª¡ª +[value] [¼¼ÄÜÃû]
+è¯´æ˜Ž3ï¼šdescfuncçš„å–å€¼èŒƒå›´åŠå±žæ€§æè¿°æ–¹å¼ï¼š
+valueä¸ºå±žæ€§çš„å€¼ï¼Œstring1ä¸ºæ­¤å±žæ€§æœ¬èº«å¯¹åº”çš„å­—ç¬¦ä¸²ï¼Œstring2ä¸ºdescstr2ä¸­å¯¹åº”çš„å­—ç¬¦ä¸²ã€‚
+func = 1 â€”â€” +[value] [string1]
+func = 2 â€”â€” [value]% [string1]
+func = 3 â€”â€” [value] [string1]
+func = 4 â€”â€” +[value]% [string1]
+func = 5 â€”â€” [value*100/128]% [string1]
+func = 6 â€”â€” +[value] [string1] [string2]
+func = 7 â€”â€” [value]% [string1] [string2]
+func = 8 â€”â€” +[value]% [string1] [string2]
+func = 9 â€”â€” [value] [string1] [string2]
+func = 10â€”â€” [value*100/128]% [string1] [string2]
+func = 11â€”â€” å›žå¤è£…å¤‡è€ä¹…åº¦ 1 äºŽ [100/value] ç§’å†…
+func = 12â€”â€” +[value] [string1]
+func = 13â€”â€” +[value] [æŸä¸€èŒä¸š] æŠ€èƒ½ç­‰çº§
+func = 14â€”â€” +[value] [æŸä¸€ç³»] ç³»æŠ€èƒ½
+func = 15â€”â€” [å½“æŸä¸€äº‹ä»¶å‘ç”Ÿæ—¶æœ‰] [chance]% æœºä¼šæ–½å±•ç­‰çº§ [æŠ€èƒ½ç­‰çº§] [æŠ€èƒ½å]
+func = 16â€”â€” èµ‹äºˆç­‰çº§ [value] [çµæ°”å] çµæ°”
+func = 17â€”â€” [value] [string1] "(Increases near" [time] ")"
+func = 18â€”â€” [value]% [string1] "(Increases near" [time] ")"
+func = 20â€”â€” [value * -1]% [string1]
+func = 21â€”â€” [value * -1] [string1]
+func = 22â€”â€” [value]% [string1] [montype]
+func = 23â€”â€” [value]% [string1] [monster]
+func = 24â€”â€” ç­‰çº§ [æŠ€èƒ½ç­‰çº§] ([å‰©ä½™èšæ°”æ•°/æ€»èšæ°”æ•°] èšæ°” )
+func = 27â€”â€” +[value] [æŠ€èƒ½å] (é™[æŸä¸€èŒä¸š]ä½¿ç”¨)
+func = 28â€”â€” +[value] [æŠ€èƒ½å]
 
 
-»Ø¸´
+å›žå¤
 
-    9Â¥
+    9æ¥¼
     2011-09-20 23:50
 
-    ¾Ù±¨ |
+    ä¸¾æŠ¥ |
 
     zqtjingzi
-    Ð¡°ÉÖ÷
+    å°å§ä¸»
     12
 
-ÌØÊâËµÃ÷£º´ËÎÄ¼þ´óÁ¿²Î¿¼ÁËÄ³Ç°±²µÄÌû×Ó£¬ÍüÁË½ÐÊ²Ã´ÁË£¬ÏÈÖÂÇ¸ÔÙÖÂ¾´
+ç‰¹æ®Šè¯´æ˜Žï¼šæ­¤æ–‡ä»¶å¤§é‡å‚è€ƒäº†æŸå‰è¾ˆçš„å¸–å­ï¼Œå¿˜äº†å«ä»€ä¹ˆäº†ï¼Œå…ˆè‡´æ­‰å†è‡´æ•¬
 
 
-»Ø¸´
+å›žå¤
 
-    10Â¥
+    10æ¥¼
     2011-09-20 23:50
 
-    ¾Ù±¨ |
+    ä¸¾æŠ¥ |
 
     zqtjingzi
-    Ð¡°ÉÖ÷
+    å°å§ä¸»
     12
 
-Íê±Ï¡£
-Èç¹ûÓÐ´íÎóÇëÖ¸³ö¡£
-×£¸÷Î»ÓÎÏ·Óä¿ì¡£
+å®Œæ¯•ã€‚
+å¦‚æžœæœ‰é”™è¯¯è¯·æŒ‡å‡ºã€‚
+ç¥å„ä½æ¸¸æˆæ„‰å¿«ã€‚
 
-7Â¥ÓÐ¸öÐ¡´íÎó¡£
-ÓÐÁ½ÐÐop = 4£¬µÚÒ»¸öÃ»´í£¬µÚ¶þ¸öop = 4Ó¦¸ÃÊÇop = 5¡£
-Ó¦¸ÃºÜÈÝÒ×¿´³öÀ´°É£¬²»¹ý»¹ÊÇÌáÐÑÒ»ÏÂµÄºÃ¡£
+7æ¥¼æœ‰ä¸ªå°é”™è¯¯ã€‚
+æœ‰ä¸¤è¡Œop = 4ï¼Œç¬¬ä¸€ä¸ªæ²¡é”™ï¼Œç¬¬äºŒä¸ªop = 4åº”è¯¥æ˜¯op = 5ã€‚
+åº”è¯¥å¾ˆå®¹æ˜“çœ‹å‡ºæ¥å§ï¼Œä¸è¿‡è¿˜æ˜¯æé†’ä¸€ä¸‹çš„å¥½ã€‚
 */
 
 typedef struct
@@ -696,7 +696,7 @@ typedef struct
 
     unsigned char vEncode;
     unsigned char bUnKnown2;
-    unsigned short vmaxstat;  //ÒýÓÃ×ÔÉí
+    unsigned short vmaxstat;  //å¼•ç”¨è‡ªèº«
 
     unsigned short vdescpriority;
     unsigned char vdescfunc;
@@ -725,12 +725,12 @@ typedef struct
 
     unsigned char vop;
     unsigned char vopmyspparam;
-    unsigned short vopmyspbase;   //ÒýÓÃ×ÔÉí
+    unsigned short vopmyspbase;   //å¼•ç”¨è‡ªèº«
 
-    unsigned short vopmyspstat1;  //ÒýÓÃ×ÔÉí
-    unsigned short vopmyspstat2;  //ÒýÓÃ×ÔÉí
+    unsigned short vopmyspstat1;  //å¼•ç”¨è‡ªèº«
+    unsigned short vopmyspstat2;  //å¼•ç”¨è‡ªèº«
 
-    unsigned short vopmyspstat3;  //ÒýÓÃ×ÔÉí
+    unsigned short vopmyspstat3;  //å¼•ç”¨è‡ªèº«
     unsigned short iPadding23;
 
     unsigned int iPadding24;

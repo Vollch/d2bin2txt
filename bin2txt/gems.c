@@ -52,38 +52,38 @@ into an item.
 */
 
 /*
-ÎÄ¼þÃû½âÎö£º
-Gem(s)£º±¦Ê¯£¬ÔÚÕâÀïÖ¸³ýÖé±¦ÍâµÄËùÓÐÏâÇ¶Îï¡£
-ËùÒÔ´ËÎÄ¼þ¾ÍÊÇÃèÊö³ýÖé±¦ÍâËùÓÐÏâÇ¶Îï£¬Ò²¾ÍÊÇÇ¶Èëµ½²»Í¬Àà±ðµÄ×°±¸ÉÏÓÐ²»Í¬ÊôÐÔµÄÏâÇ¶ÎïµÄµØ·½¡£
-´ËÎÄ¼þÖÐµÄÃ¿Ò»ÐÐ±íÊ¾Ò»ÖÖ±¦Ê¯»ò·ûÎÄ¡£
+æ–‡ä»¶åè§£æžï¼š
+Gem(s)ï¼šå®çŸ³ï¼Œåœ¨è¿™é‡ŒæŒ‡é™¤ç å®å¤–çš„æ‰€æœ‰é•¶åµŒç‰©ã€‚
+æ‰€ä»¥æ­¤æ–‡ä»¶å°±æ˜¯æè¿°é™¤ç å®å¤–æ‰€æœ‰é•¶åµŒç‰©ï¼Œä¹Ÿå°±æ˜¯åµŒå…¥åˆ°ä¸åŒç±»åˆ«çš„è£…å¤‡ä¸Šæœ‰ä¸åŒå±žæ€§çš„é•¶åµŒç‰©çš„åœ°æ–¹ã€‚
+æ­¤æ–‡ä»¶ä¸­çš„æ¯ä¸€è¡Œè¡¨ç¤ºä¸€ç§å®çŸ³æˆ–ç¬¦æ–‡ã€‚
 
-name£º´ËÏâÇ¶ÎïµÄÃû×Ö¡£
+nameï¼šæ­¤é•¶åµŒç‰©çš„åå­—ã€‚
 
-letter£º·ûÎÄÃû¡£
+letterï¼šç¬¦æ–‡åã€‚
 
-transform£ºµ±´ËÏâÇ¶Îï±»ÏâÈëÄ³×°±¸Ê±£¬¶Ô×°±¸ÑÕÉ«µÄ¸Ä±ä¡£ÓëColors.txt¹ØÁª¡£
+transformï¼šå½“æ­¤é•¶åµŒç‰©è¢«é•¶å…¥æŸè£…å¤‡æ—¶ï¼Œå¯¹è£…å¤‡é¢œè‰²çš„æ”¹å˜ã€‚ä¸ŽColors.txtå…³è”ã€‚
 
-code£º´ËÏâÇ¶ÎïµÄ´úÂë¡£
+codeï¼šæ­¤é•¶åµŒç‰©çš„ä»£ç ã€‚
 
-nummods£ºÃ»¸ãÃ÷°×ÊÇÊ²Ã´ÒâË¼£¬ÇëÖ¸½Ì¡£
+nummodsï¼šæ²¡æžæ˜Žç™½æ˜¯ä»€ä¹ˆæ„æ€ï¼Œè¯·æŒ‡æ•™ã€‚
 
-WeaponMod1Code£ºÏâÔÚÎäÆ÷ÉÏµÄÊôÐÔ1¡£
+WeaponMod1Codeï¼šé•¶åœ¨æ­¦å™¨ä¸Šçš„å±žæ€§1ã€‚
 
-WeaponMod1Param£ºÏâÔÚÎäÆ÷ÉÏµÄÊôÐÔ1µÄ²ÎÊý¡£
+WeaponMod1Paramï¼šé•¶åœ¨æ­¦å™¨ä¸Šçš„å±žæ€§1çš„å‚æ•°ã€‚
 
-WeaponMod1Min£ºÏâÔÚÎäÆ÷ÉÏµÄÊôÐÔ1µÄ×îÐ¡Öµ²ÎÊý¡£
+WeaponMod1Minï¼šé•¶åœ¨æ­¦å™¨ä¸Šçš„å±žæ€§1çš„æœ€å°å€¼å‚æ•°ã€‚
 
-WeaponMod1Max£ºÏâÔÚÎäÆ÷ÉÏµÄÊôÐÔ1µÄ×î´óÖµ²ÎÊý¡£
+WeaponMod1Maxï¼šé•¶åœ¨æ­¦å™¨ä¸Šçš„å±žæ€§1çš„æœ€å¤§å€¼å‚æ•°ã€‚
 
-WeaponMod2-3XXX£ºÍ¬ÊÇÏâÔÚÎäÆ÷ÉÏµÄÊôÐÔ£¬º¬Òå²Î¿¼ÉÏÃæ4ÁÐ¡£
+WeaponMod2-3XXXï¼šåŒæ˜¯é•¶åœ¨æ­¦å™¨ä¸Šçš„å±žæ€§ï¼Œå«ä¹‰å‚è€ƒä¸Šé¢4åˆ—ã€‚
 
-HelmMod1-3XXX£ºÏâÔÚÍ·¿øÉÏµÄÊôÐÔ£¬º¬Òå²Î¿¼Ç°ÃæµÄ½âÊÍ¡£
+HelmMod1-3XXXï¼šé•¶åœ¨å¤´ç›”ä¸Šçš„å±žæ€§ï¼Œå«ä¹‰å‚è€ƒå‰é¢çš„è§£é‡Šã€‚
 
-ShieldMod1-3XXX£ºÏâÔÚ¶ÜÅÆÉÏµÄÊôÐÔ£¬º¬Òå²Î¿¼Ç°ÃæµÄ½âÊÍ¡£
+ShieldMod1-3XXXï¼šé•¶åœ¨ç›¾ç‰Œä¸Šçš„å±žæ€§ï¼Œå«ä¹‰å‚è€ƒå‰é¢çš„è§£é‡Šã€‚
 
-*eol£ºÐÐÎ²±êÖ¾£¬±ØÐëÎª0¡£
+*eolï¼šè¡Œå°¾æ ‡å¿—ï¼Œå¿…é¡»ä¸º0ã€‚
 
-ÌØÊâËµÃ÷£ºÒÂ·þ¸úÍ·¿øÓÀÔ¶ÊÇÒ»ÑùµÄÊôÐÔ£¬ËùÒÔÔÚ´Ë²¢Ã»ÓÐµ¥¶ÀËµÃ÷¡£
+ç‰¹æ®Šè¯´æ˜Žï¼šè¡£æœè·Ÿå¤´ç›”æ°¸è¿œæ˜¯ä¸€æ ·çš„å±žæ€§ï¼Œæ‰€ä»¥åœ¨æ­¤å¹¶æ²¡æœ‰å•ç‹¬è¯´æ˜Žã€‚
 */
 
 typedef struct

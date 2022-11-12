@@ -102,163 +102,163 @@ L-XP(H): Experience Points (Hell) , is calculated together with monstats.txt col
 */
 
 /*
-AC: ¿ø¼×(AC ·ÀÓù) (ÆÕÍ¨),Á¬Í¬ monstats.txt ÁĞ (s) Ò»²¢¼ÆËã {( MonLvl.txt Ac*Monstats.txt AC)/100},·â±ÕÊ½Õ½Íø£»
+AC: ç›”ç”²(AC é˜²å¾¡) (æ™®é€š),è¿åŒ monstats.txt åˆ— (s) ä¸€å¹¶è®¡ç®— {( MonLvl.txt Ac*Monstats.txt AC)/100},å°é—­å¼æˆ˜ç½‘ï¼›
 
-AC:(N)¿ø¼×(AC ·ÀÓù) (¶ñÃÎ),Á¬Í¬ monstats.txt ÁĞ (s) Ò»²¢¼ÆËã{(MonLvl.txt Ac*Monstats.txt AC)/100},·â±ÕÊ½Õ½Íø£»
+AC:(N)ç›”ç”²(AC é˜²å¾¡) (æ¶æ¢¦),è¿åŒ monstats.txt åˆ— (s) ä¸€å¹¶è®¡ç®—{(MonLvl.txt Ac*Monstats.txt AC)/100},å°é—­å¼æˆ˜ç½‘ï¼›
 
-AC:(H) ¿ø¼×(AC ·ÀÓù) (µØÓü),Á¬Í¬ monstats.txt ÁĞ (s) Ò»²¢¼ÆËã {( MonLvl.txt Ac*Monstats.txt AC)/100},·â±ÕÊ½Õ½Íø£»
+AC:(H) ç›”ç”²(AC é˜²å¾¡) (åœ°ç‹±),è¿åŒ monstats.txt åˆ— (s) ä¸€å¹¶è®¡ç®— {( MonLvl.txt Ac*Monstats.txt AC)/100},å°é—­å¼æˆ˜ç½‘ï¼›
 
-L-AC:¿ø¼×(AC ·ÀÓù) (ÆÕÍ¨),Á¬Í¬ monstats.txt ÁĞ (s) Ò»²¢¼ÆËã{(MonLvl.txt Ac*Monstats.txt AC)/100},LadderÄ£Ê½/µ¥ÈËÓÎÏ·/tcp- ip£»
+L-AC:ç›”ç”²(AC é˜²å¾¡) (æ™®é€š),è¿åŒ monstats.txt åˆ— (s) ä¸€å¹¶è®¡ç®—{(MonLvl.txt Ac*Monstats.txt AC)/100},Ladderæ¨¡å¼/å•äººæ¸¸æˆ/tcp- ipï¼›
 
-L-AC:(N) ¿ø¼×(AC ·ÀÓù) (¶ñÃÎ),Á¬Í¬ monstats.txt ÁĞ (s) Ò»²¢¼ÆËã {/( MonLvl.txt Ac*Monstats.txt AC)/100}, LadderÄ£Ê½/ µ¥ÈËÓÎÏ·/ tcp- ip£»
+L-AC:(N) ç›”ç”²(AC é˜²å¾¡) (æ¶æ¢¦),è¿åŒ monstats.txt åˆ— (s) ä¸€å¹¶è®¡ç®— {/( MonLvl.txt Ac*Monstats.txt AC)/100}, Ladderæ¨¡å¼/ å•äººæ¸¸æˆ/ tcp- ipï¼›
 
-L-AC:(H)¿ø¼×(AC ·ÀÓù) (µØÓü),Á¬Í¬ monstats.txt ÁĞ (s) Ò»²¢¼ÆËã{(MonLvl.txt Ac*Monstats.txt AC)/100},LadderÄ£Ê½/µ¥ÈËÓÎÏ·/tcp- ip£»
+L-AC:(H)ç›”ç”²(AC é˜²å¾¡) (åœ°ç‹±),è¿åŒ monstats.txt åˆ— (s) ä¸€å¹¶è®¡ç®—{(MonLvl.txt Ac*Monstats.txt AC)/100},Ladderæ¨¡å¼/å•äººæ¸¸æˆ/tcp- ipï¼›
 
-TH:to hit(Ó¦¸ÃÖ¸¹¥»÷µÈ¼¶) (ÆÕÍ¨),Á¬Í¬ monstats.txt ÁĞ (s) Ò»²¢¼ÆËã{(MonLvl.txt TH*Monstats.txt A1TH ºÍ MonLvl.txt TH*Monstats.txt A2TH)/100},·â±ÕÊ½Õ½Íø£»
+TH:to hit(åº”è¯¥æŒ‡æ”»å‡»ç­‰çº§) (æ™®é€š),è¿åŒ monstats.txt åˆ— (s) ä¸€å¹¶è®¡ç®—{(MonLvl.txt TH*Monstats.txt A1TH å’Œ MonLvl.txt TH*Monstats.txt A2TH)/100},å°é—­å¼æˆ˜ç½‘ï¼›
 
-TH:(N) to hit(Ó¦¸ÃÖ¸¹¥»÷µÈ¼¶) (¶ñÃÎ),Á¬Í¬ monstats.txt ÁĞ (s) Ò»²¢¼ÆËã {( MonLvl.txt TH* Monstats.txt A1TH ºÍ MonLvl.txt TH*Monstats.txt A2TH)/100}, ·â±ÕÊ½Õ½Íø£»
+TH:(N) to hit(åº”è¯¥æŒ‡æ”»å‡»ç­‰çº§) (æ¶æ¢¦),è¿åŒ monstats.txt åˆ— (s) ä¸€å¹¶è®¡ç®— {( MonLvl.txt TH* Monstats.txt A1TH å’Œ MonLvl.txt TH*Monstats.txt A2TH)/100}, å°é—­å¼æˆ˜ç½‘ï¼›
 
-TH:(H)to hit(Ó¦¸ÃÖ¸¹¥»÷µÈ¼¶)(Ó¦¸ÃÖ¸¹¥»÷µÈ¼¶) (µØÓü),Á¬Í¬ monstats.txt ÁĞ (s) Ò»²¢¼ÆËã{(MonLvl.txt TH*Monstats.txt A1TH ºÍ MonLvl.txt TH*Monstats.txt A2TH)/100},·â±ÕÊ½Õ½Íø£»
+TH:(H)to hit(åº”è¯¥æŒ‡æ”»å‡»ç­‰çº§)(åº”è¯¥æŒ‡æ”»å‡»ç­‰çº§) (åœ°ç‹±),è¿åŒ monstats.txt åˆ— (s) ä¸€å¹¶è®¡ç®—{(MonLvl.txt TH*Monstats.txt A1TH å’Œ MonLvl.txt TH*Monstats.txt A2TH)/100},å°é—­å¼æˆ˜ç½‘ï¼›
 
-L-TH:to hit(Ó¦¸ÃÖ¸¹¥»÷µÈ¼¶) (ÆÕÍ¨),Á¬Í¬ monstats.txt ÁĞ (s) Ò»²¢¼ÆËã{(MonLvl.txt TH*Monstats.txt A1TH ºÍ MonLvl.txt TH*Monstats.txt A2TH)/100},LadderÄ£Ê½/µ¥ÈËÓÎÏ·/tcp- ip£»
+L-TH:to hit(åº”è¯¥æŒ‡æ”»å‡»ç­‰çº§) (æ™®é€š),è¿åŒ monstats.txt åˆ— (s) ä¸€å¹¶è®¡ç®—{(MonLvl.txt TH*Monstats.txt A1TH å’Œ MonLvl.txt TH*Monstats.txt A2TH)/100},Ladderæ¨¡å¼/å•äººæ¸¸æˆ/tcp- ipï¼›
 
-L-TH:(N) to hit(Ó¦¸ÃÖ¸¹¥»÷µÈ¼¶) (¶ñÃÎ),Á¬Í¬ monstats.txt ÁĞ (s) Ò»²¢¼ÆËã {( MonLvl.txt TH* Monstats.txt A1TH ºÍMonLvl.txt TH*Monstats.txt A2TH)/100}, LadderÄ£Ê½/ µ¥ÈËÓÎÏ·/ tcp- ip£»
+L-TH:(N) to hit(åº”è¯¥æŒ‡æ”»å‡»ç­‰çº§) (æ¶æ¢¦),è¿åŒ monstats.txt åˆ— (s) ä¸€å¹¶è®¡ç®— {( MonLvl.txt TH* Monstats.txt A1TH å’ŒMonLvl.txt TH*Monstats.txt A2TH)/100}, Ladderæ¨¡å¼/ å•äººæ¸¸æˆ/ tcp- ipï¼›
 
-L-TH:(H)to hit(Ó¦¸ÃÖ¸¹¥»÷µÈ¼¶) (µØÓü),Á¬Í¬ monstats.txt ÁĞ (s) Ò»²¢¼ÆËã{(MonLvl.txt TH*Monstats.txt A1TH ºÍ MonLvl.txt TH*Monstats.txt A2TH)/100},LadderÄ£Ê½/µ¥ÈËÓÎÏ·/tcp- ip£»
+L-TH:(H)to hit(åº”è¯¥æŒ‡æ”»å‡»ç­‰çº§) (åœ°ç‹±),è¿åŒ monstats.txt åˆ— (s) ä¸€å¹¶è®¡ç®—{(MonLvl.txt TH*Monstats.txt A1TH å’Œ MonLvl.txt TH*Monstats.txt A2TH)/100},Ladderæ¨¡å¼/å•äººæ¸¸æˆ/tcp- ipï¼›
 
-HP: ÉúÃüÖµ(ÆÕÍ¨),Á¬Í¬ monstats.txt ÁĞ (s) Ò»²¢¼ÆËã {( MonLvl.txt HP*Monstats.txt minHP)/100 ºÍ
-MonLvl.txt HP*Monstats.txt maxHP)/100}, ·â±ÕÊ½Õ½Íø£»
+HP: ç”Ÿå‘½å€¼(æ™®é€š),è¿åŒ monstats.txt åˆ— (s) ä¸€å¹¶è®¡ç®— {( MonLvl.txt HP*Monstats.txt minHP)/100 å’Œ
+MonLvl.txt HP*Monstats.txt maxHP)/100}, å°é—­å¼æˆ˜ç½‘ï¼›
 
-HP:(N)ÉúÃüÖµ(¶ñÃÎ),Á¬Í¬ monstats.txt ÁĞ (s) Ò»²¢¼ÆËã{(MonLvl.txt HP*Monstats.txt minHP)/100 ºÍ MonLvl.txt HP*Monstats.txt maxHP)/100},·â±ÕÊ½Õ½Íø£»
+HP:(N)ç”Ÿå‘½å€¼(æ¶æ¢¦),è¿åŒ monstats.txt åˆ— (s) ä¸€å¹¶è®¡ç®—{(MonLvl.txt HP*Monstats.txt minHP)/100 å’Œ MonLvl.txt HP*Monstats.txt maxHP)/100},å°é—­å¼æˆ˜ç½‘ï¼›
 
-HP:(H) ÉúÃüÖµ(µØÓü),Á¬Í¬ monstats.txt ÁĞ (s) Ò»²¢¼ÆËã {( MonLvl.txt HP*Monstats.txt minHP)/100 ºÍMonLvl.txt HP*Monstats.txt maxHP)/100)}, ·â±ÕÊ½Õ½Íø£»
+HP:(H) ç”Ÿå‘½å€¼(åœ°ç‹±),è¿åŒ monstats.txt åˆ— (s) ä¸€å¹¶è®¡ç®— {( MonLvl.txt HP*Monstats.txt minHP)/100 å’ŒMonLvl.txt HP*Monstats.txt maxHP)/100)}, å°é—­å¼æˆ˜ç½‘ï¼›
 
-L-HP: ÉúÃüÖµ(ÆÕÍ¨),Á¬Í¬ monstats.txt ÁĞ (s) Ò»²¢¼ÆËã {( MonLvl.txt HP*Monstats.txt minHP)/100 ºÍ MonLvl.txt HP*Monstats.txt maxHP)/100)}, LadderÄ£Ê½/ µ¥ÈËÓÎÏ·/ tcp- ip£»
+L-HP: ç”Ÿå‘½å€¼(æ™®é€š),è¿åŒ monstats.txt åˆ— (s) ä¸€å¹¶è®¡ç®— {( MonLvl.txt HP*Monstats.txt minHP)/100 å’Œ MonLvl.txt HP*Monstats.txt maxHP)/100)}, Ladderæ¨¡å¼/ å•äººæ¸¸æˆ/ tcp- ipï¼›
 
-L-HP:(N)ÉúÃüÖµ(¶ñÃÎ),Á¬Í¬ monstats.txt ÁĞ (s) Ò»²¢¼ÆËã{(MonLvl.txt HP*Monstats.txt minHP)/100 ºÍ MonLvl.txt HP*Monstats.txt maxHP)/100)/100},LadderÄ£Ê½/µ¥ÈËÓÎÏ·/tcp- ip£»
+L-HP:(N)ç”Ÿå‘½å€¼(æ¶æ¢¦),è¿åŒ monstats.txt åˆ— (s) ä¸€å¹¶è®¡ç®—{(MonLvl.txt HP*Monstats.txt minHP)/100 å’Œ MonLvl.txt HP*Monstats.txt maxHP)/100)/100},Ladderæ¨¡å¼/å•äººæ¸¸æˆ/tcp- ipï¼›
 
-L-HP:(H) ÉúÃüÖµ(µØÓü),Á¬Í¬ monstats.txt ÁĞ (s) Ò»²¢¼ÆËã {( MonLvl.txt HP*Monstats.txt minHP)/100 ºÍ MonLvl.txt HP*Monstats.txt maxHP)/100)}, LadderÄ£Ê½/ µ¥ÈËÓÎÏ·/ tcp- ip£»
+L-HP:(H) ç”Ÿå‘½å€¼(åœ°ç‹±),è¿åŒ monstats.txt åˆ— (s) ä¸€å¹¶è®¡ç®— {( MonLvl.txt HP*Monstats.txt minHP)/100 å’Œ MonLvl.txt HP*Monstats.txt maxHP)/100)}, Ladderæ¨¡å¼/ å•äººæ¸¸æˆ/ tcp- ipï¼›
 
-DM: Ëğº¦ (ÆÕÍ¨),Á¬Í¬ monstats.txt ÁĞ (s) Ò»²¢¼ÆËã {( MonLvl.txt DM*Monstats.txt A1MinD)/100 ºÍ
-MonLvl.txt DM*Monstats.txt A1MaxD)/100 ºÍ MonLvl.txt DM*Monstats.txt A2MinD)/100 ºÍ MonLvl.txt DM*Monstats.txt A2MaxD)/100}, ·â±ÕÊ½Õ½Íø£»
+DM: æŸå®³ (æ™®é€š),è¿åŒ monstats.txt åˆ— (s) ä¸€å¹¶è®¡ç®— {( MonLvl.txt DM*Monstats.txt A1MinD)/100 å’Œ
+MonLvl.txt DM*Monstats.txt A1MaxD)/100 å’Œ MonLvl.txt DM*Monstats.txt A2MinD)/100 å’Œ MonLvl.txt DM*Monstats.txt A2MaxD)/100}, å°é—­å¼æˆ˜ç½‘ï¼›
 
-DM:(N)Ëğº¦ (¶ñÃÎ),Á¬Í¬ monstats.txt ÁĞ (s) Ò»²¢¼ÆËã{(MonLvl.txt DM*Monstats.txt A1MinD)/100 ºÍ MonLvl.txt DM*Monstats.txt A1MaxD)/100 ºÍ MonLvl.txt DM*Monstats.txt A2MinD)/100 ºÍ MonLvl.txt DM*Monstats.txt A2MaxD)/100},·â±ÕÊ½Õ½Íø£»
+DM:(N)æŸå®³ (æ¶æ¢¦),è¿åŒ monstats.txt åˆ— (s) ä¸€å¹¶è®¡ç®—{(MonLvl.txt DM*Monstats.txt A1MinD)/100 å’Œ MonLvl.txt DM*Monstats.txt A1MaxD)/100 å’Œ MonLvl.txt DM*Monstats.txt A2MinD)/100 å’Œ MonLvl.txt DM*Monstats.txt A2MaxD)/100},å°é—­å¼æˆ˜ç½‘ï¼›
 
-DM: Ëğº¦ (ÆÕÍ¨),Á¬Í¬ monstats.txt ÁĞ (s) Ò»²¢¼ÆËã {( MonLvl.txt DM*Monstats.txt A1MinD)/100 ºÍ
-MonLvl.txt DM*Monstats.txt A1MaxD)/100 ºÍ MonLvl.txt DM*Monstats.txt A2MinD)/100 ºÍ MonLvl.txt DM*Monstats.txt A2MaxD)/100}, ·â±ÕÊ½Õ½Íø£»
+DM: æŸå®³ (æ™®é€š),è¿åŒ monstats.txt åˆ— (s) ä¸€å¹¶è®¡ç®— {( MonLvl.txt DM*Monstats.txt A1MinD)/100 å’Œ
+MonLvl.txt DM*Monstats.txt A1MaxD)/100 å’Œ MonLvl.txt DM*Monstats.txt A2MinD)/100 å’Œ MonLvl.txt DM*Monstats.txt A2MaxD)/100}, å°é—­å¼æˆ˜ç½‘ï¼›
 
-DM:(H) Ëğº¦ (µØÓü),Á¬Í¬ monstats.txt ÁĞ (s) Ò»²¢¼ÆËã {DM:Ëğº¦ (ÆÕÍ¨) Á¬Í¬ monstats.txt ac ÁĞÒ»²¢¼ÆËã{(MonLvl.txt DM*Monstats.txt A1MinD)/100 ºÍ MonLvl.txt DM*Monstats.txt A1MaxD)/100 ºÍ MonLvl.txt DM*Monstats.txt A2MinD)/100 ºÍ MonLvl.txt DM*Monstats.
-txt A2MaxD)/100},Ö»·â±ÕÊ½Õ½Íø£»
+DM:(H) æŸå®³ (åœ°ç‹±),è¿åŒ monstats.txt åˆ— (s) ä¸€å¹¶è®¡ç®— {DM:æŸå®³ (æ™®é€š) è¿åŒ monstats.txt ac åˆ—ä¸€å¹¶è®¡ç®—{(MonLvl.txt DM*Monstats.txt A1MinD)/100 å’Œ MonLvl.txt DM*Monstats.txt A1MaxD)/100 å’Œ MonLvl.txt DM*Monstats.txt A2MinD)/100 å’Œ MonLvl.txt DM*Monstats.
+txt A2MaxD)/100},åªå°é—­å¼æˆ˜ç½‘ï¼›
 
-L-DM:Ëğº¦ ( ÆÕÍ¨),Á¬Í¬ monstats.txt ÁĞ (s) Ò»²¢¼ÆËã{(MonLvl.txt DM*Monstats.txt A1MinD)/100 ºÍ MonLvl.txt DM*Monstats.txt A1MaxD)/100 ºÍ MonLvl.txt DM*Monstats.txt A2MinD)/100 ºÍ MonLvl.txt DM*Monstats.txt A2MaxD)/100},Ö»·â±ÕÊ½Õ½Íø£»
+L-DM:æŸå®³ ( æ™®é€š),è¿åŒ monstats.txt åˆ— (s) ä¸€å¹¶è®¡ç®—{(MonLvl.txt DM*Monstats.txt A1MinD)/100 å’Œ MonLvl.txt DM*Monstats.txt A1MaxD)/100 å’Œ MonLvl.txt DM*Monstats.txt A2MinD)/100 å’Œ MonLvl.txt DM*Monstats.txt A2MaxD)/100},åªå°é—­å¼æˆ˜ç½‘ï¼›
 
-DM:Ëğº¦ (ÆÕÍ¨),Á¬Í¬ monstats.txt ÁĞ (s) Ò»²¢¼ÆËã{(MonLvl.txt DM*Monstats.txt A1MinD)/100 ºÍ MonLvl.txt DM*Monstats.txt A1MaxD)/100 ºÍ MonLvl.txt DM*Monstats.txt A2MinD)/100 ºÍ MonLvl.txt DM*Monstats.txt A2MaxD)/100},LadderÄ£Ê½/µ¥ÈËÓÎÏ·/tcp- ip£»
+DM:æŸå®³ (æ™®é€š),è¿åŒ monstats.txt åˆ— (s) ä¸€å¹¶è®¡ç®—{(MonLvl.txt DM*Monstats.txt A1MinD)/100 å’Œ MonLvl.txt DM*Monstats.txt A1MaxD)/100 å’Œ MonLvl.txt DM*Monstats.txt A2MinD)/100 å’Œ MonLvl.txt DM*Monstats.txt A2MaxD)/100},Ladderæ¨¡å¼/å•äººæ¸¸æˆ/tcp- ipï¼›
 
-L-DM:(N)Ëğº¦ (¶ñÃÎ),Á¬Í¬ monstats.txt ÁĞ (s) Ò»²¢¼ÆËã{(MonLvl.txt DM*Monstats.txt A1MinD)/100 ºÍ MonLvl.txt DM*Monstats.txt A1MaxD)/100 ºÍ MonLvl.txt DM*Monstats.txt A2MinD)/100 ºÍ MonLvl.txt DM*Monstats.txt A2MaxD)/100},LadderÄ£Ê½/µ¥ÈËÓÎÏ·/tcp- ip£»
+L-DM:(N)æŸå®³ (æ¶æ¢¦),è¿åŒ monstats.txt åˆ— (s) ä¸€å¹¶è®¡ç®—{(MonLvl.txt DM*Monstats.txt A1MinD)/100 å’Œ MonLvl.txt DM*Monstats.txt A1MaxD)/100 å’Œ MonLvl.txt DM*Monstats.txt A2MinD)/100 å’Œ MonLvl.txt DM*Monstats.txt A2MaxD)/100},Ladderæ¨¡å¼/å•äººæ¸¸æˆ/tcp- ipï¼›
 
-DM: Ëğº¦ (ÆÕÍ¨),Á¬Í¬ monstats.txt ÁĞ (s) Ò»²¢¼ÆËã {( MonLvl.txt DM*Monstats.txt A1MinD)/100 ºÍ
-MonLvl.txt DM* Monstats.txt A1MaxD)/100 ºÍ MonLvl.txt DM*Monstats.txt A2MinD)/100 ºÍ MonLvl.txt DM*Monstats.txt A2MaxD)/100},LadderÄ£Ê½/µ¥ÈËÓÎÏ·/tcp- ip£»
+DM: æŸå®³ (æ™®é€š),è¿åŒ monstats.txt åˆ— (s) ä¸€å¹¶è®¡ç®— {( MonLvl.txt DM*Monstats.txt A1MinD)/100 å’Œ
+MonLvl.txt DM* Monstats.txt A1MaxD)/100 å’Œ MonLvl.txt DM*Monstats.txt A2MinD)/100 å’Œ MonLvl.txt DM*Monstats.txt A2MaxD)/100},Ladderæ¨¡å¼/å•äººæ¸¸æˆ/tcp- ipï¼›
 
-L-DM:(H)Ëğº¦ (µØÓü),Á¬Í¬ monstats.txt ÁĞ (s) Ò»²¢¼ÆËã{(MonLvl.txt DM*Monstats.txt A1MinD)/100 ºÍ MonLvl.txt DM*Monstats.txt A1MaxD)/100 ºÍ MonLvl.txt DM*Monstats.txt A2MinD)/100 ºÍ MonLvl.txt DM*Monstats.txt A2MaxD)/100},LadderÄ£Ê½/µ¥ÈËÓÎÏ·/tcp- ip£»
+L-DM:(H)æŸå®³ (åœ°ç‹±),è¿åŒ monstats.txt åˆ— (s) ä¸€å¹¶è®¡ç®—{(MonLvl.txt DM*Monstats.txt A1MinD)/100 å’Œ MonLvl.txt DM*Monstats.txt A1MaxD)/100 å’Œ MonLvl.txt DM*Monstats.txt A2MinD)/100 å’Œ MonLvl.txt DM*Monstats.txt A2MaxD)/100},Ladderæ¨¡å¼/å•äººæ¸¸æˆ/tcp- ipï¼›
 
-DM: Ëğº¦ (ÆÕÍ¨) Á¬Í¬ monstats.txt ac ÁĞÒ»²¢¼ÆËã {( MonLvl.txt DM*Monstats.txt A1MinD)/100 ºÍ
-MonLvl.txt DM*Monstats.txt A1MaxD)/100 ºÍ MonLvl.txt DM*Monstats.txt A2MinD)/100 ºÍ MonLvl.txt DM*Monstats.txt A2MaxD)/100},LadderÄ£Ê½/µ¥ÈËÓÎÏ·/tcp- ip£»
+DM: æŸå®³ (æ™®é€š) è¿åŒ monstats.txt ac åˆ—ä¸€å¹¶è®¡ç®— {( MonLvl.txt DM*Monstats.txt A1MinD)/100 å’Œ
+MonLvl.txt DM*Monstats.txt A1MaxD)/100 å’Œ MonLvl.txt DM*Monstats.txt A2MinD)/100 å’Œ MonLvl.txt DM*Monstats.txt A2MaxD)/100},Ladderæ¨¡å¼/å•äººæ¸¸æˆ/tcp- ipï¼›
 
-XP: ¾­Ñéµã (ÆÕÍ¨),Á¬Í¬ monstats.txt ÁĞ (s) Ò»²¢¼ÆËã {( MonLvl.txt XP* Monstats.txt Exp
-)/100}, ·â±ÕÊ½Õ½Íø£»
+XP: ç»éªŒç‚¹ (æ™®é€š),è¿åŒ monstats.txt åˆ— (s) ä¸€å¹¶è®¡ç®— {( MonLvl.txt XP* Monstats.txt Exp
+)/100}, å°é—­å¼æˆ˜ç½‘ï¼›
 
-XP:(N)¾­Ñéµã (¶ñÃÎ),Á¬Í¬ monstats.txt ÁĞ (s) Ò»²¢¼ÆËã{(MonLvl.txt XP*Monstats.txt Exp)/100},Ö»·â±ÕÊ½Õ½Íø£»
+XP:(N)ç»éªŒç‚¹ (æ¶æ¢¦),è¿åŒ monstats.txt åˆ— (s) ä¸€å¹¶è®¡ç®—{(MonLvl.txt XP*Monstats.txt Exp)/100},åªå°é—­å¼æˆ˜ç½‘ï¼›
 
-XP:(H) ¾­Ñéµã (µØÓü),Á¬Í¬ monstats.txt ÁĞ (s) Ò»²¢¼ÆËã {( MonLvl.txt XP* Monstats.txt Exp
-)/100}, ·â±ÕÊ½Õ½Íø£»
+XP:(H) ç»éªŒç‚¹ (åœ°ç‹±),è¿åŒ monstats.txt åˆ— (s) ä¸€å¹¶è®¡ç®— {( MonLvl.txt XP* Monstats.txt Exp
+)/100}, å°é—­å¼æˆ˜ç½‘ï¼›
 
-L-XP: ¾­Ñéµã (ÆÕÍ¨),Á¬Í¬ monstats.txt ÁĞ (s) Ò»²¢¼ÆËã {( MonLvl.txt XP* Monstats.txt Exp
-)/100}, LadderÄ£Ê½/ µ¥ÈËÓÎÏ·/ tcp- ip£»
+L-XP: ç»éªŒç‚¹ (æ™®é€š),è¿åŒ monstats.txt åˆ— (s) ä¸€å¹¶è®¡ç®— {( MonLvl.txt XP* Monstats.txt Exp
+)/100}, Ladderæ¨¡å¼/ å•äººæ¸¸æˆ/ tcp- ipï¼›
 
-L-XP:(N)¾­Ñéµã (¶ñÃÎ),Á¬Í¬ monstats.txt ÁĞ (s) Ò»²¢¼ÆËã{(MonLvl.txt XP*Monstats.txt Exp)/100},LadderÄ£Ê½/µ¥ÈËÓÎÏ·/tcp- ip£»
+L-XP:(N)ç»éªŒç‚¹ (æ¶æ¢¦),è¿åŒ monstats.txt åˆ— (s) ä¸€å¹¶è®¡ç®—{(MonLvl.txt XP*Monstats.txt Exp)/100},Ladderæ¨¡å¼/å•äººæ¸¸æˆ/tcp- ipï¼›
 
-L-XP:(H) ¾­Ñéµã (µØÓü),Á¬Í¬ monstats.txt ÁĞ (s) Ò»²¢¼ÆËã {( MonLvl.txt XP* Monstats.txt Exp
-)/100},LadderÄ£Ê½/µ¥ÈËÓÎÏ·/tcp-ip¡£
+L-XP:(H) ç»éªŒç‚¹ (åœ°ç‹±),è¿åŒ monstats.txt åˆ— (s) ä¸€å¹¶è®¡ç®— {( MonLvl.txt XP* Monstats.txt Exp
+)/100},Ladderæ¨¡å¼/å•äººæ¸¸æˆ/tcp-ipã€‚
 */
 
 /*
-ÎÄ¼şÃû½âÎö£º
-Mon£ºmonster£¨¹ÖÎï£©µÄ¼ò³Æ¡£
-Lvl£ºlevel£¨µÈ¼¶£©µÄ¼òĞ´¡£
-ËùÒÔ±¾ÎÄ¼şÃèÊöÁË¹ÖÎïµÈ¼¶Ïà¹ØµÄÒ»Ğ©ÊôĞÔ¡£
-´ËÎÄ¼şÖĞµÄÃ¿Ò»ĞĞ±íÊ¾Ò»¸öµÈ¼¶¡£
+æ–‡ä»¶åè§£æï¼š
+Monï¼šmonsterï¼ˆæ€ªç‰©ï¼‰çš„ç®€ç§°ã€‚
+Lvlï¼šlevelï¼ˆç­‰çº§ï¼‰çš„ç®€å†™ã€‚
+æ‰€ä»¥æœ¬æ–‡ä»¶æè¿°äº†æ€ªç‰©ç­‰çº§ç›¸å…³çš„ä¸€äº›å±æ€§ã€‚
+æ­¤æ–‡ä»¶ä¸­çš„æ¯ä¸€è¡Œè¡¨ç¤ºä¸€ä¸ªç­‰çº§ã€‚
 
 
-»Ø¸´
+å›å¤
 
-    2Â¥
+    2æ¥¼
     2011-09-19 23:21
 
-    ¾Ù±¨ |
+    ä¸¾æŠ¥ |
 
     zqtjingzi
-    Ğ¡°ÉÖ÷
+    å°å§ä¸»
     12
 
-Ã¿ÁĞµÄº¬ÒåÈçÏÂ£º
+æ¯åˆ—çš„å«ä¹‰å¦‚ä¸‹ï¼š
 
 
-»Ø¸´
+å›å¤
 
-    3Â¥
+    3æ¥¼
     2011-09-19 23:21
 
-    ¾Ù±¨ |
+    ä¸¾æŠ¥ |
 
     zqtjingzi
-    Ğ¡°ÉÖ÷
+    å°å§ä¸»
     12
 
-Level£ºµÈ¼¶¡£ÔÚÕâÀïÖ¸¹ÖÎïµÄµÈ¼¶¡£
+Levelï¼šç­‰çº§ã€‚åœ¨è¿™é‡ŒæŒ‡æ€ªç‰©çš„ç­‰çº§ã€‚
 
-L-AC£ºÆÕÍ¨ÄÑ¶ÈÏÂµÄ¹ÖÎïÔÚ´ËµÈ¼¶Ê±µÄ·ÀÓùÖµ¡£
+L-ACï¼šæ™®é€šéš¾åº¦ä¸‹çš„æ€ªç‰©åœ¨æ­¤ç­‰çº§æ—¶çš„é˜²å¾¡å€¼ã€‚
 
-L-AC(N)£º¶ñÃÎÄÑ¶ÈÏÂµÄ¹ÖÎïÔÚ´ËµÈ¼¶Ê±µÄ·ÀÓùÖµ¡£
+L-AC(N)ï¼šæ¶æ¢¦éš¾åº¦ä¸‹çš„æ€ªç‰©åœ¨æ­¤ç­‰çº§æ—¶çš„é˜²å¾¡å€¼ã€‚
 
-L-AC(H)£ºµØÓüÄÑ¶ÈÏÂµÄ¹ÖÎïÔÚ´ËµÈ¼¶Ê±µÄ·ÀÓùÖµ¡£
+L-AC(H)ï¼šåœ°ç‹±éš¾åº¦ä¸‹çš„æ€ªç‰©åœ¨æ­¤ç­‰çº§æ—¶çš„é˜²å¾¡å€¼ã€‚
 
-L-TH£ºÆÕÍ¨ÄÑ¶ÈÏÂµÄ¹ÖÎïÔÚ´ËµÈ¼¶Ê±µÄ¹¥»÷×¼È·ÂÊ¡£
+L-THï¼šæ™®é€šéš¾åº¦ä¸‹çš„æ€ªç‰©åœ¨æ­¤ç­‰çº§æ—¶çš„æ”»å‡»å‡†ç¡®ç‡ã€‚
 
-L-TH(N)£º¶ñÃÎÄÑ¶ÈÏÂµÄ¹ÖÎïÔÚ´ËµÈ¼¶Ê±µÄ¹¥»÷×¼È·ÂÊ¡£
+L-TH(N)ï¼šæ¶æ¢¦éš¾åº¦ä¸‹çš„æ€ªç‰©åœ¨æ­¤ç­‰çº§æ—¶çš„æ”»å‡»å‡†ç¡®ç‡ã€‚
 
-L-TH(H)£ºµØÓüÄÑ¶ÈÏÂµÄ¹ÖÎïÔÚ´ËµÈ¼¶Ê±µÄ¹¥»÷×¼È·ÂÊ¡£
+L-TH(H)ï¼šåœ°ç‹±éš¾åº¦ä¸‹çš„æ€ªç‰©åœ¨æ­¤ç­‰çº§æ—¶çš„æ”»å‡»å‡†ç¡®ç‡ã€‚
 
-L-HP£ºÆÕÍ¨ÄÑ¶ÈÏÂµÄ¹ÖÎïÔÚ´ËµÈ¼¶Ê±µÄÉúÃüÖµ¡£
+L-HPï¼šæ™®é€šéš¾åº¦ä¸‹çš„æ€ªç‰©åœ¨æ­¤ç­‰çº§æ—¶çš„ç”Ÿå‘½å€¼ã€‚
 
-L-HP(N)£º¶ñÃÎÄÑ¶ÈÏÂµÄ¹ÖÎïÔÚ´ËµÈ¼¶Ê±µÄÉúÃüÖµ¡£
+L-HP(N)ï¼šæ¶æ¢¦éš¾åº¦ä¸‹çš„æ€ªç‰©åœ¨æ­¤ç­‰çº§æ—¶çš„ç”Ÿå‘½å€¼ã€‚
 
-L-HP(H)£ºµØÓüÄÑ¶ÈÏÂµÄ¹ÖÎïÔÚ´ËµÈ¼¶Ê±µÄÉúÃüÖµ¡£
+L-HP(H)ï¼šåœ°ç‹±éš¾åº¦ä¸‹çš„æ€ªç‰©åœ¨æ­¤ç­‰çº§æ—¶çš„ç”Ÿå‘½å€¼ã€‚
 
-L-DM£ºÆÕÍ¨ÄÑ¶ÈÏÂµÄ¹ÖÎïÔÚ´ËµÈ¼¶Ê±µÄÉËº¦Öµ¡£
+L-DMï¼šæ™®é€šéš¾åº¦ä¸‹çš„æ€ªç‰©åœ¨æ­¤ç­‰çº§æ—¶çš„ä¼¤å®³å€¼ã€‚
 
-L-DM(N)£º¶ñÃÎÄÑ¶ÈÏÂµÄ¹ÖÎïÔÚ´ËµÈ¼¶Ê±µÄÉËº¦Öµ¡£
+L-DM(N)ï¼šæ¶æ¢¦éš¾åº¦ä¸‹çš„æ€ªç‰©åœ¨æ­¤ç­‰çº§æ—¶çš„ä¼¤å®³å€¼ã€‚
 
-L-DM(H)£ºµØÓüÄÑ¶ÈÏÂµÄ¹ÖÎïÔÚ´ËµÈ¼¶Ê±µÄÉËº¦Öµ¡£
+L-DM(H)ï¼šåœ°ç‹±éš¾åº¦ä¸‹çš„æ€ªç‰©åœ¨æ­¤ç­‰çº§æ—¶çš„ä¼¤å®³å€¼ã€‚
 
-L-XP£ºÆÕÍ¨ÄÑ¶ÈÏÂµÄ¹ÖÎïÔÚ´ËµÈ¼¶Ê±µÄ¾­ÑéÖµ¡£
+L-XPï¼šæ™®é€šéš¾åº¦ä¸‹çš„æ€ªç‰©åœ¨æ­¤ç­‰çº§æ—¶çš„ç»éªŒå€¼ã€‚
 
-L-XP(N)£º¶ñÃÎÄÑ¶ÈÏÂµÄ¹ÖÎïÔÚ´ËµÈ¼¶Ê±µÄ¾­ÑéÖµ¡£
+L-XP(N)ï¼šæ¶æ¢¦éš¾åº¦ä¸‹çš„æ€ªç‰©åœ¨æ­¤ç­‰çº§æ—¶çš„ç»éªŒå€¼ã€‚
 
-L-XP(H)£ºµØÓüÄÑ¶ÈÏÂµÄ¹ÖÎïÔÚ´ËµÈ¼¶Ê±µÄ¾­ÑéÖµ¡£
+L-XP(H)ï¼šåœ°ç‹±éš¾åº¦ä¸‹çš„æ€ªç‰©åœ¨æ­¤ç­‰çº§æ—¶çš„ç»éªŒå€¼ã€‚
 
 
-»Ø¸´
+å›å¤
 
-    4Â¥
+    4æ¥¼
     2011-09-19 23:21
 
-    ¾Ù±¨ |
+    ä¸¾æŠ¥ |
 
     zqtjingzi
-    Ğ¡°ÉÖ÷
+    å°å§ä¸»
     12
 
-ÌØÊâËµÃ÷£º±¾ÎÄ¼şÖĞËùÓĞµÄ¹ÖÎïÊôĞÔÖµ¶¼²¢²»ÊÇÊµ¼ÊÓÎÏ·ÖĞ¹ÖÎïµÄÊôĞÔÖµ£¬»¹ĞèÒª³ËÒÔÔÚmonstats.txtÖĞÃ¿ÖÖ¹ÖÎïµÄÊôĞÔËõ·ÅÒò×Ó²ÅÊÇÕæÕıµÄÊôĞÔÖµ¡£ÈçÊµ¼ÊÄ³ÖÖ¹ÖÎïµÄ·ÀÓùÖµÓ¦Îª L-AC * level * AC£¬ÆäÖĞAC¾ÍÊÇ´Ë¹ÖÎïÔÚmonstats.txtÖĞACÁĞµÄÖµ¡£
+ç‰¹æ®Šè¯´æ˜ï¼šæœ¬æ–‡ä»¶ä¸­æ‰€æœ‰çš„æ€ªç‰©å±æ€§å€¼éƒ½å¹¶ä¸æ˜¯å®é™…æ¸¸æˆä¸­æ€ªç‰©çš„å±æ€§å€¼ï¼Œè¿˜éœ€è¦ä¹˜ä»¥åœ¨monstats.txtä¸­æ¯ç§æ€ªç‰©çš„å±æ€§ç¼©æ”¾å› å­æ‰æ˜¯çœŸæ­£çš„å±æ€§å€¼ã€‚å¦‚å®é™…æŸç§æ€ªç‰©çš„é˜²å¾¡å€¼åº”ä¸º L-AC * level * ACï¼Œå…¶ä¸­ACå°±æ˜¯æ­¤æ€ªç‰©åœ¨monstats.txtä¸­ACåˆ—çš„å€¼ã€‚
 
 */
 

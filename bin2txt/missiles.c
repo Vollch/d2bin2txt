@@ -19,10 +19,10 @@ By Nefarius and Brother Laz
 
 Initialization
 
-Missile ¨C ID Pointer, this pointer is used to assign the missile to skills and units (Skills.txt and Monstats.txt), never use the same name twice (it won't cause you to crash, but only the first instance will be used when accessed via txt-linkage, note
+Missile â€“ ID Pointer, this pointer is used to assign the missile to skills and units (Skills.txt and Monstats.txt), never use the same name twice (it won't cause you to crash, but only the first instance will be used when accessed via txt-linkage, note
 , if the ID is different you still can launch the missile via code).
 
-Id ¨C The actual ID of the missile the pointer above refers to, if you would access your missile via code directly, you would use this! The ID must be different for each missile (ranging between 0 and 32767). You must also take care to not leave gaps 
+Id â€“ The actual ID of the missile the pointer above refers to, if you would access your missile via code directly, you would use this! The ID must be different for each missile (ranging between 0 and 32767). You must also take care to not leave gaps 
 between IDs, this is known to lead to unexplained errors and other weird behaviour.
 
 
@@ -33,16 +33,16 @@ Functions
 Note: I will not detail any of the missile functions here, I don't have enough experience in this field (and there already is a missile-function guide by Mishy23 -> which you can read by clicking here). You should also be aware that some functions will 
 work properly only when linked to a skill, such as homing missiles! - Nefarius
 
-pCltDoFunc ¨C Client movement function. Defines the graphical behavior of the missile while it is active ("before it vanishes").
+pCltDoFunc â€“ Client movement function. Defines the graphical behavior of the missile while it is active ("before it vanishes").
 
-pCltHitFunc ¨C Client collision function. Defines the graphical behaviour of the missile at the moment of collision ("the warhead" if you want to call it that way icon_razz.gif).
+pCltHitFunc â€“ Client collision function. Defines the graphical behaviour of the missile at the moment of collision ("the warhead" if you want to call it that way icon_razz.gif).
 
-pSrvDoFunc ¨C Server movement function. Defines the actual behavior of the missile while it is active ("before it vanishes"), note, without a matching client function, the effect will not be displayed, for example if it is to launch additional missiles, 
+pSrvDoFunc â€“ Server movement function. Defines the actual behavior of the missile while it is active ("before it vanishes"), note, without a matching client function, the effect will not be displayed, for example if it is to launch additional missiles, 
 these missiles will be invisible. A "server-side-only" missile cannot initialize any client-side code, thus any missile it will launch will also be invisible!
 
-pSrvHitFunc ¨C Server collision function. Defines how the missile behaves at the moment of collision, the same rules apply here as they did for the server movement function.
+pSrvHitFunc â€“ Server collision function. Defines how the missile behaves at the moment of collision, the same rules apply here as they did for the server movement function.
 
-pSrvDmgFunc ¨C Server damage function. Defines special routines to be done when the missile damages ("hits") a unit. This ranges from stunning units (without using stun damage!) to "damaging" mana instead of life.
+pSrvDmgFunc â€“ Server damage function. Defines special routines to be done when the missile damages ("hits") a unit. This ranges from stunning units (without using stun damage!) to "damaging" mana instead of life.
 
 
 
@@ -51,40 +51,40 @@ Calculations
 
 Note: These columns are only used if the proper functions are called by this missile. Also, all columns preceded by an asterisk ("*") are comment fields!
 
-SrvCalc1 ¨C This column contains the server movement calculation.
+SrvCalc1 â€“ This column contains the server movement calculation.
 
-Param1-5 ¨C These columns contain parameters passed on to the server movement function (these parameters can also be used by the server movement calculation).
+Param1-5 â€“ These columns contain parameters passed on to the server movement function (these parameters can also be used by the server movement calculation).
 
-CltCalc1 ¨C This column is the client side equivalent to the SrvCalc1 column.
+CltCalc1 â€“ This column is the client side equivalent to the SrvCalc1 column.
 
-CltParam1-5 ¨C These columns are the client side equivalents to the Param1-5 columns. Normally their values should not be different to the Param1-5 columns, some specially client-side effects such as trails will require them to be different however (the 
+CltParam1-5 â€“ These columns are the client side equivalents to the Param1-5 columns. Normally their values should not be different to the Param1-5 columns, some specially client-side effects such as trails will require them to be different however (the 
 trails are a client-side only, so they do not need a server part)!
 
-SHitCalc1 ¨C This column contains the server collision calculation.
+SHitCalc1 â€“ This column contains the server collision calculation.
 
-sHitPar1-3 ¨C These columns contain the server collision parameters, as with those for the movement functions, they can be used in the SHitCalc1 field.
+sHitPar1-3 â€“ These columns contain the server collision parameters, as with those for the movement functions, they can be used in the SHitCalc1 field.
 
-CHitCalc1 ¨C Client side equivalent to SHitCalc1.
+CHitCalc1 â€“ Client side equivalent to SHitCalc1.
 
-cHitPar1-3 ¨C Client side equivalents to sHitPar1-3 columns.
+cHitPar1-3 â€“ Client side equivalents to sHitPar1-3 columns.
 
-DmgCalc1 ¨C Calculation used for damage modifications.
+DmgCalc1 â€“ Calculation used for damage modifications.
 
-dParam1-2 ¨C Parameters for the damage functions, can be used in DmgCalc1 column.
+dParam1-2 â€“ Parameters for the damage functions, can be used in DmgCalc1 column.
 
 
 
 
 Velocity settings
 
-Vel ¨C Base velocity (the speed this missile starts with), this controls the distance in pixels the missile travels each frame. Speeds near the break point (above 240) cause it to wrap around and move backwards.
+Vel â€“ Base velocity (the speed this missile starts with), this controls the distance in pixels the missile travels each frame. Speeds near the break point (above 240) cause it to wrap around and move backwards.
 
-MaxVel ¨C Maximum velocity, this column is used if you use positive acceleration as the speed-limit.
+MaxVel â€“ Maximum velocity, this column is used if you use positive acceleration as the speed-limit.
 
-VelLev ¨C Velocity per unit level (missiles are units), in case the missile is fired by a monster its ulvl is the mlvl of the unit. In case it is fired by a skill function its ulvl is the slvl of the skill. NOTE: This column may or may not have any 
+VelLev â€“ Velocity per unit level (missiles are units), in case the missile is fired by a monster its ulvl is the mlvl of the unit. In case it is fired by a skill function its ulvl is the slvl of the skill. NOTE: This column may or may not have any 
 effect, in tests Brother Laz didn't notice a difference.
 
-Accel ¨C A positive number will make this missile accelerate until its velocity will reach the value in the MaxVel column. A negative value will make the missile slow down until it stands still (0 velocity), you can use this column to cause missiles to 
+Accel â€“ A positive number will make this missile accelerate until its velocity will reach the value in the MaxVel column. A negative value will make the missile slow down until it stands still (0 velocity), you can use this column to cause missiles to 
 accelerate past the break point (FF) and thus move in a boomerang fashion (go backwards again). NOTE: Missiles slowing to 0 may not damage anything, you should use a collision function like SFIA or Freezing Arrow to release something else that does 
 damage.
 
@@ -93,56 +93,56 @@ damage.
 
 Range settings
 
-Range ¨C The number of frames this missile will exists after being created, see as a "self destruction" timer. One may ask why the missiles must vanish, but imagine missiles flying infinitely into the void, not a good way to manage RAM.
+Range â€“ The number of frames this missile will exists after being created, see as a "self destruction" timer. One may ask why the missiles must vanish, but imagine missiles flying infinitely into the void, not a good way to manage RAM.
 
-LevRange ¨C Additional range per unit level. This works exactly like VelLev, but unlike that column, this column here has an effect.
+LevRange â€“ Additional range per unit level. This works exactly like VelLev, but unlike that column, this column here has an effect.
 
 
 
 
 Light settings
 
-Light ¨C Diameter of the missiles light radius in subtiles.
+Light â€“ Diameter of the missiles light radius in subtiles.
 
-Flicker ¨C Random alteratring to light radius diameter (in subtiles), use by fire-effects to cause them to flicker (hence the column name) in the existing radius diameter (IE. it doesn't make the radius any larger).
+Flicker â€“ Random alteratring to light radius diameter (in subtiles), use by fire-effects to cause them to flicker (hence the column name) in the existing radius diameter (IE. it doesn't make the radius any larger).
 
-Red, Green, Blue ¨C These columns control the RGB color values of the light radius, obviously 255,255,255 = White and so on, to get any other color then white you need to run in Direct3D (note: windowed mode = always directdraw).
+Red, Green, Blue â€“ These columns control the RGB color values of the light radius, obviously 255,255,255 = White and so on, to get any other color then white you need to run in Direct3D (note: windowed mode = always directdraw).
 
 
 
 
 Animation settings
 
-InitSteps ¨C Frames before the missile becomes visible (more technically, frames before the missile is created on the client).
+InitSteps â€“ Frames before the missile becomes visible (more technically, frames before the missile is created on the client).
 
-Activate ¨C This column is used for those missiles created from a central point (holybolts unleashed by the fist of heaven, lightning enchanted boss charged bolts, their scarab equivalent etc), it is also used for missiles that will only damage you 
+Activate â€“ This column is used for those missiles created from a central point (holybolts unleashed by the fist of heaven, lightning enchanted boss charged bolts, their scarab equivalent etc), it is also used for missiles that will only damage you 
 after you touch them for a longer time (the "fingers" of the death maulers for example). Thus, this column is the server side equivalent to InitSteps, this is the delay in frames before the missile can actually do anything besides existing graphically.
 
-LoopAnim ¨C Boolean, 1=Repeat this animation for the time of existence (range), 0=Play this animation once and then vanish (warning: the missile will only vanish from the client if the animation is shorter then the range).
+LoopAnim â€“ Boolean, 1=Repeat this animation for the time of existence (range), 0=Play this animation once and then vanish (warning: the missile will only vanish from the client if the animation is shorter then the range).
 
-CelFile ¨C The name of the DCC file to used for this missile, the files are stored in dataglobalmissiles, can contain subdirectories.
+CelFile â€“ The name of the DCC file to used for this missile, the files are stored in dataglobalmissiles, can contain subdirectories.
 
-animrate ¨C As far as I can say it has no function at all, I have set it to 0 and the animations still played at regular speed (16 frames per second as specified in the AnimSpeed column).
+animrate â€“ As far as I can say it has no function at all, I have set it to 0 and the animations still played at regular speed (16 frames per second as specified in the AnimSpeed column).
 
-AnimLen ¨C The length (in frames) of this animation (for a single direction). If you have a missile with 64 frames and 8 directions, you would enter 8 in this column for obvious reasons.
+AnimLen â€“ The length (in frames) of this animation (for a single direction). If you have a missile with 64 frames and 8 directions, you would enter 8 in this column for obvious reasons.
 
-AnimSpeed ¨C Number of frames played by second, this is not modified by animrate. I don't know why Blizzard has two columns that practically do almost the same, but I assume this is simply a result of the absence of missile *.COF (and thus also *.D2) 
+AnimSpeed â€“ Number of frames played by second, this is not modified by animrate. I don't know why Blizzard has two columns that practically do almost the same, but I assume this is simply a result of the absence of missile *.COF (and thus also *.D2) 
 files as the animrate column seams to be ignored (it was in my tests, it is probably there only to avoid crashes in the DCC routines).
 
-RandStart ¨C Causes the animation to start playing at the specified frame. From the name you would think it controls a random starting frame but it does not, it just causes the animation to start at the specified frame.
+RandStart â€“ Causes the animation to start playing at the specified frame. From the name you would think it controls a random starting frame but it does not, it just causes the animation to start at the specified frame.
 
-SubLoop ¨C Boolean, 1=This missile will repeat a specific sequence as long as enough range is left, 0=This missile will play it's animation normally (as defined in the LoopAnim column).
+SubLoop â€“ Boolean, 1=This missile will repeat a specific sequence as long as enough range is left, 0=This missile will play it's animation normally (as defined in the LoopAnim column).
 
-SubStart ¨C Starting frame of the SubLoop.
+SubStart â€“ Starting frame of the SubLoop.
 
-SubStop ¨C Ending frame of the SubLoop (when it reaches this frame it will either go back to SubStart frame or it will play on until the missile disappears if not enough range is left)
+SubStop â€“ Ending frame of the SubLoop (when it reaches this frame it will either go back to SubStart frame or it will play on until the missile disappears if not enough range is left)
 
 
 
 
 Collision settings A
 
-CollideType ¨C Controls the which type of collision to check for, 3=Normal collision, 6=Z-collision (a missile "dropping from above"), 1=Used mostly for missiles that lay on the floor, waiting for the character to walk over them (like spidergoo and 
+CollideType â€“ Controls the which type of collision to check for, 3=Normal collision, 6=Z-collision (a missile "dropping from above"), 1=Used mostly for missiles that lay on the floor, waiting for the character to walk over them (like spidergoo and 
 spikes) NOTE: This is not required for trap missiles, 8=Fire collision (fire walls etc), related to softhit or per-frame-damage setups. Obviously, 0=No collision detection mode. There are at least 3 unused ones (2,5,7). For a better explanation of what 
 these types of collision detection mean:
 
@@ -154,24 +154,24 @@ Type Wall-tiles Units Floor-tiles
 8 true true true
 
 
-CollideKill ¨C Boolean, Will this missile get destroyed upon collision. 1=Always destroy this missile upon collision (overrides almost all other settings, Frozen Orb collision function is known to ignore this column), 0=Don't destroy this missile upon 
+CollideKill â€“ Boolean, Will this missile get destroyed upon collision. 1=Always destroy this missile upon collision (overrides almost all other settings, Frozen Orb collision function is known to ignore this column), 0=Don't destroy this missile upon 
 collision.
 
-CollideFriend ¨C Boolean, Can this missile collide with allies (such as holybolt), 1=Allow friendly collision, 0=Disallow friendly collision.
+CollideFriend â€“ Boolean, Can this missile collide with allies (such as holybolt), 1=Allow friendly collision, 0=Disallow friendly collision.
 
-LastCollide ¨C Unknown to both me and Brother Laz, but this boolean seams to be related to some special behavior on missiles that don't vanish upon collision, such as fire effects and some other effects that are client-side only. In short, it is usually 
+LastCollide â€“ Unknown to both me and Brother Laz, but this boolean seams to be related to some special behavior on missiles that don't vanish upon collision, such as fire effects and some other effects that are client-side only. In short, it is usually 
 enabled only for missiles with a "physical collision effect". - In any event, this column can be left 0, it won't effect anything noticeable.
 
-Collision ¨C Unknown to both me and Brother Laz, but this boolean is related to the previous one, many missiles that have no "physical collision" but still perform a collision event will have this set to 1 (fire effects). - In any event, this column can 
+Collision â€“ Unknown to both me and Brother Laz, but this boolean is related to the previous one, many missiles that have no "physical collision" but still perform a collision event will have this set to 1 (fire effects). - In any event, this column can 
 be left 0, it won't effect anything noticeable.
 
-ClientCol ¨C Unknown to both me and Brother Laz, I assume this name stands for ClientCollision, but what exactly it handles remains a mystery. - In any event, this column can be left 0, it won't effect anything noticeable.
+ClientCol â€“ Unknown to both me and Brother Laz, I assume this name stands for ClientCollision, but what exactly it handles remains a mystery. - In any event, this column can be left 0, it won't effect anything noticeable.
 
-ClientSend ¨C Boolean, could be related to updating lifeorb display on the player when walking into firestorm or shock field.
+ClientSend â€“ Boolean, could be related to updating lifeorb display on the player when walking into firestorm or shock field.
 
-NextHit ¨C Use collision timer after first collision (1=yes, 0=no), the timer is used to avoid excessive damage (and to annoy players).
+NextHit â€“ Use collision timer after first collision (1=yes, 0=no), the timer is used to avoid excessive damage (and to annoy players).
 
-NextDelay ¨C Number of frames to deactivate all server-side collision settings for this missile post collision and to make the attacked unit ignore all subsequent missile attacks. For example, a missile with a NextDelay of 25 will be unable to "damage" 
+NextDelay â€“ Number of frames to deactivate all server-side collision settings for this missile post collision and to make the attacked unit ignore all subsequent missile attacks. For example, a missile with a NextDelay of 25 will be unable to "damage" 
 any target for 1 second after each successful server-side collision. Apparently the monster being hit will also become "immune to missiles" for the duration of this timer.
 
 
@@ -179,9 +179,9 @@ any target for 1 second after each successful server-side collision. Apparently 
 
 Size / Coordinate settings
 
-xoffset, yoffset, zoffset ¨C Shift the placement of this missile by # pixels on the x, y or z axis, point 0 is either the top left corner of the DCC or the pivot (I haven't tested enough to be sure).
+xoffset, yoffset, zoffset â€“ Shift the placement of this missile by # pixels on the x, y or z axis, point 0 is either the top left corner of the DCC or the pivot (I haven't tested enough to be sure).
 
-Size ¨C Diameter in subtiles. Probably works identical to the size settings in MonStats2.txt from -1 to 3. Basically 1=Fills only 1 subtile, 2=Fills 4 subtiles, 3=Fills 9 subtiles.
+Size â€“ Diameter in subtiles. Probably works identical to the size settings in MonStats2.txt from -1 to 3. Basically 1=Fills only 1 subtile, 2=Fills 4 subtiles, 3=Fills 9 subtiles.
 
 
 
@@ -190,19 +190,19 @@ Unknown settings
 
 SrcTown - boolean, most likely controls whenever a missile vanishes when the person goes to a town via a TP ("PK trapping preventation), it is enabled only for missiles that can be used to trap a way point for example (fire walls and such effects).
 
-CltSrcTown ¨C Used together with the above, probably controls some graphical aspects of the vanishing (the number may control a frame, but this is just a wild guess.
+CltSrcTown â€“ Used together with the above, probably controls some graphical aspects of the vanishing (the number may control a frame, but this is just a wild guess.
 
-CanDestroy ¨C unknown (boolean).
+CanDestroy â€“ unknown (boolean).
 
 
 
 
 Collision settings B
 
-ToHit ¨C Does this missile use Attack Rating ("chance to hit") or does it "always" (it's 95% actually) hit ("guided arrow behaviour"). You can easily make all missiles require Attack Rating by changing this boolean column to true (1). Whenever it uses 
+ToHit â€“ Does this missile use Attack Rating ("chance to hit") or does it "always" (it's 95% actually) hit ("guided arrow behaviour"). You can easily make all missiles require Attack Rating by changing this boolean column to true (1). Whenever it uses 
 the additional AR given by skills.txt is unknown, Brother Laz noticed that even the regular vanilla elemental arrows may be bugged and ignore their AR bonus (spankyou very much Blizzard).
 
-AlwaysExplode ¨C Will this missile always call it's Collision Functions when it is destroyed. 1=Yes, 0=No. (For example, Frozen Orb will always explode into a nova, even if it just runs out of range). Some collision functions, such as the Lightning Fury 
+AlwaysExplode â€“ Will this missile always call it's Collision Functions when it is destroyed. 1=Yes, 0=No. (For example, Frozen Orb will always explode into a nova, even if it just runs out of range). Some collision functions, such as the Lightning Fury 
 collision, will ignore this column and always explode server-side...
 
 
@@ -210,35 +210,35 @@ collision, will ignore this column and always explode server-side...
 
 Misc. settings and flags (mostly booleans)
 
-Explosion ¨C Boolean, 1=Is an explosion (meaning that it does not exist on the server, this will override all other settings!), 0=Is not an explosion.
+Explosion â€“ Boolean, 1=Is an explosion (meaning that it does not exist on the server, this will override all other settings!), 0=Is not an explosion.
 
-Town ¨C Boolean, 1=Does not vanish when spawned inside a town, 0=Vanishes when spawned inside a town (such as the trails left by the Druid's vines).
+Town â€“ Boolean, 1=Does not vanish when spawned inside a town, 0=Vanishes when spawned inside a town (such as the trails left by the Druid's vines).
 
-NoUniqueMod ¨C Boolean, 1=Does not get bonuses from boss modifiers (such as fire damage if the boss spawns as Fire Enchanted), 0=Receives all bonuses applicable.
+NoUniqueMod â€“ Boolean, 1=Does not get bonuses from boss modifiers (such as fire damage if the boss spawns as Fire Enchanted), 0=Receives all bonuses applicable.
 
-NoMultiShot ¨C Boolean, 1=Is not effected by the multishot modifier of bosses, 0=Is effected by the multishot modifier of bosses as usual. Note: Blizzard forgot to enable this on some boss-death events, such as Shenk...
+NoMultiShot â€“ Boolean, 1=Is not effected by the multishot modifier of bosses, 0=Is effected by the multishot modifier of bosses as usual. Note: Blizzard forgot to enable this on some boss-death events, such as Shenk...
 
-Holy ¨C Flag, controls which units this missile can hit, 0=All units, 1=Only undead, 2=Only demons, 3=All units. ¨C I didn't test this extensively, done from memory.
+Holy â€“ Flag, controls which units this missile can hit, 0=All units, 1=Only undead, 2=Only demons, 3=All units. â€“ I didn't test this extensively, done from memory.
 
-CanSlow ¨C Boolean, 1=Is effected by skill_handofathena stat (slow missiles), 0=Is not effected by skill_handofathena stat.
+CanSlow â€“ Boolean, 1=Is effected by skill_handofathena stat (slow missiles), 0=Is not effected by skill_handofathena stat.
 
-ReturnFire ¨C Boolean, 1=Can trigger "collision events" on the target, 0=Cannot trigger collision events on the target. *Collision events are all those things that happen "upon getting hit" for example. Blizzard erroneously enabled this on the Arctic 
+ReturnFire â€“ Boolean, 1=Can trigger "collision events" on the target, 0=Cannot trigger collision events on the target. *Collision events are all those things that happen "upon getting hit" for example. Blizzard erroneously enabled this on the Arctic 
 Blast used by the Frozen Horrors and Nihlathak. NOTE: May or may not effect other "on hit" events, such as casting a skill or "thorns".
 
-GetHit ¨C Boolean, 1=Can knock the target into GH mode ("hit recovery") upon collision, 0=Never knock target into GH mode upon collision.
+GetHit â€“ Boolean, 1=Can knock the target into GH mode ("hit recovery") upon collision, 0=Never knock target into GH mode upon collision.
 
-SoftHit ¨C Boolean, unknown, used only for Shockfield on Ground and Firestorn, Apparently this setting handles the frequency of the unit being "visually" hurt by the missile (probably the unit's lifebar being updated, which was bugged originally).
+SoftHit â€“ Boolean, unknown, used only for Shockfield on Ground and Firestorn, Apparently this setting handles the frequency of the unit being "visually" hurt by the missile (probably the unit's lifebar being updated, which was bugged originally).
 
-KnockBack ¨C Percentage chance (0-100) to knock target back, the default is 0 obviously, if you enter 100 in here the target will always be knocked back after every single successful collision.
+KnockBack â€“ Percentage chance (0-100) to knock target back, the default is 0 obviously, if you enter 100 in here the target will always be knocked back after every single successful collision.
 
-Trans ¨C Not a boolean, 0=Draw graphic normally, 1=Alpha-blending ("the darker the areas are the more transparent they become"), 2=Special blending mode (usually causes the missile to display black-and-white).
+Trans â€“ Not a boolean, 0=Draw graphic normally, 1=Alpha-blending ("the darker the areas are the more transparent they become"), 2=Special blending mode (usually causes the missile to display black-and-white).
 
-Qty ¨C Does this missile use up quantity (1=use quantity, 0=don't use quantity). NOTE: This requires a special starting function in skills.txt to work. Also, if you enable this for strafe for example, it will use the number of missiles it actually fires 
+Qty â€“ Does this missile use up quantity (1=use quantity, 0=don't use quantity). NOTE: This requires a special starting function in skills.txt to work. Also, if you enable this for strafe for example, it will use the number of missiles it actually fires 
 rather then a constant 1
 
-Pierce ¨C Is this missile effected by pierce (1=effected by pierce, 0=not effected by pierce). This refers to the "pierce" modifier and to the Amazon skill Pierce.
+Pierce â€“ Is this missile effected by pierce (1=effected by pierce, 0=not effected by pierce). This refers to the "pierce" modifier and to the Amazon skill Pierce.
 
-SpecialSetup ¨C Boolean, unknown, enabled only for potions. I am unsure what this controls, the "arc" is not handled by this, there is a special check in code for potion itype. Maybe this has to do with displaying correct missile damage in weapons.txt?
+SpecialSetup â€“ Boolean, unknown, enabled only for potions. I am unsure what this controls, the "arc" is not handled by this, there is a special check in code for potion itype. Maybe this has to do with displaying correct missile damage in weapons.txt?
 
 
 
@@ -246,10 +246,10 @@ SpecialSetup ¨C Boolean, unknown, enabled only for potions. I am unsure what thi
 
 Skill settings
 
-MissileSkill ¨C Boolean, used to transfer elemental damage from items to the splash radius of the missile and to diss all other damage modifiers (ever wondered why Freezing Arrow has SrcDmg set to 128 in skills.txt, yet the splash radius does no 
+MissileSkill â€“ Boolean, used to transfer elemental damage from items to the splash radius of the missile and to diss all other damage modifiers (ever wondered why Freezing Arrow has SrcDmg set to 128 in skills.txt, yet the splash radius does no 
 physical damage?).
 
-Skill ¨C If you enter the ID Pointer ("the name") of a skill here this missile will retrieve all of it's damage/hit data from this skill. The columns being read from skills.txt instead of missiles.txt are the following: ResultFlags, HitFlags, HitShift, 
+Skill â€“ If you enter the ID Pointer ("the name") of a skill here this missile will retrieve all of it's damage/hit data from this skill. The columns being read from skills.txt instead of missiles.txt are the following: ResultFlags, HitFlags, HitShift, 
 HitClass, SrcDamage (SrcDam in skills.txt!), MinDam, MinLevDam1-5, MaxDam, MaxLevDam1-5, DmgSymPerCalc, EType, EMin, EMinLev1-5, EMax, EMaxLev1-5, EDmgSymPerCalc, ELen, ELenLev1-3, ELenSymPerCalc.
 
 
@@ -258,62 +258,62 @@ HitClass, SrcDamage (SrcDam in skills.txt!), MinDam, MinLevDam1-5, MaxDam, MaxLe
 
 Event flags
 
-ResultFlags ¨C unknown (to both of us). 4=Used for normal missiles, 5=Used for explosions (all things with HitFlags of 2!), 8=Used for missiles that never damage anything. Most likely behaves similar to CollideType but what it really does...
+ResultFlags â€“ unknown (to both of us). 4=Used for normal missiles, 5=Used for explosions (all things with HitFlags of 2!), 8=Used for missiles that never damage anything. Most likely behaves similar to CollideType but what it really does...
 
-HitFlags ¨C unknown, 2=Used for explosions, 5=Used for freezing arrow. This could play a more important role then originally expected. Likely related to "splash damage elemental carry over" mentioned further above (MissileSkill).
+HitFlags â€“ unknown, 2=Used for explosions, 5=Used for freezing arrow. This could play a more important role then originally expected. Likely related to "splash damage elemental carry over" mentioned further above (MissileSkill).
 
 
 
 
 Damage settings
 
-HitShift ¨C this is a "damage divisor", damage, as well as hitpoints, mana and stamina is handled in 256ths. 8=256/256, 7=128/256, 6=64/256, 5=32/256, 4=16/256, 3=8/256, 2=4/256, 1=2/256, 0=1/256. This roughly equals: 100%, 50%, 25%, 12.5%, 6.25%, 3.125%
+HitShift â€“ this is a "damage divisor", damage, as well as hitpoints, mana and stamina is handled in 256ths. 8=256/256, 7=128/256, 6=64/256, 5=32/256, 4=16/256, 3=8/256, 2=4/256, 1=2/256, 0=1/256. This roughly equals: 100%, 50%, 25%, 12.5%, 6.25%, 3.125%
 , 1.5625%, 0.78125% and 0.390625% of the actual damage.
 
-ApplyMastery ¨C Used only for MeteorFire and VampireMeteorFire. Most likely used to boost the damage of these unlinked missiles via mastery bonuses..
+ApplyMastery â€“ Used only for MeteorFire and VampireMeteorFire. Most likely used to boost the damage of these unlinked missiles via mastery bonuses..
 
-SrcDamage ¨C "Source Damage", this controls whenever the game should append the source units attack properties to the missile or not. Thi column is using 128ths (128=100%). This does not only reflect damage, but all other modifiers related to attack, 
+SrcDamage â€“ "Source Damage", this controls whenever the game should append the source units attack properties to the missile or not. Thi column is using 128ths (128=100%). This does not only reflect damage, but all other modifiers related to attack, 
 including lifesteal and manasteal. Set this to -1 (poison clouds) to get rid of SrcDmg from skills.txt.
 
-Half2HSrc ¨C Boolean, 1=Halven damage when a two handed weapon is used, 0=Keep full damage when a two handed weapon is used.
+Half2HSrc â€“ Boolean, 1=Halven damage when a two handed weapon is used, 0=Keep full damage when a two handed weapon is used.
 
-SrcMissDmg ¨C Used only for the poison clouds created by the expansion Viper's poison javelin I assume this tells it how much damage it should carry over from the base missile.
+SrcMissDmg â€“ Used only for the poison clouds created by the expansion Viper's poison javelin I assume this tells it how much damage it should carry over from the base missile.
 
-MinDamage, MaxDamage ¨C Basic minimum and maximum physical damage of this missile.
+MinDamage, MaxDamage â€“ Basic minimum and maximum physical damage of this missile.
 
-MinLevDam1-5, MaxLevDam1-5 ¨C Additional physical damage to deal out per missile level (the unit level of the missile, either equal to the attacker's level or to the skill level). The range is: ulvl 2-8, ulvl 9-16, ulvl 17-22, ulvl 23-28 and ulvl 29+
+MinLevDam1-5, MaxLevDam1-5 â€“ Additional physical damage to deal out per missile level (the unit level of the missile, either equal to the attacker's level or to the skill level). The range is: ulvl 2-8, ulvl 9-16, ulvl 17-22, ulvl 23-28 and ulvl 29+
 
-DmgSymPerCalc ¨C Physical damage synergy, works just like the synergy column in skills.txt, only that it has much fewer functions, AFAIK it only supports getting skill level, not way to obtain stat values etc.
+DmgSymPerCalc â€“ Physical damage synergy, works just like the synergy column in skills.txt, only that it has much fewer functions, AFAIK it only supports getting skill level, not way to obtain stat values etc.
 
-EType ¨C Elemental damage type. fire, ltng (Lightning), mag (Magic), cold, pois (Poison), life (Life-steal), mana (Mana-steal), stam (Stamina-steal), stun (note, "stun damage" is ignored, stun uses only duration), rand (either lightning, fire, cold or 
-poison ¨C picked at every successful hit), burn (Burning damage, bugged, gives no EXP from kills, otherwise works like poison, you need to have low HitShift to make it work properly!), frze (Freeze, by itself this is handled like cold damage, you need 
+EType â€“ Elemental damage type. fire, ltng (Lightning), mag (Magic), cold, pois (Poison), life (Life-steal), mana (Mana-steal), stam (Stamina-steal), stun (note, "stun damage" is ignored, stun uses only duration), rand (either lightning, fire, cold or 
+poison â€“ picked at every successful hit), burn (Burning damage, bugged, gives no EXP from kills, otherwise works like poison, you need to have low HitShift to make it work properly!), frze (Freeze, by itself this is handled like cold damage, you need 
 to use special server damage functions to actually cause the unit to become frozen solid).
 
-EMin, EMax ¨C Just like MinDamage and MaxDamage, just for elemental damage (duh).
+EMin, EMax â€“ Just like MinDamage and MaxDamage, just for elemental damage (duh).
 
-MinELev1-5, MaxELev1-5 ¨C I doubt I have to explain this. This is like MinLevDam1-5 and MaxLevDam1-5, just for elemental damage.
+MinELev1-5, MaxELev1-5 â€“ I doubt I have to explain this. This is like MinLevDam1-5 and MaxLevDam1-5, just for elemental damage.
 
-EDmgSymPerCalc ¨C Same as DmgSymPerCalc, just for elemental damage.
+EDmgSymPerCalc â€“ Same as DmgSymPerCalc, just for elemental damage.
 
-ELen ¨C Duration (used for stun, poison and burning damage), the duration is handled in frames, 25=1 second.
+ELen â€“ Duration (used for stun, poison and burning damage), the duration is handled in frames, 25=1 second.
 
-ELevLen1-3 ¨C Extra duration per missile unit level. (check intervals)
+ELevLen1-3 â€“ Extra duration per missile unit level. (check intervals)
 
 
 
 
 Misc. Settings
 
-HitClass ¨C Hit classes are a rather "enigmatic" part of D2, but they are technically just client side effects for collisions. For example the Hit class #6 is responsible for the "pierce noise" when a throwing weapon hits something. #10 is probably the 
+HitClass â€“ Hit classes are a rather "enigmatic" part of D2, but they are technically just client side effects for collisions. For example the Hit class #6 is responsible for the "pierce noise" when a throwing weapon hits something. #10 is probably the 
 same just for "smaller piercing missiles" like Arrows. #2 is used for throwing axes, #64 causes the "electric sound" (used for lightning based missiles to make that special sound), #32 is used for fire walls and the like, #176 for liquid attacks (slime-
 missiles for example), #80 is used for Poison Nova, #48 for some cold effects. The hitclasses used in other txt files (MonStats2.txt, Skills.txt and possibly others that I forgot) can also be used here.
 
-NumDirections ¨C Number of directions of the DCC file loaded via the CelFile column. Make sure this matches the DCC to avoid crashes and the like. NOTE: Brother Laz says that this column is of no importance, I personally remember getting crashes in pre 1
+NumDirections â€“ Number of directions of the DCC file loaded via the CelFile column. Make sure this matches the DCC to avoid crashes and the like. NOTE: Brother Laz says that this column is of no importance, I personally remember getting crashes in pre 1
 .09 days, so ignore this column or fill it, it seams more important that the "Length" column is correct, probably like animrate, which is only there to avoid internal conflicts due to the absence of COF files.
 
-LocalBlood ¨C Related to skills that cause blood to be spilled around. 0=Can't bleed, 1=Can it bleed, 2=Can it bleed and is it effected by open wounds.
+LocalBlood â€“ Related to skills that cause blood to be spilled around. 0=Can't bleed, 1=Can it bleed, 2=Can it bleed and is it effected by open wounds.
 
-DamageRate ¨C How does this missile handle magic_damage_reduced stat. An empty column means the effect is applied completely every single frame. Blizzard added this to avoid people from almost nullifying fire wall damage with just 5+ Magic Damage 
+DamageRate â€“ How does this missile handle magic_damage_reduced stat. An empty column means the effect is applied completely every single frame. Blizzard added this to avoid people from almost nullifying fire wall damage with just 5+ Magic Damage 
 reducing items. (Get detailed formula)
 
 
@@ -322,21 +322,21 @@ reducing items. (Get detailed formula)
 
 Client side settings A: Sounds
 
-TravelSound ¨C ID Pointer from Sounds.txt to the WAV file the game plays when the missile is created. This is also used for sound effects that should loop for the time of the missiles existence. NOTE: Using looping sounds here can cause crashes (don't 
+TravelSound â€“ ID Pointer from Sounds.txt to the WAV file the game plays when the missile is created. This is also used for sound effects that should loop for the time of the missiles existence. NOTE: Using looping sounds here can cause crashes (don't 
 use long looping sound effects such as Music).
 
-HitSound ¨C ID Pointer from Sounds.txt to the WAV file the game plays when the missile collides with a target.
+HitSound â€“ ID Pointer from Sounds.txt to the WAV file the game plays when the missile collides with a target.
 
-ProgSound ¨C ID Pointer from Sounds.txt to the WAV file the game plays at special events, defined by the client side functions related to collisions.
+ProgSound â€“ ID Pointer from Sounds.txt to the WAV file the game plays at special events, defined by the client side functions related to collisions.
 
 
 
 
 Client side settings B: Graphics
 
-ProgOverlay ¨C ID Pointer from Overlays.txt for the DCC file to use as an overlay for special events defined by the client side functions related to collisions.
+ProgOverlay â€“ ID Pointer from Overlays.txt for the DCC file to use as an overlay for special events defined by the client side functions related to collisions.
 
-ExplosionMissile ¨C The ID pointer from Missiles.txt for the explosion to create upon collision, this is only created if the missile successfully collides with a unit or an obstacle (what it can collide with is controlled by CollideType) or when 
+ExplosionMissile â€“ The ID pointer from Missiles.txt for the explosion to create upon collision, this is only created if the missile successfully collides with a unit or an obstacle (what it can collide with is controlled by CollideType) or when 
 AlwaysExplode is enabled..
 
 
@@ -346,13 +346,13 @@ Appended missiles
 
 Note: These columns are only accessed if the movement or collision functions use them! Also, all these columns use ID Pointers ("names")
 
-SubMissile1-3 ¨C Server part of the missiles spawned by the movement function.
+SubMissile1-3 â€“ Server part of the missiles spawned by the movement function.
 
-HitSubMissile1-3 ¨C Server part of the missiles spawned by the collision function.
+HitSubMissile1-3 â€“ Server part of the missiles spawned by the collision function.
 
-CltSubMissile1-3 ¨C Client part of SubMissile1-3.
+CltSubMissile1-3 â€“ Client part of SubMissile1-3.
 
-CltHitSubMissile1-3 ¨C Client part of HitSubMissile1-3.
+CltHitSubMissile1-3 â€“ Client part of HitSubMissile1-3.
 
 
 
@@ -360,347 +360,347 @@ CltHitSubMissile1-3 ¨C Client part of HitSubMissile1-3.
 
 Line terminator
 
-EOL ¨C End of Line, must be set to 0 if you use M$ Excel, to prevent it from blowing up the table.
+EOL â€“ End of Line, must be set to 0 if you use M$ Excel, to prevent it from blowing up the table.
 
 */
 
 /*
-ÎÄ¼şÃû½âÎö£º
-missile£ºµ¼µ¯£¬·¢ÉäÎï¡£
-´ËÎÄ¼ş¼ÇÂ¼ÁËÓÎÏ·ÖĞËùÓĞ·¢ÉäÎïµÄĞÅÏ¢£¬Ã¿Ò»ĞĞ±íÊ¾Ò»ÖÖ·¢ÉäÎï¡£
+æ–‡ä»¶åè§£æï¼š
+missileï¼šå¯¼å¼¹ï¼Œå‘å°„ç‰©ã€‚
+æ­¤æ–‡ä»¶è®°å½•äº†æ¸¸æˆä¸­æ‰€æœ‰å‘å°„ç‰©çš„ä¿¡æ¯ï¼Œæ¯ä¸€è¡Œè¡¨ç¤ºä¸€ç§å‘å°„ç‰©ã€‚
 
 
-»Ø¸´
+å›å¤
 
-    2Â¥
+    2æ¥¼
     2012-01-12 20:55
 
-    ¾Ù±¨ |
+    ä¸¾æŠ¥ |
 
     zqtjingzi
-    Ğ¡°ÉÖ÷
+    å°å§ä¸»
     12
 
-Ã¿ÁĞµÄº¬ÒåÈçÏÂ£º
+æ¯åˆ—çš„å«ä¹‰å¦‚ä¸‹ï¼š
 
 
-»Ø¸´
+å›å¤
 
-    3Â¥
+    3æ¥¼
     2012-01-12 20:55
 
-    ¾Ù±¨ |
+    ä¸¾æŠ¥ |
 
-    ÎÒ°®Æ¤ºï¶ù
-    ÊÀ½çÖ®Ê¯
+    æˆ‘çˆ±çš®çŒ´å„¿
+    ä¸–ç•Œä¹‹çŸ³
     10
 
-²åÖ®
+æ’ä¹‹
 
 
-»Ø¸´
+å›å¤
 
-    4Â¥
+    4æ¥¼
     2012-01-12 20:55
 
-    ¾Ù±¨ |
+    ä¸¾æŠ¥ |
 
     zqtjingzi
-    Ğ¡°ÉÖ÷
+    å°å§ä¸»
     12
 
-Missile£º·¢ÉäÎïÃû³ÆË÷Òı¡£
+Missileï¼šå‘å°„ç‰©åç§°ç´¢å¼•ã€‚
 
-Id£º·¢ÉäÎïÊı×ÖË÷Òı¡£
+Idï¼šå‘å°„ç‰©æ•°å­—ç´¢å¼•ã€‚
 
-pCltDoFunc£º´Ë·¢ÉäÎïµÄ¿Í»§¶ËÒÆ¶¯º¯Êı¡£
+pCltDoFuncï¼šæ­¤å‘å°„ç‰©çš„å®¢æˆ·ç«¯ç§»åŠ¨å‡½æ•°ã€‚
 
-pCltHitFunc£º´Ë·¢ÉäÎïµÄ¿Í»§¶ËÅö×²º¯Êı¡£
+pCltHitFuncï¼šæ­¤å‘å°„ç‰©çš„å®¢æˆ·ç«¯ç¢°æ’å‡½æ•°ã€‚
 
-pSrvDoFunc£º´Ë·¢ÉäÎïµÄ·şÎñÆ÷¶ËÒÆ¶¯º¯Êı¡£
+pSrvDoFuncï¼šæ­¤å‘å°„ç‰©çš„æœåŠ¡å™¨ç«¯ç§»åŠ¨å‡½æ•°ã€‚
 
-pSrvHitFunc£º´Ë·¢ÉäÎïµÄ·şÎñÆ÷¶ËÅö×²º¯Êı¡£
+pSrvHitFuncï¼šæ­¤å‘å°„ç‰©çš„æœåŠ¡å™¨ç«¯ç¢°æ’å‡½æ•°ã€‚
 
-pSrvDmgFunc£º´Ë·¢ÉäÎïµÄÌØÊâÉËº¦¼ÆËãº¯Êı¡£
+pSrvDmgFuncï¼šæ­¤å‘å°„ç‰©çš„ç‰¹æ®Šä¼¤å®³è®¡ç®—å‡½æ•°ã€‚
 
-SrvCalc1£º·şÎñÆ÷¶ËÒÆ¶¯º¯ÊıËùĞèµÄ¼ÆËã¹«Ê½¡£
+SrvCalc1ï¼šæœåŠ¡å™¨ç«¯ç§»åŠ¨å‡½æ•°æ‰€éœ€çš„è®¡ç®—å…¬å¼ã€‚
 
-Param1-5£º·şÎñÆ÷¶ËÒÆ¶¯º¯ÊıËùĞèµÄ²ÎÊı¡£
+Param1-5ï¼šæœåŠ¡å™¨ç«¯ç§»åŠ¨å‡½æ•°æ‰€éœ€çš„å‚æ•°ã€‚
 
-CltCalc1£º¿Í»§¶ËÒÆ¶¯º¯ÊıËùĞèµÄ¼ÆËã¹«Ê½¡£
+CltCalc1ï¼šå®¢æˆ·ç«¯ç§»åŠ¨å‡½æ•°æ‰€éœ€çš„è®¡ç®—å…¬å¼ã€‚
 
-CltParam1-5£º¿Í»§¶ËÒÆ¶¯º¯ÊıËùĞèµÄ²ÎÊı¡£
+CltParam1-5ï¼šå®¢æˆ·ç«¯ç§»åŠ¨å‡½æ•°æ‰€éœ€çš„å‚æ•°ã€‚
 
-SHitCalc1£º·şÎñÆ÷¶ËÅö×²º¯ÊıËùĞèµÄ¼ÆËã¹«Ê½¡£
+SHitCalc1ï¼šæœåŠ¡å™¨ç«¯ç¢°æ’å‡½æ•°æ‰€éœ€çš„è®¡ç®—å…¬å¼ã€‚
 
-sHitPar1-3£º·şÎñÆ÷¶ËÅö×²º¯ÊıËùĞèµÄ²ÎÊı¡£
+sHitPar1-3ï¼šæœåŠ¡å™¨ç«¯ç¢°æ’å‡½æ•°æ‰€éœ€çš„å‚æ•°ã€‚
 
-CHitCalc1£º¿Í»§¶ËÅö×²º¯ÊıËùĞèµÄ¼ÆËã¹«Ê½¡£
+CHitCalc1ï¼šå®¢æˆ·ç«¯ç¢°æ’å‡½æ•°æ‰€éœ€çš„è®¡ç®—å…¬å¼ã€‚
 
-cHitPar1-3£º¿Í»§¶ËÅö×²º¯ÊıËùĞèµÄ²ÎÊı¡£
+cHitPar1-3ï¼šå®¢æˆ·ç«¯ç¢°æ’å‡½æ•°æ‰€éœ€çš„å‚æ•°ã€‚
 
-DmgCalc1£ºÌØÊâÉËº¦¼ÆËãº¯ÊıËùĞèµÄ¼ÆËã¹«Ê½¡£
+DmgCalc1ï¼šç‰¹æ®Šä¼¤å®³è®¡ç®—å‡½æ•°æ‰€éœ€çš„è®¡ç®—å…¬å¼ã€‚
 
-dParam1-2£ºÌØÊâÉËº¦¼ÆËãº¯ÊıËùĞèµÄ²ÎÊı¡£
+dParam1-2ï¼šç‰¹æ®Šä¼¤å®³è®¡ç®—å‡½æ•°æ‰€éœ€çš„å‚æ•°ã€‚
 
 
-»Ø¸´
+å›å¤
 
-    5Â¥
+    5æ¥¼
     2012-01-12 20:55
 
-    ¾Ù±¨ |
+    ä¸¾æŠ¥ |
 
     zqtjingzi
-    Ğ¡°ÉÖ÷
+    å°å§ä¸»
     12
 
-Vel£º´Ë·¢ÉäÎïµÄ»ù´¡ËÙ¶È¡£
+Velï¼šæ­¤å‘å°„ç‰©çš„åŸºç¡€é€Ÿåº¦ã€‚
 
-MaxVel£º´Ë·¢ÉäÎïµÄ×î´óËÙ¶È¡£
+MaxVelï¼šæ­¤å‘å°„ç‰©çš„æœ€å¤§é€Ÿåº¦ã€‚
 
-VelLev£º´Ë·¢ÉäÎïËæµÈ¼¶Ôö¼ÓµÄËÙ¶È¡£µ«¾­²âÊÔËÆºõÃ»ÓĞĞ§¹û¡£
+VelLevï¼šæ­¤å‘å°„ç‰©éšç­‰çº§å¢åŠ çš„é€Ÿåº¦ã€‚ä½†ç»æµ‹è¯•ä¼¼ä¹æ²¡æœ‰æ•ˆæœã€‚
 
-Accel£º´Ë·¢ÉäÎïµÄ¼ÓËÙ¶È¡£×î´óËÙ¶ÈÈçMaxVel£¬×îĞ¡ËÙ¶ÈÎª0¡£
+Accelï¼šæ­¤å‘å°„ç‰©çš„åŠ é€Ÿåº¦ã€‚æœ€å¤§é€Ÿåº¦å¦‚MaxVelï¼Œæœ€å°é€Ÿåº¦ä¸º0ã€‚
 
-Range£º´Ë·¢ÉäÎïµÄÊÙÃü£¬ÒÔÖ¡Îªµ¥Î»¡£
+Rangeï¼šæ­¤å‘å°„ç‰©çš„å¯¿å‘½ï¼Œä»¥å¸§ä¸ºå•ä½ã€‚
 
-LevRange£º´Ë·¢ÉäÎïÃ¿Ìá¸ßÒ»¼¶Ôö¼ÓµÄÊÙÃü¡£
+LevRangeï¼šæ­¤å‘å°„ç‰©æ¯æé«˜ä¸€çº§å¢åŠ çš„å¯¿å‘½ã€‚
 
-Light£º´Ë·¢ÉäÎïµÄÕÕÁÁ·¶Î§¡£
+Lightï¼šæ­¤å‘å°„ç‰©çš„ç…§äº®èŒƒå›´ã€‚
 
-Flicker£º´Ë·¢ÉäÎïÔÚÉÁË¸Ê±Ôö¼ÓµÄÕÕÁÁ·¶Î§¡£Êµ¼ÊÉÏÃ»ÓĞ²âÊÔ³öĞ§¹û¡£
+Flickerï¼šæ­¤å‘å°„ç‰©åœ¨é—ªçƒæ—¶å¢åŠ çš„ç…§äº®èŒƒå›´ã€‚å®é™…ä¸Šæ²¡æœ‰æµ‹è¯•å‡ºæ•ˆæœã€‚
 
-Red/Green/Blue£ºÕÕÁÁ·¶Î§ÄÚµÄ¹âÁÁÑÕÉ«¡£
+Red/Green/Blueï¼šç…§äº®èŒƒå›´å†…çš„å…‰äº®é¢œè‰²ã€‚
 
-InitSteps£º´Ë·¢ÉäÎïÔÚ¿É¼ûÖ®Ç°µÄ×¼±¸ÆÚËùÓÃÖ¡Êı¡£
+InitStepsï¼šæ­¤å‘å°„ç‰©åœ¨å¯è§ä¹‹å‰çš„å‡†å¤‡æœŸæ‰€ç”¨å¸§æ•°ã€‚
 
-Activate£º´Ë·¢ÉäÎïÔÚ·¢Éú×÷ÓÃÖ®Ç°µÄ×¼±¸ÆÚËùÓÃÖ¡Êı¡£
+Activateï¼šæ­¤å‘å°„ç‰©åœ¨å‘ç”Ÿä½œç”¨ä¹‹å‰çš„å‡†å¤‡æœŸæ‰€ç”¨å¸§æ•°ã€‚
 
-LoopAnim£º²¼¶ûÖµ¡£ÊÇ·ñÔÚÊÙÃü½áÊøÇ°Ñ­»·ÖØ¸´·¢ÉäÎï¶¯×÷¡£
+LoopAnimï¼šå¸ƒå°”å€¼ã€‚æ˜¯å¦åœ¨å¯¿å‘½ç»“æŸå‰å¾ªç¯é‡å¤å‘å°„ç‰©åŠ¨ä½œã€‚
 
-CelFile£º´Ë·¢ÉäÎïµÄÍâ¹ÛÍ¼Æ¬¡£
+CelFileï¼šæ­¤å‘å°„ç‰©çš„å¤–è§‚å›¾ç‰‡ã€‚
 
-animrate£ºº¬ÒåÎ´Öª¡£
+animrateï¼šå«ä¹‰æœªçŸ¥ã€‚
 
-AnimLen£º´Ë·¢ÉäÎïÔÚÃ¿¸ö·½ÏòÉÏµÄ¶¯×÷Ö¡Êı¡£
+AnimLenï¼šæ­¤å‘å°„ç‰©åœ¨æ¯ä¸ªæ–¹å‘ä¸Šçš„åŠ¨ä½œå¸§æ•°ã€‚
 
-AnimSpeed£º¶¯×÷ËÙ¶È£¬Ã¿Ãë²¥·ÅÖ¡Êı¡£
+AnimSpeedï¼šåŠ¨ä½œé€Ÿåº¦ï¼Œæ¯ç§’æ’­æ”¾å¸§æ•°ã€‚
 
-RandStart£º¶¯×÷ÆğÊ¼Ö¡ºÅ¡£
+RandStartï¼šåŠ¨ä½œèµ·å§‹å¸§å·ã€‚
 
-SubLoop£º²¼¶ûÖµ£¬ÊÇ·ñÓĞ×ÓÑ­»·¶¯×÷¡£
+SubLoopï¼šå¸ƒå°”å€¼ï¼Œæ˜¯å¦æœ‰å­å¾ªç¯åŠ¨ä½œã€‚
 
-SubStart£º×ÓÑ­»·µÄÆğÊ¼Ö¡ºÅ¡£
+SubStartï¼šå­å¾ªç¯çš„èµ·å§‹å¸§å·ã€‚
 
-SubStop£º×ÓÑ­»·µÄ½áÊøÌù¡£
+SubStopï¼šå­å¾ªç¯çš„ç»“æŸè´´ã€‚
 
 
-»Ø¸´
+å›å¤
 
-    6Â¥
+    6æ¥¼
     2012-01-12 20:56
 
-    ¾Ù±¨ |
+    ä¸¾æŠ¥ |
 
     zqtjingzi
-    Ğ¡°ÉÖ÷
+    å°å§ä¸»
     12
 
-CollideType£ºÅö×²ÀàĞÍ¡£¾ßÌåÅö×²Ğ§¹ûÈçÏÂ£º
-ÀàĞÍºÅ Ç½ µ¥Î» µØÃæ
-0 ·ñ ·ñ ·ñ
-1 ·ñ ÊÇ ·ñ
-3 ÊÇ ÊÇ ·ñ
-6 ÊÇ ·ñ ·ñ
-8 ÊÇ ÊÇ ÊÇ
+CollideTypeï¼šç¢°æ’ç±»å‹ã€‚å…·ä½“ç¢°æ’æ•ˆæœå¦‚ä¸‹ï¼š
+ç±»å‹å· å¢™ å•ä½ åœ°é¢
+0 å¦ å¦ å¦
+1 å¦ æ˜¯ å¦
+3 æ˜¯ æ˜¯ å¦
+6 æ˜¯ å¦ å¦
+8 æ˜¯ æ˜¯ æ˜¯
 
-CollideKill£º²¼¶ûÖµ¡£´Ë·¢ÉäÎïÊÇ·ñ»áÒòÎªÅö×²ÏûÊ§¡£
+CollideKillï¼šå¸ƒå°”å€¼ã€‚æ­¤å‘å°„ç‰©æ˜¯å¦ä¼šå› ä¸ºç¢°æ’æ¶ˆå¤±ã€‚
 
-CollideFriend£º²¼¶ûÖµ¡£´Ë·¢ÉäÎïÊÇ·ñ»áÓëÍ¬ÃËÕß·¢ÉúÅö×²¡£
+CollideFriendï¼šå¸ƒå°”å€¼ã€‚æ­¤å‘å°„ç‰©æ˜¯å¦ä¼šä¸åŒç›Ÿè€…å‘ç”Ÿç¢°æ’ã€‚
 
-LastCollide£ºº¬ÒåÎ´Öª¡£
+LastCollideï¼šå«ä¹‰æœªçŸ¥ã€‚
 
-Collision£ºº¬ÒåÎ´Öª¡£
+Collisionï¼šå«ä¹‰æœªçŸ¥ã€‚
 
-ClientCol£ºº¬ÒåÎ´Öª¡£
+ClientColï¼šå«ä¹‰æœªçŸ¥ã€‚
 
-ClientSend£º²¼¶ûÖµ£¬ÊÇ·ñĞèÒªÏò·şÎñ¶Ë·¢ËÍÏûÏ¢¡£
+ClientSendï¼šå¸ƒå°”å€¼ï¼Œæ˜¯å¦éœ€è¦å‘æœåŠ¡ç«¯å‘é€æ¶ˆæ¯ã€‚
 
-NextHit£º²¼¶ûÖµ¡£ÊÇ·ñ¾ßÓĞµÚ¶ş»÷ÑÓ³ÙĞ§¹û¡£
+NextHitï¼šå¸ƒå°”å€¼ã€‚æ˜¯å¦å…·æœ‰ç¬¬äºŒå‡»å»¶è¿Ÿæ•ˆæœã€‚
 
-NextDelay£ºµÚ¶ş»÷ÑÓ³ÙĞ§¹ûµÄÖ¡Êı¡£
+NextDelayï¼šç¬¬äºŒå‡»å»¶è¿Ÿæ•ˆæœçš„å¸§æ•°ã€‚
 
-x/y/z offset£ºx/y/z·½ÏòÉÏµÄÆ«ÒÆ¡£
+x/y/z offsetï¼šx/y/zæ–¹å‘ä¸Šçš„åç§»ã€‚
 
-Size£º´Ë·¢ÉäÎïµÄ´óĞ¡¡£
+Sizeï¼šæ­¤å‘å°„ç‰©çš„å¤§å°ã€‚
 
-SrcTown£ºº¬ÒåÎ´Öª
+SrcTownï¼šå«ä¹‰æœªçŸ¥
 
-CltSrcTown£ºº¬ÒåÎ´Öª¡£
+CltSrcTownï¼šå«ä¹‰æœªçŸ¥ã€‚
 
-CanDestroy£ºº¬ÒåÎ´Öª¡£
+CanDestroyï¼šå«ä¹‰æœªçŸ¥ã€‚
 
-ToHit£º´Ë·¢ÉäÎïÊÇ·ñÊ¹ÓÃ¹¥»÷×¼È·ÂÊÊôĞÔ¡£
+ToHitï¼šæ­¤å‘å°„ç‰©æ˜¯å¦ä½¿ç”¨æ”»å‡»å‡†ç¡®ç‡å±æ€§ã€‚
 
-AlwaysExplode£º²¼¶ûÖµ¡£´Ë·¢ÉäÎï±»´İ»ÙÊ±ÊÇ·ñ×Ü»á´¥·¢Åö×²º¯Êı¡£
+AlwaysExplodeï¼šå¸ƒå°”å€¼ã€‚æ­¤å‘å°„ç‰©è¢«æ‘§æ¯æ—¶æ˜¯å¦æ€»ä¼šè§¦å‘ç¢°æ’å‡½æ•°ã€‚
 
-Explosion£º²¼¶ûÖµ¡£ÊÇ·ñÊÇ±¬Õ¨·¢ÉäÎï¡£
+Explosionï¼šå¸ƒå°”å€¼ã€‚æ˜¯å¦æ˜¯çˆ†ç‚¸å‘å°„ç‰©ã€‚
 
-Town£º²¼¶ûÖµ¡£ÊÇ·ñÄÜÔÚ³ÇÄÚ´æÔÚ¡£
+Townï¼šå¸ƒå°”å€¼ã€‚æ˜¯å¦èƒ½åœ¨åŸå†…å­˜åœ¨ã€‚
 
-NoUniqueMod£º²¼¶ûÖµ¡£ÊÇ·ñ²»±»½ğ¹Ö½±ÀøÊôĞÔÓ°Ïì¡£
+NoUniqueModï¼šå¸ƒå°”å€¼ã€‚æ˜¯å¦ä¸è¢«é‡‘æ€ªå¥–åŠ±å±æ€§å½±å“ã€‚
 
-NoMultiShot£º²¼¶ûÖµ¡£ÊÇ·ñ²»±»¶àÖØÉä»÷ÊôĞÔÓ°Ïì¡£
+NoMultiShotï¼šå¸ƒå°”å€¼ã€‚æ˜¯å¦ä¸è¢«å¤šé‡å°„å‡»å±æ€§å½±å“ã€‚
 
 
-»Ø¸´
+å›å¤
 
-    7Â¥
+    7æ¥¼
     2012-01-12 20:56
 
-    ¾Ù±¨ |
+    ä¸¾æŠ¥ |
 
     s420295286
-    ÊØ»¤ÌìÊ¹
+    å®ˆæŠ¤å¤©ä½¿
     12
 
 
 
-»Ø¸´
+å›å¤
 
-    8Â¥
+    8æ¥¼
     2012-01-12 20:56
 
-    ¾Ù±¨ |
+    ä¸¾æŠ¥ |
 
     zqtjingzi
-    Ğ¡°ÉÖ÷
+    å°å§ä¸»
     12
 
-Holy£º´Ë·¢ÉäÎïµÄÉñÊ¥ÊôĞÔ¡£¾ßÌå×÷ÓÃÈçÏÂ£º
-0£º²»¾ßÓĞÉñÊ¥ÊôĞÔ¡£
-1£ººöÊÓ²»ËÀÉúÎïµÄ¿¹ĞÔ¡£
-2£ººöÊÓ¶ñÄ§ÉúÎïµÄ¿¹ĞÔ¡£
-3£ººöÊÓ²»ËÀÉúÎïºÍ¶ñÄ§ÉúÎïµÄ¿¹ĞÔ¡£
+Holyï¼šæ­¤å‘å°„ç‰©çš„ç¥åœ£å±æ€§ã€‚å…·ä½“ä½œç”¨å¦‚ä¸‹ï¼š
+0ï¼šä¸å…·æœ‰ç¥åœ£å±æ€§ã€‚
+1ï¼šå¿½è§†ä¸æ­»ç”Ÿç‰©çš„æŠ—æ€§ã€‚
+2ï¼šå¿½è§†æ¶é­”ç”Ÿç‰©çš„æŠ—æ€§ã€‚
+3ï¼šå¿½è§†ä¸æ­»ç”Ÿç‰©å’Œæ¶é­”ç”Ÿç‰©çš„æŠ—æ€§ã€‚
 
-CanSlow£º²¼¶ûÖµ¡£ÊÇ·ñ»á±»ÂıËÙ¼ı¼¼ÄÜ¼õËÙ¡£
+CanSlowï¼šå¸ƒå°”å€¼ã€‚æ˜¯å¦ä¼šè¢«æ…¢é€Ÿç®­æŠ€èƒ½å‡é€Ÿã€‚
 
-ReturnFire£º²¼¶ûÖµ¡£ÊÇ·ñ»á´¥·¢Ä¿±êµÄÅö×²ÊÂ¼ş£¨Èç±»»÷ÖĞÊÂ¼ş£©¡£
+ReturnFireï¼šå¸ƒå°”å€¼ã€‚æ˜¯å¦ä¼šè§¦å‘ç›®æ ‡çš„ç¢°æ’äº‹ä»¶ï¼ˆå¦‚è¢«å‡»ä¸­äº‹ä»¶ï¼‰ã€‚
 
-GetHit£º²¼¶ûÖµ¡£ÊÇ·ñÄÜÈÃÄ¿±ê½øĞĞ´ò»÷×´Ì¬¡£
+GetHitï¼šå¸ƒå°”å€¼ã€‚æ˜¯å¦èƒ½è®©ç›®æ ‡è¿›è¡Œæ‰“å‡»çŠ¶æ€ã€‚
 
-SoftHit£ºº¬ÒåÎ´Öª¡£
+SoftHitï¼šå«ä¹‰æœªçŸ¥ã€‚
 
-KnockBack£º»÷ÍËÄ¿±êµÄ¼¸ÂÊ¡£
+KnockBackï¼šå‡»é€€ç›®æ ‡çš„å‡ ç‡ã€‚
 
-Trans£ºÏÔÊ¾²ÎÊı¡£
+Transï¼šæ˜¾ç¤ºå‚æ•°ã€‚
 
-Qty£º²¼¶ûÖµ¡£´Ë·¢ÉäÎïÊÇ·ñ»áÏûºÄÊıÁ¿¡£
+Qtyï¼šå¸ƒå°”å€¼ã€‚æ­¤å‘å°„ç‰©æ˜¯å¦ä¼šæ¶ˆè€—æ•°é‡ã€‚
 
-Pierce£º²¼¶ûÖµ¡£´Ë·¢ÉäÎïÊÇ·ñÊÜ´©´ÌĞ§¹ûÓ°Ïì¡£
+Pierceï¼šå¸ƒå°”å€¼ã€‚æ­¤å‘å°„ç‰©æ˜¯å¦å—ç©¿åˆºæ•ˆæœå½±å“ã€‚
 
-SpecialSetup£ºº¬ÒåÎ´Öª¡£
+SpecialSetupï¼šå«ä¹‰æœªçŸ¥ã€‚
 
-MissileSkill£º²¼¶ûÖµ¡£ÊÇ·ñ¶Ô±¬Õ¨·¶Î§ÄÚµÄÄ¿±êÖ»Ôì³ÉÔªËØÉËº¦¡£
+MissileSkillï¼šå¸ƒå°”å€¼ã€‚æ˜¯å¦å¯¹çˆ†ç‚¸èŒƒå›´å†…çš„ç›®æ ‡åªé€ æˆå…ƒç´ ä¼¤å®³ã€‚
 
-Skill£ºÊÇ·ñÊ¹ÓÃ¶ÔÓ¦¼¼ÄÜµÄÊôĞÔ£¨ÈçÉËº¦¡¢¹¥»÷ÀàĞÍ£©¡£
+Skillï¼šæ˜¯å¦ä½¿ç”¨å¯¹åº”æŠ€èƒ½çš„å±æ€§ï¼ˆå¦‚ä¼¤å®³ã€æ”»å‡»ç±»å‹ï¼‰ã€‚
 
-ResultFlags£ºº¬ÒåÎ´Öª¡£
+ResultFlagsï¼šå«ä¹‰æœªçŸ¥ã€‚
 
-HitFlags£ºº¬ÒåÎ´Öª¡£
+HitFlagsï¼šå«ä¹‰æœªçŸ¥ã€‚
 
-HitShift£ºÉËº¦·ÅËõÒò×Ó¡£²ÉÈ¡¶ş½øÖÆÒÆÎ»·½Ê½½øĞĞ·ÅËõ¡£
+HitShiftï¼šä¼¤å®³æ”¾ç¼©å› å­ã€‚é‡‡å–äºŒè¿›åˆ¶ç§»ä½æ–¹å¼è¿›è¡Œæ”¾ç¼©ã€‚
 0 = 1/256
 1 = 2/256
 2 = 4/256...8 = 256/256
 9 = 512/256
 
-ApplyMastery£º²¼¶ûÖµ¡£ÊÇ·ñÊ¹ÓÃÔªËØÖ§ÅäµÄÉËº¦ÌáÉı½±Àø¡£
+ApplyMasteryï¼šå¸ƒå°”å€¼ã€‚æ˜¯å¦ä½¿ç”¨å…ƒç´ æ”¯é…çš„ä¼¤å®³æå‡å¥–åŠ±ã€‚
 
-SrcDamage£ºÆÕÍ¨¹¥»÷ÉËº¦¸½¼Ó±ÈÀı¡£Ëõ¼õÒò×ÓÎª128¡£
+SrcDamageï¼šæ™®é€šæ”»å‡»ä¼¤å®³é™„åŠ æ¯”ä¾‹ã€‚ç¼©å‡å› å­ä¸º128ã€‚
 
-Half2HSrc£º²¼¶ûÖµ¡£µ±×°±¸Ë«ÊÖÎäÆ÷Ê±ÊÇ·ñ½«ÉËº¦¼õ°ë¡£
+Half2HSrcï¼šå¸ƒå°”å€¼ã€‚å½“è£…å¤‡åŒæ‰‹æ­¦å™¨æ—¶æ˜¯å¦å°†ä¼¤å®³å‡åŠã€‚
 
-SrcMissDmg£º´Î¼¶·¢ÉäÎïÉÏ¸½¼Ó³õÊ¼·¢ÉäÎïÉËº¦µÄ±ÈÀı¡£ĞŞ¸ÄÕâÁĞ¾ÍÄÜÈ¥³ıbugÉß¶¾ÔÆ¼¼ÄÜÖĞµÄÎïÀíÉËº¦¡£
+SrcMissDmgï¼šæ¬¡çº§å‘å°„ç‰©ä¸Šé™„åŠ åˆå§‹å‘å°„ç‰©ä¼¤å®³çš„æ¯”ä¾‹ã€‚ä¿®æ”¹è¿™åˆ—å°±èƒ½å»é™¤bugè›‡æ¯’äº‘æŠ€èƒ½ä¸­çš„ç‰©ç†ä¼¤å®³ã€‚
 
 
-»Ø¸´
+å›å¤
 
-    9Â¥
+    9æ¥¼
     2012-01-12 20:56
 
-    ¾Ù±¨ |
+    ä¸¾æŠ¥ |
 
     zqtjingzi
-    Ğ¡°ÉÖ÷
+    å°å§ä¸»
     12
 
-MinDamage£º³õÊ¼×îĞ¡ÎïÀíÉËº¦Öµ¡£
+MinDamageï¼šåˆå§‹æœ€å°ç‰©ç†ä¼¤å®³å€¼ã€‚
 
-MinLevDam1-5£ºÃ¿¼¶Ôö¼ÓµÄ×îĞ¡ÎïÀíÉËº¦Öµ¡£
+MinLevDam1-5ï¼šæ¯çº§å¢åŠ çš„æœ€å°ç‰©ç†ä¼¤å®³å€¼ã€‚
 
-MaxDamage£º³õÊ¼×î´óÉËº¦Öµ¡£
+MaxDamageï¼šåˆå§‹æœ€å¤§ä¼¤å®³å€¼ã€‚
 
-MaxLevDam1-5£ºÃ¿¼¶Ôö¼ÓµÄ×î´óÉËº¦Öµ¡£
+MaxLevDam1-5ï¼šæ¯çº§å¢åŠ çš„æœ€å¤§ä¼¤å®³å€¼ã€‚
 
-DmgSymPerCalc£ºÎïÀíÉËº¦¼Ó³É¼ÆËã¹«Ê½¡£
+DmgSymPerCalcï¼šç‰©ç†ä¼¤å®³åŠ æˆè®¡ç®—å…¬å¼ã€‚
 
-EType£ºÔªËØÉËº¦Àà±ğ¡£ÓëElemTypes.txt¹ØÁª¡£
+ETypeï¼šå…ƒç´ ä¼¤å®³ç±»åˆ«ã€‚ä¸ElemTypes.txtå…³è”ã€‚
 
-EMin£º³õÊ¼ÔªËØÉËº¦×îĞ¡Öµ¡£
+EMinï¼šåˆå§‹å…ƒç´ ä¼¤å®³æœ€å°å€¼ã€‚
 
-MinELev1-5£ºÃ¿¼¶Ôö¼ÓµÄÔªËØÉËº¦×îĞ¡Öµ¡£
+MinELev1-5ï¼šæ¯çº§å¢åŠ çš„å…ƒç´ ä¼¤å®³æœ€å°å€¼ã€‚
 
-EMax£º³õÊ¼ÔªËØÉËº¦×î´óÖµ¡£
+EMaxï¼šåˆå§‹å…ƒç´ ä¼¤å®³æœ€å¤§å€¼ã€‚
 
-MaxELev1-5£ºÃ¿¼¶Ôö¼ÓµÄÔªËØÉËº¦×î´óÖµ¡£
+MaxELev1-5ï¼šæ¯çº§å¢åŠ çš„å…ƒç´ ä¼¤å®³æœ€å¤§å€¼ã€‚
 
-EDmgSymPerCalc£ºÔªËØÉËº¦¼Ó³É¼ÆËã¹«Ê½¡£
+EDmgSymPerCalcï¼šå…ƒç´ ä¼¤å®³åŠ æˆè®¡ç®—å…¬å¼ã€‚
 
-ELen£ºÔªËØÉËº¦Ğ§¹ûµÄ³ÖĞøÖ¡Êı¡£
+ELenï¼šå…ƒç´ ä¼¤å®³æ•ˆæœçš„æŒç»­å¸§æ•°ã€‚
 
-ELevLen1-3£ºÃ¿¼¶Ôö¼ÓµÄÔªËØÉËº¦Ğ§¹û³ÖĞøÖ¡Êı¡£
+ELevLen1-3ï¼šæ¯çº§å¢åŠ çš„å…ƒç´ ä¼¤å®³æ•ˆæœæŒç»­å¸§æ•°ã€‚
 
 
-»Ø¸´
+å›å¤
 
-    10Â¥
+    10æ¥¼
     2012-01-12 20:57
 
-    ¾Ù±¨ |
+    ä¸¾æŠ¥ |
 
     zqtjingzi
-    Ğ¡°ÉÖ÷
+    å°å§ä¸»
     12
 
-HitClass£º»÷´òÀà±ğ¡£
+HitClassï¼šå‡»æ‰“ç±»åˆ«ã€‚
 
-NumDirections£º¿ÉÄÜµÄ³¯ÏòÊı¡£
+NumDirectionsï¼šå¯èƒ½çš„æœå‘æ•°ã€‚
 
-LocalBlood£ºÁ÷Ñª×´Ì¬¡£
+LocalBloodï¼šæµè¡€çŠ¶æ€ã€‚
 
-DamageRate£º¶ÔÉËº¦¼õÉÙÊôĞÔµÄÏìÓ¦¡£
+DamageRateï¼šå¯¹ä¼¤å®³å‡å°‘å±æ€§çš„å“åº”ã€‚
 
-TravelSound£º·¢ÉäÊ±µÄÉùÒô¡£
+TravelSoundï¼šå‘å°„æ—¶çš„å£°éŸ³ã€‚
 
-HitSound£ºÅö×²ÀïµÄÉùÒô¡£
+HitSoundï¼šç¢°æ’é‡Œçš„å£°éŸ³ã€‚
 
-ProgSound£ºÌØÊâÊÂ¼şÊ±µÄÉùÒô¡£
+ProgSoundï¼šç‰¹æ®Šäº‹ä»¶æ—¶çš„å£°éŸ³ã€‚
 
-ProgOverlay£ºÌØÊâÊÂ¼şÊ±µÄÏÔÊ¾Ğ§¹û¡£
+ProgOverlayï¼šç‰¹æ®Šäº‹ä»¶æ—¶çš„æ˜¾ç¤ºæ•ˆæœã€‚
 
-ExplosionMissile£ºÅö×²Ê±²úÉúµÄ´Î¼¶·¢ÉäÎï¡£
+ExplosionMissileï¼šç¢°æ’æ—¶äº§ç”Ÿçš„æ¬¡çº§å‘å°„ç‰©ã€‚
 
-SubMissile1-3£º·şÎñÆ÷¶ËÒÆ¶¯º¯ÊıÖĞÊÍ·ÅµÄ´Î¼¶·¢ÉäÎï¡£
+SubMissile1-3ï¼šæœåŠ¡å™¨ç«¯ç§»åŠ¨å‡½æ•°ä¸­é‡Šæ”¾çš„æ¬¡çº§å‘å°„ç‰©ã€‚
 
-HitSubMissile1-4£º·şÎñÆ÷ÉÌÅö×²º¯ÊıÖĞÊÍ·ÅµÄ´Î¼¶·¢ÉäÎï¡£
+HitSubMissile1-4ï¼šæœåŠ¡å™¨å•†ç¢°æ’å‡½æ•°ä¸­é‡Šæ”¾çš„æ¬¡çº§å‘å°„ç‰©ã€‚
 
-CltSubMissile1-3£º¿Í»§¶ËÒÆ¶¯º¯ÊıÖĞÊÍ·ÅµÄ´Î¼¶·¢ÉäÎï¡£
+CltSubMissile1-3ï¼šå®¢æˆ·ç«¯ç§»åŠ¨å‡½æ•°ä¸­é‡Šæ”¾çš„æ¬¡çº§å‘å°„ç‰©ã€‚
 
-CltHitSubMissile1-4£º¿Í»§¶ËÅö×²º¯ÊıÖĞÊÍ·ÅµÄ´Î¼¶·¢ÉäÎï¡£
+CltHitSubMissile1-4ï¼šå®¢æˆ·ç«¯ç¢°æ’å‡½æ•°ä¸­é‡Šæ”¾çš„æ¬¡çº§å‘å°„ç‰©ã€‚
 
-EOL£ºĞĞÎ²±êÖ¾£¬±ØĞëÎª0¡£
+EOLï¼šè¡Œå°¾æ ‡å¿—ï¼Œå¿…é¡»ä¸º0ã€‚
 
 */
 
@@ -741,31 +741,31 @@ typedef struct
     unsigned short vTravelSound;    //sounds.txt
 
     unsigned short vHitSound;       //sounds.txt
-    unsigned short vExplosionMissile;   //¶ÔÓ¦×ÔÉí
+    unsigned short vExplosionMissile;   //å¯¹åº”è‡ªèº«
 
-    unsigned short vSubMissile1;   //¶ÔÓ¦×ÔÉí
-    unsigned short vSubMissile2;   //¶ÔÓ¦×ÔÉí
+    unsigned short vSubMissile1;   //å¯¹åº”è‡ªèº«
+    unsigned short vSubMissile2;   //å¯¹åº”è‡ªèº«
 
-    unsigned short vSubMissile3;   //¶ÔÓ¦×ÔÉí
-    unsigned short vCltSubMissile1;   //¶ÔÓ¦×ÔÉí
+    unsigned short vSubMissile3;   //å¯¹åº”è‡ªèº«
+    unsigned short vCltSubMissile1;   //å¯¹åº”è‡ªèº«
 
-    unsigned short vCltSubMissile2;   //¶ÔÓ¦×ÔÉí
-    unsigned short vCltSubMissile3;   //¶ÔÓ¦×ÔÉí
+    unsigned short vCltSubMissile2;   //å¯¹åº”è‡ªèº«
+    unsigned short vCltSubMissile3;   //å¯¹åº”è‡ªèº«
 
-    unsigned short vHitSubMissile1;   //¶ÔÓ¦×ÔÉí
-    unsigned short vHitSubMissile2;   //¶ÔÓ¦×ÔÉí
+    unsigned short vHitSubMissile1;   //å¯¹åº”è‡ªèº«
+    unsigned short vHitSubMissile2;   //å¯¹åº”è‡ªèº«
 
-    unsigned short vHitSubMissile3;   //¶ÔÓ¦×ÔÉí
-    unsigned short vHitSubMissile4;   //¶ÔÓ¦×ÔÉí
+    unsigned short vHitSubMissile3;   //å¯¹åº”è‡ªèº«
+    unsigned short vHitSubMissile4;   //å¯¹åº”è‡ªèº«
 
-    unsigned short vCltHitSubMissile1;   //¶ÔÓ¦×ÔÉí
-    unsigned short vCltHitSubMissile2;   //¶ÔÓ¦×ÔÉí
+    unsigned short vCltHitSubMissile1;   //å¯¹åº”è‡ªèº«
+    unsigned short vCltHitSubMissile2;   //å¯¹åº”è‡ªèº«
 
-    unsigned short vCltHitSubMissile3;   //¶ÔÓ¦×ÔÉí
-    unsigned short vCltHitSubMissile4;   //¶ÔÓ¦×ÔÉí
+    unsigned short vCltHitSubMissile3;   //å¯¹åº”è‡ªèº«
+    unsigned short vCltHitSubMissile4;   //å¯¹åº”è‡ªèº«
 
     unsigned short vProgSound;      //sounds.txt
-    unsigned short vProgOverlay;    //56 bytes£¬¶ÔÓ¦overlay.txt
+    unsigned short vProgOverlay;    //56 bytesï¼Œå¯¹åº”overlay.txt
 
     int vParam1;
     int vParam2;
@@ -833,7 +833,7 @@ typedef struct
 
     unsigned int vDmgSymPerCalc;    //misscode
 
-    unsigned int vEType;   //¶ÔÓ¦elemtypesµÄË÷Òı
+    unsigned int vEType;   //å¯¹åº”elemtypesçš„ç´¢å¼•
 
     unsigned int vEMin;
     unsigned int vEmax;
@@ -896,7 +896,7 @@ typedef struct
 
     unsigned int vSpecialSetup;
 
-    unsigned short vSkill;  //¶ÔÓ¦skills.txt
+    unsigned short vSkill;  //å¯¹åº”skills.txt
     unsigned short vHitShift;
 
     unsigned int iPadding3;

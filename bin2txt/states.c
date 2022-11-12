@@ -115,82 +115,82 @@ srvactivefunc - srvdofunc called every frame the state is active
 */
 
 /*
-(A). state��״̬���ƣ�
-(B). id��ID��ţ�����չ��
-(C). group��״̬�顣����ͬһ��ļ���״̬�޷���ͬʱ���
-(D). remhit������������Cloak of ShadowsΪ1(�����ʺܽӽ���InnerSightȴҲ�ǿ�)��
-(E). nosend�������ڷ������˺Ϳͻ��˴�������ʱ�����á������Ϊ1���Ǳ������ܣ�����Bar������ϵȴ�ǿգ�
-(F). transform���Ƿ��Ǳ��ε�״̬��
-(G). aura��״̬�Ƿ���������ʽ���ã�
-(H). curable����״̬�Ƿ���Ա����ƣ�
-(I). curse��״̬�Ƿ������䷽ʽ���ã�
-(J). active��״̬�Ƿ��и�����Ч��(?)��
-(K). immed��״̬�Ƿ����������ã�
-(L). restrict������״̬���Ƿ�����ʹ�ü��ܣ�
-(M). disguise��״̬�Ƿ��ı�ͼ��Ч���������Ǻ�transformһ����ֵģ�����HolyShield��
-(N). blue����״̬�Ƿ�ʹ�������߱����ɫ���������Ч����
-(O). attblue����״̬�����������Ƿ���ʾΪ��ɫ��
-(P). damblue����״̬���˺������Ƿ���ʾΪ��ɫ��
-(Q). armblue����״̬�·��������Ƿ���ʾΪ��ɫ��
-(R). rfblue����״̬�»��������Ƿ���ʾΪ��ɫ��
-(S). rlblue����״̬�µ翹�������Ƿ���ʾΪ��ɫ��
-(T). rcblue����״̬�±����������Ƿ���ʾΪ��ɫ��
-(U). stambarblue����״̬���������Ƿ���ʾΪ��ɫ��
-(V). rpblue����״̬�¶����������Ƿ���ʾΪ��ɫ��
-(W). attred����״̬�����������Ƿ���ʾΪ��ɫ��
-(X). damred����״̬���˺������Ƿ���ʾΪ��ɫ��
-(Y). armred����״̬�·��������Ƿ���ʾΪ��ɫ��
-(Z). rfred����״̬�»��������Ƿ���ʾΪ��ɫ��
-(AA). rlred����״̬�µ翹�������Ƿ���ʾΪ��ɫ��
-(AB). rcred����״̬�±����������Ƿ���ʾΪ��ɫ��
-(AC). rpred����״̬�¶����������Ƿ���ʾΪ��ɫ��
-(AD). exp����ת��ϵ���������á�����Ϊ1��ʱ�򣬱�ת���ĵ�λҲ��Ϊ��׬����ֵ��
-(AE). plrstaydeath����ʬ���йء�Ҳ���ǵ���ɫ����ʱ�Կ��������õ�״̬��ʶ?
-(AF). monstaydeath����ʬ���йء�Ҳ���Ƕ������Ĺ���/��ɫ�����õ�״̬��ʶ?
-(AG). bossstaydeath����ʬ���йء�
-(AH). hide��������������ͼ��? ����Decoy��ShadowWarrior/Master�⣬����"����"ʬ���Ч����
-(AI). shatter����״̬�Ƿ�ʹ��������������ʱ�����飻
-(AJ). udead����״̬�Ƿ�ȥ���������ߵ�ʬ��(�����޷�ѡ��������ʬ��?)��
-(AK). life����״̬�Ƿ�Ӱ������ֵ(����Ӱ������ֵ���Զ��ָ�?)��
-(AL). green�����·����������Ƿ�����ɫ��
-(AM). pgsv����״̬�Ƿ��������õ�(������ʲô��˼)��
-(AN). nooverlays��û��Overlays?
-(AO). noclear������Bone Armor��Cyclone ArmorΪ1��
-(AP). bossinv������DecoyΪ1��
-(AQ). meleeonly����״̬����ʱ����ʹ�ý���������
-(AR). notondead����ʬ���й�?
-(AS��AV). overlay1��4����Overlay.txt�еĶ�Ӧ����ID��
-(AW). pgsvoverlay����״̬��������ʱ��Ķ���ID��
-(AX). castoverlay��������״̬ʱ��Ķ���ID��
-(AY). removerlay��״̬����ʱ��Ķ���ID��
-(AZ). stat���Ƿ�Ӱ���ɫ״̬��
-(BA). setfunc��״̬����ʱ���õĺ�����
-(BB). remfunc��״̬����ʱ���õĺ�����
-(BC). missile��״̬����ʱ������Missile��
-(BD). skill������״̬ʱʹ�õļ��ܣ�
-(BE). itemtype����״̬����Ӱ�����Ʒ���ͣ�
-(BF). itemtrans����״̬�������Ʒ��ɫ�仯��
-(BG). colorpri����״̬�������Ʒ��ɫ�仯ǿ��(ɫ������ǰٷֱ�)��
-(BH). colorshift����ɫ�仯�������ɫ(?)��
-(BI). light-r��״̬�����Դ�仯�ĺ�ⲿ��(���߽����Ǻ�ɫ?)��
-(BJ). light-g��״̬�����Դ�仯���̹ⲿ��(���߽�������ɫ?)��
-(BK). light-b��״̬�����Դ�仯�����ⲿ��(���߽�������ɫ?)��
-(BL). onsound��״̬��ʼʱ���ŵ�������
-(BM). offsound��״̬����ʱ���ŵ�������
-(BN). gfxtype������״̬��transform/disguise��Ϊ1��ʱ��(���ε�״̬)��ͨ������ָ��ʹ������ͼ�Σ�2��7����Ϸ��ɫ��1������(��������/��Ӷ��/NPC/��������ȵ�)��
-(BO). gfxclass�����gfxtype=1����ô����ָ������ID(��monstats.txt���hcidx)�����gfxtype=2��ͨ������ָ����ɫID��
-0 = Amazon ����ѷŮսʿ
-1 = Sorceress Ů��ʦ
-2 = Necromancer ������ʦ
-3 = Paladin ʥ��ʿ
-4 = Barbarian Ұ����
-5 = Druid ��³��
-6 = Assassin �̿�
-(BP). cltevent���ڿͻ��˴���״̬���¼���
-(BQ). clteventfunc���ͻ��˵��õĺ�����
-(BR). cltactivefunc��״̬����ʱ�ͻ��˵��õĺ�����
-(BS). srvactivefunc��״̬����ʱ�������˵��õĺ�����
-(BT). eol���н�����־��0��
+(A). state：状态名称；
+(B). id：ID编号，可扩展；
+(C). group：状态组。处在同一组的几个状态无法被同时激活；
+(D). remhit：不明。仅有Cloak of Shadows为1(但性质很接近的InnerSight却也是空)；
+(E). nosend：可能在服务器端和客户端传输数据时起作用。大多数为1的是被动技能，但是Bar的掌握系却是空；
+(F). transform：是否是变形的状态；
+(G). aura：状态是否以灵气方式作用；
+(H). curable：该状态是否可以被治疗；
+(I). curse：状态是否以诅咒方式作用；
+(J). active：状态是否有个激活效果(?)；
+(K). immed：状态是否立刻起作用；
+(L). restrict：变形状态中是否限制使用技能；
+(M). disguise：状态是否会改变图像效果。基本是和transform一起出现的，除了HolyShield；
+(N). blue：该状态是否使被作用者变成蓝色，例如冰冻效果；
+(O). attblue：该状态下命中率栏是否显示为蓝色；
+(P). damblue：该状态下伤害力栏是否显示为蓝色；
+(Q). armblue：该状态下防御力栏是否显示为蓝色；
+(R). rfblue：该状态下火抗属性栏是否显示为蓝色；
+(S). rlblue：该状态下电抗属性栏是否显示为蓝色；
+(T). rcblue：该状态下冰抗属性栏是否显示为蓝色；
+(U). stambarblue：该状态下体力栏是否显示为蓝色；
+(V). rpblue：该状态下毒抗属性栏是否显示为蓝色；
+(W). attred：该状态下命中率栏是否显示为红色；
+(X). damred：该状态下伤害力栏是否显示为红色；
+(Y). armred：该状态下防御力栏是否显示为红色；
+(Z). rfred：该状态下火抗属性栏是否显示为红色；
+(AA). rlred：该状态下电抗属性栏是否显示为红色；
+(AB). rcred：该状态下冰抗属性栏是否显示为红色；
+(AC). rpred：该状态下毒抗属性栏是否显示为红色；
+(AD). exp：对转换系技能起作用。该列为1的时候，被转换的单位也会为你赚经验值；
+(AE). plrstaydeath：与尸体有关。也许是当角色死亡时仍可以起作用的状态标识?
+(AF). monstaydeath：与尸体有关。也许是对死亡的怪物/角色起作用的状态标识?
+(AG). bossstaydeath：与尸体有关。
+(AH). hide：隐藏起真正的图像? 除了Decoy和ShadowWarrior/Master外，都是"擦除"尸体的效果；
+(AI). shatter：该状态是否使被作用者在死亡时被打碎；
+(AJ). udead：该状态是否去除被作用者的尸体(或是无法选择被作用者尸体?)；
+(AK). life：该状态是否影响生命值(或是影响生命值的自动恢复?)；
+(AL). green：左下方的生命球是否变成绿色；
+(AM). pgsv：该状态是否逐渐起作用的(不明白什么意思)；
+(AN). nooverlays：没有Overlays?
+(AO). noclear：仅有Bone Armor和Cyclone Armor为1；
+(AP). bossinv：仅有Decoy为1；
+(AQ). meleeonly：当状态激活时仅能使用近身攻击；
+(AR). notondead：和尸体有关?
+(AS～AV). overlay1～4：在Overlay.txt中的对应动画ID；
+(AW). pgsvoverlay：当状态逐渐起作用时候的动画ID；
+(AX). castoverlay：产生该状态时候的动画ID；
+(AY). removerlay：状态结束时候的动画ID；
+(AZ). stat：是否影响角色状态；
+(BA). setfunc：状态激活时调用的函数；
+(BB). remfunc：状态结束时调用的函数；
+(BC). missile：状态激活时产生的Missile；
+(BD). skill：触发状态时使用的技能；
+(BE). itemtype：该状态可以影响的物品类型；
+(BF). itemtrans：该状态引起的物品颜色变化；
+(BG). colorpri：该状态引起的物品颜色变化强度(色深，估计是百分比)；
+(BH). colorshift：颜色变化后的新颜色(?)；
+(BI). light-r：状态引起光源变化的红光部分(或者仅仅是红色?)；
+(BJ). light-g：状态引起光源变化的绿光部分(或者仅仅是绿色?)；
+(BK). light-b：状态引起光源变化的蓝光部分(或者仅仅是蓝色?)；
+(BL). onsound：状态开始时播放的声音；
+(BM). offsound：状态结束时播放的声音；
+(BN). gfxtype：当该状态的transform/disguise列为1的时候(变形的状态)，通过这里指定使用哪种图形：2－7个游戏角色；1－怪物(包括怪物/雇佣兵/NPC/背景人物等等)；
+(BO). gfxclass：如果gfxtype=1，那么这里指定怪物ID(在monstats.txt里的hcidx)；如果gfxtype=2，通过这里指定角色ID：
+0 = Amazon 亚马逊女战士
+1 = Sorceress 女法师
+2 = Necromancer 死灵巫师
+3 = Paladin 圣骑士
+4 = Barbarian 野蛮人
+5 = Druid 德鲁伊
+6 = Assassin 刺客
+(BP). cltevent：在客户端触发状态的事件；
+(BQ). clteventfunc：客户端调用的函数；
+(BR). cltactivefunc：状态激活时客户端调用的函数；
+(BS). srvactivefunc：状态激活时服务器端调用的函数；
+(BT). eol：行结束标志，0。
 */
 
 typedef struct

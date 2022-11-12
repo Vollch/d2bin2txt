@@ -14,366 +14,366 @@ By Nefarius
 
 
 ID Pointers
-Id ¨C Pointer used by MonStats.txt to link to this line. (note, multiple monsters can link to the same line)
+Id â€“ Pointer used by MonStats.txt to link to this line. (note, multiple monsters can link to the same line)
 
 
 
 
 Collision Detection I
 
-Height ¨C not used (size in in-game sub-tiles).
-OverlayHeight ¨C not used.
+Height â€“ not used (size in in-game sub-tiles).
+OverlayHeight â€“ not used.
 
-pixHeight ¨C not used (size in pixels).
+pixHeight â€“ not used (size in pixels).
 
-SizeX ¨C X-diameter in sub-tiles, used for collision and proximity checking (-1 to 3)
+SizeX â€“ X-diameter in sub-tiles, used for collision and proximity checking (-1 to 3)
 
-SizeY ¨C Y-diameter in sub-tiles, used for collision and proximity checking (-1 to 3)
+SizeY â€“ Y-diameter in sub-tiles, used for collision and proximity checking (-1 to 3)
 
 
 
 
 Misc. Settings I
-SpawnCol ¨C equivalent to 1.00-1.09 eSpawnCol column, controls which spawning method the game uses to create this unit, originally 0=normal spawning via m1-25 columns, 1=special spawning via DS1 only (special layering setup), 2=spawn via s1-25 columns. 
+SpawnCol â€“ equivalent to 1.00-1.09 eSpawnCol column, controls which spawning method the game uses to create this unit, originally 0=normal spawning via m1-25 columns, 1=special spawning via DS1 only (special layering setup), 2=spawn via s1-25 columns. 
 Due to the changes to levels.txt, this column becomes useless, S1-25 and M1-25 are identical in 1.10+. Setting it to 1 will still prevent them from spawning however.
 
 
 
 
 Weapon Settings
-MeleeRng ¨C range in sub-tiles this monster can attack you in (the radius of its melee attacks), works exactly like the range column in weapons.txt
+MeleeRng â€“ range in sub-tiles this monster can attack you in (the radius of its melee attacks), works exactly like the range column in weapons.txt
 
-BaseW ¨C base weaponclass, uses the codes from weaponclass.txt ¨C for some AIs (such as that of the Necro Skeleton) this will define which special effects are being applied. (in 1.00-1.06 you could make the necro skeletons work like archers by setting 
-the equivalent of this column to ¡°bow¡± ¨C this no longer works). Note, this will apply all the hardcoded effects of a specific weaponclass to the unit (such as how some modifiers work).
+BaseW â€“ base weaponclass, uses the codes from weaponclass.txt â€“ for some AIs (such as that of the Necro Skeleton) this will define which special effects are being applied. (in 1.00-1.06 you could make the necro skeletons work like archers by setting 
+the equivalent of this column to â€œbowâ€ â€“ this no longer works). Note, this will apply all the hardcoded effects of a specific weaponclass to the unit (such as how some modifiers work).
 
-HitClass ¨C has to do with how successful hits are handled by the target, some hitclasses have minor effects, such as making specific sounds on impact, I doubt there is much more to it then some client side effects (but there may yet be some surprises 
-here) ¨C probably uses the same hitclasses as used by missiles.
+HitClass â€“ has to do with how successful hits are handled by the target, some hitclasses have minor effects, such as making specific sounds on impact, I doubt there is much more to it then some client side effects (but there may yet be some surprises 
+here) â€“ probably uses the same hitclasses as used by missiles.
 
 
 
 
 Display / Component Settings
 
-HDv, TRv, LGv, Rav, Lav, RHv, LHv, SHv, S1v, S2v, S3v, S4v, S5v, S6v, S7v, S8v ¨C equipment-graphic type for head, torso, legs, right arm, left arm, right hand, left hand, shield and special 1-8 components. This works just like the AlternateGFX columns 
-in weapons.txt ¨C Make sure the monster has the component types you specify If you insert multiple graphic types, separated by a comma (¡°,¡±), the game will randomly select a component to use.
+HDv, TRv, LGv, Rav, Lav, RHv, LHv, SHv, S1v, S2v, S3v, S4v, S5v, S6v, S7v, S8v â€“ equipment-graphic type for head, torso, legs, right arm, left arm, right hand, left hand, shield and special 1-8 components. This works just like the AlternateGFX columns 
+in weapons.txt â€“ Make sure the monster has the component types you specify If you insert multiple graphic types, separated by a comma (â€œ,â€), the game will randomly select a component to use.
 
-HD, TR, LG, RA, LA, RH, LH, SH, S1, S2, S3, S4, S5, S6, S7, S8 ¨C Booleans, these columns control whenever the monster has these components or not. Make sure this matches your COF files.
+HD, TR, LG, RA, LA, RH, LH, SH, S1, S2, S3, S4, S5, S6, S7, S8 â€“ Booleans, these columns control whenever the monster has these components or not. Make sure this matches your COF files.
 
-TotalPieces ¨C Total amount of different components this monster has.
+TotalPieces â€“ Total amount of different components this monster has.
 
-mDT, mNU, mWL, mGH, mA1, mA2, mBL, mSC, mS1, mS2, mS3, mS4, mDD, mKB, mSQ, mRN ¨C booleans (death, stall, walk, gethit, attack 1, attack 2, block, cast, special1-4, corpse, knockback, sequence, run), they control which modes this monster has. Some of 
+mDT, mNU, mWL, mGH, mA1, mA2, mBL, mSC, mS1, mS2, mS3, mS4, mDD, mKB, mSQ, mRN â€“ booleans (death, stall, walk, gethit, attack 1, attack 2, block, cast, special1-4, corpse, knockback, sequence, run), they control which modes this monster has. Some of 
 these have special effects, if you set mGH to 0, the monster will have instant-hit recovery (I.E. golems for example cannot be locked in GH mode, because the game never plays GH anims), mKB is another boolean that controls whenever the monster can be 
 knocked back or not (if mKB is false then items with knockback will have no effect on this monster), otherwise the game will pick the GH animation for knockback. SQ defines whenever this unit can use a skill-sequence or not.
 
-dDT, dNU, dWL, dGH, dA1, dA2, dBL, dSC, dS1, dS2, dS3, dS4, dDD, dKB, dSQ, dRN ¨C controls the number of directions the specific animations for each mode have ¨C this must match the values in the COF files. Otherwise you usually get a nice crash.
+dDT, dNU, dWL, dGH, dA1, dA2, dBL, dSC, dS1, dS2, dS3, dS4, dDD, dKB, dSQ, dRN â€“ controls the number of directions the specific animations for each mode have â€“ this must match the values in the COF files. Otherwise you usually get a nice crash.
 
-A1mv, A2mv, SCmv, S1mv, S2mv, S3mv, S4mv ¨C booleans that control whenever the unit can use these modes while moving, on top of the modes WL and RN.
+A1mv, A2mv, SCmv, S1mv, S2mv, S3mv, S4mv â€“ booleans that control whenever the unit can use these modes while moving, on top of the modes WL and RN.
 
 
 
 Collision Detection II
 
-NoGfxHitTest ¨C boolean that controls whenever the game uses the x/y diameter settings for collision detection or special, superimposed values.
+NoGfxHitTest â€“ boolean that controls whenever the game uses the x/y diameter settings for collision detection or special, superimposed values.
 
-htTop, htLeft, htWidth, htHeight ¨C the dimensions of the superimposed bounding box, probably using the pivot of the animation as x/y 0.
+htTop, htLeft, htWidth, htHeight â€“ the dimensions of the superimposed bounding box, probably using the pivot of the animation as x/y 0.
 
 
 
 Misc. Settings II
-Restore ¨C has to do with how the game handles the monster, monsters set to 0 are not stored permanently (Izual's Ghost, Natalya, the Familiar Summon (the ¡°eyeball¡± scout summon the Necro had in the alpha version of D2) , all D2X summons, all non DS1 
+Restore â€“ has to do with how the game handles the monster, monsters set to 0 are not stored permanently (Izual's Ghost, Natalya, the Familiar Summon (the â€œeyeballâ€ scout summon the Necro had in the alpha version of D2) , all D2X summons, all non DS1 
 based traps (I.E those traps that spawn once and die)), 1 is the default value, that will make the game store and restore the units as needed when the maps load/unload. 2 is a special setting for large constructs, like towers, spawners and catapults.
 
-AutomapCel ¨C what index in Maximap.DC6 is used to display this monster on the AutoMap. (does not update ¨C go cry now you cheaters), to use this NoMap needs to be enabled.
+AutomapCel â€“ what index in Maximap.DC6 is used to display this monster on the AutoMap. (does not update â€“ go cry now you cheaters), to use this NoMap needs to be enabled.
 
-NoMap ¨C boolean, 0=default, 1=use automapCel entry.
+NoMap â€“ boolean, 0=default, 1=use automapCel entry.
 
-NoOvly ¨C boolean, 0=default, 1=disallow specific overlays, used for stationary and unselectable summons, such as bonewalls, traps and the druids ravens.
+NoOvly â€“ boolean, 0=default, 1=disallow specific overlays, used for stationary and unselectable summons, such as bonewalls, traps and the druids ravens.
 
 
 
 Selection
 
-isSel ¨C boolean, 1=can be selected, 0=cannot be selected.
+isSel â€“ boolean, 1=can be selected, 0=cannot be selected.
 
-alSel ¨C boolean, 1=can be selected, 0=cannot be selected. Used to select allies outside of town (such as Cain in Tristram).
+alSel â€“ boolean, 1=can be selected, 0=cannot be selected. Used to select allies outside of town (such as Cain in Tristram).
 
-noSel ¨C boolean, 1=can not be selected, 0=can be selected. Used to prevent any form of selection.
+noSel â€“ boolean, 1=can not be selected, 0=can be selected. Used to prevent any form of selection.
 
-shiftSel ¨C boolean, not directly known, used with bonewalls (both the necromancer's bonewalls and big D's boneprison) to prevent them from being properly selected. (I.E. they are selected but no name is ever shown in case of diablo's prison).
+shiftSel â€“ boolean, not directly known, used with bonewalls (both the necromancer's bonewalls and big D's boneprison) to prevent them from being properly selected. (I.E. they are selected but no name is ever shown in case of diablo's prison).
 
-corpseSel ¨C boolean, 1=can select corpse, 0=cannot select corpse.
+corpseSel â€“ boolean, 1=can select corpse, 0=cannot select corpse.
 
 
 
 
 Misc. Settings III
 
-isAtt ¨C boolean, 1=can be attacked, 0=cannot be attacked.
+isAtt â€“ boolean, 1=can be attacked, 0=cannot be attacked.
 
-revive ¨C boolean, 1=can be revived, 0=cannot be revived. I don't know whenever this also applies to self-resurrect and the like.
+revive â€“ boolean, 1=can be revived, 0=cannot be revived. I don't know whenever this also applies to self-resurrect and the like.
 
-critter ¨C boolean, 1=is a critter, 0=is not a critter. Many of the critter specific effects are applied to the unit via this columns, others are hardcoded to their hcIdx and baseIds, and still others are only appended via levels.txt critter spawning 
+critter â€“ boolean, 1=is a critter, 0=is not a critter. Many of the critter specific effects are applied to the unit via this columns, others are hardcoded to their hcIdx and baseIds, and still others are only appended via levels.txt critter spawning 
 columns.
 
-small ¨C boolean, 1=small, 0=not small. Used to get 100% effective knockback.
+small â€“ boolean, 1=small, 0=not small. Used to get 100% effective knockback.
 
-large ¨C boolean, 1=large, 0=not large. Used to get 25% effective knockback.
+large â€“ boolean, 1=large, 0=not large. Used to get 25% effective knockback.
 
-soft ¨C probably has to do something with sound effects, 1=is soft, 0=is not soft. Set to 0 only for skeletons and other enemies that lack ¡°flesh¡±, like wraiths, swarms etc.
+soft â€“ probably has to do something with sound effects, 1=is soft, 0=is not soft. Set to 0 only for skeletons and other enemies that lack â€œfleshâ€, like wraiths, swarms etc.
 
-inert ¨C boolean, 1=harmless, 0=default. (used for NPCs and some other things)
+inert â€“ boolean, 1=harmless, 0=default. (used for NPCs and some other things)
 
-objCol ¨C boolean, The explanation in the old guide is unclear, I don't know what to look for when testing this. Probably has to do if the unit is handled like an object while alive.
+objCol â€“ boolean, The explanation in the old guide is unclear, I don't know what to look for when testing this. Probably has to do if the unit is handled like an object while alive.
 
-deadCol ¨C boolean, ditto, just that this effects corpses.
+deadCol â€“ boolean, ditto, just that this effects corpses.
 
-unFlatDeath ¨C boolean, applies collision checking to a corpse, set this to 1 to make it impossible to walk over a corpse while it exists.
+unFlatDeath â€“ boolean, applies collision checking to a corpse, set this to 1 to make it impossible to walk over a corpse while it exists.
 
-Shadow ¨C boolean, 1=draw shadow, 0=don't draw a shadow.
+Shadow â€“ boolean, 1=draw shadow, 0=don't draw a shadow.
 
-noUniqueShift ¨C boolean. 1=don't use random palette from RandTransforms.dat if it spawns as a boss.
+noUniqueShift â€“ boolean. 1=don't use random palette from RandTransforms.dat if it spawns as a boss.
 
-compositeDeath ¨C boolean. is the death animation a composite of more then 1 component (1) or just TR-component (0).
+compositeDeath â€“ boolean. is the death animation a composite of more then 1 component (1) or just TR-component (0).
 
-localBlood ¨C probably defines the z-offset from where to release blood when hit. (this is not a boolean). Setting the next column to a value is enough to make a unit bleed.
+localBlood â€“ probably defines the z-offset from where to release blood when hit. (this is not a boolean). Setting the next column to a value is enough to make a unit bleed.
 
-Bleed ¨C 0=don't bleed, 1=small blood missile (missiles 18-19), 2=small and large blood missiles (missiles 20-21), >3 will pick other missiles (I.E. each time a pair of two 3 would allow it to pick 22-23, in case the behavior is still like 1.09).
+Bleed â€“ 0=don't bleed, 1=small blood missile (missiles 18-19), 2=small and large blood missiles (missiles 20-21), >3 will pick other missiles (I.E. each time a pair of two 3 would allow it to pick 22-23, in case the behavior is still like 1.09).
 
-Light ¨C diameter of the light radius this monster has in sub-tiles, default is no light radius.
+Light â€“ diameter of the light radius this monster has in sub-tiles, default is no light radius.
 
-light-r, light-g, light-b ¨C RGB values for light-color (255,255,255 = white obviously).
+light-r, light-g, light-b â€“ RGB values for light-color (255,255,255 = white obviously).
 
-Utrans, Utrans(N), Utrans(H) ¨C defines which palette entry to use on normal, nightmare and hell, from both the units palshift file and transtransforms.dat ¨C used by the game to give act bosses a different color on each difficulty for example.
+Utrans, Utrans(N), Utrans(H) â€“ defines which palette entry to use on normal, nightmare and hell, from both the units palshift file and transtransforms.dat â€“ used by the game to give act bosses a different color on each difficulty for example.
 
-Heart, Bodypart ¨C broken as of 1.07 ¨C when blizzard introduced TreasureClassEx.txt they broke MonItemPercent.txt, in old days, this column defined which items the unit dropped in addition to their treasureclass (organ and heart drops from alpha diablo 
+Heart, Bodypart â€“ broken as of 1.07 â€“ when blizzard introduced TreasureClassEx.txt they broke MonItemPercent.txt, in old days, this column defined which items the unit dropped in addition to their treasureclass (organ and heart drops from alpha diablo 
 II). The columns are useless, until someone manages to recreate the functionality MonItemPercent.txt had in 1.00-1.06.
 
-InfernoLen ¨C Length of each inferno sub-animation.
+InfernoLen â€“ Length of each inferno sub-animation.
 
-InfernoAnim ¨C mode to use for inferno animation, I assume this uses the numerical ID of the lines on MonMode.txt (9=S2,11=S4 and so on, I'm not sure though)
+InfernoAnim â€“ mode to use for inferno animation, I assume this uses the numerical ID of the lines on MonMode.txt (9=S2,11=S4 and so on, I'm not sure though)
 
-InfernoRollback ¨C Length of the rollback (I.E. return to frame 1) of the inferno animation.
+InfernoRollback â€“ Length of the rollback (I.E. return to frame 1) of the inferno animation.
 
-ResurrectMode ¨C Animation mode to use when resurrected, most use NU, but some such as skeletons have a special skill (SkeletonRaise) that applies a skill sequence to them in MonStats, this is why they have xx in here (or summons, the animation of which 
-is controlled by skills.txt) ¨C some others like fallen have special ¡°stand up¡± animations.
+ResurrectMode â€“ Animation mode to use when resurrected, most use NU, but some such as skeletons have a special skill (SkeletonRaise) that applies a skill sequence to them in MonStats, this is why they have xx in here (or summons, the animation of which 
+is controlled by skills.txt) â€“ some others like fallen have special â€œstand upâ€ animations.
 
-ResurrectSkill ¨C Skill to use when being resurrected, only needed if the skill is also present in MonStats.txt I guess.
+ResurrectSkill â€“ Skill to use when being resurrected, only needed if the skill is also present in MonStats.txt I guess.
 
-EOL ¨C End of Line.
+EOL â€“ End of Line.
 
 */
 
 /*
- ÎÄ¼şÃû½âÎö£º
-Mon£ºMonster£¬¼´¹ÖÎï¡£
-Stat(s)£ºState(s)£¬×´Ì¬¡£¼Ó¸ö2£¬±íÊ¾Ò»Ğ©ÌØÊâµÄ¸½¼Ó×´Ì¬
-±¾ÎÄ¼şÃèÊöÁËÒ»Ğ©ÌØÊâ¹ÖÎïµÄ×´Ì¬ÊôĞÔ¡£
-ÎÄ¼şÖĞµÄÃ¿Ò»ĞĞ±íÊ¾Ò»ÖÖ¹ÖÎï¡£
+ æ–‡ä»¶åè§£æï¼š
+Monï¼šMonsterï¼Œå³æ€ªç‰©ã€‚
+Stat(s)ï¼šState(s)ï¼ŒçŠ¶æ€ã€‚åŠ ä¸ª2ï¼Œè¡¨ç¤ºä¸€äº›ç‰¹æ®Šçš„é™„åŠ çŠ¶æ€
+æœ¬æ–‡ä»¶æè¿°äº†ä¸€äº›ç‰¹æ®Šæ€ªç‰©çš„çŠ¶æ€å±æ€§ã€‚
+æ–‡ä»¶ä¸­çš„æ¯ä¸€è¡Œè¡¨ç¤ºä¸€ç§æ€ªç‰©ã€‚
 
- Id£º¹ÖÎïË÷Òı£¬ÓëMonStats.txt¹ØÁª¡£
+ Idï¼šæ€ªç‰©ç´¢å¼•ï¼Œä¸MonStats.txtå…³è”ã€‚
 
-Height£ºÎŞÓÃ²ÎÊıÁĞ£¬¿ÉÉ¾¡£
+Heightï¼šæ— ç”¨å‚æ•°åˆ—ï¼Œå¯åˆ ã€‚
 
-OverlayHeight£ºÎŞÓÃ²ÎÊıÁĞ£¬¿ÉÉ¾¡£
+OverlayHeightï¼šæ— ç”¨å‚æ•°åˆ—ï¼Œå¯åˆ ã€‚
 
-pixHeight£ºÎŞÓÃ²ÎÊıÁĞ£¬¿ÉÉ¾¡£
+pixHeightï¼šæ— ç”¨å‚æ•°åˆ—ï¼Œå¯åˆ ã€‚
 
-SizeX£º¹ÖÎïÔÚX·½ÏòÉÏµÄ´óĞ¡£¬ÓÃÓÚ¼ÆËãÅö×²Ìå»ı¡£
+SizeXï¼šæ€ªç‰©åœ¨Xæ–¹å‘ä¸Šçš„å¤§å°ï¼Œç”¨äºè®¡ç®—ç¢°æ’ä½“ç§¯ã€‚
 
-SizeY£º¹ÖÎïÔÚY·½ÏòÉÏµÄ´óĞ¡£¬ÓÃÓÚ¼ÆËãÅö×²Ìå»ı¡£
+SizeYï¼šæ€ªç‰©åœ¨Yæ–¹å‘ä¸Šçš„å¤§å°ï¼Œç”¨äºè®¡ç®—ç¢°æ’ä½“ç§¯ã€‚
 
-SpawnCol£º¹ÖÎï²úÉú·½Ê½¡£1.11ºó²»ÔÙÊ¹ÓÃ£¬µ«ÆäĞ§¹û±£Áô¡£
+SpawnColï¼šæ€ªç‰©äº§ç”Ÿæ–¹å¼ã€‚1.11åä¸å†ä½¿ç”¨ï¼Œä½†å…¶æ•ˆæœä¿ç•™ã€‚
 
-MeleeRng£º¹ÖÎïµÄ½üÕ½¹¥»÷¾àÀë¡£
+MeleeRngï¼šæ€ªç‰©çš„è¿‘æˆ˜æ”»å‡»è·ç¦»ã€‚
 
-BaseW£º»ù´¡¹¥»÷Àà±ğ¡£ÓëWeaponClass.txt¹ØÁª¡£
+BaseWï¼šåŸºç¡€æ”»å‡»ç±»åˆ«ã€‚ä¸WeaponClass.txtå…³è”ã€‚
 
-HitClass£º´ò»÷Àà±ğ£¬ÓëÃüÖĞºÍ»÷ÖĞĞ§¹ûÏà¹Ø¡£
+HitClassï¼šæ‰“å‡»ç±»åˆ«ï¼Œä¸å‘½ä¸­å’Œå‡»ä¸­æ•ˆæœç›¸å…³ã€‚
 
- HDv£º¹ÖÎïÍ·²¿µÄÍ¼ÏñÀàĞÍ¡£
+ HDvï¼šæ€ªç‰©å¤´éƒ¨çš„å›¾åƒç±»å‹ã€‚
 
-TRv£º¹ÖÎïÇû¸ÉµÄÍ¼ÏñÀàĞÍ¡£
+TRvï¼šæ€ªç‰©èº¯å¹²çš„å›¾åƒç±»å‹ã€‚
 
-LGv£º¹ÖÎïÍÈ²¿µÄÍ¼ÏñÀàĞÍ¡£
+LGvï¼šæ€ªç‰©è…¿éƒ¨çš„å›¾åƒç±»å‹ã€‚
 
-Rav£º¹ÖÎïÓÒ±ÛµÄÍ¼ÏñÀàĞÍ¡£
+Ravï¼šæ€ªç‰©å³è‡‚çš„å›¾åƒç±»å‹ã€‚
 
-Lav£º¹ÖÎï×ó±ÛµÄÍ¼ÏñÀàĞÍ¡£
+Lavï¼šæ€ªç‰©å·¦è‡‚çš„å›¾åƒç±»å‹ã€‚
 
-RHv£º¹ÖÎïÓÒÊÖµÄÍ¼ÏñÀàĞÍ¡£
+RHvï¼šæ€ªç‰©å³æ‰‹çš„å›¾åƒç±»å‹ã€‚
 
-LHv£º¹ÖÎï×óÊÖµÄÍ¼ÏñÀàĞÍ¡£
+LHvï¼šæ€ªç‰©å·¦æ‰‹çš„å›¾åƒç±»å‹ã€‚
 
-SHv£º¹ÖÎï¶ÜÅÆµÄÍ¼ÏñÀàĞÍ¡£
+SHvï¼šæ€ªç‰©ç›¾ç‰Œçš„å›¾åƒç±»å‹ã€‚
 
-S1-8v£º¹ÖÎïÌØÊâ²¿¼ş1-8µÄÍ¼ÏñÀàĞÍ¡£
+S1-8vï¼šæ€ªç‰©ç‰¹æ®Šéƒ¨ä»¶1-8çš„å›¾åƒç±»å‹ã€‚
 
-ËµÃ÷£ºÈç¹ûÄãÏëÎªÄ³¸ö¹ÖÎïµÄÄ³¸ö²¿Î»Ö¸¶¨Í¼ÏñÀàĞÍÇëÏÈÈ·¶¨´Ë¹ÖÎïÓĞ´Ë²¿Î»£¬¼´Ó¦²Î¿¼ºóÃæ¶ÔÓ¦ÁĞµÄÖµ¡£ÁíÍâ£ºÈç¹û¶ÔÄ³¸ö²¿Î»Ö¸¶¨¶àÖÖÀàĞÍµÄ»°£¬ÓÎÏ·»áËæ»úÑ¡ÔñÒ»¸ö¡£
+è¯´æ˜ï¼šå¦‚æœä½ æƒ³ä¸ºæŸä¸ªæ€ªç‰©çš„æŸä¸ªéƒ¨ä½æŒ‡å®šå›¾åƒç±»å‹è¯·å…ˆç¡®å®šæ­¤æ€ªç‰©æœ‰æ­¤éƒ¨ä½ï¼Œå³åº”å‚è€ƒåé¢å¯¹åº”åˆ—çš„å€¼ã€‚å¦å¤–ï¼šå¦‚æœå¯¹æŸä¸ªéƒ¨ä½æŒ‡å®šå¤šç§ç±»å‹çš„è¯ï¼Œæ¸¸æˆä¼šéšæœºé€‰æ‹©ä¸€ä¸ªã€‚
 
- HD£º¹ÖÎïÊÇ·ñÓĞÍ·²¿¡£
+ HDï¼šæ€ªç‰©æ˜¯å¦æœ‰å¤´éƒ¨ã€‚
 
-TR£º¹ÖÎïÊÇ·ñÓĞÇû¸É¡£
+TRï¼šæ€ªç‰©æ˜¯å¦æœ‰èº¯å¹²ã€‚
 
-LG£º¹ÖÎïÊÇ·ñÓĞÍÈ¡£
+LGï¼šæ€ªç‰©æ˜¯å¦æœ‰è…¿ã€‚
 
-RA£º¹ÖÎïÊÇ·ñÓĞÓÒ±Û¡£
+RAï¼šæ€ªç‰©æ˜¯å¦æœ‰å³è‡‚ã€‚
 
-LA£º¹ÖÎïÊÇ·ñÓĞ×ó±Û¡£
+LAï¼šæ€ªç‰©æ˜¯å¦æœ‰å·¦è‡‚ã€‚
 
-RH£º¹ÖÎïÊÇ·ñÓĞÓÒÊÖ¡£
+RHï¼šæ€ªç‰©æ˜¯å¦æœ‰å³æ‰‹ã€‚
 
-LH£º¹ÖÎïÊÇ·ñÓĞ×óÊÖ¡£
+LHï¼šæ€ªç‰©æ˜¯å¦æœ‰å·¦æ‰‹ã€‚
 
-SH£º¹ÖÎïÊÇ·ñÓĞ¶ÜÅÆ¡£
+SHï¼šæ€ªç‰©æ˜¯å¦æœ‰ç›¾ç‰Œã€‚
 
-S1-8£º¹ÖÎïÊÇ·ñÓĞÌØÊâ²¿¼ş1-8¡£
+S1-8ï¼šæ€ªç‰©æ˜¯å¦æœ‰ç‰¹æ®Šéƒ¨ä»¶1-8ã€‚
 
-ËµÃ÷£º´Ë´¦¶Ô¹ÖÎï²¿Î»µÄÉùÃ÷±ØĞëÒªÓëcofÎÄ¼şÖĞËùÉùÃ÷µÄÒ»ÖÂ¡£
+è¯´æ˜ï¼šæ­¤å¤„å¯¹æ€ªç‰©éƒ¨ä½çš„å£°æ˜å¿…é¡»è¦ä¸cofæ–‡ä»¶ä¸­æ‰€å£°æ˜çš„ä¸€è‡´ã€‚
 
-TotalPieces£º¹ÖÎï×Ü¹²º¬ÓĞ¶àÉÙ¸ö²¿¼ş¡£
+TotalPiecesï¼šæ€ªç‰©æ€»å…±å«æœ‰å¤šå°‘ä¸ªéƒ¨ä»¶ã€‚
 
-mDT£º¹ÖÎïÊÇ·ñ»áËÀ¡£
+mDTï¼šæ€ªç‰©æ˜¯å¦ä¼šæ­»ã€‚
 
-mNU£º¹ÖÎïÊÇ·ñ»á¾²Ö¹²»¶¯¡£
+mNUï¼šæ€ªç‰©æ˜¯å¦ä¼šé™æ­¢ä¸åŠ¨ã€‚
 
-mWL£º¹ÖÎïÊÇ·ñ»á×ß¡£
+mWLï¼šæ€ªç‰©æ˜¯å¦ä¼šèµ°ã€‚
 
-mGH£º¹ÖÎïÊÇ·ñÓĞ´ò»÷»Ö¸´¡£
+mGHï¼šæ€ªç‰©æ˜¯å¦æœ‰æ‰“å‡»æ¢å¤ã€‚
 
-mA1£º¹ÖÎïÊÇ·ñ»á¹¥»÷1¡£
+mA1ï¼šæ€ªç‰©æ˜¯å¦ä¼šæ”»å‡»1ã€‚
 
-mA2£º¹ÖÎïÊÇ·ñ»á¹¥»÷2¡£
+mA2ï¼šæ€ªç‰©æ˜¯å¦ä¼šæ”»å‡»2ã€‚
 
-mBL£º¹ÖÎïÊÇ·ñ»á¸ñµ²¡£
+mBLï¼šæ€ªç‰©æ˜¯å¦ä¼šæ ¼æŒ¡ã€‚
 
-mSC£º¹ÖÎïÊÇ·ñ»áÊ©·¨¡£
+mSCï¼šæ€ªç‰©æ˜¯å¦ä¼šæ–½æ³•ã€‚
 
-mS1-4£º¹ÖÎïÊÇ·ñÓĞÌØÊâĞ§¹û1-4¡£
+mS1-4ï¼šæ€ªç‰©æ˜¯å¦æœ‰ç‰¹æ®Šæ•ˆæœ1-4ã€‚
 
-mDD£º¹ÖÎïÊÇ·ñÓĞÊ¬Ìå¡£
+mDDï¼šæ€ªç‰©æ˜¯å¦æœ‰å°¸ä½“ã€‚
 
-mKB£º¹ÖÎïÊÇ·ñ»á±»»÷ÍË¡£
+mKBï¼šæ€ªç‰©æ˜¯å¦ä¼šè¢«å‡»é€€ã€‚
 
-mSQ£º¹ÖÎïÊÇ·ñÓĞÁ¬Ğø¼¼¡£
+mSQï¼šæ€ªç‰©æ˜¯å¦æœ‰è¿ç»­æŠ€ã€‚
 
-mRN£º¹ÖÎïÊÇ·ñ»áÅÜ¡£
+mRNï¼šæ€ªç‰©æ˜¯å¦ä¼šè·‘ã€‚
 
- dDT£º¹ÖÎïËÀÍöÊ±¿ÉÄÜµÄ³¯ÏòÊı¡£Ò»Ğ©BOSS´ËÁĞÖµÎª1£¬Ò²¾ÍÊÇËµËüÃÇËÀÍöÊ±×ÜÊÇ³å×ÅÒ»¸ö·½Ïò¡£
+ dDTï¼šæ€ªç‰©æ­»äº¡æ—¶å¯èƒ½çš„æœå‘æ•°ã€‚ä¸€äº›BOSSæ­¤åˆ—å€¼ä¸º1ï¼Œä¹Ÿå°±æ˜¯è¯´å®ƒä»¬æ­»äº¡æ—¶æ€»æ˜¯å†²ç€ä¸€ä¸ªæ–¹å‘ã€‚
 
-dNU£º¹ÖÎï²»¶¯Ê±¿ÉÄÜµÄ³¯ÏòÊı¡£
+dNUï¼šæ€ªç‰©ä¸åŠ¨æ—¶å¯èƒ½çš„æœå‘æ•°ã€‚
 
-dWL£º¹ÖÎï¿ÉÄÜµÄ×ßÂ··½ÏòÊı¡£
+dWLï¼šæ€ªç‰©å¯èƒ½çš„èµ°è·¯æ–¹å‘æ•°ã€‚
 
-dGH£º¹ÖÎï´ò»÷»Ö¸´Ê±µÄ³¯ÏòÊı¡£
+dGHï¼šæ€ªç‰©æ‰“å‡»æ¢å¤æ—¶çš„æœå‘æ•°ã€‚
 
-dA1£º¹ÖÎï¿ÉÄÜµÄ¹¥»÷1·½ÏòÊı¡£
+dA1ï¼šæ€ªç‰©å¯èƒ½çš„æ”»å‡»1æ–¹å‘æ•°ã€‚
 
-dA2£º¹ÖÎï¿ÉÄÜµÄ¹¥»÷2·½ÏòÊı¡£
+dA2ï¼šæ€ªç‰©å¯èƒ½çš„æ”»å‡»2æ–¹å‘æ•°ã€‚
 
-dBL£º¹ÖÎï¿ÉÄÜµÄ¸ñµ²·½ÏòÊı¡£
+dBLï¼šæ€ªç‰©å¯èƒ½çš„æ ¼æŒ¡æ–¹å‘æ•°ã€‚
 
-dSC£º¹ÖÎï¿ÉÄÜµÄÊ©·¨·½ÏòÊı¡£
+dSCï¼šæ€ªç‰©å¯èƒ½çš„æ–½æ³•æ–¹å‘æ•°ã€‚
 
-dS1-4£º¹ÖÎï×ö1-4ºÅÌØÊâ¶¯×÷1-4Ê±µÄ³¯ÏòÊı¡£
+dS1-4ï¼šæ€ªç‰©åš1-4å·ç‰¹æ®ŠåŠ¨ä½œ1-4æ—¶çš„æœå‘æ•°ã€‚
 
-dDD£º¹ÖÎïÊ¬ÌåµÄ¿ÉÄÜ³¯ÏòÊı¡£
+dDDï¼šæ€ªç‰©å°¸ä½“çš„å¯èƒ½æœå‘æ•°ã€‚
 
-dKB£º¹ÖÎï¿ÉÄÜ±»»÷ÍËµÄ·½ÏòÊı¡£
+dKBï¼šæ€ªç‰©å¯èƒ½è¢«å‡»é€€çš„æ–¹å‘æ•°ã€‚
 
-dSQ£º¹ÖÎïÊ©·ÅÁ¬Ğø¼¼µÄ¿ÉÄÜ·½ÏòÊı¡£
+dSQï¼šæ€ªç‰©æ–½æ”¾è¿ç»­æŠ€çš„å¯èƒ½æ–¹å‘æ•°ã€‚
 
-dRN£º¹ÖÎï¿ÉÄÜµÄÅÜ²½·½ÏòÊı¡£
+dRNï¼šæ€ªç‰©å¯èƒ½çš„è·‘æ­¥æ–¹å‘æ•°ã€‚
 
-A1mv£º¹ÖÎïÒÆ¶¯Ê±ÄÜ·ñ½øĞĞ¹¥»÷1¡£
+A1mvï¼šæ€ªç‰©ç§»åŠ¨æ—¶èƒ½å¦è¿›è¡Œæ”»å‡»1ã€‚
 
-A2mv£º¹ÖÎïÒÆ¶¯Ê±ÄÜ·ñ½øĞĞ¹¥»÷2¡£
+A2mvï¼šæ€ªç‰©ç§»åŠ¨æ—¶èƒ½å¦è¿›è¡Œæ”»å‡»2ã€‚
 
-SCmv£º¹ÖÎïÒÆ¶¯Ê±ÄÜ·ñÊ©·¨¡£
+SCmvï¼šæ€ªç‰©ç§»åŠ¨æ—¶èƒ½å¦æ–½æ³•ã€‚
 
-S1-4mv£º¹ÖÎïÒÆ¶¯Ê±ÄÜ·ñ½øĞĞ1-4ºÅÌØÊâ¶¯×÷¡£
+S1-4mvï¼šæ€ªç‰©ç§»åŠ¨æ—¶èƒ½å¦è¿›è¡Œ1-4å·ç‰¹æ®ŠåŠ¨ä½œã€‚
 
-NoGfxHitTest£ºÊÇ·ñÊ¹ÓÃÖ®Ç°Ö¸¶¨µÄX¡¢Y·½ÏòÖ±¾¶½øĞĞÅö×²¼ÆËã£¬Èç¹û²»ÊÇ£¬ÔòÊ¹ÓÃÏÂÃæµÄÌØÊâ±ß½ç¡£
+NoGfxHitTestï¼šæ˜¯å¦ä½¿ç”¨ä¹‹å‰æŒ‡å®šçš„Xã€Yæ–¹å‘ç›´å¾„è¿›è¡Œç¢°æ’è®¡ç®—ï¼Œå¦‚æœä¸æ˜¯ï¼Œåˆ™ä½¿ç”¨ä¸‹é¢çš„ç‰¹æ®Šè¾¹ç•Œã€‚
 
-htTop£ºÌØÊâ±ß½çÖ®ÉÏ½ç¡£
+htTopï¼šç‰¹æ®Šè¾¹ç•Œä¹‹ä¸Šç•Œã€‚
 
-htLeft£ºÌØÊâ±ß½çÖ®×ó½ç¡£
+htLeftï¼šç‰¹æ®Šè¾¹ç•Œä¹‹å·¦ç•Œã€‚
 
-htWidth£ºÌØÊâ±ß½çÖ®¿í¶È¡£
+htWidthï¼šç‰¹æ®Šè¾¹ç•Œä¹‹å®½åº¦ã€‚
 
-htHeight£ºÌØÊâ±ß½çÖ®¸ß¶È¡£
+htHeightï¼šç‰¹æ®Šè¾¹ç•Œä¹‹é«˜åº¦ã€‚
 
-Restore£º¹ÖÎïÊÇ·ñÊ¼ÖÕ´æÔÚ¡£ÈçÒÂ×ä¶ûµÄÁé»ê¾Í²»ÊÇÊ¼ÖÕ´æÔÚµÄ¡£
+Restoreï¼šæ€ªç‰©æ˜¯å¦å§‹ç»ˆå­˜åœ¨ã€‚å¦‚è¡£å’å°”çš„çµé­‚å°±ä¸æ˜¯å§‹ç»ˆå­˜åœ¨çš„ã€‚
 
-AutomapCel£ºÊÇ·ñÔÚ×Ô¶¯µØÍ¼ÉÏÏÔÊ¾¡£
+AutomapCelï¼šæ˜¯å¦åœ¨è‡ªåŠ¨åœ°å›¾ä¸Šæ˜¾ç¤ºã€‚
 
-NoMap£ºÊÇ·ñÊ¹ÓÃÉÏÃæµÄAutomapCel¿ª¹Ø¡£
+NoMapï¼šæ˜¯å¦ä½¿ç”¨ä¸Šé¢çš„AutomapCelå¼€å…³ã€‚
 
-NoOvly£ºÊÇ·ñ»á±»¸²¸Ç¡£
+NoOvlyï¼šæ˜¯å¦ä¼šè¢«è¦†ç›–ã€‚
 
-isSel£ºÊÇ·ñÄÜ±»Ñ¡ÖĞ¡£
+isSelï¼šæ˜¯å¦èƒ½è¢«é€‰ä¸­ã€‚
 
-alSel£º×÷ÎªÍ¬ÃËÊ±ÊÇ·ñÄÜÔÚ³ÇÍâ±»Ñ¡ÖĞ¡£
+alSelï¼šä½œä¸ºåŒç›Ÿæ—¶æ˜¯å¦èƒ½åœ¨åŸå¤–è¢«é€‰ä¸­ã€‚
 
-noSel£ºÊÇ·ñ¾ø¶Ô²»ÄÜ±»Ñ¡ÖĞ¡£
+noSelï¼šæ˜¯å¦ç»å¯¹ä¸èƒ½è¢«é€‰ä¸­ã€‚
 
-shiftSel£ºÊÇ·ñÄÜ±»Õı³£Ñ¡ÖĞ¡£ÆäÊµÕâ¸öÖµÎÒ²»Ì«Çå³ş¡­¡­
+shiftSelï¼šæ˜¯å¦èƒ½è¢«æ­£å¸¸é€‰ä¸­ã€‚å…¶å®è¿™ä¸ªå€¼æˆ‘ä¸å¤ªæ¸…æ¥šâ€¦â€¦
 
-corpseSel£ºÊ¬ÌåÄÜ·ñ±»Ñ¡ÖĞ¡£
+corpseSelï¼šå°¸ä½“èƒ½å¦è¢«é€‰ä¸­ã€‚
 
- isAtt£ºÊÇ·ñÄÜ±»¹¥»÷¡£
+ isAttï¼šæ˜¯å¦èƒ½è¢«æ”»å‡»ã€‚
 
-revive£ºÊÇ·ñÄÜ±»¸´»î¡£
+reviveï¼šæ˜¯å¦èƒ½è¢«å¤æ´»ã€‚
 
-critter£ºÊÇ·ñÊÇÒ°ÍâÉúÎï£¬Èç¼¦¡¢Ğ«×Ó¡£
+critterï¼šæ˜¯å¦æ˜¯é‡å¤–ç”Ÿç‰©ï¼Œå¦‚é¸¡ã€èå­ã€‚
 
-small£ºÊÇ·ñÊÇĞ¡ĞÍ¹ÖÎï¡£100%»÷ÍËĞ§¹û¡£
+smallï¼šæ˜¯å¦æ˜¯å°å‹æ€ªç‰©ã€‚100%å‡»é€€æ•ˆæœã€‚
 
-large£ºÊÇ·ñÊÇ´óĞÍ¹ÖÎï¡£25%»÷ÍËĞ§¹û¡£
+largeï¼šæ˜¯å¦æ˜¯å¤§å‹æ€ªç‰©ã€‚25%å‡»é€€æ•ˆæœã€‚
 
-soft£ºÊÇ·ñÊÇÈâ¸ĞµÄ¡£¸ú´ò»÷Ê±µÄÉùÒôÓĞ¹Ø¡£
+softï¼šæ˜¯å¦æ˜¯è‚‰æ„Ÿçš„ã€‚è·Ÿæ‰“å‡»æ—¶çš„å£°éŸ³æœ‰å…³ã€‚
 
-inert£ºÊÇ·ñÊÇÎŞÉËº¦ĞÔµÄ¡£
+inertï¼šæ˜¯å¦æ˜¯æ— ä¼¤å®³æ€§çš„ã€‚
 
-objCol£ºÊÇ·ñÏñÎïÆ·Ò»Ñù£¿£¿£¿
+objColï¼šæ˜¯å¦åƒç‰©å“ä¸€æ ·ï¼Ÿï¼Ÿï¼Ÿ
 
-deadCol£ºÊÇ·ñÏñÊ¬ÌåÒ»Ñù£¿£¿£¿
+deadColï¼šæ˜¯å¦åƒå°¸ä½“ä¸€æ ·ï¼Ÿï¼Ÿï¼Ÿ
 
-unFlatDeath£ºËÀÍöºóÊÇ·ñ±£ÁôÅö×²Ìå»ı¡£
+unFlatDeathï¼šæ­»äº¡åæ˜¯å¦ä¿ç•™ç¢°æ’ä½“ç§¯ã€‚
 
-Shadow£ºÊÇ·ñÓĞÓ°×Ó¡£
+Shadowï¼šæ˜¯å¦æœ‰å½±å­ã€‚
 
-noUniqueShift£ºÊÇ·ñÄÜ±ä³É½ğ¹Ö¡£
+noUniqueShiftï¼šæ˜¯å¦èƒ½å˜æˆé‡‘æ€ªã€‚
 
-compositeDeath£ºËÀÍö¶¯»­ÊÇ·ñÊÇ¶à¸ö¶¯»­¸´ºÏ³ÉµÄ¡£
+compositeDeathï¼šæ­»äº¡åŠ¨ç”»æ˜¯å¦æ˜¯å¤šä¸ªåŠ¨ç”»å¤åˆæˆçš„ã€‚
 
-localBlood£º±»»÷ÖĞÊ±³öÑªµÄÎ»ÖÃ¡£
+localBloodï¼šè¢«å‡»ä¸­æ—¶å‡ºè¡€çš„ä½ç½®ã€‚
 
-Bleed£º³öÑª×´Ì¬¡£0=²»³öÑª£»1=Âı³öÑª£»2=´ó³öÑª£»3=ÌØÊâ³öÑª×´Ì¬¡£
+Bleedï¼šå‡ºè¡€çŠ¶æ€ã€‚0=ä¸å‡ºè¡€ï¼›1=æ…¢å‡ºè¡€ï¼›2=å¤§å‡ºè¡€ï¼›3=ç‰¹æ®Šå‡ºè¡€çŠ¶æ€ã€‚
 
-Light£ºÕÕÁÁ·¶Î§¡£
+Lightï¼šç…§äº®èŒƒå›´ã€‚
 
-light-r, light-g, light-b£ºÕÕÁÁ¹âµÄÑÕÉ«¡£
+light-r, light-g, light-bï¼šç…§äº®å…‰çš„é¢œè‰²ã€‚
 
-Utrans/(N)/(H)£ºÆÕÍ¨/Ø¬ÃÎ/µØÓüÄÑ¶ÈÏÂµÄÑÕÉ«»ùµ÷¡£
+Utrans/(N)/(H)ï¼šæ™®é€š/å™©æ¢¦/åœ°ç‹±éš¾åº¦ä¸‹çš„é¢œè‰²åŸºè°ƒã€‚
 
-Heart£ºÎŞÓÃ²ÎÊı¡£
+Heartï¼šæ— ç”¨å‚æ•°ã€‚
 
-Bodypart£ºÎŞÓÃ²ÎÊı¡£
+Bodypartï¼šæ— ç”¨å‚æ•°ã€‚
 
-InfernoLen£ºÊ¹ÓÃµØÓü»ğÀàËÆ¼¼ÄÜÊ±µÄ»ù´¡¶¯×÷Ö¡Êı¡£
+InfernoLenï¼šä½¿ç”¨åœ°ç‹±ç«ç±»ä¼¼æŠ€èƒ½æ—¶çš„åŸºç¡€åŠ¨ä½œå¸§æ•°ã€‚
 
-InfernoAnim£ºÊ¹ÓÃµØÓü»ğÀàËÆ¼¼ÄÜÊ±µÄ¶¯×÷ÀàĞÍ¡£
+InfernoAnimï¼šä½¿ç”¨åœ°ç‹±ç«ç±»ä¼¼æŠ€èƒ½æ—¶çš„åŠ¨ä½œç±»å‹ã€‚
 
-InfernoRollback£ºÊ¹ÓÃµØÓü»ğÀàËÆ¼¼ÄÜÊ±µÄÊÕÕĞÊ±¼ä¡£
+InfernoRollbackï¼šä½¿ç”¨åœ°ç‹±ç«ç±»ä¼¼æŠ€èƒ½æ—¶çš„æ”¶æ‹›æ—¶é—´ã€‚
 
-ResurrectMode£º¸´»îÄ£Ê½¡£
+ResurrectModeï¼šå¤æ´»æ¨¡å¼ã€‚
 
-ResurrectSkill£º±»¸´»îµÄ¼¼ÄÜ¡£
+ResurrectSkillï¼šè¢«å¤æ´»çš„æŠ€èƒ½ã€‚
 
-EOL£ºĞĞÎ²±êÖ¾£¬±ØĞëÎª0¡£
+EOLï¼šè¡Œå°¾æ ‡å¿—ï¼Œå¿…é¡»ä¸º0ã€‚
 
 
-ĞŞÕıÒ»ÏÂ£¬¹ØÓÚHeight¡¢OverlayHeight¡¢pixHeightÖ®Ç°ËµÎŞÓÃÊÇ¿´ÁË±ğÈËµÄ×ÊÁÏ£¬µ«¾­ÎÒ×Ô¼º²âÊÔºóÆäÊµÊÇ¹ÖÎïµÄ¸ß¶È£¬ÒÔ¼°×´Ì¬¸²¸ÇµÄÎ»ÖÃºÍ¾ßÌåµÄÏñËØ¸ß¶È¡£ÕâĞ©¶«Î÷»áÓ°Ïì¹ÖÎïÔÚĞ¡µØÍ¼ÉÏµÄ×¼È·Î»ÖÃ¡¢¹â»·Ïà¶ÔÓÚ¹ÖÎïµÄÎ»ÖÃµÈ
+ä¿®æ­£ä¸€ä¸‹ï¼Œå…³äºHeightã€OverlayHeightã€pixHeightä¹‹å‰è¯´æ— ç”¨æ˜¯çœ‹äº†åˆ«äººçš„èµ„æ–™ï¼Œä½†ç»æˆ‘è‡ªå·±æµ‹è¯•åå…¶å®æ˜¯æ€ªç‰©çš„é«˜åº¦ï¼Œä»¥åŠçŠ¶æ€è¦†ç›–çš„ä½ç½®å’Œå…·ä½“çš„åƒç´ é«˜åº¦ã€‚è¿™äº›ä¸œè¥¿ä¼šå½±å“æ€ªç‰©åœ¨å°åœ°å›¾ä¸Šçš„å‡†ç¡®ä½ç½®ã€å…‰ç¯ç›¸å¯¹äºæ€ªç‰©çš„ä½ç½®ç­‰
 
 */
 

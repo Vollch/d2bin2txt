@@ -95,401 +95,401 @@ gloveHeight - height of the glove slot.
 */
 
 /*
-��һ�в��� �� ����˵��
-Amazon �� ����ѷ��Ʒ���ÿռ䣨640��480 ���طֱ��ʣ�
-Sorceress �� ��ʦ��Ʒ���ÿռ䣨640��480 ���طֱ��ʣ�
-Necromancer �� ���鷨ʦ��Ʒ���ÿռ䣨640��480 ���طֱ��ʣ�
-Paladin �� ʥ��ʿ��Ʒ���ÿռ䣨640��480 ���طֱ��ʣ�
-Barbarian �� Ұ������Ʒ���ÿռ䣨640��480 ���طֱ��ʣ�
-Monster �� ���������Ի�������Ʒ���ÿռ䣨640��480 ���طֱ��ʣ�
-Trade Page 1 �� ������Ϸ��Ʒ��������������ÿռ䣨640��480 ���طֱ��ʣ�
-Trade Page 2 �� ������Ϸ��Ʒ��������������ÿռ䣨640��480 ���طֱ��ʣ�
-Bank Page 1 �� ������ռ䣨640��480 ���طֱ��ʣ�[��Ӧԭ��]
-Transmogrify Box Page 1 �� Horadric Cube ���ÿռ䣨640��480 ���طֱ��ʣ�
-Guild Vault Page 1 �� δʹ�õĹ������ÿռ䣨640��480 ���طֱ��ʣ�
-Trophy Case Page 1 �� δʹ�õĽ������ÿռ䣨640��480 ���طֱ��ʣ�
-Expansion �� Expansion
-Big Bank Page 1 �� ������ռ䣨640��480 ���طֱ��ʣ�[��Ӧ����Ƭ]
-Hireling �� ��Ӷ����Ʒ���ÿռ䣨640��480 ���طֱ��ʣ�
-Druid �� ��³����Ʒ���ÿռ䣨640��480 ���طֱ��ʣ�
-Assassin �� �̿���Ʒ���ÿռ䣨640��480 ���طֱ��ʣ�
-Amazon2 �� ����ѷ��Ʒ���ÿռ䣨800��600 ���طֱ��ʣ�
-Sorceress2 �� ��ʦ��Ʒ���ÿռ䣨800��600 ���طֱ��ʣ�
-Necromancer2 �� ���鷨ʦ��Ʒ���ÿռ䣨800��600 ���طֱ��ʣ�
-Paladin2 �� ʥ��ʿ��Ʒ���ÿռ䣨800��600 ���طֱ��ʣ�
-Barbarian2 �� Ұ������Ʒ���ÿռ䣨800��600 ���طֱ��ʣ�
-Monster2 �� ���������Ի�������Ʒ���ÿռ䣨800��600 ���طֱ��ʣ�
-Trade Page 1-2 �� ������Ϸ��Ʒ��������������ÿռ䣨800��600 ���طֱ��ʣ�
-Trade Page 2-2 �� ������Ϸ��Ʒ��������������ÿռ䣨800��600 ���طֱ��ʣ�
-Bank Page2 �� ������ռ䣨800��600 ���طֱ��ʣ�[��Ӧԭ��]
-Transmogrify Box2 �� Horadric Cube ���ÿռ䣨800��600 ���طֱ��ʣ�
-Guild Vault Page2 �� δʹ�õĹ������ÿռ䣨800��600 ���طֱ��ʣ�
-Trophy Case Page2 �� δʹ�õĽ������ÿռ䣨800��600 ���طֱ��ʣ�
-Big Bank Page2 �� ������ռ䣨800��600 ���طֱ��ʣ�[��Ӧ����Ƭ]
-Hireling2 �� ��Ӷ����Ʒ���ÿռ䣨800��600 ���طֱ��ʣ�
-Druid2 �� ��³����Ʒ���ÿռ䣨800��600 ���طֱ��ʣ�
-Assassin2 �� �̿���Ʒ���ÿռ䣨800��600 ���طֱ��ʣ�
+第一列参数 — 参数说明
+Amazon — 亚马逊物品放置空间（640×480 像素分辨率）
+Sorceress — 法师物品放置空间（640×480 像素分辨率）
+Necromancer — 死灵法师物品放置空间（640×480 像素分辨率）
+Paladin — 圣骑士物品放置空间（640×480 像素分辨率）
+Barbarian — 野蛮人物品放置空间（640×480 像素分辨率）
+Monster — 交易买卖对话窗口物品放置空间（640×480 像素分辨率）
+Trade Page 1 — 多人游戏物品交换窗口上面放置空间（640×480 像素分辨率）
+Trade Page 2 — 多人游戏物品交换窗口下面放置空间（640×480 像素分辨率）
+Bank Page 1 — 储物箱空间（640×480 像素分辨率）[对应原版]
+Transmogrify Box Page 1 — Horadric Cube 放置空间（640×480 像素分辨率）
+Guild Vault Page 1 — 未使用的公共放置空间（640×480 像素分辨率）
+Trophy Case Page 1 — 未使用的奖励放置空间（640×480 像素分辨率）
+Expansion — Expansion
+Big Bank Page 1 — 储物箱空间（640×480 像素分辨率）[对应资料片]
+Hireling — 雇佣兵物品放置空间（640×480 像素分辨率）
+Druid — 德鲁依物品放置空间（640×480 像素分辨率）
+Assassin — 刺客物品放置空间（640×480 像素分辨率）
+Amazon2 — 亚马逊物品放置空间（800×600 像素分辨率）
+Sorceress2 — 法师物品放置空间（800×600 像素分辨率）
+Necromancer2 — 死灵法师物品放置空间（800×600 像素分辨率）
+Paladin2 — 圣骑士物品放置空间（800×600 像素分辨率）
+Barbarian2 — 野蛮人物品放置空间（800×600 像素分辨率）
+Monster2 — 交易买卖对话窗口物品放置空间（800×600 像素分辨率）
+Trade Page 1-2 — 多人游戏物品交换窗口上面放置空间（800×600 像素分辨率）
+Trade Page 2-2 — 多人游戏物品交换窗口下面放置空间（800×600 像素分辨率）
+Bank Page2 — 储物箱空间（800×600 像素分辨率）[对应原版]
+Transmogrify Box2 — Horadric Cube 放置空间（800×600 像素分辨率）
+Guild Vault Page2 — 未使用的公共放置空间（800×600 像素分辨率）
+Trophy Case Page2 — 未使用的奖励放置空间（800×600 像素分辨率）
+Big Bank Page2 — 储物箱空间（800×600 像素分辨率）[对应资料片]
+Hireling2 — 雇佣兵物品放置空间（800×600 像素分辨率）
+Druid2 — 德鲁依物品放置空间（800×600 像素分辨率）
+Assassin2 — 刺客物品放置空间（800×600 像素分辨率）
 
-��һ�в��� �� ����˵��
-Class �� ����ռ䴦�����ݣ�ֻ���ο���־��
-InvLeft �� �����������ꡪ��ʾͼ����߽߱�ĺ���������Ļ�ϵ���Զ�λ����ֵ
-InvRight �� �����������ꡪ��ʾͼ���ұ߽߱�ĺ���������Ļ�ϵ���Զ�λ����ֵ
-InvTop �� �����������ꡪ��ʾͼ���ϲ��߽������������Ļ�ϵ���Զ�λ����ֵ
-InvBottom �� �����������ꡪ��ʾͼ��ײ��߽������������Ļ�ϵ���Զ�λ����ֵ
+第一行参数 — 参数说明
+Class — 储存空间处理数据（只作参考标志）
+InvLeft — 横坐标或Ｘ坐标—标示图像左边边界的横坐标在屏幕上的相对定位坐标值
+InvRight — 横坐标或Ｘ坐标—标示图像右边边界的横坐标在屏幕上的相对定位坐标值
+InvTop — 竖坐标或Ｙ坐标—标示图像上部边界的竖坐标在屏幕上的相对定位坐标值
+InvBottom — 竖坐标或Ｙ坐标—标示图像底部边界的竖坐标在屏幕上的相对定位坐标值
 
-����ռ�����趨��
-GridX �� ����ռ�ÿ�еĸ���
-GridY �� ����ռ�ÿ�еĸ���
-GridLeft �� �����������ꡪ��ʾ����ռ���߽߱�ĺ���������Ļ�ϵ���Զ�λ����ֵ
-GridRight �� �����������ꡪ��ʾ����ռ��ұ߽߱�ĺ���������Ļ�ϵ���Զ�λ����ֵ
-GridTop �� �����������ꡪ��ʾ����ռ��ϲ��߽������������Ļ�ϵ���Զ�λ����ֵ
-GridBottom �� �����������ꡪ��ʾ����ռ�ײ��߽������������Ļ�ϵ���Զ�λ����ֵ
-GridBoxWidth �� ÿ�����˵Ŀ��ȣ�����ֵ�����a��ÿ��ߴ���29��29�����ͨ��ȡֵ��29��
-GridBoxHeight �� ÿ�����˵ĸ߶ȣ�����ֵ�����a��ÿ��ߴ���29��29�����ͨ��ȡֵ��29��
+储存空间相关设定：
+GridX — 储存空间每列的格数
+GridY — 储存空间每行的格数
+GridLeft — 横坐标或Ｘ坐标—标示储存空间左边边界的横坐标在屏幕上的相对定位坐标值
+GridRight — 横坐标或Ｘ坐标—标示储存空间右边边界的横坐标在屏幕上的相对定位坐标值
+GridTop — 竖坐标或Ｙ坐标—标示储存空间上部边界的竖坐标在屏幕上的相对定位坐标值
+GridBottom — 竖坐标或Ｙ坐标—标示储存空间底部边界的竖坐标在屏幕上的相对定位坐标值
+GridBoxWidth — 每个格了的宽度（像素值），黙认每格尺寸是29×29，因此通常取值是29。
+GridBoxHeight — 每个格了的高度（像素值），黙认每格尺寸是29×29，因此通常取值是29。
 
-������Ʒװ���ռ�����趨��
-rArmLeft �� �����������ꡪ��ʾ�ұۣ�������ܣ�װ���ռ���߽߱�ĺ���������Ļ�ϵ���Զ�λ����ֵ
-rArmRight �� �����������ꡪ��ʾ�ұۣ�������ܣ�װ���ռ��ұ߽߱�ĺ���������Ļ�ϵ���Զ�λ����ֵ
-rArmTop �� �����������ꡪ��ʾ�ұۣ�������ܣ�װ���ռ��ϲ��߽������������Ļ�ϵ���Զ�λ����ֵ
-rArmBottom �� �����������ꡪ��ʾ�ұۣ�������ܣ�װ���ռ�ײ��߽������������Ļ�ϵ���Զ�λ����ֵ
-rArmWidth �� �ұۣ�������ܣ�װ���ռ�Ŀ��ȣ�����ֵ��
-rArmHeight �� �ұۣ�������ܣ�װ���ռ�ĸ߶ȣ�����ֵ��
+人物物品装备空间相关设定：
+rArmLeft — 横坐标或Ｘ坐标—标示右臂（武器或盾）装备空间左边边界的横坐标在屏幕上的相对定位坐标值
+rArmRight — 横坐标或Ｘ坐标—标示右臂（武器或盾）装备空间右边边界的横坐标在屏幕上的相对定位坐标值
+rArmTop — 竖坐标或Ｙ坐标—标示右臂（武器或盾）装备空间上部边界的竖坐标在屏幕上的相对定位坐标值
+rArmBottom — 竖坐标或Ｙ坐标—标示右臂（武器或盾）装备空间底部边界的竖坐标在屏幕上的相对定位坐标值
+rArmWidth — 右臂（武器或盾）装备空间的宽度（像素值）
+rArmHeight — 右臂（武器或盾）装备空间的高度（像素值）
 
-TorsoLeft �� �����������ꡪ��ʾ���ɣ�װ�ף�װ���ռ���߽߱�ĺ���������Ļ�ϵ���Զ�λ����ֵ
-TorsoRight �� �����������ꡪ��ʾ���ɣ�װ�ף�װ���ռ��ұ߽߱�ĺ���������Ļ�ϵ���Զ�λ����ֵ
-TorsoTop �� �����������ꡪ��ʾ���ɣ�װ�ף�װ���ռ��ϲ��߽������������Ļ�ϵ���Զ�λ����ֵ
-TorsoBottom �� �����������ꡪ��ʾ���ɣ�װ�ף�װ���ռ�ײ��߽������������Ļ�ϵ���Զ�λ����ֵ
-TorsoWidth �� ���ɣ�װ�ף�װ���ռ�Ŀ��ȣ�����ֵ��
-TorsoHeight �� ���ɣ�װ�ף�װ���ռ�ĸ߶ȣ�����ֵ��
+TorsoLeft — 横坐标或Ｘ坐标—标示躯干（装甲）装备空间左边边界的横坐标在屏幕上的相对定位坐标值
+TorsoRight — 横坐标或Ｘ坐标—标示躯干（装甲）装备空间右边边界的横坐标在屏幕上的相对定位坐标值
+TorsoTop — 竖坐标或Ｙ坐标—标示躯干（装甲）装备空间上部边界的竖坐标在屏幕上的相对定位坐标值
+TorsoBottom — 竖坐标或Ｙ坐标—标示躯干（装甲）装备空间底部边界的竖坐标在屏幕上的相对定位坐标值
+TorsoWidth — 躯干（装甲）装备空间的宽度（像素值）
+TorsoHeight — 躯干（装甲）装备空间的高度（像素值）
 
-lArmLeft �� �����������ꡪ��ʾ��ۣ�������ܣ�װ���ռ���߽߱�ĺ���������Ļ�ϵ���Զ�λ����ֵ
-lArmRight �� �����������ꡪ��ʾ�ұۣ�������ܣ�װ���ռ���߽߱�ĺ���������Ļ�ϵ���Զ�λ����ֵ
-lArmTop �� �����������ꡪ��ʾ��ۣ�������ܣ�װ���ռ��ϲ��߽������������Ļ�ϵ���Զ�λ����ֵ
-lArmBottom �� �����������ꡪ��ʾ��ۣ�������ܣ�װ���ռ�ײ��߽������������Ļ�ϵ���Զ�λ����ֵ
-lArmWidth �� ��ۣ�������ܣ�װ���ռ�Ŀ��ȣ�����ֵ��
-lArmHeight �� ��ۣ�������ܣ�װ���ռ�ĸ߶ȣ�����ֵ��
+lArmLeft — 横坐标或Ｘ坐标—标示左臂（武器或盾）装备空间左边边界的横坐标在屏幕上的相对定位坐标值
+lArmRight — 横坐标或Ｘ坐标—标示右臂（武器或盾）装备空间左边边界的横坐标在屏幕上的相对定位坐标值
+lArmTop — 竖坐标或Ｙ坐标—标示左臂（武器或盾）装备空间上部边界的竖坐标在屏幕上的相对定位坐标值
+lArmBottom — 竖坐标或Ｙ坐标—标示左臂（武器或盾）装备空间底部边界的竖坐标在屏幕上的相对定位坐标值
+lArmWidth — 左臂（武器或盾）装备空间的宽度（像素值）
+lArmHeight — 左臂（武器或盾）装备空间的高度（像素值）
 
-HeadLeft �� �����������ꡪ��ʾͷ����ͷ����װ���ռ���߽߱�ĺ���������Ļ�ϵ���Զ�λ����ֵ
-HeadRight �� �����������ꡪ��ʾͷ����ͷ����װ���ռ��ұ߽߱�ĺ���������Ļ�ϵ���Զ�λ����ֵ
-HeadTop �� �����������ꡪ��ʾͷ����ͷ����װ���ռ��ϲ��߽������������Ļ�ϵ���Զ�λ����ֵ
-HeadBottom �� �����������ꡪ��ʾͷ����ͷ����װ���ռ�ײ��߽������������Ļ�ϵ���Զ�λ����ֵ
-HeadWidth �� ͷ����ͷ����װ���ռ�Ŀ��ȣ�����ֵ��
-HeadHeight �� ͷ����ͷ����װ���ռ�ĸ߶ȣ�����ֵ��
+HeadLeft — 横坐标或Ｘ坐标—标示头部（头盔）装备空间左边边界的横坐标在屏幕上的相对定位坐标值
+HeadRight — 横坐标或Ｘ坐标—标示头部（头盔）装备空间右边边界的横坐标在屏幕上的相对定位坐标值
+HeadTop — 竖坐标或Ｙ坐标—标示头部（头盔）装备空间上部边界的竖坐标在屏幕上的相对定位坐标值
+HeadBottom — 竖坐标或Ｙ坐标—标示头部（头盔）装备空间底部边界的竖坐标在屏幕上的相对定位坐标值
+HeadWidth — 头部（头盔）装备空间的宽度（像素值）
+HeadHeight — 头部（头盔）装备空间的高度（像素值）
 
-NeckLeft �� �����������ꡪ��ʾ��������������װ���ռ���߽߱�ĺ���������Ļ�ϵ���Զ�λ����ֵ
-NeckRight �� �����������ꡪ��ʾ��������������װ���ռ��ұ߽߱�ĺ���������Ļ�ϵ���Զ�λ����ֵ
-NeckTop �� �����������ꡪ��ʾ��������������װ���ռ��ϲ��߽������������Ļ�ϵ���Զ�λ����ֵ
-NeckBottom �� �����������ꡪ��ʾ��������������װ���ռ�ײ��߽������������Ļ�ϵ���Զ�λ����ֵ
-NeckWidth �� ��������������װ���ռ�Ŀ��ȣ�����ֵ��
-NeckHeight �� ��������������װ���ռ�ĸ߶ȣ�����ֵ��
+NeckLeft — 横坐标或Ｘ坐标—标示颈部（护身符）装备空间左边边界的横坐标在屏幕上的相对定位坐标值
+NeckRight — 横坐标或Ｘ坐标—标示颈部（护身符）装备空间右边边界的横坐标在屏幕上的相对定位坐标值
+NeckTop — 竖坐标或Ｙ坐标—标示颈部（护身符）装备空间上部边界的竖坐标在屏幕上的相对定位坐标值
+NeckBottom — 竖坐标或Ｙ坐标—标示颈部（护身符）装备空间底部边界的竖坐标在屏幕上的相对定位坐标值
+NeckWidth — 颈部（护身符）装备空间的宽度（像素值）
+NeckHeight — 颈部（护身符）装备空间的高度（像素值）
 
-rHandLeft �� �����������ꡪ��ʾ���֣���ָ��װ���ռ���߽߱�ĺ���������Ļ�ϵ���Զ�λ����ֵ
-rHandRight �� �����������ꡪ��ʾ���֣���ָ��װ���ռ��ұ߽߱�ĺ���������Ļ�ϵ���Զ�λ����ֵ
-rHandTop �� �����������ꡪ��ʾ���֣���ָ��װ���ռ��ϲ��߽������������Ļ�ϵ���Զ�λ����ֵ
-rHandBottom �� �����������ꡪ��ʾ���֣���ָ��װ���ռ�ײ��߽������������Ļ�ϵ���Զ�λ����ֵ
-rHandWidth �� ���֣���ָ��װ���ռ�Ŀ��ȣ�����ֵ��
-rHandHeight �� ���֣���ָ��װ���ռ�ĸ߶ȣ�����ֵ��
+rHandLeft — 横坐标或Ｘ坐标—标示右手（戒指）装备空间左边边界的横坐标在屏幕上的相对定位坐标值
+rHandRight — 横坐标或Ｘ坐标—标示右手（戒指）装备空间右边边界的横坐标在屏幕上的相对定位坐标值
+rHandTop — 竖坐标或Ｙ坐标—标示右手（戒指）装备空间上部边界的竖坐标在屏幕上的相对定位坐标值
+rHandBottom — 竖坐标或Ｙ坐标—标示右手（戒指）装备空间底部边界的竖坐标在屏幕上的相对定位坐标值
+rHandWidth — 右手（戒指）装备空间的宽度（像素值）
+rHandHeight — 右手（戒指）装备空间的高度（像素值）
 
-lHandLeft �� �����������ꡪ��ʾ���֣���ָ��װ���ռ���߽߱�ĺ���������Ļ�ϵ���Զ�λ����ֵ
-lHandRight �� �����������ꡪ��ʾ���֣���ָ��װ���ռ��ұ߽߱�ĺ���������Ļ�ϵ���Զ�λ����ֵ
-lHandTop �� �����������ꡪ��ʾ���֣���ָ��װ���ռ��ϲ��߽������������Ļ�ϵ���Զ�λ����ֵ
-lHandBottom �� �����������ꡪ��ʾ���֣���ָ��װ���ռ�ײ��߽������������Ļ�ϵ���Զ�λ����ֵ
-lHandWidth �� ���֣���ָ��װ���ռ�Ŀ��ȣ�����ֵ��
-lHandHeight �� ���֣���ָ��װ���ռ�ĸ߶ȣ�����ֵ��
+lHandLeft — 横坐标或Ｘ坐标—标示左手（戒指）装备空间左边边界的横坐标在屏幕上的相对定位坐标值
+lHandRight — 横坐标或Ｘ坐标—标示左手（戒指）装备空间右边边界的横坐标在屏幕上的相对定位坐标值
+lHandTop — 竖坐标或Ｙ坐标—标示左手（戒指）装备空间上部边界的竖坐标在屏幕上的相对定位坐标值
+lHandBottom — 竖坐标或Ｙ坐标—标示左手（戒指）装备空间底部边界的竖坐标在屏幕上的相对定位坐标值
+lHandWidth — 左手（戒指）装备空间的宽度（像素值）
+lHandHeight — 左手（戒指）装备空间的高度（像素值）
 
-BeltLeft �� �����������ꡪ��ʾ����װ���ռ���߽߱�ĺ���������Ļ�ϵ���Զ�λ����ֵ
-BeltRight �� �����������ꡪ��ʾ����װ���ռ��ұ߽߱�ĺ���������Ļ�ϵ���Զ�λ����ֵ
-BeltTop �� �����������ꡪ��ʾ����װ���ռ��ϲ��߽������������Ļ�ϵ���Զ�λ����ֵ
-BeltBottom �� �����������ꡪ��ʾ����װ���ռ�ײ��߽������������Ļ�ϵ���Զ�λ����ֵ
-BeltWidth �� ����װ���ռ�Ŀ��ȣ�����ֵ��
-BeltHeight �� ����װ���ռ�ĸ߶ȣ�����ֵ��
+BeltLeft — 横坐标或Ｘ坐标—标示腰带装备空间左边边界的横坐标在屏幕上的相对定位坐标值
+BeltRight — 横坐标或Ｘ坐标—标示腰带装备空间右边边界的横坐标在屏幕上的相对定位坐标值
+BeltTop — 竖坐标或Ｙ坐标—标示腰带装备空间上部边界的竖坐标在屏幕上的相对定位坐标值
+BeltBottom — 竖坐标或Ｙ坐标—标示腰带装备空间底部边界的竖坐标在屏幕上的相对定位坐标值
+BeltWidth — 腰带装备空间的宽度（像素值）
+BeltHeight — 腰带装备空间的高度（像素值）
 
-FeetLeft �� �����������ꡪ��ʾѥ��װ���ռ���߽߱�ĺ���������Ļ�ϵ���Զ�λ����ֵ
-FeetRight �� �����������ꡪ��ʾѥ��װ���ռ��ұ߽߱�ĺ���������Ļ�ϵ���Զ�λ����ֵ
-FeetTop �� �����������ꡪ��ʾѥ��װ���ռ��ϲ��߽������������Ļ�ϵ���Զ�λ����ֵ
-FeetBottom �� �����������ꡪ��ʾѥ��װ���ռ�ײ��߽������������Ļ�ϵ���Զ�λ����ֵ
-FeetWidth �� ѥ��װ���ռ�Ŀ��ȣ�����ֵ��
-FeetHeight �� ѥ��װ���ռ�ĸ߶ȣ�����ֵ��
+FeetLeft — 横坐标或Ｘ坐标—标示靴子装备空间左边边界的横坐标在屏幕上的相对定位坐标值
+FeetRight — 横坐标或Ｘ坐标—标示靴子装备空间右边边界的横坐标在屏幕上的相对定位坐标值
+FeetTop — 竖坐标或Ｙ坐标—标示靴子装备空间上部边界的竖坐标在屏幕上的相对定位坐标值
+FeetBottom — 竖坐标或Ｙ坐标—标示靴子装备空间底部边界的竖坐标在屏幕上的相对定位坐标值
+FeetWidth — 靴子装备空间的宽度（像素值）
+FeetHeight — 靴子装备空间的高度（像素值）
 
-GlovesLeft �� �����������ꡪ��ʾ����װ���ռ���߽߱�ĺ���������Ļ�ϵ���Զ�λ����ֵ
-GlovesRight �� �����������ꡪ��ʾ����װ���ռ��ұ߽߱�ĺ���������Ļ�ϵ���Զ�λ����ֵ
-GlovesTop �� �����������ꡪ��ʾ����װ���ռ��ϲ��߽������������Ļ�ϵ���Զ�λ����ֵ
-GlovesBottom �� �����������ꡪ��ʾ����װ���ռ�ײ��߽������������Ļ�ϵ���Զ�λ����ֵ
-GlovesWidth �� ����װ���ռ�Ŀ��ȣ�����ֵ��
-GlovesHeight �� ����װ���ռ�ĸ߶ȣ�����ֵ��
+GlovesLeft — 横坐标或Ｘ坐标—标示手套装备空间左边边界的横坐标在屏幕上的相对定位坐标值
+GlovesRight — 横坐标或Ｘ坐标—标示手套装备空间右边边界的横坐标在屏幕上的相对定位坐标值
+GlovesTop — 竖坐标或Ｙ坐标—标示手套装备空间上部边界的竖坐标在屏幕上的相对定位坐标值
+GlovesBottom — 竖坐标或Ｙ坐标—标示手套装备空间底部边界的竖坐标在屏幕上的相对定位坐标值
+GlovesWidth — 手套装备空间的宽度（像素值）
+GlovesHeight — 手套装备空间的高度（像素值）
 
-��Ʒ����ռ����ɶ����С��һ��С���񲢽���ɵĶ�ά�ռ䣬���������Ͽ�ͨ��ԭʼ��Inventory.txt�ļ���ã���ÿ����ɫ��ԭʼ����ռ�Ϊ10��4�����ǿ���ͨ����GridX���͡�GridY��������������Ӧ��ֵ��10���͡�4�����˽����Ϣ������GridBoxWidth���͡�GridBoxHeight���� 
-����������Ӧ��ֵͬΪ29�������֪ÿ�����Ÿ�ĳߴ�Ϊ29��29����һ���ڷֱ���Ϊ800��600������ѷ����ռ�����ϣ�
-Class ��GridX��GridY��GridLeft��GridRight��GridTop��GridBottom��GridBoxWidth��GridBoxHeight
-Amazon2�� 10�� 4�� 419�� 706�� 315�� 428�� 29�� 29
-������û�Ѹ���ѧ��ƽ����ѧ����һ�ɶ����Ļ��������������������Ͼ�������ó���GridTop�������ŵ�λ����ʲô��������GridTop���ڷ�Χ�Ǵ�0��600����ͼ�δ����������£�
+物品储存空间是由多个大小或一的小方格并接组成的二维空间，其数据资料可通过原始的Inventory.txt文件获得，如每个角色的原始储存空间为10×4，我们可以通过“GridX”和“GridY”两个参数所对应的值“10”和“4”而了解此信息。而“GridBoxWidth”和“GridBoxHeight”两 
+个参数所对应的值同为29，因而可知每个储放格的尺寸为29×29。看一下在分辨率为800×600下亚马逊储存空间的资料：
+Class ┃GridX┃GridY┃GridLeft┃GridRight┃GridTop┃GridBottom┃GridBoxWidth┃GridBoxHeight
+Amazon2┃ 10┃ 4┃ 419┃ 706┃ 315┃ 428┃ 29┃ 29
+假如你没把高中学的平面数学忘得一干二净的话，根据以上资料你马上就能想像得出“GridTop”坐标大概的位置在什么地主，“GridTop”在范围是从0到600，用图形大致描述如下：
 
-��0
-��
-��
-��
-��
-��
-��315����������������
-�� ��
-�� ��
-�� ����������ռ䡪��
-�� ��
-�� ��
-��428����������������
-��
-��
-��
-��
-��
-��600
+┏0
+┃
+┃
+┃
+┃
+┃
+┃315┈┈┈┈┈┈┈→
+┃ ┊
+┃ ┊
+┃ ┊←—储存空间—→
+┃ ┊
+┃ ┊
+┃428┈┈┈┈┈┈┈→
+┃
+┃
+┃
+┃
+┃
+┗600
 
-�������ͼ�ɼ�����ռ�������귶Χ��315��428���������Ϊ113��������ռ���4�У����113��4��28.25������롰GridBoxHeight������29���Ӧ�ˡ��˽�������������п��ܸ�����Ԥ�ڵ��趨����������޸ġ�����֮�⣬�㻹Ҫ��invchar6.dc6
-��ͼ�ļ�����������ʹ֮�����޸ĵĲ����ﵽһ�µ�Ч����
+从上面草图可见储存空间的竖坐标范围从315到428，两数相减为113，而储存空间有4行，因此113÷4＝28.25，这就与“GridBoxHeight”等于29相对应了。了解了以上情况就有可能根据你预期的设定而对其进行修改。除此之外，你还要对invchar6.dc6
+贴图文件进行修正而使之与你修改的参数达到一致的效果。
 
-��GridLeft���͡�GridRight������������Ҳ�ǲ�࣬��ֻ����ͬ���ѣ�
+“GridLeft”和“GridRight”参数的作用也是差不多，而只方向不同而已：
 
-������������������������������������������������
-400 419����������������������706 800
-��������������ռ䡪������
-�� ��
+┅┅━━━━━━━━━━━━━━━━━━━━━┓
+400 419┈┈┈┈┈┈┈┈┈┈┈706 800
+┊←———储存空间——→┊
+↓ ↓
 
-����֮����400��ʼԭ����һ����������ʾ��ɫ״̬������״̬���ϳ���Ʒ�ȵȡ����ϲ�ͼ���������ó���ʲô�����ˣ��Ͳ��˶�������ˡ�
+坐标之所从400开始原因另一半是用于显示角色状态，交易状态，合成物品等等。以上草图你可以想象得出有什么作用了，就不此多加叙述了。
 
-���Ҫ˵���ǣ����ϵ���ֵ������������Ϊ������λ��Ҳ��������Ϊ�㣬�ڶ�Inventory.txt
-�����޸�����ʱ��Ϊ�˴ﵽ��������ʾЧ�����ͱ������Ӧ����ͼ�ļ�����������ʵ��֤������һ�е��޸ģ���ʼ����ͼ�ļ����޸ģ�һ���޸�һ�߼�¼������ͼ�ε�ԭʼ������λ�����꣬��֮���Inventory.txt
-�ļ��޸�ʱ��������˺���ȷ�ĵ�һ�����ϣ��ӼӼ����ܿ�Ϳ�����޸ģ����ڼ������Ψһ���ܾ��������ѧ�����������޸�ͼ�����õ��������ر��Ŀ�����Dc6 Creator���������ľ͸��������ˣ��Ϻõ�Ӧ����Fireworks�ˣ��򵥿�ݣ���Դռ�õ͡�
+最后要说的是，以上的数值，都是以像素为基本单位，也可以理解为点，在对Inventory.txt
+进行修改扩容时，为了达到完美的显示效果，就必须对相应的贴图文件加以修正。实践证明，这一切的修改，都始于贴图文件的修改，一边修改一边记录各部分图形的原始坐标与位移坐标，在之后的Inventory.txt
+文件修改时，你就有了很明确的第一手资料，加加减减很快就可完成修改，而期间出错的唯一可能就是你的数学不及格。至于修改图形所用的软件，必备的可能是Dc6 Creator，而其它的就各有所好了，较好的应该是Fireworks了，简单快捷，资源占用低。
 */
 
 /*
-�ļ���������
-Inventory����棬�����������ָ�洢�ռ䡣
-���ļ�������������Ʒ���Լ��ֿ����Ϣ��
-���ļ��е�ÿһ�б�ʾһ�ִ洢�ռ䡣
+文件名解析：
+Inventory：库存，存货。在这里指存储空间。
+本文件就是描述了物品栏以及仓库的信息。
+此文件中的每一行表示一种存储空间。
 
-ÿ�еĺ������£�
+每列的含义如下：
 
 
-�ظ�
+回复
 
-    3¥
+    3楼
     2011-09-28 00:00
 
-    �ٱ� |
+    举报 |
 
     zqtjingzi
-    С����
+    小吧主
     12
 
-class��������ע�ͣ�ָ���������������ִ洢�ռ䡣
+class：仅用作注释，指明此行描述了哪种存储空间。
 
 
-�ظ�
+回复
 
-    4¥
+    4楼
     2011-09-28 00:00
 
-    �ٱ� |
+    举报 |
 
     zqtjingzi
-    С����
+    小吧主
     12
 
-��ǰ˵����
-XXXLeft����ʾXXX����߽��λ�á�
-XXXRight����ʾXXX���ұ߽��λ�á�
-XXXTop����ʾXXX���ϱ߽��λ�á�
-XXXBottom����ʾXXX���±߽��λ�á�
-XXXWidth����ʾXXX�Ŀ��ȣ�һ����ڣ��±߽� - �ϱ߽磩
-XXXHeight����ʾXXX�ĸ߶ȣ�һ����ڣ��ұ߽� - ��߽磩
+提前说明：
+XXXLeft：表示XXX的左边界的位置。
+XXXRight：表示XXX的右边界的位置。
+XXXTop：表示XXX的上边界的位置。
+XXXBottom：表示XXX的下边界的位置。
+XXXWidth：表示XXX的宽度，一般等于（下边界 - 上边界）
+XXXHeight：表示XXX的高度，一般等于（右边界 - 左边界）
 
 
-�ظ�
+回复
 
-    5¥
+    5楼
     2011-09-28 00:00
 
-    �ٱ� |
+    举报 |
 
     zqtjingzi
-    С����
+    小吧主
     12
 
-invLeft��
-invRight��
-invTop��
-invBottom��
-��ɫ�������壨����װ��������Ʒ�����Ĵ�С��ʵ���ϰ���B�����򿪱������ռ��ȫ���Ұ�ߵ���Ļ���������ļ����Կ���ʵ�ʵı�����СҪС�ڰ����Ļ��ʣ�ಿ�־����ɻ��л��Ƶı߿��Զ���䡣
+invLeft：
+invRight：
+invTop：
+invBottom：
+角色背包整体（包括装备区和物品栏）的大小。实际上按“B”键打开背包后会占据全部右半边的屏幕，但读此文件可以看出实际的背包大小要小于半个屏幕，剩余部分就是由绘有花纹的边框自动填充。
 
-gridX����Ʒ���ж����С�
-gridY����Ʒ���ж����С�
+gridX：物品栏有多少列。
+gridY：物品栏有多少行。
 
-gridLeft��
-gridRight��
-gridTop��
-gridBottom��
-��Ʒ���Ĵ�С��
-gridBoxWidth��
-gridBoxHeight��
-��Ʒ����ÿ�����ӵĴ�С��
+gridLeft：
+gridRight：
+gridTop：
+gridBottom：
+物品栏的大小。
+gridBoxWidth：
+gridBoxHeight：
+物品栏中每个格子的大小。
 
 
-�ظ�
+回复
 
-    6¥
+    6楼
     2011-09-28 00:01
 
-    �ٱ� |
+    举报 |
 
     zqtjingzi
-    С����
+    小吧主
     12
 
-rArmLeft��
-rArmRight��
-rArmTop��
-rArmBottom��
-rArmWidth��
-rArmHeight��
-�����������Ĵ�С��
+rArmLeft：
+rArmRight：
+rArmTop：
+rArmBottom：
+rArmWidth：
+rArmHeight：
+右手武器区的大小。
 
-torsoLeft��
-torsoRight��
-torsoTop��
-torsoBottom��
-torsoWidth��
-torsoHeight��
-�����·����Ĵ�С��
+torsoLeft：
+torsoRight：
+torsoTop：
+torsoBottom：
+torsoWidth：
+torsoHeight：
+身体衣服区的大小。
 
-lArmLeft��
-lArmRight��
-lArmTop��
-lArmBottom��
-lArmWidth��
-lArmHeight��
-�����������Ĵ�С��
+lArmLeft：
+lArmRight：
+lArmTop：
+lArmBottom：
+lArmWidth：
+lArmHeight：
+左手武器区的大小。
 
 
-�ظ�
+回复
 
-    7¥
+    7楼
     2011-09-28 00:01
 
-    �ٱ� |
+    举报 |
 
     zqtjingzi
-    С����
+    小吧主
     12
 
-headLeft��
-headRight��
-headTop��
-headBottom��
-headWidth��
-headHeight��
-ͷ�����Ĵ�С��
+headLeft：
+headRight：
+headTop：
+headBottom：
+headWidth：
+headHeight：
+头盔区的大小。
 
-neckLeft��
-neckRight��
-neckTop��
-neckBottom��
-neckWidth��
-neckHeight��
-�����������Ĵ�С��
+neckLeft：
+neckRight：
+neckTop：
+neckBottom：
+neckWidth：
+neckHeight：
+颈部项链区的大小。
 
 
-�ظ�
+回复
 
-    8¥
+    8楼
     2011-09-28 00:01
 
-    �ٱ� |
+    举报 |
 
     zqtjingzi
-    С����
+    小吧主
     12
 
-rhandLeft��
-rhandRight��
-rhandTop��
-rhandBottom��
-rhandWidth��
-rhandHeight��
-���ֽ�ָ���Ĵ�С��
+rhandLeft：
+rhandRight：
+rhandTop：
+rhandBottom：
+rhandWidth：
+rhandHeight：
+右手戒指区的大小。
 
-lHandLeft��
-lHandRight��
-lHandTop��
-lHandBottom��
-lHandWidth��
-lHandHeight��
-���ֽ�ָ���Ĵ�С��
+lHandLeft：
+lHandRight：
+lHandTop：
+lHandBottom：
+lHandWidth：
+lHandHeight：
+左手戒指区的大小。
 
-beltLeft��
-beltRight��
-beltTop��
-beltBottom��
-beltWidth��
-beltHeight��
-�������Ĵ�С��
+beltLeft：
+beltRight：
+beltTop：
+beltBottom：
+beltWidth：
+beltHeight：
+腰带区的大小。
 
 
-�ظ�
+回复
 
-    9¥
+    9楼
     2011-09-28 00:01
 
-    �ٱ� |
+    举报 |
 
     zqtjingzi
-    С����
+    小吧主
     12
 
-feetLeft��
-feetRight��
-feetTop��
-feetBottom��
-feetWidth��
-feetHeight��
-Ь�����Ĵ�С��
+feetLeft：
+feetRight：
+feetTop：
+feetBottom：
+feetWidth：
+feetHeight：
+鞋子区的大小。
 
-gloveLeft��
-gloveRight��
-gloveTop��
-gloveBottom��
-gloveWidth��
-gloveHeight��
-�������Ĵ�С��
+gloveLeft：
+gloveRight：
+gloveTop：
+gloveBottom：
+gloveWidth：
+gloveHeight：
+手套区的大小。
 
 
-�ظ�
+回复
 
-    10¥
+    10楼
     2011-09-28 00:01
 
-    �ٱ� |
+    举报 |
 
     zqtjingzi
-    С����
+    小吧主
     12
 
-����˵����
-��Ļ���Ͻ�Ϊԭ�㣬����0��0���㡣���д�С��ֵ��λΪ���ء�
+补充说明：
+屏幕左上角为原点，即（0，0）点。所有大小数值单位为像素。
 
 
-�ظ�
+回复
 
-    11¥
+    11楼
     2011-09-28 00:01
 
-    �ٱ� |
+    举报 |
 
     zqtjingzi
-    С����
+    小吧主
     12
 
-����˵����
-����ʵ�ִ󱳰��������ʱ���ı���ļ�ʱ��Ϊ����ʾЧ����ʵ�ʴ�С��һ���ԣ�һ��Ҫͬʱ�޸Ķ�Ӧ��dc6�ļ���
+特殊说明：
+当想实现大背包或大箱子时而改变此文件时，为了显示效果与实际大小的一致性，一定要同时修改对应的dc6文件。
 */
 
 typedef struct

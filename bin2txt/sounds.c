@@ -4,30 +4,30 @@
 #define NAME_PREFIX "so"
 
 /*
-A.sound = ÃèÊöÐÔ×Ö¶Î¡£
-B.index = ¼ÇÂ¼ID,Ê¹ÓÃÓÚÆäËûtxtÎÄ¼þ¡£ÈçLevels.txt,SoundEnviron.txt¡£
-C.filename = ½âÊÍÀ¸¡£¸ÃÉùÒôÎÄ¼þÔÚmpqÎÄ¼þÀïÃæµÄÎÄ¼þÃû£¬×¢ÒâAct1-4µÄÂ·¾¶Îªdata\global\music\act*\***.wav,ÔÚd2music.mpqÄÚ;Act5µÄÂ·¾¶Îªdata\global\music\act5\***.wav,ÔÚd2xmusic.wavÄÚ¡£Ìæ»»»òÔö¼ÓÉùÒôÎÄ¼þÊ±×¢ÒâÂ·¾¶¡£ÁíÍâ£¬¸Ä±äÎÄ¼þÃûÎÞÐ§¡£(¼û¸½Â¼)
-D.volume = ½âÊÍÀ¸¡£ÒôÁ¿¿ØÖÆ£¬È¡Öµ0-255£»ÊÇ·ñÆð×÷ÓÃÈ¡¾öÓÚmusic volÀ¸Öµ£¬¼ûÏÂ¡£
-E.group size = µ±ÒôÀÖÎÄ¼þÓÐ¶à¸öÊ±(Ò»×é),Ëæ»ú²¥·Å¡£ÓÐµãÀàËÆÓÚËæ»úµØÍ¼¡£µ±Ò»×éÖ»ÓÐÒ»¸öÊ±,ÖµÎª0,ÆäËûµÄÔÚ¸Ã×éµÄµÚÒ»¸öÎÄ¼þµÄ¸ÃÀ¸ÌîÈëÎÄ¼þ¸öÊý,ÆäËûÈ¡ÖµÎª0¡£Ò²¾ÍÊÇËµÖ»ÓÐÒ»¸öÒôÀÖ×éµÄµÚÒ»¸öÎÄ¼þ\Öµ²»Îª0¡£(ÎÒºÃÂÞàÂ!)
-F.loop = ÊÇ·ñÑ­»·²¥·Å¡£1=Ñ­»·²¥·Å£¬0=²¥·ÅÒ»´Î¡£
-G/H.fade in/fade out = ÒôÀÖµ­Èë»òµ­³öËù¾­ÀúµÄÊ±¼ä£¬¼´ÉùÒô´ÓÏûÊ§µ½Ö¸¶¨ÒôÁ¿ËùÐèÒªµÄÊ±¼ä¡£
-I.defer inst = Î´Öª
-J.stop inst = Î´Öª
-K.duration = ²¥·ÅÊ±¼ä¡£ÒâÒå²»Çå³þ,ËÆºõ³ýÁË¼¸¸öÓÐ¹Ø°×ÌìºÍÍíÉÏµÄµÄÉùÒôÍâ,ÈçAct2ºÍAct3(ÔÚIDÎª171ºÍ189µÄÉùÒôÎÄ¼þ¸½½ü),ÆäËû¾ùÈ¡Öµ0¡£
-L.compound = ¿ØÖÆÍ¬Ê±²¥·ÅµÄÉùÒôÊýÁ¿??²»Çå³þ¡£
-M.reverb = 0/1¿ØÖÆÊÇ·ñÔö¼Ó»ØÒôÐ§¹ûµ½ÉùÒô¡£
-N.falloff = È¡Öµ0-4£¬¿ØÖÆÉùÒôËæ¾àÀë¼õÈõµÄ¿ìÂý¡£
-O.cache = 0/1¿ØÖÆÊÇ·ñ¾­³£ÔÚ»º´æÖÐ²¥·Å¡£
-P.async only = 0/1¿ØÖÆÊÇ·ñÌø¹ý²¥·Å²»ÖØÒªµÄÉùÒôÈç¹û×°ÔØ²»¼°Ê±¡£
-Q.priority = È¡Öµ0-255£¬¿ØÖÆÉùÒôµÄ±äÈõ´ÎÐòÈç¹ûÍ¬Ê±ÓÐ¶à¸öÒôÀÖ²¥·Å¡£»»¾ä»°Ëµ¾ÍÊÇ¿ØÖÆ²¥·ÅµÄÓÅÏÈ¼¶¡£
-R.stream = 0/1¿ØÖÆÉùÒôÊÇ·ñ±ß×°ÔØ±ß²¥·Å£¬·ñÔòÏÈ×°ÔØÔÙ²¥·Å;Ö»¶ÔÒôÀÖÎÄ¼þÓÐÐ§¡£
-S.stereo = ²¼¶ûÖµ£¬¿ØÖÆÁ¢ÌåÉù£¬Ö»¶ÔÒôÀÖÎÄ¼þÓÐÐ§¡£×¢Òâ:16bits(Î»)wav¸ñÊ½£¬²ÉÑùÂÊ22,050Hz¡£
-T.tracking = 0/1¿ØÖÆÉùÒôÊÇ·ñËæËùÒÀ¸½µÄÒôÀÖ×éÒÆ¶¯,Èç¹û×éµÄÉùÒôÎÄ¼þÊý>=2ÔòÈ¡Öµ1¡£
-U.solo = 0/1¿ØÖÆ¸ÃÉùÒôÎÄ¼þÊÇ·ñµ¥¶À²¥·Å¡£
-V.music vol = 0/1¿ØÖÆÊÇ·ñÊ¹ÓÃvolumeÀ¸µÄÒôÁ¿Öµ¡£
-W.block 1 = Ñ­»·ÒôÀÖÔÚÉùÒôÎÄ¼þÖÐµÄÆ«ÒÆÁ¿¡£
-X.block 2 = Í¬ÉÏ¡£
-Y.block 3 = Í¬ÉÏ¡£
+A.sound = æè¿°æ€§å­—æ®µã€‚
+B.index = è®°å½•ID,ä½¿ç”¨äºŽå…¶ä»–txtæ–‡ä»¶ã€‚å¦‚Levels.txt,SoundEnviron.txtã€‚
+C.filename = è§£é‡Šæ ã€‚è¯¥å£°éŸ³æ–‡ä»¶åœ¨mpqæ–‡ä»¶é‡Œé¢çš„æ–‡ä»¶åï¼Œæ³¨æ„Act1-4çš„è·¯å¾„ä¸ºdata\global\music\act*\***.wav,åœ¨d2music.mpqå†…;Act5çš„è·¯å¾„ä¸ºdata\global\music\act5\***.wav,åœ¨d2xmusic.wavå†…ã€‚æ›¿æ¢æˆ–å¢žåŠ å£°éŸ³æ–‡ä»¶æ—¶æ³¨æ„è·¯å¾„ã€‚å¦å¤–ï¼Œæ”¹å˜æ–‡ä»¶åæ— æ•ˆã€‚(è§é™„å½•)
+D.volume = è§£é‡Šæ ã€‚éŸ³é‡æŽ§åˆ¶ï¼Œå–å€¼0-255ï¼›æ˜¯å¦èµ·ä½œç”¨å–å†³äºŽmusic volæ å€¼ï¼Œè§ä¸‹ã€‚
+E.group size = å½“éŸ³ä¹æ–‡ä»¶æœ‰å¤šä¸ªæ—¶(ä¸€ç»„),éšæœºæ’­æ”¾ã€‚æœ‰ç‚¹ç±»ä¼¼äºŽéšæœºåœ°å›¾ã€‚å½“ä¸€ç»„åªæœ‰ä¸€ä¸ªæ—¶,å€¼ä¸º0,å…¶ä»–çš„åœ¨è¯¥ç»„çš„ç¬¬ä¸€ä¸ªæ–‡ä»¶çš„è¯¥æ å¡«å…¥æ–‡ä»¶ä¸ªæ•°,å…¶ä»–å–å€¼ä¸º0ã€‚ä¹Ÿå°±æ˜¯è¯´åªæœ‰ä¸€ä¸ªéŸ³ä¹ç»„çš„ç¬¬ä¸€ä¸ªæ–‡ä»¶\å€¼ä¸ä¸º0ã€‚(æˆ‘å¥½ç½—å—¦!)
+F.loop = æ˜¯å¦å¾ªçŽ¯æ’­æ”¾ã€‚1=å¾ªçŽ¯æ’­æ”¾ï¼Œ0=æ’­æ”¾ä¸€æ¬¡ã€‚
+G/H.fade in/fade out = éŸ³ä¹æ·¡å…¥æˆ–æ·¡å‡ºæ‰€ç»åŽ†çš„æ—¶é—´ï¼Œå³å£°éŸ³ä»Žæ¶ˆå¤±åˆ°æŒ‡å®šéŸ³é‡æ‰€éœ€è¦çš„æ—¶é—´ã€‚
+I.defer inst = æœªçŸ¥
+J.stop inst = æœªçŸ¥
+K.duration = æ’­æ”¾æ—¶é—´ã€‚æ„ä¹‰ä¸æ¸…æ¥š,ä¼¼ä¹Žé™¤äº†å‡ ä¸ªæœ‰å…³ç™½å¤©å’Œæ™šä¸Šçš„çš„å£°éŸ³å¤–,å¦‚Act2å’ŒAct3(åœ¨IDä¸º171å’Œ189çš„å£°éŸ³æ–‡ä»¶é™„è¿‘),å…¶ä»–å‡å–å€¼0ã€‚
+L.compound = æŽ§åˆ¶åŒæ—¶æ’­æ”¾çš„å£°éŸ³æ•°é‡??ä¸æ¸…æ¥šã€‚
+M.reverb = 0/1æŽ§åˆ¶æ˜¯å¦å¢žåŠ å›žéŸ³æ•ˆæžœåˆ°å£°éŸ³ã€‚
+N.falloff = å–å€¼0-4ï¼ŒæŽ§åˆ¶å£°éŸ³éšè·ç¦»å‡å¼±çš„å¿«æ…¢ã€‚
+O.cache = 0/1æŽ§åˆ¶æ˜¯å¦ç»å¸¸åœ¨ç¼“å­˜ä¸­æ’­æ”¾ã€‚
+P.async only = 0/1æŽ§åˆ¶æ˜¯å¦è·³è¿‡æ’­æ”¾ä¸é‡è¦çš„å£°éŸ³å¦‚æžœè£…è½½ä¸åŠæ—¶ã€‚
+Q.priority = å–å€¼0-255ï¼ŒæŽ§åˆ¶å£°éŸ³çš„å˜å¼±æ¬¡åºå¦‚æžœåŒæ—¶æœ‰å¤šä¸ªéŸ³ä¹æ’­æ”¾ã€‚æ¢å¥è¯è¯´å°±æ˜¯æŽ§åˆ¶æ’­æ”¾çš„ä¼˜å…ˆçº§ã€‚
+R.stream = 0/1æŽ§åˆ¶å£°éŸ³æ˜¯å¦è¾¹è£…è½½è¾¹æ’­æ”¾ï¼Œå¦åˆ™å…ˆè£…è½½å†æ’­æ”¾;åªå¯¹éŸ³ä¹æ–‡ä»¶æœ‰æ•ˆã€‚
+S.stereo = å¸ƒå°”å€¼ï¼ŒæŽ§åˆ¶ç«‹ä½“å£°ï¼Œåªå¯¹éŸ³ä¹æ–‡ä»¶æœ‰æ•ˆã€‚æ³¨æ„:16bits(ä½)wavæ ¼å¼ï¼Œé‡‡æ ·çŽ‡22,050Hzã€‚
+T.tracking = 0/1æŽ§åˆ¶å£°éŸ³æ˜¯å¦éšæ‰€ä¾é™„çš„éŸ³ä¹ç»„ç§»åŠ¨,å¦‚æžœç»„çš„å£°éŸ³æ–‡ä»¶æ•°>=2åˆ™å–å€¼1ã€‚
+U.solo = 0/1æŽ§åˆ¶è¯¥å£°éŸ³æ–‡ä»¶æ˜¯å¦å•ç‹¬æ’­æ”¾ã€‚
+V.music vol = 0/1æŽ§åˆ¶æ˜¯å¦ä½¿ç”¨volumeæ çš„éŸ³é‡å€¼ã€‚
+W.block 1 = å¾ªçŽ¯éŸ³ä¹åœ¨å£°éŸ³æ–‡ä»¶ä¸­çš„åç§»é‡ã€‚
+X.block 2 = åŒä¸Šã€‚
+Y.block 3 = åŒä¸Šã€‚
 */
 
 typedef struct

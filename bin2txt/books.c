@@ -4,27 +4,27 @@
 #define NAME_PREFIX "bk"
 
 /*
-Name��������δʹ�á�
+Name：书名，未使用。
 
-Nameco�����ֺ�׺�����������ΪBook + ��׺��
+Nameco：名字后缀。此书的命名为Book + 后缀。
 
-Completed���Ƿ�����ɡ�
+Completed：是否已完成。
 
-ScrollSpellCode����Ӧ�������Ʒ���롣
+ScrollSpellCode：对应卷轴的物品代码。
 
-BookSpellCode�������Ʒ���롣
+BookSpellCode：书的物品代码。
 
-pSpell��ʹ��Ч����
+pSpell：使用效果。
 
-SpellIcon���Ƿ���ʹ��ͼ�ꡣ
+SpellIcon：是否有使用图标。
 
-ScrollSkill��ʹ�þ����Ӧ�ļ��ܡ�
+ScrollSkill：使用卷轴对应的技能。
 
-BookSkill��ʹ�����Ӧ�ļ��ܣ���������1�����൱��ʹ��һ�����ᡣ
+BookSkill：使用书对应的技能，即数量减1，并相当于使用一个卷轴。
 
-BaseCost����ļ۸�
+BaseCost：书的价格。
 
-CostPerCharge��ÿ����һ�����������ӵļ۸�
+CostPerCharge：每增加一个卷轴所增加的价格。
 */
 
 typedef struct

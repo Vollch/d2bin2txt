@@ -21,17 +21,17 @@ This guide is based on Kingpin's 1.10 update to my 1.09 MonStats.txt guide.
 
 ID Settings
 
-ID ¨C this column contains the pointer that will be used in other txt files such as levels.txt and superuniques.txt.
+ID â€“ this column contains the pointer that will be used in other txt files such as levels.txt and superuniques.txt.
 
-HCIDX ¨C this is the actual internal ID of the unit (this is what the ID pointer actually points at) remember that no two units can have the same ID, this will result in lots of unpredictable behaviour and crashes so please don¡¯t do it. This "
+HCIDX â€“ this is the actual internal ID of the unit (this is what the ID pointer actually points at) remember that no two units can have the same ID, this will result in lots of unpredictable behaviour and crashes so please donâ€™t do it. This "
 HarcCodedInDeX" is used for several things, such as determining whenever the unit uses DCC or DC6 graphics (like mephisto and the death animations of Diablo, the Maggoc Queen etc.), the HCIDX column also links other hardcoded effects to the units, such 
 as the transparency on necro summons and the name-color change on unique boss units (thanks to Kingpin for the info)
 
-BASEID ¨C this column contains the ID pointer of the ¡°base¡± unit for this specific monster type (ex. There are five types of ¡°Fallen¡±; all of them have fallen1 as their ¡°base¡± unit). The baseID is responsible for some hardcoded behaviours, for 
+BASEID â€“ this column contains the ID pointer of the â€œbaseâ€ unit for this specific monster type (ex. There are five types of â€œFallenâ€; all of them have fallen1 as their â€œbaseâ€ unit). The baseID is responsible for some hardcoded behaviours, for 
 example moving thru walls (ghosts), knowing what units to ressurect, create etc (putrid defilers, shamans etc), the explosion appended to suicide minions (either cold, fire or ice). Thanks to Kingpin for additional info on this column.
 
-NEXTINCLASS ¨C this column contains the ID of the next unit in the chain. (Continuing on the above example, fallen1 has the ID pointer of fallen2 in here). If you want to make a monster subtype less you should simply leave this blank and make BaseId 
-point at itself (its ID pointer). I assume the game may use this for ¡°map generated¡± monsters such as the fallen in the fallen camps, which get picked based on area level (the same camp, that in the cold plains contains normal fallen will contain 
+NEXTINCLASS â€“ this column contains the ID of the next unit in the chain. (Continuing on the above example, fallen1 has the ID pointer of fallen2 in here). If you want to make a monster subtype less you should simply leave this blank and make BaseId 
+point at itself (its ID pointer). I assume the game may use this for â€œmap generatedâ€ monsters such as the fallen in the fallen camps, which get picked based on area level (the same camp, that in the cold plains contains normal fallen will contain 
 carvers and devilkin elsewhere).
 
 
@@ -41,14 +41,14 @@ carvers and devilkin elsewhere).
 
 Display Settings I
 
-TRANSLVL ¨C this indicates which palette entry the unit will use, most monsters have a palshift.dat file in their COF folder, this contains 8 palettes (5 of them are used normally), these palettes are used by the game to make the various subtypes appear 
-in ¡°a different light¡± icon_wink.gif. Note that some tokens such as FC do not accept any palettes whatsoever.
+TRANSLVL â€“ this indicates which palette entry the unit will use, most monsters have a palshift.dat file in their COF folder, this contains 8 palettes (5 of them are used normally), these palettes are used by the game to make the various subtypes appear 
+in â€œa different lightâ€ icon_wink.gif. Note that some tokens such as FC do not accept any palettes whatsoever.
 
-NAMESTR ¨C this column contains the string-key used in the TBL files to make this monsters name appear when you highlight it. Note that string keys are case sensitive, so if you enter a key like ¡°Foo¡± in monstats.txt you must enter exactly that in the 
-TBL file! (IE if you enter ¡°foo¡± or ¡°fOO¡± you will get a nice ¡°not xlated call ken¡± or ¡°an evil force¡± displayed instead of your enemies name).
+NAMESTR â€“ this column contains the string-key used in the TBL files to make this monsters name appear when you highlight it. Note that string keys are case sensitive, so if you enter a key like â€œFooâ€ in monstats.txt you must enter exactly that in the 
+TBL file! (IE if you enter â€œfooâ€ or â€œfOOâ€ you will get a nice â€œnot xlated call kenâ€ or â€œan evil forceâ€ displayed instead of your enemies name).
 
-MONSTATSEX ¨C this column contains the ID pointer to an entry in MonStats2.txt. In 1.10 Blizzard have moved all the graphical aspects (light radius, bleeding etc) to a new file to conserve space (monstats.txt is one column short of 256, the maximum M$ 
-Excel can handle, and that¡¯s what they used for their files I guess).
+MONSTATSEX â€“ this column contains the ID pointer to an entry in MonStats2.txt. In 1.10 Blizzard have moved all the graphical aspects (light radius, bleeding etc) to a new file to conserve space (monstats.txt is one column short of 256, the maximum M$ 
+Excel can handle, and thatâ€™s what they used for their files I guess).
 
 
 
@@ -57,14 +57,14 @@ Excel can handle, and that¡¯s what they used for their files I guess).
 
 Other links to external files/code
 
-MONPROP ¨C this column contains the ID pointer to an entry in MonProp.txt. MonProp.txt controls what special modifiers are appended to the unit, for example you can use it to give your monsters random resistances or immunities, give them ¡°get hit skills
-¡± and almost anything else (look at the MCML).
+MONPROP â€“ this column contains the ID pointer to an entry in MonProp.txt. MonProp.txt controls what special modifiers are appended to the unit, for example you can use it to give your monsters random resistances or immunities, give them â€œget hit skills
+â€ and almost anything else (look at the MCML).
 
-MONTYPE ¨C this column contains the group ID of the ¡°super group¡± this monster belongs to, IE all skeletons belong to the ¡°super group¡± skeleton. The 1.10 MonType.txt works exactly like ItemTypes.txt, furthermore this file is used for special 
+MONTYPE â€“ this column contains the group ID of the â€œsuper groupâ€ this monster belongs to, IE all skeletons belong to the â€œsuper groupâ€ skeleton. The 1.10 MonType.txt works exactly like ItemTypes.txt, furthermore this file is used for special 
 modifiers. (Additional damage vs. monster-class)
 
-AI ¨C this column tells the game which AI to use for this monster, note that every AI needs a set amount of animation modes (GH, A1, A2, S1, WL, RN etc). If you want to make a melee unit shoot missiles you must edit the COF files for its attack 
-animations to use trigger ID #2 and not trigger ID #1 otherwise the missile will either not be released or won¡¯t do any damage, the same change must also be done in ANIMDATA.D2.
+AI â€“ this column tells the game which AI to use for this monster, note that every AI needs a set amount of animation modes (GH, A1, A2, S1, WL, RN etc). If you want to make a melee unit shoot missiles you must edit the COF files for its attack 
+animations to use trigger ID #2 and not trigger ID #1 otherwise the missile will either not be released or wonâ€™t do any damage, the same change must also be done in ANIMDATA.D2.
 
 
 
@@ -73,10 +73,10 @@ animations to use trigger ID #2 and not trigger ID #1 otherwise the missile will
 
 Display Settings II
 
-DESCSTR ¨C this column contains the string-key for the monsters description (leave it blank for no description), IE ever wandered how to make it say something below the monster name (such as ¡°Drains Mana and Stamina etc), well this is how you do it. 
+DESCSTR â€“ this column contains the string-key for the monsters description (leave it blank for no description), IE ever wandered how to make it say something below the monster name (such as â€œDrains Mana and Stamina etc), well this is how you do it. 
 Just put the string-key of the string you want to display below the monsters name in here.
 
-CODE ¨C this is the only graphical setting (besides TRANSLVL) left in MonStats.txt, this controls which token the game uses for this monster (IE in what folder it looks for animations).
+CODE â€“ this is the only graphical setting (besides TRANSLVL) left in MonStats.txt, this controls which token the game uses for this monster (IE in what folder it looks for animations).
 
 
 
@@ -85,10 +85,10 @@ CODE ¨C this is the only graphical setting (besides TRANSLVL) left in MonStats.t
 
 Misc Boolean Settings I
 
-ENABLED ¨C Boolean, 1=enabled, 0=disabled. This controls whenever the unit can be used at all for any purpose whatsoever. This is not the only setting that controls this; there are some other things that can also disable the unit. (RARITY and ISSPAWN 
+ENABLED â€“ Boolean, 1=enabled, 0=disabled. This controls whenever the unit can be used at all for any purpose whatsoever. This is not the only setting that controls this; there are some other things that can also disable the unit. (RARITY and ISSPAWN 
 columns see those for description)
 
-RANGEDTYPE ¨C Boolean, 1=ranged attacker, 0=melee attacker. This tells the game whenever this is a ranged attacker; I suspect this has to do with the RANGEDSPAWN column in levels.txt. (Could it be the game uses this for preference settings when spawning 
+RANGEDTYPE â€“ Boolean, 1=ranged attacker, 0=melee attacker. This tells the game whenever this is a ranged attacker; I suspect this has to do with the RANGEDSPAWN column in levels.txt. (Could it be the game uses this for preference settings when spawning 
 monsters to avoid areas being populated only with melee monsters, IE the game picks a set amount of monsters for every level, randomly, only based on their rarity values, from those specified in Levels.txt, now I assume that it could pick 4 melee 
 monsters, however in 1.10 Blizzard added a check to prevent this from happening AFAIK and this could be how they control it.)
 
@@ -99,15 +99,15 @@ monsters, however in 1.10 Blizzard added a check to prevent this from happening 
 
 Nest/Spawner Settings
 
-PLACESPAWN ¨C Boolean, 1=spawner, 0=not a spawner. This tells the game whenever this unit is a ¡°nest¡±. IE, monsters that spawn new monsters have this set to 1. Note that you can make any monster spawn new monsters, irregardless of its AI, all you need 
-to do is adjust these four columns and make sure one of its skills is either ¡°Nest¡± or ¡°Minion Spawner¡±.
+PLACESPAWN â€“ Boolean, 1=spawner, 0=not a spawner. This tells the game whenever this unit is a â€œnestâ€. IE, monsters that spawn new monsters have this set to 1. Note that you can make any monster spawn new monsters, irregardless of its AI, all you need 
+to do is adjust these four columns and make sure one of its skills is either â€œNestâ€ or â€œMinion Spawnerâ€.
 
-SPAWN ¨C this column contains the ID pointer of the unit to spawn. (in case it is a spawner that is), so if you want to make a new monster that generates Balrogs this is where you would put the Balrogs ID pointer.
+SPAWN â€“ this column contains the ID pointer of the unit to spawn. (in case it is a spawner that is), so if you want to make a new monster that generates Balrogs this is where you would put the Balrogs ID pointer.
 
-SPAWNX, SPAWNY ¨C the x/y offsets at which spawned monsters are placed. IE. This prevents the spawned monsters being created at the same x/y coordinates as the spawner itself, albeit its not needed, Blizzards collision detection system is good enough to 
+SPAWNX, SPAWNY â€“ the x/y offsets at which spawned monsters are placed. IE. This prevents the spawned monsters being created at the same x/y coordinates as the spawner itself, albeit its not needed, Blizzards collision detection system is good enough to 
 prevent them from getting stuck.
 
-SPAWNMODE ¨C which mode will the spawned monster be spawned in. IE. If you make a golem summoner (yes I know, ¡°very original¡±) you could put S1 in here to make it look as if the golems are really summoned (otherwise they would just appear).
+SPAWNMODE â€“ which mode will the spawned monster be spawned in. IE. If you make a golem summoner (yes I know, â€œvery originalâ€) you could put S1 in here to make it look as if the golems are really summoned (otherwise they would just appear).
 
 
 
@@ -116,21 +116,21 @@ SPAWNMODE ¨C which mode will the spawned monster be spawned in. IE. If you make 
 
 Group and Minion Settings
 
-MINION1, MINION2 ¨C these columns contain the ID pointers to the minions that spawn around this unit when it is created. Lets say you want your super-strong boss to spawn with 5 Oblivion Knights. To do this you would simply enter the Oblivion Knights ID 
+MINION1, MINION2 â€“ these columns contain the ID pointers to the minions that spawn around this unit when it is created. Lets say you want your super-strong boss to spawn with 5 Oblivion Knights. To do this you would simply enter the Oblivion Knights ID 
 pointer in the MINION1 column. And set PARTYMIN and PARTYMAX both to 5. MINION1/2 are used for several other things. If the monster spawns as unique or superunique then it will have the unit from MINION1/2 set as its minion instead of monsters of its 
-own type. That¡¯s why Lord De Seis doesn¡¯t spawn with other oblivion knights anymore. To semi-circumvent this I suggest you simply put the monsters ID pointer in the MINION2 column (I.E. if you give the Oblivion Knights their own ID pointer in MINION2, 
+own type. Thatâ€™s why Lord De Seis doesnâ€™t spawn with other oblivion knights anymore. To semi-circumvent this I suggest you simply put the monsters ID pointer in the MINION2 column (I.E. if you give the Oblivion Knights their own ID pointer in MINION2, 
 Lord De Seis should spawn with both Doom Knights and Oblivion Knights again). The other use controls what monster is created when this unit dies. For example Flayer Shamans will spawn a regular Flayer when they are killed. To enable this you must set 
 SPLENDDEATH to 1, make sure the unit you spawn this was has a raise or resurrect sequence otherwise it will look weird (but it works).
 
-SETBOSS ¨C Boolean, 1=set unit as boss, 0=don¡¯t set unit as boss. The original guide stated that this controls which type of minion the unit spawns with when it¡¯s a boss. This column however does not influence this behaviour. I believe this has to do 
+SETBOSS â€“ Boolean, 1=set unit as boss, 0=donâ€™t set unit as boss. The original guide stated that this controls which type of minion the unit spawns with when itâ€™s a boss. This column however does not influence this behaviour. I believe this has to do 
 with AI (IE some units can pass on commands to their minions, maybe this specifies which unit can do so).
 
-BOSSXFER ¨C Boolean, 1=true, 0=false. Unknown, either related to boss modifiers (Lightning enchanted etc) or to AI.
+BOSSXFER â€“ Boolean, 1=true, 0=false. Unknown, either related to boss modifiers (Lightning enchanted etc) or to AI.
 
-PARTYMIN, PARTYMAX ¨C How many minions are spawned together with this unit. As mentioned above in the MINION1/2 columns, this controls the quantity of minions this unit has. Id avoid setting this to more 15.
+PARTYMIN, PARTYMAX â€“ How many minions are spawned together with this unit. As mentioned above in the MINION1/2 columns, this controls the quantity of minions this unit has. Id avoid setting this to more 15.
 
-MINGRP, MAXGRP ¨C Exactly like the previous two columns, just that this controls how many units of the base unit to spawn. In the past (1.00-1.06), setting the minimum to more then 99 would crash the game. I am not aware if this also occurs in 1.07-1.10 
-but I¡¯d avoid doing it anyway.
+MINGRP, MAXGRP â€“ Exactly like the previous two columns, just that this controls how many units of the base unit to spawn. In the past (1.00-1.06), setting the minimum to more then 99 would crash the game. I am not aware if this also occurs in 1.07-1.10 
+but Iâ€™d avoid doing it anyway.
 
 
 
@@ -138,10 +138,10 @@ but I¡¯d avoid doing it anyway.
 
 Population Control and Dynamics Settings I
 
-SPARSEPOPULATE ¨C This column is a great tool for us balance freaks. This is like a ¡°second layer of security¡± when it comes to population control. Lets say you have a really tough enemy and want it to occur less densely then the other monsters in a 
+SPARSEPOPULATE â€“ This column is a great tool for us balance freaks. This is like a â€œsecond layer of securityâ€ when it comes to population control. Lets say you have a really tough enemy and want it to occur less densely then the other monsters in a 
 level. So, you have the choice of either lowering MONDEN (levels.txt) or MINGRP and MAXGRP. But this would in every case not produce exactly what you want, lowering MONDEN would make the monster population, irregardless of type less dense and lowering 
-the amount of monsters in the group wouldn¡¯t help either (it would possibly make your tough monster easier then you want). So what to do? This column controls the overall chance something will spawn (0-100%), Leaving it blank is the same as 100%. If 
-you enter ¡°80¡± in this column then whenever the game chooses to spawn this unit it will first roll out the chances. So in 2 out of 10 cases the monster will not be spawned. Setting it lower then 50 is however not recommended. Note, this does not mean 
+the amount of monsters in the group wouldnâ€™t help either (it would possibly make your tough monster easier then you want). So what to do? This column controls the overall chance something will spawn (0-100%), Leaving it blank is the same as 100%. If 
+you enter â€œ80â€ in this column then whenever the game chooses to spawn this unit it will first roll out the chances. So in 2 out of 10 cases the monster will not be spawned. Setting it lower then 50 is however not recommended. Note, this does not mean 
 that lower values don't work or do something bad. In case the game doesn't roll out the monster and this monster has units specified in minion1/minion2 columns it will only spawn those minions without the "main" unit.
 
 
@@ -151,7 +151,7 @@ that lower values don't work or do something bad. In case the game doesn't roll 
 
 Velocity Settings
 
-VELOCITY, RUN ¨C controls the walking and running speed of this monster (respectively), note that RUN is only used if the monster has a RN mode and its AI uses that mode. I¡¯d suggest staying below 25 on this one.
+VELOCITY, RUN â€“ controls the walking and running speed of this monster (respectively), note that RUN is only used if the monster has a RN mode and its AI uses that mode. Iâ€™d suggest staying below 25 on this one.
 
 
 
@@ -160,7 +160,7 @@ VELOCITY, RUN ¨C controls the walking and running speed of this monster (respect
 
 Population Control and Dynamics Settings II
 
-RARITY ¨C This one also helps controlling the monster population, it controls the overall odds that this monster will be spawned. I.E. Lets say in levels.txt you have two monsters set to spawn Monster A has a rarity of 10 whereas Monster B has a rarity 
+RARITY â€“ This one also helps controlling the monster population, it controls the overall odds that this monster will be spawned. I.E. Lets say in levels.txt you have two monsters set to spawn Monster A has a rarity of 10 whereas Monster B has a rarity 
 of 1 and the level in question is limited to 1 monster type. First the game sums up the chances (11) and then calculates the odds of the monster spawning. Which would be 1/11 (9% chance) for Monster B and 10/11 (91% chance) for Monster A, thus Monster A 
 is a lot more common then monster B. If you set this column to 0 then the monster will never be selected by Levels.txt (for obvious reasons, and I dare to say, it could lead to a crash if this is the only monster to spawn on the level, it would lead to 
 a division by zero, unless Blizzard added some double checks here).
@@ -172,7 +172,7 @@ a division by zero, unless Blizzard added some double checks here).
 
 Level Settings
 
-LEVEL, LEVEL(N), LEVEL(H) ¨C Controls the monsters level on the specified difficulty. This setting is only used on normal, on nightmare and hell (thus the two later columns are actually obsolete) the monsters level is identical with the area level. I 
+LEVEL, LEVEL(N), LEVEL(H) â€“ Controls the monsters level on the specified difficulty. This setting is only used on normal, on nightmare and hell (thus the two later columns are actually obsolete) the monsters level is identical with the area level. I 
 did some tests on this and found it to not matter if the level is higher or lower. It will be set to it indefinitely. Note that the monsters level is used by the game to evaluate the stats the monster will have in 1.10 (look at the stats section for 
 more info).
 
@@ -183,9 +183,9 @@ more info).
 
 Sound Settings
 
-MONSOUND ¨C Specifies the ID pointer to this monsters ¡°Sound Bank¡± in MonSound.txt when this monster is normal.
+MONSOUND â€“ Specifies the ID pointer to this monsters â€œSound Bankâ€ in MonSound.txt when this monster is normal.
 
-UMONSOUND ¨C Specifies the ID pointer to this monsters ¡°Sound Bank¡± in MonSounds.txt when this monster is unique or champion. For Superunique monsters this is controlled by SuperUniques.txt.
+UMONSOUND â€“ Specifies the ID pointer to this monsters â€œSound Bankâ€ in MonSounds.txt when this monster is unique or champion. For Superunique monsters this is controlled by SuperUniques.txt.
 
 
 
@@ -194,14 +194,14 @@ UMONSOUND ¨C Specifies the ID pointer to this monsters ¡°Sound Bank¡± in MonSoun
 
 AI Settings
 
-THREAT ¨C Used by the games Threat Rating System to tell AIs which unit to target first. The higher this is the higher the Threat level. So I guess setting this to 25 or so on Maggot Eggs would make your Merc try to destroy those first.
+THREAT â€“ Used by the games Threat Rating System to tell AIs which unit to target first. The higher this is the higher the Threat level. So I guess setting this to 25 or so on Maggot Eggs would make your Merc try to destroy those first.
 
-AIDEL, AIDEL(N), AIDEL(H) ¨C The controls delays between AI ticks, however how exactly this is used is still shrouded in mystery. Its likely that each AI may use this in a sightley different fashion. In general however, the higher the number the slower 
+AIDEL, AIDEL(N), AIDEL(H) â€“ The controls delays between AI ticks, however how exactly this is used is still shrouded in mystery. Its likely that each AI may use this in a sightley different fashion. In general however, the higher the number the slower 
 something should become (after all the delay increases that way), what part of the AI this delay applies to however is uncertain due to the quantity of different observations.
 
-AIDIST, AIDIST(N), AIDIST(H) ¨C The distance in cells required for this AI to be enabled. This is only used for mephisto on nightmare and hell, I assume the game otherwise uses some hardcoded default value. For the units ¡°Radius of Awareness¡±.
+AIDIST, AIDIST(N), AIDIST(H) â€“ The distance in cells required for this AI to be enabled. This is only used for mephisto on nightmare and hell, I assume the game otherwise uses some hardcoded default value. For the units â€œRadius of Awarenessâ€.
 
-AIP1-8, AIP1-8(N), AIP1-8(H) ¨C These cells pass on parameters (usually in percentage) to the AI code. For descriptions about what all these AIs do check MonAI.txt. Note that some AIs are very badly or not at all, explained there (¡°Thanks¡± Blizzard!). 
+AIP1-8, AIP1-8(N), AIP1-8(H) â€“ These cells pass on parameters (usually in percentage) to the AI code. For descriptions about what all these AIs do check MonAI.txt. Note that some AIs are very badly or not at all, explained there (â€œThanksâ€ Blizzard!). 
 Many people have trouble with the AI of the Imps, this AI is special and uses multiple rows, to understand what the cells do look at the original monstats.txt file (from D2EXP.MPQ).
 
 
@@ -211,8 +211,8 @@ Many people have trouble with the AI of the Imps, this AI is special and uses mu
 
 Projectile Settings
 
-MISSA1, MISSA2, MISSS1, MISSS3, MISSS4, MISSC, MISSSQ ¨C These columns control ¡°non-skill-related¡± missiles used by the monster. For example if you enter a missile ID pointer (from Missiles.txt) in MissA1 then, whenever the monster uses its Attack1 
-Mode it will shoot a missile, this however will not work properly if 1. The COF files of A1 use the #1 trigger (to get it to work change the trigger in the COF files and in ANIMDATA.D2 to #2). And 2. If the AI of the monster doesn¡¯t support missiles it 
+MISSA1, MISSA2, MISSS1, MISSS3, MISSS4, MISSC, MISSSQ â€“ These columns control â€œnon-skill-relatedâ€ missiles used by the monster. For example if you enter a missile ID pointer (from Missiles.txt) in MissA1 then, whenever the monster uses its Attack1 
+Mode it will shoot a missile, this however will not work properly if 1. The COF files of A1 use the #1 trigger (to get it to work change the trigger in the COF files and in ANIMDATA.D2 to #2). And 2. If the AI of the monster doesnâ€™t support missiles it 
 will usually look very weird (but this can sometimes create nice effects). For the beginners, A1=Attack1, A2=Attack2, S1=Skill1, S2=Skill2, S3=Skill3, S4=Skill4, C=Cast, SQ=Sequence.
 
 
@@ -221,23 +221,23 @@ will usually look very weird (but this can sometimes create nice effects). For t
 
 Misc Boolean Settings II (especially NPC related!)
 
-ALIGN ¨C Switch, 1=aligned, 0=enemy, 2=neutral. This setting controls whenever the monster fights on your side or fights against you (or if it just walks around, IE a critter). If you want to turn some obsolete NPCs into enemies like I usually do this 
+ALIGN â€“ Switch, 1=aligned, 0=enemy, 2=neutral. This setting controls whenever the monster fights on your side or fights against you (or if it just walks around, IE a critter). If you want to turn some obsolete NPCs into enemies like I usually do this 
 is one of the settings you will need to modify. Setting it to 2 without adjusting other settings (related to AI and also some in MonStats2) it will simply attack everything.
 
-ISSPAWN ¨C Boolean, 1=spawnable, 0=not spawnable. This controls whenever this unit can be spawned via Levels.txt.
+ISSPAWN â€“ Boolean, 1=spawnable, 0=not spawnable. This controls whenever this unit can be spawned via Levels.txt.
 
-ISMELEE ¨C Boolean, 1=melee attacker, 0=not a melee attacker. This controls whenever this unit can spawn with boss modifiers such as Multiple Shot or not. IE Melee monsters will never spawn with MS.
+ISMELEE â€“ Boolean, 1=melee attacker, 0=not a melee attacker. This controls whenever this unit can spawn with boss modifiers such as Multiple Shot or not. IE Melee monsters will never spawn with MS.
 
-NPC ¨C Boolean, 1=I¡¯m a NPC, 0=I¡¯m not. This controls whenever the unit is a NPC or not. See below.
+NPC â€“ Boolean, 1=Iâ€™m a NPC, 0=Iâ€™m not. This controls whenever the unit is a NPC or not. See below.
 
-INTERACT ¨C Boolean, 1=Special NPC features enabled, 0=No special NPC features.
+INTERACT â€“ Boolean, 1=Special NPC features enabled, 0=No special NPC features.
 This controls whenever you can interact with this unit. IE. This controls whenever it opens a speech-box or menu when you click on the unit. To turn units like Kaeleen or Flavie into enemies you will need to set this to 0 (you will also need to set NPC 
 to 0 for that).
 
-INVENTORY ¨C Boolean, 1=Has an inventory, 0=Has no inventory. Controls whenever this NPC or UNIT can carry items with it. For NPCs this means that you can access their Inventory and buy items (if you disable this and then try to access this feature it 
-will cause a crash so don¡¯t do it unless you know what you¡¯re doing). For Monsters this means that they can access their equipment data in MonEquip.txt.
+INVENTORY â€“ Boolean, 1=Has an inventory, 0=Has no inventory. Controls whenever this NPC or UNIT can carry items with it. For NPCs this means that you can access their Inventory and buy items (if you disable this and then try to access this feature it 
+will cause a crash so donâ€™t do it unless you know what youâ€™re doing). For Monsters this means that they can access their equipment data in MonEquip.txt.
 
-INTOWN ¨C Boolean, 1=I can enter towns, 0=I can¡¯t enter towns. This controls whenever enemies can follow you into a town or not. This should be set to 1 for everything that spawns in a town.
+INTOWN â€“ Boolean, 1=I can enter towns, 0=I canâ€™t enter towns. This controls whenever enemies can follow you into a town or not. This should be set to 1 for everything that spawns in a town.
 
 
 
@@ -246,12 +246,12 @@ INTOWN ¨C Boolean, 1=I can enter towns, 0=I can¡¯t enter towns. This controls wh
 
 Type Settings
 
-LUNDEAD ¨C Boolean, 1=True, 0=False. Blizzard used this to differentiate High and Low Undead (IE. Low undead like Zombies, Skeletons etc are set to 1 here), both this and HUNDEAD will make the unit be considered undead so I don¡¯t see how these two 
+LUNDEAD â€“ Boolean, 1=True, 0=False. Blizzard used this to differentiate High and Low Undead (IE. Low undead like Zombies, Skeletons etc are set to 1 here), both this and HUNDEAD will make the unit be considered undead so I donâ€™t see how these two 
 actually differ. This may have to with the Unravelers resurrecting behaviour (IE they only ressurect low undead), thanks to Brother Laz for this input.
 
-HUNDEAD ¨C Boolean, 1=True, 0=False. This is usually set for large magical undead monsters Lichs, Unravelers etc. See comments under the previous column.
+HUNDEAD â€“ Boolean, 1=True, 0=False. This is usually set for large magical undead monsters Lichs, Unravelers etc. See comments under the previous column.
 
-DEMON ¨C Boolean, 1=True, 0=False. This makes the game consider this unit a demon.
+DEMON â€“ Boolean, 1=True, 0=False. This makes the game consider this unit a demon.
 
 
 
@@ -260,36 +260,36 @@ DEMON ¨C Boolean, 1=True, 0=False. This makes the game consider this unit a demo
 
 Misc Boolean Settings III
 
-FLYING ¨C Boolean, 1=I can fly, 0=I can¡¯t fly. If you set this to 1 the monster will be able to move fly over obstacles such as puddles and rivers.
+FLYING â€“ Boolean, 1=I can fly, 0=I canâ€™t fly. If you set this to 1 the monster will be able to move fly over obstacles such as puddles and rivers.
 
-OPENDOORS ¨C Boolean, 1=I can open doors, 0=I¡¯m to stupid to open doors. Ever wanted to make the game more like D1 (where closing doors could actually protect you), then this column is all you need. By setting this to 0, the monster in question will 
+OPENDOORS â€“ Boolean, 1=I can open doors, 0=Iâ€™m to stupid to open doors. Ever wanted to make the game more like D1 (where closing doors could actually protect you), then this column is all you need. By setting this to 0, the monster in question will 
 not be able to open doors any more.
 
-BOSS ¨C Boolean, 1=I¡¯m a boss, 0=I¡¯m not a boss. This controls whenever this unit is a special boss, monsters set as boss IGNORE the level settings, IE. they will always spawn w the levels specified in MonStats.txt. Setting this to 1 for monsters does 
+BOSS â€“ Boolean, 1=Iâ€™m a boss, 0=Iâ€™m not a boss. This controls whenever this unit is a special boss, monsters set as boss IGNORE the level settings, IE. they will always spawn w the levels specified in MonStats.txt. Setting this to 1 for monsters does 
 not cause a crash in 1.10. The only effects it has are that the monster will always use the mlvl specified in MonStats.txt (and it will probably gain the special boss resistances, IE it will not be effected by things like Deadly Strike the way normal 
 monsters are. Though I didn't have time to do test on this yet)
 
-PRIMEEVIL ¨C Boolean, 1=I¡¯m a prime evil, 0=I¡¯m not a prime evil. (=Act Boss). Changing this could lead to unpredictable results, however I assume this controls the Act Boss Specific resistances to special damage modifiers (like Deadly Strike etc).
+PRIMEEVIL â€“ Boolean, 1=Iâ€™m a prime evil, 0=Iâ€™m not a prime evil. (=Act Boss). Changing this could lead to unpredictable results, however I assume this controls the Act Boss Specific resistances to special damage modifiers (like Deadly Strike etc).
 
-KILLABLE ¨C Boolean, 1=Mortal, 0=Immortal. Setting this to 0 will make the monster unkillable. There is no reason to set this to 1 for enemies, it will just result in your userbase decreasing.
+KILLABLE â€“ Boolean, 1=Mortal, 0=Immortal. Setting this to 0 will make the monster unkillable. There is no reason to set this to 1 for enemies, it will just result in your userbase decreasing.
 
-SWITCHAI ¨C Boolean, 1=Can chance sides, 0=Cannot change sides. Can this units mind be altered by ¡°mind altering skills¡± like Conversion, Revive etc.
+SWITCHAI â€“ Boolean, 1=Can chance sides, 0=Cannot change sides. Can this units mind be altered by â€œmind altering skillsâ€ like Conversion, Revive etc.
 
-NOAURA ¨C Boolean, 1=Can¡¯t get an aura, 0=Can get an aura. Monsters set to 0 here will not be effected by friendly auras.
+NOAURA â€“ Boolean, 1=Canâ€™t get an aura, 0=Can get an aura. Monsters set to 0 here will not be effected by friendly auras.
 
-NOMULTISHOT ¨C Boolean, 1=Can¡¯t get multishot modifier, 0=Can get multishot modifier. This is another layer of security to prevent this modifier from spawning, besides the ISMELEE layer.
+NOMULTISHOT â€“ Boolean, 1=Canâ€™t get multishot modifier, 0=Can get multishot modifier. This is another layer of security to prevent this modifier from spawning, besides the ISMELEE layer.
 
-NEVERCOUNT ¨C Boolean, 1=Never accounted for, 0=Accounted for. Unknown but I assume this may have to do with population dynamics and level building. Some also believe this may be related to multi-missile attacks.
+NEVERCOUNT â€“ Boolean, 1=Never accounted for, 0=Accounted for. Unknown but I assume this may have to do with population dynamics and level building. Some also believe this may be related to multi-missile attacks.
 
-PETIGNORE ¨C Doesn't work in 1.10 anymore (thanks Snowknight), previously it was a Boolean, 1=Summons ignore this unit, 0=Summons notice this unit. If you set this to 1 this monster will not be targeted by summons (and mercs?) irregardless of its THREAT 
+PETIGNORE â€“ Doesn't work in 1.10 anymore (thanks Snowknight), previously it was a Boolean, 1=Summons ignore this unit, 0=Summons notice this unit. If you set this to 1 this monster will not be targeted by summons (and mercs?) irregardless of its THREAT 
 level.
 
-DEATHDMG ¨C Boolean, 1=Damage players colliding with my death animation, 0=Don¡¯t damage anything. This works similar to corpse explosion (its based on hitpoints) and damages the surrounding players when the unit dies. (Ever wanted to prevent those 
+DEATHDMG â€“ Boolean, 1=Damage players colliding with my death animation, 0=Donâ€™t damage anything. This works similar to corpse explosion (its based on hitpoints) and damages the surrounding players when the unit dies. (Ever wanted to prevent those 
 undead stygian dolls from doing damage when they die, this is all there is to it)
 
-GENERICSPAWN ¨C Boolean, 1=Use generic spawning, 0=Don¡¯t use generic spawning. Unknown but probably has to do with population dynamics and level building like NEVERCOUNT.
+GENERICSPAWN â€“ Boolean, 1=Use generic spawning, 0=Donâ€™t use generic spawning. Unknown but probably has to do with population dynamics and level building like NEVERCOUNT.
 
-ZOO ¨C Boolean, 1=true, 0=false. Unknown it could be related to AI when this unit spawns as part of a boss pack, but this is just a wild guess rather then knowledge.
+ZOO â€“ Boolean, 1=true, 0=false. Unknown it could be related to AI when this unit spawns as part of a boss pack, but this is just a wild guess rather then knowledge.
 
 
 
@@ -298,13 +298,13 @@ ZOO ¨C Boolean, 1=true, 0=false. Unknown it could be related to AI when this uni
 
 Skill Settings
 
-SENDSKILLS ¨C Switch, 1=Unknown, 2=Used for assassin traps, 0=Don¡¯t send skills. This is only used by two of the Assassin traps, but what exactly it is used for is unknown.
+SENDSKILLS â€“ Switch, 1=Unknown, 2=Used for assassin traps, 0=Donâ€™t send skills. This is only used by two of the Assassin traps, but what exactly it is used for is unknown.
 
-SKILL1-8 ¨C The ID Pointer to the skill the monster will cast when this specific slot is accessed by the AI. (from Skills.txt). Which slots are used is determined by the units AI.
+SKILL1-8 â€“ The ID Pointer to the skill the monster will cast when this specific slot is accessed by the AI. (from Skills.txt). Which slots are used is determined by the units AI.
 
-SK1MODE-SK8MODE ¨C The graphical MODE (or SEQUENCE) this unit uses when it uses this skill.
+SK1MODE-SK8MODE â€“ The graphical MODE (or SEQUENCE) this unit uses when it uses this skill.
 
-SK1LVL-SK8LVL ¨C The skill level of the skill in question. This gets a bonus on nightmare and hell which you can modify in DifficultyLevels.txt.
+SK1LVL-SK8LVL â€“ The skill level of the skill in question. This gets a bonus on nightmare and hell which you can modify in DifficultyLevels.txt.
 
 
 
@@ -313,26 +313,26 @@ SK1LVL-SK8LVL ¨C The skill level of the skill in question. This gets a bonus on 
 
 Resistance Settings
 
-DRAIN, DRAIN(N), DRAIN(H) ¨C Controls the effectiveness of Life and Mana steal equipment on this unit on the respective difficulties. 0=Can¡¯t leech at all. (negative values don't damage you, thanks to Doombreed-x for testing this), setting it to more 
+DRAIN, DRAIN(N), DRAIN(H) â€“ Controls the effectiveness of Life and Mana steal equipment on this unit on the respective difficulties. 0=Canâ€™t leech at all. (negative values don't damage you, thanks to Doombreed-x for testing this), setting it to more 
 then 100 would probably make LL and ML more effective. Remember that besides this, Life and Mana Steal is further limited by DifficultyLevels.txt.
 
-COLDEFFECT, COLDEFFECT(N), COLDEFFECT(H) ¨C Controls the effectiveness of cold damage on this unit. The lower this value is, the more speed this unit looses when its frozen. ¨C100 will probably make it stop completely. Positive values will make the unit 
+COLDEFFECT, COLDEFFECT(N), COLDEFFECT(H) â€“ Controls the effectiveness of cold damage on this unit. The lower this value is, the more speed this unit looses when its frozen. â€“100 will probably make it stop completely. Positive values will make the unit 
 faster (thanks to Brother Laz for confirming my assumption), and 0 will make it unfreezeable. The cold length is NOT effected by this, for cold length and freeze length settings refer to DifficultyLevels.txt.
 
 
 HINT: If you want to give units random resistances and immunities you can use MonProp.txt.
 
-RESDM, RESDM(N), RESDM(H) ¨C Damage resistance on the respective difficulties. Negative values mean that the unit takes more damage from this element, values at or above 100 will result in immunity.
+RESDM, RESDM(N), RESDM(H) â€“ Damage resistance on the respective difficulties. Negative values mean that the unit takes more damage from this element, values at or above 100 will result in immunity.
 
-RESMA, RESMA(N), RESMA(H) ¨C Magic resistance on the respective difficulties. Negative values mean that the unit takes more damage from this element, values at or above 100 will result in immunity.
+RESMA, RESMA(N), RESMA(H) â€“ Magic resistance on the respective difficulties. Negative values mean that the unit takes more damage from this element, values at or above 100 will result in immunity.
 
-RESFI, RESFI(N), RESFI(H) ¨C Fire resistance on the respective difficulties. Negative values mean that the unit takes more damage from this element, values at or above 100 will result in immunity.
+RESFI, RESFI(N), RESFI(H) â€“ Fire resistance on the respective difficulties. Negative values mean that the unit takes more damage from this element, values at or above 100 will result in immunity.
 
-RESLI, RESLI(N), RESLI(H) ¨C Lightning resistance on the respective difficulties. Negative values mean that the unit takes more damage from this element, values at or above 100 will result in immunity.
+RESLI, RESLI(N), RESLI(H) â€“ Lightning resistance on the respective difficulties. Negative values mean that the unit takes more damage from this element, values at or above 100 will result in immunity.
 
-RESCO, RESCO(N), RESCO(H) ¨C Cold resistance on the respective difficulties. Negative values mean that the unit takes more damage from this element, values at or above 100 will result in immunity.
+RESCO, RESCO(N), RESCO(H) â€“ Cold resistance on the respective difficulties. Negative values mean that the unit takes more damage from this element, values at or above 100 will result in immunity.
 
-RESPO, RESPO(N), RESPO(H) ¨C Poison resistance on the respective difficulties. Negative values mean that the unit takes more damage from this element, values at or above 100 will result in immunity.
+RESPO, RESPO(N), RESPO(H) â€“ Poison resistance on the respective difficulties. Negative values mean that the unit takes more damage from this element, values at or above 100 will result in immunity.
 
 
 
@@ -341,9 +341,9 @@ RESPO, RESPO(N), RESPO(H) ¨C Poison resistance on the respective difficulties. N
 
 Misc Settings
 
-DAMAGEREGEN ¨C This controls how much health this unit regenerates. Sometimes this is altered by the units AI. The formula in 1.09 was (REGEN * HP) / 4096. So a monster with 200 hp and a regen rate of 10 would regenerate ~0,5 HP every frame.
+DAMAGEREGEN â€“ This controls how much health this unit regenerates. Sometimes this is altered by the units AI. The formula in 1.09 was (REGEN * HP) / 4096. So a monster with 200 hp and a regen rate of 10 would regenerate ~0,5 HP every frame.
 
-SKILLDAMAGE ¨C ID Pointer to the skill that controls this units damage. This is used for the druids summons. (I.E. their damage is specified solely by Skills.txt and not by MonStats.txt)
+SKILLDAMAGE â€“ ID Pointer to the skill that controls this units damage. This is used for the druids summons. (I.E. their damage is specified solely by Skills.txt and not by MonStats.txt)
 
 
 
@@ -352,38 +352,38 @@ SKILLDAMAGE ¨C ID Pointer to the skill that controls this units damage. This is 
 
 Stat Settings
 
-NORATIO ¨C Boolean, 1=Don¡¯t use MonLevel.txt, 0=Use MonLevel.txt. Does this unit use MonLevel.txt or does it use the stats listed in MonStats.txt as is. Setting this to 1 will result in an array of problems, such as the appended elemental damage being 
+NORATIO â€“ Boolean, 1=Donâ€™t use MonLevel.txt, 0=Use MonLevel.txt. Does this unit use MonLevel.txt or does it use the stats listed in MonStats.txt as is. Setting this to 1 will result in an array of problems, such as the appended elemental damage being 
 completely ignored, irregardless of the values in it.
 
-NOSHLDBLOCK ¨C Boolean, 1=Can block without a blocking animation, 0=Can¡¯t block without a blocking animation. Quite self explanatory, in order for a unit to block it needs the BL mode, if this is set to 1 then it will block irregardless of what modes 
+NOSHLDBLOCK â€“ Boolean, 1=Can block without a blocking animation, 0=Canâ€™t block without a blocking animation. Quite self explanatory, in order for a unit to block it needs the BL mode, if this is set to 1 then it will block irregardless of what modes 
 it has.
 
-TOBLOCK, TOBLOCK(N), TOBLOCK(H) ¨C This units chance to block. See the above column for details when this applies or not. Monsters are capped at 75% block as players are AFAIK.
+TOBLOCK, TOBLOCK(N), TOBLOCK(H) â€“ This units chance to block. See the above column for details when this applies or not. Monsters are capped at 75% block as players are AFAIK.
 
-CRIT ¨C This units chance of scoring a critical hit.
+CRIT â€“ This units chance of scoring a critical hit.
 
-Hint: The values below are percentages (if NORATIO is set to 0). The game first checks the monsters level and then uses these percentages to calculate the actual stats from the ¡°general stats¡± listed in MonLevel.txt. This is done by regular percentage 
-calculation, IE: S/100*P (S=Stat, P=Percentage). As an example, if your monster is level 50, and has 200 listed in MINHP in MonStats.txt and the ¡°general stat¡± for HP at mlvl 50 is 100 then the following calculation is done: 100/100*200 which results 
-in 200 HP. In the same way, if S=300 and P=200 the result will be 600. If you want the game to use the values directly from monstats.txt and don¡¯t want to set NORATIO to 0 (to avoid the bugs related to doing that), simply change all entries in MonLevel.
+Hint: The values below are percentages (if NORATIO is set to 0). The game first checks the monsters level and then uses these percentages to calculate the actual stats from the â€œgeneral statsâ€ listed in MonLevel.txt. This is done by regular percentage 
+calculation, IE: S/100*P (S=Stat, P=Percentage). As an example, if your monster is level 50, and has 200 listed in MINHP in MonStats.txt and the â€œgeneral statâ€ for HP at mlvl 50 is 100 then the following calculation is done: 100/100*200 which results 
+in 200 HP. In the same way, if S=300 and P=200 the result will be 600. If you want the game to use the values directly from monstats.txt and donâ€™t want to set NORATIO to 0 (to avoid the bugs related to doing that), simply change all entries in MonLevel.
 txt to 100).
 
-MINHP, MAXHP, MINHP(N), MAXHP(N), MINHP(H), MAXHP(H) ¨C This units minimum and maximum HP on the respective difficulties.
+MINHP, MAXHP, MINHP(N), MAXHP(N), MINHP(H), MAXHP(H) â€“ This units minimum and maximum HP on the respective difficulties.
 
-AC, AC(N), AC(H) ¨C This units Armor Class on the respective difficulties.
+AC, AC(N), AC(H) â€“ This units Armor Class on the respective difficulties.
 
-EXP, EXP(N), EXP(H) ¨C The experience you get when killing this unit on the respective difficulty.
+EXP, EXP(N), EXP(H) â€“ The experience you get when killing this unit on the respective difficulty.
 
-A1MIND, A1MAXD, A1MIND(N), A1MAXD(N), A1MIND(H), A1MAXD(H) ¨C This units minimum and maximum damage when it uses Attack 1.
+A1MIND, A1MAXD, A1MIND(N), A1MAXD(N), A1MIND(H), A1MAXD(H) â€“ This units minimum and maximum damage when it uses Attack 1.
 
-A2MIND, A2MAXD, A2MIND(N), A2MAXD(N), A2MIND(H), A2MAXD(H) ¨C This units minimum and maximum damage when it uses Attack 2.
+A2MIND, A2MAXD, A2MIND(N), A2MAXD(N), A2MIND(H), A2MAXD(H) â€“ This units minimum and maximum damage when it uses Attack 2.
 
-S1MIND, S1MAXD, S1MIND(N), S1MAXD(N), S1MIND(H), S1MAXD(H) ¨C This units minimum and maximum damage when it uses Special Attack 1 (or Skill 1), usually used for missiles like Arrows etc.
+S1MIND, S1MAXD, S1MIND(N), S1MAXD(N), S1MIND(H), S1MAXD(H) â€“ This units minimum and maximum damage when it uses Special Attack 1 (or Skill 1), usually used for missiles like Arrows etc.
 
-A1TH, A1TH(N), A1TH(H) ¨C This units attack rating for Attack 1 on the respective difficulties.
+A1TH, A1TH(N), A1TH(H) â€“ This units attack rating for Attack 1 on the respective difficulties.
 
-A2TH, A2TH(N), A2TH(H) ¨C This units attack rating for Attack 2 on the respective difficulties.
+A2TH, A2TH(N), A2TH(H) â€“ This units attack rating for Attack 2 on the respective difficulties.
 
-S1TH, S1TH(N), S1TH(H) ¨C This units attack rating for Special Attack 1 (or Skill 1) on the respective difficulties. Usually used for missiles like Arrows etc.
+S1TH, S1TH(N), S1TH(H) â€“ This units attack rating for Special Attack 1 (or Skill 1) on the respective difficulties. Usually used for missiles like Arrows etc.
 
 
 
@@ -394,20 +394,20 @@ Xtra Elemental Damage Settings
 
 HINT: These columns are not used correctly if you set NORATIO to 1. (thanks to Sduibek for finding this stupid little typo that snuck in here)
 
-EL1MODE-EL3MODE ¨C The mode to which the elemental damage is appended. The modes to which you would usually attack elemental damage are A1, A2, S1, S2, S3, S4, SQ or C as these are the only ones that naturally contain trigger bytes.
+EL1MODE-EL3MODE â€“ The mode to which the elemental damage is appended. The modes to which you would usually attack elemental damage are A1, A2, S1, S2, S3, S4, SQ or C as these are the only ones that naturally contain trigger bytes.
 
-EL1TYPE-EL3TYPE ¨C The type of the elemental damage appended to an attack. There are several elements: fire=Fire Damage, ltng=Lightning Damage, cold=Cold Damage (uses duration), pois = Poison Damage (uses duration), mag=Magic Damage, life=Life Drain (
+EL1TYPE-EL3TYPE â€“ The type of the elemental damage appended to an attack. There are several elements: fire=Fire Damage, ltng=Lightning Damage, cold=Cold Damage (uses duration), pois = Poison Damage (uses duration), mag=Magic Damage, life=Life Drain (
 the monster heals the specified amount when it hits you), mana=Mana Drain (the monster steals the specified amount of mana when it hits you), stam=Stamina Drain (the monster steals the specified amount of stamina when it hits you), stun=Stun Damage (
 uses duration, damage is not used, this only effects pets and mercs, players will not get immobilized but they will get thrown into hit recovery whenever they get hit by an attack, no matter what type of attack it is, thanks to Brother Laz clearing this 
-one up), rand=Random Damage (uses duration, either does Poison, Cold, Fire or Lightning damage, randomly picked for every attack), burn=Burning Damage (uses duration, this damage type cannot be resisted and shouldn¡¯t be used), frze=Freezing Damage (
+one up), rand=Random Damage (uses duration, either does Poison, Cold, Fire or Lightning damage, randomly picked for every attack), burn=Burning Damage (uses duration, this damage type cannot be resisted and shouldnâ€™t be used), frze=Freezing Damage (
 uses duration, this will effect players like normal cold damage but will freeze and shatter pets). If you want to give your monster knockback use MonProp.txt.
 
-EL1PCT-EL3PCT, EL1PCT(N)-EL3PCT(N), EL1PCT(H)-EL3PCT(H) ¨C Chance to append elemental damage to an attack on the respective difficulties. 0=Never append, 100=Always append.
+EL1PCT-EL3PCT, EL1PCT(N)-EL3PCT(N), EL1PCT(H)-EL3PCT(H) â€“ Chance to append elemental damage to an attack on the respective difficulties. 0=Never append, 100=Always append.
 
-EL1MIND-EL3MIND, EL1MAXD-EL3MAXD, EL1MIND-EL3MIND(N), EL1MAXD-EL3MAXD(N), EL1MIND-EL3MIND(H), EL1MAXD-EL3MAXD(H) ¨C Minimum and Maximum elemental damage to append to the attack on the respective difficulties. (See the hints under the Stat Settings 
-section, this uses the same calculations). Note that you should only append elemental damage to those missiles that don¡¯t have any set in Missiles.txt.
+EL1MIND-EL3MIND, EL1MAXD-EL3MAXD, EL1MIND-EL3MIND(N), EL1MAXD-EL3MAXD(N), EL1MIND-EL3MIND(H), EL1MAXD-EL3MAXD(H) â€“ Minimum and Maximum elemental damage to append to the attack on the respective difficulties. (See the hints under the Stat Settings 
+section, this uses the same calculations). Note that you should only append elemental damage to those missiles that donâ€™t have any set in Missiles.txt.
 
-EL1DUR-EL3DUR, EL1DUR(N)-EL3DUR(N), EL1DUR(H)-EL3DUR(H) ¨C Duration of the elemental effect (for freeze, burn, cold, poison and stun) on the respective difficulties.
+EL1DUR-EL3DUR, EL1DUR(N)-EL3DUR(N), EL1DUR(H)-EL3DUR(H) â€“ Duration of the elemental effect (for freeze, burn, cold, poison and stun) on the respective difficulties.
 
 
 
@@ -418,17 +418,17 @@ Treasureclass Settings
 
 HINT: Because of the new Treasureclass system introduced in 1.10 these entries are only of minor influence regarding what TC is being selected unless you change the system by editing TreasureClassEX.txt.
 
-TREASURECLASS1, TREASURECLASS1(N), TREASURECLASS1(H) ¨C The Treasureclass used by this unit as a normal monster on the respective difficulties.
+TREASURECLASS1, TREASURECLASS1(N), TREASURECLASS1(H) â€“ The Treasureclass used by this unit as a normal monster on the respective difficulties.
 
-TREASURECLASS2, TREASURECLASS2(N), TREASURECLASS2(H) ¨C The Treasureclass used by this unit as a champion on the respective difficulties.
+TREASURECLASS2, TREASURECLASS2(N), TREASURECLASS2(H) â€“ The Treasureclass used by this unit as a champion on the respective difficulties.
 
-TREASURECLASS3, TREASURECLASS3(N), TREASURECLASS3(H) ¨C The Treasureclass used by this unit as a unique or superunique on the respective difficulties.
+TREASURECLASS3, TREASURECLASS3(N), TREASURECLASS3(H) â€“ The Treasureclass used by this unit as a unique or superunique on the respective difficulties.
 
-TREASURECLASS4, TREASURECLASS4(N), TREASURECLASS4(H) ¨C The Quest Treasureclass used by this monster. (For example, the act bosses always have better odds of dropping rare, set and unique items the first time you kill them).
+TREASURECLASS4, TREASURECLASS4(N), TREASURECLASS4(H) â€“ The Quest Treasureclass used by this monster. (For example, the act bosses always have better odds of dropping rare, set and unique items the first time you kill them).
 
-TCQUESTID ¨C The ID of the Quest that triggers the Quest Treasureclass drop.
+TCQUESTID â€“ The ID of the Quest that triggers the Quest Treasureclass drop.
 
-TCQUESTCP ¨C The ID of the Quest State that you need to complete to trigger the Quest Treasureclass trop.
+TCQUESTCP â€“ The ID of the Quest State that you need to complete to trigger the Quest Treasureclass trop.
 
 
 
@@ -437,13 +437,13 @@ TCQUESTCP ¨C The ID of the Quest State that you need to complete to trigger the 
 
 Special Settings
 
-SPLENDDEATH ¨C Switch, 0=no special death, 1=spawn the monster in the MINION1 column when I die, 2=kill whatever monster is mounted to me when I die (used by guard towers that kill the imps that are on top of them when they die I guess).
+SPLENDDEATH â€“ Switch, 0=no special death, 1=spawn the monster in the MINION1 column when I die, 2=kill whatever monster is mounted to me when I die (used by guard towers that kill the imps that are on top of them when they die I guess).
 
-SPLGETMODECHART ¨C Boolean, 1=Get Special Mode Chart, 0=Don¡¯t get special mode chart. Unknown but could be telling the game to look at some internal table. This is used for some Act Bosses and monsters like Putrid Defilers.
+SPLGETMODECHART â€“ Boolean, 1=Get Special Mode Chart, 0=Donâ€™t get special mode chart. Unknown but could be telling the game to look at some internal table. This is used for some Act Bosses and monsters like Putrid Defilers.
 
-SPLENDGENERIC ¨C Boolean, 1=true, 0=false. Works in conjunction with SPLCLIENTEND, this makes the unit untargetable when it is first spawned (used for those monsters that are under water, under ground or fly above you)
+SPLENDGENERIC â€“ Boolean, 1=true, 0=false. Works in conjunction with SPLCLIENTEND, this makes the unit untargetable when it is first spawned (used for those monsters that are under water, under ground or fly above you)
 
-SPLCLIENTEND¨C Boolean, 1=true, 0=false. Works in conjunction with SPLENDGENERIC, this makes the unit invisible when it is first spawned (used for those monsters that are under water, under ground or fly above you), this is also used for units that have 
+SPLCLIENTENDâ€“ Boolean, 1=true, 0=false. Works in conjunction with SPLENDGENERIC, this makes the unit invisible when it is first spawned (used for those monsters that are under water, under ground or fly above you), this is also used for units that have 
 other special drawing setups.
 
 
@@ -453,7 +453,7 @@ other special drawing setups.
 
 EOL
 
-EOL ¨C End of Line, used to avoid the trailing bit error M$ Excel usually causes when adjusting the end of the rows. This column must contain 0 unless you want to crash when the game loads.
+EOL â€“ End of Line, used to avoid the trailing bit error M$ Excel usually causes when adjusting the end of the rows. This column must contain 0 unless you want to crash when the game loads.
 
 
 
@@ -481,271 +481,271 @@ Subsequently updated BOSS column (and related ones).
 */
 
 /*
-ÎÄ¼şÃû½âÎö£º
-Mon£ºMonster£¬¼´¹ÖÎï¡£
-Stat(s)£ºState(s)£¬×´Ì¬¡£
-±¾ÎÄ¼şÃèÊöÁËËùÓĞ¹ÖÎïµÄ×´Ì¬ÊôĞÔ¡£
-ÎÄ¼şÖĞµÄÃ¿Ò»ĞĞ±íÊ¾Ò»ÖÖ¹ÖÎï¡£
+æ–‡ä»¶åè§£æï¼š
+Monï¼šMonsterï¼Œå³æ€ªç‰©ã€‚
+Stat(s)ï¼šState(s)ï¼ŒçŠ¶æ€ã€‚
+æœ¬æ–‡ä»¶æè¿°äº†æ‰€æœ‰æ€ªç‰©çš„çŠ¶æ€å±æ€§ã€‚
+æ–‡ä»¶ä¸­çš„æ¯ä¸€è¡Œè¡¨ç¤ºä¸€ç§æ€ªç‰©ã€‚
 
-Ã¿ÁĞµÄº¬ÒåÈçÏÂ£º
+æ¯åˆ—çš„å«ä¹‰å¦‚ä¸‹ï¼š
 
-Id£º´Ë¹ÖÎïµÄË÷Òı¡£
+Idï¼šæ­¤æ€ªç‰©çš„ç´¢å¼•ã€‚
 
-hcIdx£º´Ë¹ÖÎïµÄ±àºÅ¡£
+hcIdxï¼šæ­¤æ€ªç‰©çš„ç¼–å·ã€‚
 
-BaseId£º´Ë¹ÖÎï¶ÔÓ¦µÄ»ù´¡£¨0½×£©¹ÖÎï¡£ÈçÍ¬×°±¸ÓĞÆÕÍ¨¡¢À©Õ¹¡¢¾«»ªÒ»Ñù£¬ºÜ¶à¹ÖÎï¶¼ÓĞ¼¸¸ö¸ü¸ßµÄ½×Î»¡£
+BaseIdï¼šæ­¤æ€ªç‰©å¯¹åº”çš„åŸºç¡€ï¼ˆ0é˜¶ï¼‰æ€ªç‰©ã€‚å¦‚åŒè£…å¤‡æœ‰æ™®é€šã€æ‰©å±•ã€ç²¾åä¸€æ ·ï¼Œå¾ˆå¤šæ€ªç‰©éƒ½æœ‰å‡ ä¸ªæ›´é«˜çš„é˜¶ä½ã€‚
 
-NextInClass£º´Ë¹ÖÎï¶ÔÓ¦µÄÏÂÒ»¸ö½×Î»µÄ¹ÖÎï¡£
+NextInClassï¼šæ­¤æ€ªç‰©å¯¹åº”çš„ä¸‹ä¸€ä¸ªé˜¶ä½çš„æ€ªç‰©ã€‚
 
-TransLvl£º´Ë¹ÖÎïµÄ½×Î»¡£
+TransLvlï¼šæ­¤æ€ªç‰©çš„é˜¶ä½ã€‚
 
-NameStr£º´Ë¹ÖÎïµÄÃû×Ö£¬ÓëtblÎÄ¼ş¹ØÁª¡£
+NameStrï¼šæ­¤æ€ªç‰©çš„åå­—ï¼Œä¸tblæ–‡ä»¶å…³è”ã€‚
 
-MonStatsEx£º´Ë¹ÖÎïµÄÀ©Õ¹ÊôĞÔ£¬ÓëMonStats2.txt¹ØÁª¡£
+MonStatsExï¼šæ­¤æ€ªç‰©çš„æ‰©å±•å±æ€§ï¼Œä¸MonStats2.txtå…³è”ã€‚
 
-MonProp£º´Ë¹ÖÎïµÄÌØÊâÊôĞÔ£¬ÓëMonProp.txt¹ØÁª¡£
+MonPropï¼šæ­¤æ€ªç‰©çš„ç‰¹æ®Šå±æ€§ï¼Œä¸MonProp.txtå…³è”ã€‚
 
-MonType£º´Ë¹ÖÎïµÄÀà±ğ£¬ÓëMonType.txt¹ØÁª¡£
+MonTypeï¼šæ­¤æ€ªç‰©çš„ç±»åˆ«ï¼Œä¸MonType.txtå…³è”ã€‚
 
-AI£º´Ë¹ÖÎïµÄAI£¬ÓëMonAi.txt¹ØÁª¡£
+AIï¼šæ­¤æ€ªç‰©çš„AIï¼Œä¸MonAi.txtå…³è”ã€‚
 
-DescStr£º´Ë¹ÖÎïµÄ¶îÍâÃèÊö£¬ÓëtblÎÄ¼ş¹ØÁª¡£
+DescStrï¼šæ­¤æ€ªç‰©çš„é¢å¤–æè¿°ï¼Œä¸tblæ–‡ä»¶å…³è”ã€‚
 
-Code£º´Ë¹ÖÎïµÄÍâĞÎ¡£
+Codeï¼šæ­¤æ€ªç‰©çš„å¤–å½¢ã€‚
 
-enabled£º´Ë¹ÖÎïÊÇ·ñ¿ÉÔÚÓÎÏ·ÖĞ³öÏÖ¡£
+enabledï¼šæ­¤æ€ªç‰©æ˜¯å¦å¯åœ¨æ¸¸æˆä¸­å‡ºç°ã€‚
 
-rangedtype£º´Ë¹ÖÎïÊÇ·ñÊÇÔ¶³Ì¹¥»÷µÄ¡£
+rangedtypeï¼šæ­¤æ€ªç‰©æ˜¯å¦æ˜¯è¿œç¨‹æ”»å‡»çš„ã€‚
 
-placespawn£º´Ë¹ÖÎïÊÇ·ñ¿ÉÒÔÉú²ú³öÆäËüµÄ¹ÖÎï¡£
+placespawnï¼šæ­¤æ€ªç‰©æ˜¯å¦å¯ä»¥ç”Ÿäº§å‡ºå…¶å®ƒçš„æ€ªç‰©ã€‚
 
-spawn£º´Ë¹ÖÎï¿ÉÒÔÉú²ú³öµÄ¹ÖÎï¡£
+spawnï¼šæ­¤æ€ªç‰©å¯ä»¥ç”Ÿäº§å‡ºçš„æ€ªç‰©ã€‚
 
-spawnx£ºÉú²ú³öµÄ¹ÖÎïµÄ³öÉúÎ»ÖÃ×ø±ê1¡£
+spawnxï¼šç”Ÿäº§å‡ºçš„æ€ªç‰©çš„å‡ºç”Ÿä½ç½®åæ ‡1ã€‚
 
-spawny£ºÉú²ú³öµÄ¹ÖÎïµÄ³öÉúÎ»ÖÃ×ø±ê2£¬
+spawnyï¼šç”Ÿäº§å‡ºçš„æ€ªç‰©çš„å‡ºç”Ÿä½ç½®åæ ‡2ï¼Œ
 
-spawnmode£ºÉú²ú³öµÄ¹ÖÎïµÄ³öÉú¶¯»­¡£ÈçÑªÄñ¸´»îµÄ½©Ê¬ÊÇ´ÓµØÖĞÅÀ³öÀ´µÄ¶¯»­£¬¶ø²»ÊÇÖ±½Ó³öÏÖ¡£
+spawnmodeï¼šç”Ÿäº§å‡ºçš„æ€ªç‰©çš„å‡ºç”ŸåŠ¨ç”»ã€‚å¦‚è¡€é¸Ÿå¤æ´»çš„åƒµå°¸æ˜¯ä»åœ°ä¸­çˆ¬å‡ºæ¥çš„åŠ¨ç”»ï¼Œè€Œä¸æ˜¯ç›´æ¥å‡ºç°ã€‚
 
-minion1£º´Ë¹ÖÎïµÄËæ´Ó¹ÖÎï1¡£Èç³ÁÂÙÄ§Î×Ê¦µÄËæ´ÓÊÇ³ÁÂÙÄ§¡£
+minion1ï¼šæ­¤æ€ªç‰©çš„éšä»æ€ªç‰©1ã€‚å¦‚æ²‰æ²¦é­”å·«å¸ˆçš„éšä»æ˜¯æ²‰æ²¦é­”ã€‚
 
-minion2£º´Ë¹ÖÎïµÄËæ´Ó¹ÖÎï2¡£
+minion2ï¼šæ­¤æ€ªç‰©çš„éšä»æ€ªç‰©2ã€‚
 
-SetBoss£º´Ë¹ÖÎïµÄËæ´ÓÊÇ·ñÒÔ´Ë¹ÖÎïÎªÖĞĞÄ¡£
+SetBossï¼šæ­¤æ€ªç‰©çš„éšä»æ˜¯å¦ä»¥æ­¤æ€ªç‰©ä¸ºä¸­å¿ƒã€‚
 
-BossXfer£º´Ë¹ÖÎïµÄËæ´ÓÊÇ·ñ¾ßÓĞ´Ë¹ÖÎïµÄ½±ÀøÊôĞÔ¡£
+BossXferï¼šæ­¤æ€ªç‰©çš„éšä»æ˜¯å¦å…·æœ‰æ­¤æ€ªç‰©çš„å¥–åŠ±å±æ€§ã€‚
 
-PartyMin£º´Ë¹ÖÎï×îÉÙÓĞ¼¸¸öËæ´Ó¡£
+PartyMinï¼šæ­¤æ€ªç‰©æœ€å°‘æœ‰å‡ ä¸ªéšä»ã€‚
 
-PartyMax£º´Ë¹ÖÎï×î¶àÓĞ¼¸¸öËæ´Ó¡£
+PartyMaxï¼šæ­¤æ€ªç‰©æœ€å¤šæœ‰å‡ ä¸ªéšä»ã€‚
 
-MinGrp£º´Ë¹ÖÎï³ÉÈº³öÏÖµÄ×îĞ¡ÊıÄ¿¡£
+MinGrpï¼šæ­¤æ€ªç‰©æˆç¾¤å‡ºç°çš„æœ€å°æ•°ç›®ã€‚
 
-MaxGrp£º´Ë¹ÖÎï³ÉÈº³öÏÖµÄ×î´óÊıÄ¿¡£
+MaxGrpï¼šæ­¤æ€ªç‰©æˆç¾¤å‡ºç°çš„æœ€å¤§æ•°ç›®ã€‚
 
-sparsePopulate£ºÊÇ·ñÏŞÖÆ´Ë¹ÖÎïµÄÊıÄ¿¡£
+sparsePopulateï¼šæ˜¯å¦é™åˆ¶æ­¤æ€ªç‰©çš„æ•°ç›®ã€‚
 
-Velocity£º´Ë¹ÖÎïµÄÒÆ¶¯ËÙ¶È¡£
+Velocityï¼šæ­¤æ€ªç‰©çš„ç§»åŠ¨é€Ÿåº¦ã€‚
 
-Run£º´Ë¹ÖÎïÅÜ²½Ê±µÄÒÆ¶¯ËÙ¶È¡£
+Runï¼šæ­¤æ€ªç‰©è·‘æ­¥æ—¶çš„ç§»åŠ¨é€Ÿåº¦ã€‚
 
-Rarity£º´Ë¹ÖÎïµÄ³öÏÖÆµÂÊ£¬ÔÚÏàÍ¬¹ÖÎïÃÜ¶ÈµÄÇé¿öÏÂ£¬´ËÖµÔ½¸ß³öÏÖµÄÔ½¶à¡£
+Rarityï¼šæ­¤æ€ªç‰©çš„å‡ºç°é¢‘ç‡ï¼Œåœ¨ç›¸åŒæ€ªç‰©å¯†åº¦çš„æƒ…å†µä¸‹ï¼Œæ­¤å€¼è¶Šé«˜å‡ºç°çš„è¶Šå¤šã€‚
 
-Level£º´Ë¹ÖÎïÔÚÆÕÍ¨ÄÑ¶ÈÏÂµÄ¼¶±ğ¡£
+Levelï¼šæ­¤æ€ªç‰©åœ¨æ™®é€šéš¾åº¦ä¸‹çš„çº§åˆ«ã€‚
 
-Level(N)£º´Ë¹ÖÎïÔÚ¶ñÃÎÄÑ¶ÈÏÂµÄ¼¶±ğ¡£Ö»¶ÔBOSSÓĞÓÃ¡£¶ñÃÎÄÑ¶ÈÏÂµÄ¹ÖÎï¼¶±ğÓÉÆäËùÔÚ³¡¾°¾ö¶¨¡£
+Level(N)ï¼šæ­¤æ€ªç‰©åœ¨æ¶æ¢¦éš¾åº¦ä¸‹çš„çº§åˆ«ã€‚åªå¯¹BOSSæœ‰ç”¨ã€‚æ¶æ¢¦éš¾åº¦ä¸‹çš„æ€ªç‰©çº§åˆ«ç”±å…¶æ‰€åœ¨åœºæ™¯å†³å®šã€‚
 
-Level(H)£º´Ë¹ÖÎïÔÚµØÓüÄÑ¶ÈÏÂµÄ¼¶±ğ¡£Ö»¶ÔBOSSÓĞÓÃ¡£µØÓüÄÑ¶ÈÏÂµÄ¹ÖÎï¼¶±ğÓÉÆäËùÔÚ³¡¾°¾ö¶¨¡£
+Level(H)ï¼šæ­¤æ€ªç‰©åœ¨åœ°ç‹±éš¾åº¦ä¸‹çš„çº§åˆ«ã€‚åªå¯¹BOSSæœ‰ç”¨ã€‚åœ°ç‹±éš¾åº¦ä¸‹çš„æ€ªç‰©çº§åˆ«ç”±å…¶æ‰€åœ¨åœºæ™¯å†³å®šã€‚
 
-MonSound£º´Ë¹ÖÎïÄÜ¹»·¢³öµÄÉùÒô£¬ÓëMonSound.txt¹ØÁª¡£
+MonSoundï¼šæ­¤æ€ªç‰©èƒ½å¤Ÿå‘å‡ºçš„å£°éŸ³ï¼Œä¸MonSound.txtå…³è”ã€‚
 
-UMonSound£ºµ±´Ë¹ÖÎï×÷Îª½ğ¹Ö»òÍ·Ä¿¹ÖÊ±ÄÜ¹»·¢³öµÄÉùÒô£¬ÓëMonSound.txt¹ØÁª¡£
+UMonSoundï¼šå½“æ­¤æ€ªç‰©ä½œä¸ºé‡‘æ€ªæˆ–å¤´ç›®æ€ªæ—¶èƒ½å¤Ÿå‘å‡ºçš„å£°éŸ³ï¼Œä¸MonSound.txtå…³è”ã€‚
 
-threat£º´Ë¹ÖÎïµÄÎ£ÏÕµÈ¼¶¡£
+threatï¼šæ­¤æ€ªç‰©çš„å±é™©ç­‰çº§ã€‚
 
-aidel /(N)/(H)£º´Ë¹ÖÎïÔÚ ÆÕÍ¨/¶ñÃÎ/µØÓü ÄÑ¶ÈÏÂµÄAI¶¯×÷¼äÏ¶¡£¹¥»÷¡¢ÒÆ¶¯¡¢ÌÓÅÜ¶¼¿ÉÊÓ×÷Ò»¸öAI¶¯×÷¡£
+aidel /(N)/(H)ï¼šæ­¤æ€ªç‰©åœ¨ æ™®é€š/æ¶æ¢¦/åœ°ç‹± éš¾åº¦ä¸‹çš„AIåŠ¨ä½œé—´éš™ã€‚æ”»å‡»ã€ç§»åŠ¨ã€é€ƒè·‘éƒ½å¯è§†ä½œä¸€ä¸ªAIåŠ¨ä½œã€‚
 
-aidist /(N)/(H)£º´Ë¹ÖÎïÔÚ ÆÕÍ¨/¶ñÃÎ/µØÓü ÄÑ¶ÈÏÂµÄÊÓÒ°´óĞ¡¡£
+aidist /(N)/(H)ï¼šæ­¤æ€ªç‰©åœ¨ æ™®é€š/æ¶æ¢¦/åœ°ç‹± éš¾åº¦ä¸‹çš„è§†é‡å¤§å°ã€‚
 
-aip 1-8 /(N)/(H)£º´Ë¹ÖÎïÔÚ ÆÕÍ¨/¶ñÃÎ/µØÓü ÄÑ¶ÈÏÂµÄµÚ1-8¸öAI¶¯×÷µÄ²ÎÊı¡£
+aip 1-8 /(N)/(H)ï¼šæ­¤æ€ªç‰©åœ¨ æ™®é€š/æ¶æ¢¦/åœ°ç‹± éš¾åº¦ä¸‹çš„ç¬¬1-8ä¸ªAIåŠ¨ä½œçš„å‚æ•°ã€‚
 
-MissA1£º´Ë¹ÖÎïÓÃµÚÒ»ÖÖÆÕÍ¨¹¥»÷Ê±µÄ·¢ÉäÎï¡£
+MissA1ï¼šæ­¤æ€ªç‰©ç”¨ç¬¬ä¸€ç§æ™®é€šæ”»å‡»æ—¶çš„å‘å°„ç‰©ã€‚
 
-MissA2£º´Ë¹ÖÎïÓÃµÚ¶şÖÖÆÕÍ¨¹¥»÷Ê±µÄ·¢ÉäÎï¡£
+MissA2ï¼šæ­¤æ€ªç‰©ç”¨ç¬¬äºŒç§æ™®é€šæ”»å‡»æ—¶çš„å‘å°„ç‰©ã€‚
 
-MissS1£º´Ë¹ÖÎïÓÃ¼¼ÄÜ1Ê±µÄ¶îÍâ·¢ÉäÎï¡£
+MissS1ï¼šæ­¤æ€ªç‰©ç”¨æŠ€èƒ½1æ—¶çš„é¢å¤–å‘å°„ç‰©ã€‚
 
-MissS2£º´Ë¹ÖÎïÓÃ¼¼ÄÜ2Ê±µÄ¶îÍâ·¢ÉäÎï¡£
+MissS2ï¼šæ­¤æ€ªç‰©ç”¨æŠ€èƒ½2æ—¶çš„é¢å¤–å‘å°„ç‰©ã€‚
 
-MissS3£º´Ë¹ÖÎïÓÃ¼¼ÄÜ3Ê±µÄ¶îÍâ·¢ÉäÎï¡£
+MissS3ï¼šæ­¤æ€ªç‰©ç”¨æŠ€èƒ½3æ—¶çš„é¢å¤–å‘å°„ç‰©ã€‚
 
-MissS4£º´Ë¹ÖÎïÓÃ¼¼ÄÜ4Ê±µÄ¶îÍâ·¢ÉäÎï¡£
+MissS4ï¼šæ­¤æ€ªç‰©ç”¨æŠ€èƒ½4æ—¶çš„é¢å¤–å‘å°„ç‰©ã€‚
 
-MissC£º´Ë¹ÖÎïÊ©·¨Ê±µÄ¶îÍâ·¢ÉäÎï¡£
+MissCï¼šæ­¤æ€ªç‰©æ–½æ³•æ—¶çš„é¢å¤–å‘å°„ç‰©ã€‚
 
-MissSQ£º´Ë¹ÖÎïÔÚË³Ğò¶¯×÷Ê±µÄ·¢ÉäÎï¡£
+MissSQï¼šæ­¤æ€ªç‰©åœ¨é¡ºåºåŠ¨ä½œæ—¶çš„å‘å°„ç‰©ã€‚
 
-Align£º´Ë¹ÖÎïµÄÕóÓª¡£0´ú±í¹ÖÎïÕóÓª£¬1´ú±íÍæ¼ÒÕóÓª£¬2´ú±íÖĞÁ¢ÕóÓª¡£
+Alignï¼šæ­¤æ€ªç‰©çš„é˜µè¥ã€‚0ä»£è¡¨æ€ªç‰©é˜µè¥ï¼Œ1ä»£è¡¨ç©å®¶é˜µè¥ï¼Œ2ä»£è¡¨ä¸­ç«‹é˜µè¥ã€‚
 
-isSpawn£º´Ë¹ÖÎïÊÇ·ñÄÜÓÉLevels.txt¿ØÖÆÉú³É¡£
+isSpawnï¼šæ­¤æ€ªç‰©æ˜¯å¦èƒ½ç”±Levels.txtæ§åˆ¶ç”Ÿæˆã€‚
 
-isMelee£º´Ë¹ÖÎïÊÇ·ñÊÇ½üÕ½µÄ¡£
+isMeleeï¼šæ­¤æ€ªç‰©æ˜¯å¦æ˜¯è¿‘æˆ˜çš„ã€‚
 
-npc£º´Ë¹ÖÎïÊÇ·ñÊÇNPC¡£
+npcï¼šæ­¤æ€ªç‰©æ˜¯å¦æ˜¯NPCã€‚
 
-interact£º´Ë¹ÖÎï£¨NPC£©ÊÇ·ñÄÜ¸úÍæ¼Ò½»Á÷¡£
+interactï¼šæ­¤æ€ªç‰©ï¼ˆNPCï¼‰æ˜¯å¦èƒ½è·Ÿç©å®¶äº¤æµã€‚
 
-inventory£º´Ë¹ÖÎïÊÇ·ñÓĞÎïÆ·´¢´æ¿Õ¼ä¡£
+inventoryï¼šæ­¤æ€ªç‰©æ˜¯å¦æœ‰ç‰©å“å‚¨å­˜ç©ºé—´ã€‚
 
-inTown£º´Ë¹ÖÎïÄÜ·ñ½øÈë³ÇÕò¡£Äã¿ÉÒÔÊÔ×ÅÈÃ¹ÖÎïÄÜ×·Äã×·µ½³ÇÕòÀï¡£
+inTownï¼šæ­¤æ€ªç‰©èƒ½å¦è¿›å…¥åŸé•‡ã€‚ä½ å¯ä»¥è¯•ç€è®©æ€ªç‰©èƒ½è¿½ä½ è¿½åˆ°åŸé•‡é‡Œã€‚
 
- lUndead£º´Ë¹ÖÎïÊÇ·ñÊÇµÍ¼¶²»ËÀÉúÎï¡£
+ lUndeadï¼šæ­¤æ€ªç‰©æ˜¯å¦æ˜¯ä½çº§ä¸æ­»ç”Ÿç‰©ã€‚
 
-hUndead£º´Ë¹ÖÎïÊÇ·ñÊÇ¸ß¼¶²»ËÀÉúÎï¡£
+hUndeadï¼šæ­¤æ€ªç‰©æ˜¯å¦æ˜¯é«˜çº§ä¸æ­»ç”Ÿç‰©ã€‚
 
-demon£º´Ë¹ÖÎïÊÇ·ñÊÇ¶ñÄ§¡£
+demonï¼šæ­¤æ€ªç‰©æ˜¯å¦æ˜¯æ¶é­”ã€‚
 
-flying£º´Ë¹ÖÎïÊÇ·ñÒÔ·ÉĞĞ·½Ê½ÒÆ¶¯¡£
+flyingï¼šæ­¤æ€ªç‰©æ˜¯å¦ä»¥é£è¡Œæ–¹å¼ç§»åŠ¨ã€‚
 
-opendoors£º´Ë¹ÖÎïÊÇ·ñ»á¿ªÃÅ¡£
+opendoorsï¼šæ­¤æ€ªç‰©æ˜¯å¦ä¼šå¼€é—¨ã€‚
 
-boss£º´Ë¹ÖÎïÊÇ·ñÊÇBOSS¡£
+bossï¼šæ­¤æ€ªç‰©æ˜¯å¦æ˜¯BOSSã€‚
 
-primeevil£º´Ë¹ÖÎïÊÇ·ñÊÇÊ¼Ä§¡£
+primeevilï¼šæ­¤æ€ªç‰©æ˜¯å¦æ˜¯å§‹é­”ã€‚
 
-killable£º´Ë¹ÖÎïÊÇ·ñ¿É±»É±ËÀ¡£
+killableï¼šæ­¤æ€ªç‰©æ˜¯å¦å¯è¢«æ€æ­»ã€‚
 
-switchai£º´Ë¹ÖÎïÊÇ·ñ»á¸Ä±äAI¡£±ÈÈçµ±±»¸´»îºó¡£
+switchaiï¼šæ­¤æ€ªç‰©æ˜¯å¦ä¼šæ”¹å˜AIã€‚æ¯”å¦‚å½“è¢«å¤æ´»åã€‚
 
-noAura£º´Ë¹ÖÎïÄÜ·ñ±»¹â»·Ó°Ïì¡£
+noAuraï¼šæ­¤æ€ªç‰©èƒ½å¦è¢«å…‰ç¯å½±å“ã€‚
 
-nomultishot£º´Ë¹ÖÎïÄÜ·ñ¾ßÓĞ¶àÖØÉä»÷ÊôĞÔ¡£
+nomultishotï¼šæ­¤æ€ªç‰©èƒ½å¦å…·æœ‰å¤šé‡å°„å‡»å±æ€§ã€‚
 
-neverCount£º´Ë¹ÖÎïÊÇ·ñ²ÎÓë¼ÆÊı¡£
+neverCountï¼šæ­¤æ€ªç‰©æ˜¯å¦å‚ä¸è®¡æ•°ã€‚
 
-petIgnore£ºÎŞÓÃ²ÎÊı¡£
+petIgnoreï¼šæ— ç”¨å‚æ•°ã€‚
 
-deathDmg£º´Ë¹ÖÎïËÀÍöÊ±ÊÇ·ñ¶ÔÖÜÎ§ÓĞÉËº¦¡£
+deathDmgï¼šæ­¤æ€ªç‰©æ­»äº¡æ—¶æ˜¯å¦å¯¹å‘¨å›´æœ‰ä¼¤å®³ã€‚
 
-genericSpawn£º´Ë¹ÖÎïÊÇ·ñ²ÉÓÃÍ¨ÓÃµÄÉú³É·½Ê½¡£
+genericSpawnï¼šæ­¤æ€ªç‰©æ˜¯å¦é‡‡ç”¨é€šç”¨çš„ç”Ÿæˆæ–¹å¼ã€‚
 
-zoo£º¶¯ÎïÔ°£¿²»ÖªµÀÊ²Ã´ÒâË¼µÄ²ÎÊı¡£
+zooï¼šåŠ¨ç‰©å›­ï¼Ÿä¸çŸ¥é“ä»€ä¹ˆæ„æ€çš„å‚æ•°ã€‚
 
-SendSkills£ºÎŞÓÃ²ÎÊı¡£
+SendSkillsï¼šæ— ç”¨å‚æ•°ã€‚
 
- Skill 1-8£º´Ë¹ÖÎïµÄµÚ1-8¸ö¼¼ÄÜ¡£
+ Skill 1-8ï¼šæ­¤æ€ªç‰©çš„ç¬¬1-8ä¸ªæŠ€èƒ½ã€‚
 
-Sk 1-8 mode£º´Ë¹ÖÎïÊ¹ÓÃµÚ1-8¸ö¼¼ÄÜÊ±µÄ¶¯»­¡£
+Sk 1-8 modeï¼šæ­¤æ€ªç‰©ä½¿ç”¨ç¬¬1-8ä¸ªæŠ€èƒ½æ—¶çš„åŠ¨ç”»ã€‚
 
-Sk 1-8 lvl£º´Ë¹ÖÎïµÄµÚ1-8¸ö¼¼ÄÜµÄ»ù´¡µÈ¼¶¡£ÔÚ¶ñÃÎºÍµØÓüÄÑ¶ÈÏÂ»áÓĞ¶îÍâµÄÌá¸ß£¨²Î¼ûDifficultyLevels.txt£©¡£
+Sk 1-8 lvlï¼šæ­¤æ€ªç‰©çš„ç¬¬1-8ä¸ªæŠ€èƒ½çš„åŸºç¡€ç­‰çº§ã€‚åœ¨æ¶æ¢¦å’Œåœ°ç‹±éš¾åº¦ä¸‹ä¼šæœ‰é¢å¤–çš„æé«˜ï¼ˆå‚è§DifficultyLevels.txtï¼‰ã€‚
 
-Drain /(N)/(H)£º´Ë¹ÖÎïÔÚ ÆÕÍ¨/¶ñÃÎ/µØÓü ÄÑ¶ÈÏÂµÄÉúÃü/·¨Á¦ÍµÈ¡Ğ§¹û¡£
+Drain /(N)/(H)ï¼šæ­¤æ€ªç‰©åœ¨ æ™®é€š/æ¶æ¢¦/åœ°ç‹± éš¾åº¦ä¸‹çš„ç”Ÿå‘½/æ³•åŠ›å·å–æ•ˆæœã€‚
 
-coldeffect /(N)/(H)£º´Ë¹ÖÎïÔÚ ÆÕÍ¨/¶ñÃÎ/µØÓü ÄÑ¶ÈÏÂµÄ±ù¶³/¶³½á×´Ì¬µÄ³ÖĞøÊ±¼äË¥¼õ¡£
+coldeffect /(N)/(H)ï¼šæ­¤æ€ªç‰©åœ¨ æ™®é€š/æ¶æ¢¦/åœ°ç‹± éš¾åº¦ä¸‹çš„å†°å†»/å†»ç»“çŠ¶æ€çš„æŒç»­æ—¶é—´è¡°å‡ã€‚
 
-ResDm /(N)/(H)£º´Ë¹ÖÎïÔÚ ÆÕÍ¨/¶ñÃÎ/µØÓü ÄÑ¶ÈÏÂµÄÎïÀí¿¹ĞÔ¡£
+ResDm /(N)/(H)ï¼šæ­¤æ€ªç‰©åœ¨ æ™®é€š/æ¶æ¢¦/åœ°ç‹± éš¾åº¦ä¸‹çš„ç‰©ç†æŠ—æ€§ã€‚
 
-ResMa /(N)/(H)£º´Ë¹ÖÎïÔÚ ÆÕÍ¨/¶ñÃÎ/µØÓü ÄÑ¶ÈÏÂµÄÄ§·¨¿¹ĞÔ¡£
+ResMa /(N)/(H)ï¼šæ­¤æ€ªç‰©åœ¨ æ™®é€š/æ¶æ¢¦/åœ°ç‹± éš¾åº¦ä¸‹çš„é­”æ³•æŠ—æ€§ã€‚
 
-ResFi /(N)/(H)£º´Ë¹ÖÎïÔÚ ÆÕÍ¨/¶ñÃÎ/µØÓü ÄÑ¶ÈÏÂµÄ»ğÑæ¿¹ĞÔ¡£
+ResFi /(N)/(H)ï¼šæ­¤æ€ªç‰©åœ¨ æ™®é€š/æ¶æ¢¦/åœ°ç‹± éš¾åº¦ä¸‹çš„ç«ç„°æŠ—æ€§ã€‚
 
-ResLi /(N)/(H)£º´Ë¹ÖÎïÔÚ ÆÕÍ¨/¶ñÃÎ/µØÓü ÄÑ¶ÈÏÂµÄÉÁµç¿¹ĞÔ¡£
+ResLi /(N)/(H)ï¼šæ­¤æ€ªç‰©åœ¨ æ™®é€š/æ¶æ¢¦/åœ°ç‹± éš¾åº¦ä¸‹çš„é—ªç”µæŠ—æ€§ã€‚
 
-ResCo /(N)/(H)£º´Ë¹ÖÎïÔÚ ÆÕÍ¨/¶ñÃÎ/µØÓü ÄÑ¶ÈÏÂµÄ±ùÀä¿¹ĞÔ¡£
+ResCo /(N)/(H)ï¼šæ­¤æ€ªç‰©åœ¨ æ™®é€š/æ¶æ¢¦/åœ°ç‹± éš¾åº¦ä¸‹çš„å†°å†·æŠ—æ€§ã€‚
 
-ResPo /(N)/(H)£º´Ë¹ÖÎïÔÚ ÆÕÍ¨/¶ñÃÎ/µØÓü ÄÑ¶ÈÏÂµÄ¶¾ËØ¿¹ĞÔ¡£
+ResPo /(N)/(H)ï¼šæ­¤æ€ªç‰©åœ¨ æ™®é€š/æ¶æ¢¦/åœ°ç‹± éš¾åº¦ä¸‹çš„æ¯’ç´ æŠ—æ€§ã€‚
 
-DamageRegen£º¹ÖÎïµÄÉúÃü»Ø¸´ËÙ¶È¡£Ã¿Ãë»Ø¸´µÄÉúÃüÊıÎª£º£¨´ËÁĞÖµ * ¹ÖÎïÉúÃü * 25 / 4096£©¡£
+DamageRegenï¼šæ€ªç‰©çš„ç”Ÿå‘½å›å¤é€Ÿåº¦ã€‚æ¯ç§’å›å¤çš„ç”Ÿå‘½æ•°ä¸ºï¼šï¼ˆæ­¤åˆ—å€¼ * æ€ªç‰©ç”Ÿå‘½ * 25 / 4096ï¼‰ã€‚
 
-SkillDamage£º´Ë¹ÖÎïµÄÉËº¦ÓÉÄÄ¸ö¼¼ÄÜ¾ö¶¨¡£
+SkillDamageï¼šæ­¤æ€ªç‰©çš„ä¼¤å®³ç”±å“ªä¸ªæŠ€èƒ½å†³å®šã€‚
 
-noRatio£º´Ë¹ÖÎïµÄÊôĞÔÊÇ·ñÊ¹ÓÃMonLvl.txtµÄ·ÅËõ±ÈÀı¡£1´ú±í²»Ê¹ÓÃ¡£
+noRatioï¼šæ­¤æ€ªç‰©çš„å±æ€§æ˜¯å¦ä½¿ç”¨MonLvl.txtçš„æ”¾ç¼©æ¯”ä¾‹ã€‚1ä»£è¡¨ä¸ä½¿ç”¨ã€‚
 
-NoShldBlock£º´Ë¹ÖÎï¸ñµ²Ê±ÊÇ·ñÓĞ¸ñµ²¶¯×÷¡£
+NoShldBlockï¼šæ­¤æ€ªç‰©æ ¼æŒ¡æ—¶æ˜¯å¦æœ‰æ ¼æŒ¡åŠ¨ä½œã€‚
 
-ToBlock /(N)/(H)£º´Ë¹ÖÎïÔÚ ÆÕÍ¨/¶ñÃÎ/µØÓü ÄÑ¶ÈÏÂµÄ¸ñµ²¼¸ÂÊ¡£
+ToBlock /(N)/(H)ï¼šæ­¤æ€ªç‰©åœ¨ æ™®é€š/æ¶æ¢¦/åœ°ç‹± éš¾åº¦ä¸‹çš„æ ¼æŒ¡å‡ ç‡ã€‚
 
-Crit£º´Ë¹ÖÎï¹¥»÷Ê±´¥·¢ÖÂÃüÒ»»÷µÄ¼¸ÂÊ¡£
+Critï¼šæ­¤æ€ªç‰©æ”»å‡»æ—¶è§¦å‘è‡´å‘½ä¸€å‡»çš„å‡ ç‡ã€‚
 
-minHP /(N)/(H)£º´Ë¹ÖÎïÔÚ ÆÕÍ¨/¶ñÃÎ/µØÓü ÄÑ¶ÈÏÂµÄ»ù´¡×îĞ¡ÉúÃüÖµ¡£
+minHP /(N)/(H)ï¼šæ­¤æ€ªç‰©åœ¨ æ™®é€š/æ¶æ¢¦/åœ°ç‹± éš¾åº¦ä¸‹çš„åŸºç¡€æœ€å°ç”Ÿå‘½å€¼ã€‚
 
-maxHP /(N)/(H)£º´Ë¹ÖÎïÔÚ ÆÕÍ¨/¶ñÃÎ/µØÓü ÄÑ¶ÈÏÂµÄ»ù´¡×î´óÉúÃüÖµ¡£
+maxHP /(N)/(H)ï¼šæ­¤æ€ªç‰©åœ¨ æ™®é€š/æ¶æ¢¦/åœ°ç‹± éš¾åº¦ä¸‹çš„åŸºç¡€æœ€å¤§ç”Ÿå‘½å€¼ã€‚
 
-AC /(N)/(H)£º´Ë¹ÖÎïÔÚ ÆÕÍ¨/¶ñÃÎ/µØÓü ÄÑ¶ÈÏÂµÄ»ù´¡·ÀÓù¡£
+AC /(N)/(H)ï¼šæ­¤æ€ªç‰©åœ¨ æ™®é€š/æ¶æ¢¦/åœ°ç‹± éš¾åº¦ä¸‹çš„åŸºç¡€é˜²å¾¡ã€‚
 
-Exp /(N)/(H)£ºÔÚ ÆÕÍ¨/¶ñÃÎ/µØÓü ÄÑ¶ÈÏÂÉ±ËÀ´Ë¹ÖÎïËù»ñµÃµÄ»ù´¡¾­ÑéÖµ¡£
+Exp /(N)/(H)ï¼šåœ¨ æ™®é€š/æ¶æ¢¦/åœ°ç‹± éš¾åº¦ä¸‹æ€æ­»æ­¤æ€ªç‰©æ‰€è·å¾—çš„åŸºç¡€ç»éªŒå€¼ã€‚
 
-A1/A2/S1 MinD /(N)/(H)£º´Ë¹ÖÎïÔÚ ÆÕÍ¨/¶ñÃÎ/µØÓü ÄÑ¶ÈÏÂÊ¹ÓÃ ÆÕÍ¨¹¥»÷1/ÆÕÍ¨¹¥»÷2/¼¼ÄÜ1 µÄ»ù´¡×îĞ¡ÉËº¦¡£
+A1/A2/S1 MinD /(N)/(H)ï¼šæ­¤æ€ªç‰©åœ¨ æ™®é€š/æ¶æ¢¦/åœ°ç‹± éš¾åº¦ä¸‹ä½¿ç”¨ æ™®é€šæ”»å‡»1/æ™®é€šæ”»å‡»2/æŠ€èƒ½1 çš„åŸºç¡€æœ€å°ä¼¤å®³ã€‚
 
-A1/A2/S1 MaxD /(N)/(H)£º´Ë¹ÖÎïÔÚ ÆÕÍ¨/¶ñÃÎ/µØÓü ÄÑ¶ÈÏÂÊ¹ÓÃ ÆÕÍ¨¹¥»÷1/ÆÕÍ¨¹¥»÷2/¼¼ÄÜ1 µÄ»ù´¡×î´óÉËº¦¡£
+A1/A2/S1 MaxD /(N)/(H)ï¼šæ­¤æ€ªç‰©åœ¨ æ™®é€š/æ¶æ¢¦/åœ°ç‹± éš¾åº¦ä¸‹ä½¿ç”¨ æ™®é€šæ”»å‡»1/æ™®é€šæ”»å‡»2/æŠ€èƒ½1 çš„åŸºç¡€æœ€å¤§ä¼¤å®³ã€‚
 
-A1/A2/S1 TH /(N)/(H)£º´Ë¹ÖÎïÔÚ ÆÕÍ¨/¶ñÃÎ/µØÓü ÄÑ¶ÈÏÂÊ¹ÓÃ ÆÕÍ¨¹¥»÷1/ÆÕÍ¨¹¥»÷2/¼¼ÄÜ1 Ê±µÄ»ù´¡ÃüÖĞÂÊ¡£
+A1/A2/S1 TH /(N)/(H)ï¼šæ­¤æ€ªç‰©åœ¨ æ™®é€š/æ¶æ¢¦/åœ°ç‹± éš¾åº¦ä¸‹ä½¿ç”¨ æ™®é€šæ”»å‡»1/æ™®é€šæ”»å‡»2/æŠ€èƒ½1 æ—¶çš„åŸºç¡€å‘½ä¸­ç‡ã€‚
 
-El 1-3 Mode£º´Ë¹ÖÎïÓĞ¸½¼ÓÊôĞÔÉËº¦µÄµÚ1-3¸ö¹¥»÷ÖÖÀà¡£
+El 1-3 Modeï¼šæ­¤æ€ªç‰©æœ‰é™„åŠ å±æ€§ä¼¤å®³çš„ç¬¬1-3ä¸ªæ”»å‡»ç§ç±»ã€‚
 
-El 1-3 Type£º´Ë¹ÖÎïÓĞ¸½¼ÓÊôĞÔÉËº¦µÄµÚ1-3¸ö¹¥»÷ÖÖÀàÖĞ¸½¼ÓµÄÊôĞÔÉËº¦Àà±ğ¡£ÓëElemTypes.txt¹ØÁª¡£
+El 1-3 Typeï¼šæ­¤æ€ªç‰©æœ‰é™„åŠ å±æ€§ä¼¤å®³çš„ç¬¬1-3ä¸ªæ”»å‡»ç§ç±»ä¸­é™„åŠ çš„å±æ€§ä¼¤å®³ç±»åˆ«ã€‚ä¸ElemTypes.txtå…³è”ã€‚
 
-El 1-3 Pct /(N)/(H)£º´Ë¹ÖÎïÔÚ ÆÕÍ¨/¶ñÃÎ/µØÓü ÄÑ¶ÈÏÂµÄµÚ1-3¸ö¹¥»÷ÖÖÀà¸½¼ÓÊôĞÔÉËº¦µÄ¼¸ÂÊ¡£
+El 1-3 Pct /(N)/(H)ï¼šæ­¤æ€ªç‰©åœ¨ æ™®é€š/æ¶æ¢¦/åœ°ç‹± éš¾åº¦ä¸‹çš„ç¬¬1-3ä¸ªæ”»å‡»ç§ç±»é™„åŠ å±æ€§ä¼¤å®³çš„å‡ ç‡ã€‚
 
-El 1-3 MinD /(N)/(H)£º´Ë¹ÖÎïÔÚ ÆÕÍ¨/¶ñÃÎ/µØÓü ÄÑ¶ÈÏÂµÄµÚ1-3¸ö¹¥»÷ÖÖÀà¸½¼ÓµÄÊôĞÔÉËº¦×îĞ¡Öµ¡£
+El 1-3 MinD /(N)/(H)ï¼šæ­¤æ€ªç‰©åœ¨ æ™®é€š/æ¶æ¢¦/åœ°ç‹± éš¾åº¦ä¸‹çš„ç¬¬1-3ä¸ªæ”»å‡»ç§ç±»é™„åŠ çš„å±æ€§ä¼¤å®³æœ€å°å€¼ã€‚
 
-El 1-3 MaxD /(N)/(H)£º´Ë¹ÖÎïÔÚ ÆÕÍ¨/¶ñÃÎ/µØÓü ÄÑ¶ÈÏÂµÄµÚ1-3¸ö¹¥»÷ÖÖÀà¸½¼ÓµÄÊôĞÔÉËº¦×î´óÖµ¡£
+El 1-3 MaxD /(N)/(H)ï¼šæ­¤æ€ªç‰©åœ¨ æ™®é€š/æ¶æ¢¦/åœ°ç‹± éš¾åº¦ä¸‹çš„ç¬¬1-3ä¸ªæ”»å‡»ç§ç±»é™„åŠ çš„å±æ€§ä¼¤å®³æœ€å¤§å€¼ã€‚
 
-El 1-3 Dur /(N)/(H)£º´Ë¹ÖÎïÔÚ ÆÕÍ¨/¶ñÃÎ/µØÓü ÄÑ¶ÈÏÂµÄµÚ1-3¸ö¹¥»÷ÖÖÀà¸½¼ÓµÄÊôĞÔÉËº¦Ğ§¹ûµÄ³ÖĞøÊ±¼ä¡£
+El 1-3 Dur /(N)/(H)ï¼šæ­¤æ€ªç‰©åœ¨ æ™®é€š/æ¶æ¢¦/åœ°ç‹± éš¾åº¦ä¸‹çš„ç¬¬1-3ä¸ªæ”»å‡»ç§ç±»é™„åŠ çš„å±æ€§ä¼¤å®³æ•ˆæœçš„æŒç»­æ—¶é—´ã€‚
 
-TreasureClass1 /(N)/(H)£º´Ë¹ÖÎïÔÚ ÆÕÍ¨/¶ñÃÎ/µØÓü ÄÑ¶ÈÏÂµÄTC¡£
+TreasureClass1 /(N)/(H)ï¼šæ­¤æ€ªç‰©åœ¨ æ™®é€š/æ¶æ¢¦/åœ°ç‹± éš¾åº¦ä¸‹çš„TCã€‚
 
-TreasureClass2 /(N)/(H)£º´Ë¹ÖÎïÔÚ ÆÕÍ¨/¶ñÃÎ/µØÓü ÄÑ¶ÈÏÂ×÷ÎªÍ·Ä¿Ê±µÄTC¡£
+TreasureClass2 /(N)/(H)ï¼šæ­¤æ€ªç‰©åœ¨ æ™®é€š/æ¶æ¢¦/åœ°ç‹± éš¾åº¦ä¸‹ä½œä¸ºå¤´ç›®æ—¶çš„TCã€‚
 
-TreasureClass3 /(N)/(H)£º´Ë¹ÖÎïÔÚ ÆÕÍ¨/¶ñÃÎ/µØÓü ÄÑ¶ÈÏÂ×÷Îª½ğ¹ÖÊ±µÄTC¡£
+TreasureClass3 /(N)/(H)ï¼šæ­¤æ€ªç‰©åœ¨ æ™®é€š/æ¶æ¢¦/åœ°ç‹± éš¾åº¦ä¸‹ä½œä¸ºé‡‘æ€ªæ—¶çš„TCã€‚
 
-TreasureClass4 /(N)/(H)£º´Ë¹ÖÎïÔÚ ÆÕÍ¨/¶ñÃÎ/µØÓü ÄÑ¶ÈÏÂ×÷ÎªÈÎÎñ¹ÖÊ±µÄTC¡£
+TreasureClass4 /(N)/(H)ï¼šæ­¤æ€ªç‰©åœ¨ æ™®é€š/æ¶æ¢¦/åœ°ç‹± éš¾åº¦ä¸‹ä½œä¸ºä»»åŠ¡æ€ªæ—¶çš„TCã€‚
 
-TCQuestId£º´Ë¹ÖÎï×÷ÎªÈÎÎñ¹ÖÊ±µÄÈÎÎñ±àºÅ¡£
+TCQuestIdï¼šæ­¤æ€ªç‰©ä½œä¸ºä»»åŠ¡æ€ªæ—¶çš„ä»»åŠ¡ç¼–å·ã€‚
 
-TCQuestCP£ºÄÜ¹»´¥·¢ÈÎÎñÉ±¶ÔÓ¦TCµÄÈÎÎñ×´Ì¬¡£
+TCQuestCPï¼šèƒ½å¤Ÿè§¦å‘ä»»åŠ¡æ€å¯¹åº”TCçš„ä»»åŠ¡çŠ¶æ€ã€‚
 
-SplEndDeath£ºËÀÍöÊ±µÄÌØÊâĞ§¹û¡£0´ú±íÎŞÌØÊâĞ§¹û£¬1´ú±íËÀºóÉú³öËæ´Ó1£¬2´ú±í»áÀ­×ÅÆïÔÚ´Ë¹ÖÎïÉíÉÏµÄ¹ÖÎïÒ»ÆğËÀÍö¡£
+SplEndDeathï¼šæ­»äº¡æ—¶çš„ç‰¹æ®Šæ•ˆæœã€‚0ä»£è¡¨æ— ç‰¹æ®Šæ•ˆæœï¼Œ1ä»£è¡¨æ­»åç”Ÿå‡ºéšä»1ï¼Œ2ä»£è¡¨ä¼šæ‹‰ç€éª‘åœ¨æ­¤æ€ªç‰©èº«ä¸Šçš„æ€ªç‰©ä¸€èµ·æ­»äº¡ã€‚
 
-SplGetModeChart£ºÊÇ·ñÓĞÌØÊâmode±í¡£
+SplGetModeChartï¼šæ˜¯å¦æœ‰ç‰¹æ®Šmodeè¡¨ã€‚
 
-SplEndGeneric£º¸Õ³öÉúÊ±ÊÇ·ñ¿É±»Ñ¡ÖĞ×÷ÎªÄ¿±ê¡£ÈçÇ±ÔÚË®ÀïµÄ¹Ö¡£
+SplEndGenericï¼šåˆšå‡ºç”Ÿæ—¶æ˜¯å¦å¯è¢«é€‰ä¸­ä½œä¸ºç›®æ ‡ã€‚å¦‚æ½œåœ¨æ°´é‡Œçš„æ€ªã€‚
 
-SplClientEnd£º¸Õ³öÉúÊ±ÊÇ·ñ¿É¼û¡£ÈçÇ±ÔÚË®ÀïµÄ¹Ö¡£
+SplClientEndï¼šåˆšå‡ºç”Ÿæ—¶æ˜¯å¦å¯è§ã€‚å¦‚æ½œåœ¨æ°´é‡Œçš„æ€ªã€‚
 
-*eol£ºĞĞÎ²±êÖ¾£¬±ØĞëÎª0¡£
+*eolï¼šè¡Œå°¾æ ‡å¿—ï¼Œå¿…é¡»ä¸º0ã€‚
 
-²âÊÔ³öÀ´ÁËzooµÄĞ§¹û£¬Èç¹ûÉèÖÃÎª1
-µ±¸Ã¹ÖÎïÔÚlevelÖĞÉèÖÃÎªÖĞÁ¢¶¯ÎïµÄÊ±ºò
-Äã½Ó½üËü£¬Ëû¾Í»áÒÆ¶¯Àë¿ªÄã£¨¾ÍºÃÏñÂŞ¸ñÓªµØµÄ¼¦£©
+æµ‹è¯•å‡ºæ¥äº†zooçš„æ•ˆæœï¼Œå¦‚æœè®¾ç½®ä¸º1
+å½“è¯¥æ€ªç‰©åœ¨levelä¸­è®¾ç½®ä¸ºä¸­ç«‹åŠ¨ç‰©çš„æ—¶å€™
+ä½ æ¥è¿‘å®ƒï¼Œä»–å°±ä¼šç§»åŠ¨ç¦»å¼€ä½ ï¼ˆå°±å¥½åƒç½—æ ¼è¥åœ°çš„é¸¡ï¼‰
 
-µ«ÊÇÇ°ÌáÊÇÆäswithAI=1ºÍmonstats2µÄmWL=1
-²¢ÇÒÓĞÒÆ¶¯µÄ¶¯»­
+ä½†æ˜¯å‰ææ˜¯å…¶swithAI=1å’Œmonstats2çš„mWL=1
+å¹¶ä¸”æœ‰ç§»åŠ¨çš„åŠ¨ç”»
 
-¶ÔÁË£¬zoo=1
-»¹ÓĞÒ»¸öĞ§¹ûÊÇ£¬¶¯ÎïÆ½Ê±Ò²»áÎŞÄ¿µÄµÄÒÆ¶¯
+å¯¹äº†ï¼Œzoo=1
+è¿˜æœ‰ä¸€ä¸ªæ•ˆæœæ˜¯ï¼ŒåŠ¨ç‰©å¹³æ—¶ä¹Ÿä¼šæ— ç›®çš„çš„ç§»åŠ¨
 
 
- ÄãºÃ£¡
-ÎÒ·¢ÏÖÕâ¸öÎÄ¼şµÄ ÆÕÍ¨ÄÑ¶ÈµÄminHP£¬maxHP£¬MinD£¬MaxDµÈÃ²ËÆ¶¼ÓĞÎÊÌâ£¬²»ºÏÊµ¼Ê£¡¶ød2data.mpqÀïµÄmonstats.txt ÖĞminHP£¬maxHP£¬MinD£¬MaxDµÈÊÇÕæÊµµÄ£¡ Çë½ÌÊÇÔõÃ´»ØÊÂ£¿
-²¢ÇÒĞŞ¸ÄcritµÈ ÔÚÓÎÏ·ÀïËÆºõÒ²Ã»ÓĞ×÷ÓÃ(-direct -txt)£¿
-ĞÂÊÖ£¬Ğ»Ğ»£¡
+ ä½ å¥½ï¼
+æˆ‘å‘ç°è¿™ä¸ªæ–‡ä»¶çš„ æ™®é€šéš¾åº¦çš„minHPï¼ŒmaxHPï¼ŒMinDï¼ŒMaxDç­‰è²Œä¼¼éƒ½æœ‰é—®é¢˜ï¼Œä¸åˆå®é™…ï¼è€Œd2data.mpqé‡Œçš„monstats.txt ä¸­minHPï¼ŒmaxHPï¼ŒMinDï¼ŒMaxDç­‰æ˜¯çœŸå®çš„ï¼ è¯·æ•™æ˜¯æ€ä¹ˆå›äº‹ï¼Ÿ
+å¹¶ä¸”ä¿®æ”¹critç­‰ åœ¨æ¸¸æˆé‡Œä¼¼ä¹ä¹Ÿæ²¡æœ‰ä½œç”¨(-direct -txt)ï¼Ÿ
+æ–°æ‰‹ï¼Œè°¢è°¢ï¼
 
 
-ÊÕÆğ»Ø¸´
+æ”¶èµ·å›å¤
 
-14Â¥
+14æ¥¼
 2012-12-29 21:49
 
-¾Ù±¨ |
+ä¸¾æŠ¥ |
 
-zqtjingzi: ÆÕÍ¨ÄÑ¶ÈµÄ¹ÖÎï²»ÊÜÎÄ¼ş¿ØÖÆ£¬Ö±½ÓÉú³É
-2012-12-29 21:54»Ø¸´
-0ÎŞËù´ÓÀ´0: »Ø¸´ zqtjingzi :¼ÈÈ»Ö±½ÓÉú³É£¬ÄÇÃ´d2data.mpqÀïµÄmonstats.txtÊÇ¸öÊ²Ã´×÷ÓÃ£¿ºÍpatch_D2.mpqÀïµÄÍ¬Â·¾¶Í¬ÃûÎÄ¼şÓĞÊ²Ã´¹ØÏµ£¿ ´ó´óÄÜ·ñÍÆ¼öĞ©¹ÖÎïÊıÖµ·½ÃæµÄÎÄÕÂ¿´¿´£¿thx!
-2012-12-29 22:07»Ø¸´
-zqtjingzi: »Ø¸´ 0ÎŞËù´ÓÀ´0 :Ö»ÓĞÆÕÍ¨ÄÑ¶ÈÊÇÕâÑù£¬ÆäÊµÁ½¸öÎÄ¼şÊÇ¸²¸ÇµÄ¹ØÏµ£¬ºóÕßÆğ×÷ÓÃ¡£¹ÖÎïÊıÖµµÄ»°¾«Æ·ÇøÓ¦¸ÃÓĞÒ»Ğ©£¬ÄãÏë¿´Ê²Ã´ÑùµÄÊıÖµ£¿¿ÉÒÔÈ¥¿­¶÷Ö®½ÇÕÒÕÒ
-2012-12-29 22:35»Ø¸´
-0ÎŞËù´ÓÀ´0: »Ø¸´ zqtjingzi :¾ÍÊÇÏêÏ¸·ÖÎömonstatsµÄÎÄÕÂ ×îºÃÓĞĞ©Àı×Ó Ïë¸Ä¸Ä¹ÖÎïµÄÊıÖµ¡¢¼¼ÄÜ¡¢µØÍ¼·Ö²¼Ö®ÀàµÄ
+zqtjingzi: æ™®é€šéš¾åº¦çš„æ€ªç‰©ä¸å—æ–‡ä»¶æ§åˆ¶ï¼Œç›´æ¥ç”Ÿæˆ
+2012-12-29 21:54å›å¤
+0æ— æ‰€ä»æ¥0: å›å¤ zqtjingzi :æ—¢ç„¶ç›´æ¥ç”Ÿæˆï¼Œé‚£ä¹ˆd2data.mpqé‡Œçš„monstats.txtæ˜¯ä¸ªä»€ä¹ˆä½œç”¨ï¼Ÿå’Œpatch_D2.mpqé‡Œçš„åŒè·¯å¾„åŒåæ–‡ä»¶æœ‰ä»€ä¹ˆå…³ç³»ï¼Ÿ å¤§å¤§èƒ½å¦æ¨èäº›æ€ªç‰©æ•°å€¼æ–¹é¢çš„æ–‡ç« çœ‹çœ‹ï¼Ÿthx!
+2012-12-29 22:07å›å¤
+zqtjingzi: å›å¤ 0æ— æ‰€ä»æ¥0 :åªæœ‰æ™®é€šéš¾åº¦æ˜¯è¿™æ ·ï¼Œå…¶å®ä¸¤ä¸ªæ–‡ä»¶æ˜¯è¦†ç›–çš„å…³ç³»ï¼Œåè€…èµ·ä½œç”¨ã€‚æ€ªç‰©æ•°å€¼çš„è¯ç²¾å“åŒºåº”è¯¥æœ‰ä¸€äº›ï¼Œä½ æƒ³çœ‹ä»€ä¹ˆæ ·çš„æ•°å€¼ï¼Ÿå¯ä»¥å»å‡¯æ©ä¹‹è§’æ‰¾æ‰¾
+2012-12-29 22:35å›å¤
+0æ— æ‰€ä»æ¥0: å›å¤ zqtjingzi :å°±æ˜¯è¯¦ç»†åˆ†æmonstatsçš„æ–‡ç«  æœ€å¥½æœ‰äº›ä¾‹å­ æƒ³æ”¹æ”¹æ€ªç‰©çš„æ•°å€¼ã€æŠ€èƒ½ã€åœ°å›¾åˆ†å¸ƒä¹‹ç±»çš„
 */
 
 typedef struct

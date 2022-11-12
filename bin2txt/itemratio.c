@@ -17,8 +17,8 @@ Unique > Set > Rare > Magic > Hi quality > Normal > Low quality
 
 RELATED .TXT FILES :
 
-As far as I know, this file is not using/used by other .txt files. But the game has to know is the current item is uber/elite, and if it is class-specific, which involve Armor.txt/Misc.txt/Weapons.txt and ItemTypes.txt. The game also checks item¡¯s qLvl 
-(¡°level¡± column in Armor.txt/Misc.txt/Weapons.txt) and monsters¡¯ levels (this use MonStats.txt and Levels.txt but exact behaviour is out of the scope of this file guide).
+As far as I know, this file is not using/used by other .txt files. But the game has to know is the current item is uber/elite, and if it is class-specific, which involve Armor.txt/Misc.txt/Weapons.txt and ItemTypes.txt. The game also checks itemâ€™s qLvl 
+(â€œlevelâ€ column in Armor.txt/Misc.txt/Weapons.txt) and monstersâ€™ levels (this use MonStats.txt and Levels.txt but exact behaviour is out of the scope of this file guide).
 
 COLUMN DESCRIPTIONS :
 
@@ -53,12 +53,12 @@ D2C class specific items don't appear in vanilla. The line used if you make such
 Unique
 	
 
-Base chance of being unique. The higher, the rarer. (¡°chance¡± must be understood as ¡°one over chance ¡­¡±)
+Base chance of being unique. The higher, the rarer. (â€œchanceâ€ must be understood as â€œone over chance â€¦â€)
 
 UniqueDivisor
 	
 
-Influence of monster level / item quality level. High value counter the bonus of high level monsters giving better items (see Mishy23¡¯s note below).
+Influence of monster level / item quality level. High value counter the bonus of high level monsters giving better items (see Mishy23â€™s note below).
 
 UniqueMin
 	
@@ -170,98 +170,98 @@ First Myrdinn who teached me almost everything I know, but also Paul Simary for 
 */
 
 /*
-ÎÄ¼şÃû½âÎö£º
-Item£ºµÀ¾ß£¬¼´×°±¸¡£
-Ratio£º±ÈÖµ£¬ÔÚÕâÀïÖ¸ÅĞ¶¨¼¸ÂÊ¡£
-±¾ÎÄ¼şÃèÊöÁË¸÷ÖÖ³ÉÉ«µÄ×°±¸ÅĞ¶¨µÄ¸ÅÂÊ¡£
-´ËÎÄ¼şÖĞµÄÃ¿Ò»ĞĞ±íÊ¾Ò»ÖÖÊÊÓÃÓÚ²»Í¬Çé¿öµÄ¼ÆËã·½·¨¡£
+æ–‡ä»¶åè§£æï¼š
+Itemï¼šé“å…·ï¼Œå³è£…å¤‡ã€‚
+Ratioï¼šæ¯”å€¼ï¼Œåœ¨è¿™é‡ŒæŒ‡åˆ¤å®šå‡ ç‡ã€‚
+æœ¬æ–‡ä»¶æè¿°äº†å„ç§æˆè‰²çš„è£…å¤‡åˆ¤å®šçš„æ¦‚ç‡ã€‚
+æ­¤æ–‡ä»¶ä¸­çš„æ¯ä¸€è¡Œè¡¨ç¤ºä¸€ç§é€‚ç”¨äºä¸åŒæƒ…å†µçš„è®¡ç®—æ–¹æ³•ã€‚
 
 
-»Ø¸´
+å›å¤
 
-    2Â¥
+    2æ¥¼
     2011-09-29 23:19
 
-    ¾Ù±¨ |
+    ä¸¾æŠ¥ |
 
     zqtjingzi
-    Ğ¡°ÉÖ÷
+    å°å§ä¸»
     12
 
-Ã¿ÁĞµÄº¬ÒåÈçÏÂ£º
+æ¯åˆ—çš„å«ä¹‰å¦‚ä¸‹ï¼š
 
 
-»Ø¸´
+å›å¤
 
-    3Â¥
+    3æ¥¼
     2011-09-29 23:19
 
-    ¾Ù±¨ |
+    ä¸¾æŠ¥ |
 
     zqtjingzi
-    Ğ¡°ÉÖ÷
+    å°å§ä¸»
     12
 
-Function£º½ö×÷×¢ÊÍÓÃ¡£
+Functionï¼šä»…ä½œæ³¨é‡Šç”¨ã€‚
 
-Version£ºÊÊÓÃ°æ±¾¡£0±íÊ¾·Ç×ÊÁÏÆ¬£¬1´ú±í×ÊÁÏÆ¬¡£
+Versionï¼šé€‚ç”¨ç‰ˆæœ¬ã€‚0è¡¨ç¤ºéèµ„æ–™ç‰‡ï¼Œ1ä»£è¡¨èµ„æ–™ç‰‡ã€‚
 
-Uber£º´ËĞĞÊÇ·ñÓÃÓÚÌØÊâ×°±¸¡£Èç¹û´ËĞĞÓÃÓÚ½Ü³ö×°±¸£¬ÔòÎª1
+Uberï¼šæ­¤è¡Œæ˜¯å¦ç”¨äºç‰¹æ®Šè£…å¤‡ã€‚å¦‚æœæ­¤è¡Œç”¨äºæ°å‡ºè£…å¤‡ï¼Œåˆ™ä¸º1
 
-Class Specific£º´ËĞĞÊÇ·ñ×÷ÓÃÓÚ½ÇÉ«×¨ÓÃÎïÆ·¡£Èç¹û´ËĞĞÓÃÓÚ×¨ÓÃÎïÆ·µÈÓÚ1
+Class Specificï¼šæ­¤è¡Œæ˜¯å¦ä½œç”¨äºè§’è‰²ä¸“ç”¨ç‰©å“ã€‚å¦‚æœæ­¤è¡Œç”¨äºä¸“ç”¨ç‰©å“ç­‰äº1
 
-Unique£º°µ½ğÎïÆ·µÄ»ù´¡ÅĞ¶¨¼¸ÂÊ¡£
+Uniqueï¼šæš—é‡‘ç‰©å“çš„åŸºç¡€åˆ¤å®šå‡ ç‡ã€‚
 
-UniqueDivisor£º¹ÖÎïµÈ¼¶¶Ô°µ½ğÎïÆ·ÅĞ¶¨¼¸ÂÊµÄÓ°Ïì¡£
-µôÂä°µ½ğÎïÆ·µÄ¿ÉÄÜĞÔÊÇ 1 / (U - (drop level - item level)/UD)
-ÓÉTreasure Class£¨TC£©ºÍmagic find£¨MF£©ĞŞÕı
+UniqueDivisorï¼šæ€ªç‰©ç­‰çº§å¯¹æš—é‡‘ç‰©å“åˆ¤å®šå‡ ç‡çš„å½±å“ã€‚
+æ‰è½æš—é‡‘ç‰©å“çš„å¯èƒ½æ€§æ˜¯ 1 / (U - (drop level - item level)/UD)
+ç”±Treasure Classï¼ˆTCï¼‰å’Œmagic findï¼ˆMFï¼‰ä¿®æ­£
 
-UniqueMin£º°µ½ğÎïÆ·µÄ×îĞ¡ÅĞ¶¨¼¸ÂÊ¡£
-´ËÁĞÎŞÓÃµ«ÊÇÒ»Ö±¶ÁÈë£¬Èç¹ûÄãÒªdll±à¼­ÎïÆ·µôÂä´úÂë£¬¿ÉÒÔ½«ËûÃÇÓÃ×÷×Ô¶¨Òå×Ö¶Î
+UniqueMinï¼šæš—é‡‘ç‰©å“çš„æœ€å°åˆ¤å®šå‡ ç‡ã€‚
+æ­¤åˆ—æ— ç”¨ä½†æ˜¯ä¸€ç›´è¯»å…¥ï¼Œå¦‚æœä½ è¦dllç¼–è¾‘ç‰©å“æ‰è½ä»£ç ï¼Œå¯ä»¥å°†ä»–ä»¬ç”¨ä½œè‡ªå®šä¹‰å­—æ®µ
 
-Rare¡¢RareDivisor¡¢£ºÁÁ½ğÎïÆ·µÄÏà¹ØÊôĞÔ¡£
-ÁÁ½ğµÄ¿ÉÄÜĞÔÊÇ 1 / (R - (drop level - item level)/RD)
-ÓÉTreasure Class£¨TC£©ºÍmagic find£¨MF£©ĞŞÕı
+Rareã€RareDivisorã€ï¼šäº®é‡‘ç‰©å“çš„ç›¸å…³å±æ€§ã€‚
+äº®é‡‘çš„å¯èƒ½æ€§æ˜¯ 1 / (R - (drop level - item level)/RD)
+ç”±Treasure Classï¼ˆTCï¼‰å’Œmagic findï¼ˆMFï¼‰ä¿®æ­£
 
 RareMin
-´ËÁĞÎŞÓÃµ«ÊÇÒ»Ö±¶ÁÈë£¬Èç¹ûÄãÒªdll±à¼­ÎïÆ·µôÂä´úÂë£¬¿ÉÒÔ½«ËûÃÇÓÃ×÷×Ô¶¨Òå×Ö¶Î
+æ­¤åˆ—æ— ç”¨ä½†æ˜¯ä¸€ç›´è¯»å…¥ï¼Œå¦‚æœä½ è¦dllç¼–è¾‘ç‰©å“æ‰è½ä»£ç ï¼Œå¯ä»¥å°†ä»–ä»¬ç”¨ä½œè‡ªå®šä¹‰å­—æ®µ
 
-Set¡¢SetDivisor¡¢£ºÂÌÉ«ÎïÆ·µÄÏà¹ØÊôĞÔ¡£
-³öÏÖÌ××°µÄ¿ÉÄÜĞÔÊÇ 1 / (S - (drop level - item level)/SD)
-ÓÉTreasure Class£¨TC£©ºÍmagic find£¨MF£©ĞŞÕı
+Setã€SetDivisorã€ï¼šç»¿è‰²ç‰©å“çš„ç›¸å…³å±æ€§ã€‚
+å‡ºç°å¥—è£…çš„å¯èƒ½æ€§æ˜¯ 1 / (S - (drop level - item level)/SD)
+ç”±Treasure Classï¼ˆTCï¼‰å’Œmagic findï¼ˆMFï¼‰ä¿®æ­£
 
 SetMin
-´ËÁĞÎŞÓÃµ«ÊÇÒ»Ö±¶ÁÈë£¬Èç¹ûÄãÒªdll±à¼­ÎïÆ·µôÂä´úÂë£¬¿ÉÒÔ½«ËûÃÇÓÃ×÷×Ô¶¨Òå×Ö¶Î
+æ­¤åˆ—æ— ç”¨ä½†æ˜¯ä¸€ç›´è¯»å…¥ï¼Œå¦‚æœä½ è¦dllç¼–è¾‘ç‰©å“æ‰è½ä»£ç ï¼Œå¯ä»¥å°†ä»–ä»¬ç”¨ä½œè‡ªå®šä¹‰å­—æ®µ
 
-Magic¡¢MagicDivisor¡¢£ºÀ¶É«ÎïÆ·µÄÏà¹ØÊôĞÔ¡£
-Ä§·¨ÎïÆ·µôÂäµÄ»úÂÊÊÇ 1 / (M - (drop level - item level)/MD)
-ÓÉTreasure Class£¨TC£©ºÍmagic find£¨MF£©ĞŞÕı
+Magicã€MagicDivisorã€ï¼šè“è‰²ç‰©å“çš„ç›¸å…³å±æ€§ã€‚
+é­”æ³•ç‰©å“æ‰è½çš„æœºç‡æ˜¯ 1 / (M - (drop level - item level)/MD)
+ç”±Treasure Classï¼ˆTCï¼‰å’Œmagic findï¼ˆMFï¼‰ä¿®æ­£
 
 MagicMin
-´ËÁĞÎŞÓÃµ«ÊÇÒ»Ö±¶ÁÈë£¬Èç¹ûÄãÒªdll±à¼­ÎïÆ·µôÂä´úÂë£¬¿ÉÒÔ½«ËûÃÇÓÃ×÷×Ô¶¨Òå×Ö¶Î
+æ­¤åˆ—æ— ç”¨ä½†æ˜¯ä¸€ç›´è¯»å…¥ï¼Œå¦‚æœä½ è¦dllç¼–è¾‘ç‰©å“æ‰è½ä»£ç ï¼Œå¯ä»¥å°†ä»–ä»¬ç”¨ä½œè‡ªå®šä¹‰å­—æ®µ
 
-HiQuality¡¢HiQualityDivisor£º³¬Ç¿ÎïÆ·µÄÏà¹ØÊôĞÔ¡£
-¸ßÁÁÎïÆ·µôÂäµÄ»úÂÊÊÇ 1 / (H - (drop level - itemlevel)/HD) 
-ÓÉTreasure Class£¨TC£©ºÍmagic find£¨MF£©ĞŞÕı
+HiQualityã€HiQualityDivisorï¼šè¶…å¼ºç‰©å“çš„ç›¸å…³å±æ€§ã€‚
+é«˜äº®ç‰©å“æ‰è½çš„æœºç‡æ˜¯ 1 / (H - (drop level - itemlevel)/HD) 
+ç”±Treasure Classï¼ˆTCï¼‰å’Œmagic findï¼ˆMFï¼‰ä¿®æ­£
 
-Normal¡¢NormalDivisor£ºÆÕÍ¨ÎïÆ·µÄÏà¹ØÊôĞÔ¡£
-°×É«Õı³£ÎïÆ·³öÏÖµÄ¿ÉÄÜĞÔÊÇ 1 / (N - (drop level - item level)/ND)
-ÓÉTreasure Class£¨TC£©ºÍmagic find£¨MF£©ĞŞÕı
+Normalã€NormalDivisorï¼šæ™®é€šç‰©å“çš„ç›¸å…³å±æ€§ã€‚
+ç™½è‰²æ­£å¸¸ç‰©å“å‡ºç°çš„å¯èƒ½æ€§æ˜¯ 1 / (N - (drop level - item level)/ND)
+ç”±Treasure Classï¼ˆTCï¼‰å’Œmagic findï¼ˆMFï¼‰ä¿®æ­£
 
 
-»Ø¸´
+å›å¤
 
-    4Â¥
+    4æ¥¼
     2011-09-29 23:19
 
-    ¾Ù±¨ |
+    ä¸¾æŠ¥ |
 
     zqtjingzi
-    Ğ¡°ÉÖ÷
+    å°å§ä¸»
     12
 
-²¹³äËµÃ÷£º
-¸÷ÖÖ¼¸ÂÊÖµÈçºÎÊ¹ÓÃ»¹Çë²ÎÊı¾«Æ·ÇøÇáº®µÄÎïÆ·µôÂäÔ­ÀíÒ»Ìù¡£
+è¡¥å……è¯´æ˜ï¼š
+å„ç§å‡ ç‡å€¼å¦‚ä½•ä½¿ç”¨è¿˜è¯·å‚æ•°ç²¾å“åŒºè½»å¯’çš„ç‰©å“æ‰è½åŸç†ä¸€è´´ã€‚
 http://tieba.baidu.com/p/1010218627
 */
 

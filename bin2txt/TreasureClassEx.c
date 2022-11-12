@@ -15,59 +15,59 @@ By Nefarius
 
 
 
-Treasure Class ®C This column defines the ID pointer (°∞the name°±) of the treasureclass, this pointer is used by other files (and fields inside this file) to link to a specific line. An ID pointer must be unique, if you have two identical ID pointers 
+Treasure Class ‚Äì This column defines the ID pointer (‚Äúthe name‚Äù) of the treasureclass, this pointer is used by other files (and fields inside this file) to link to a specific line. An ID pointer must be unique, if you have two identical ID pointers 
 the game will always use the first occurrence and ignore all others. Fields of this type are (almost always) case-sensitive. Files that use this ID pointer: MonStats.txt, SuperUniques.txt and TreasureClassEx.txt
 
 
 
-Group and Level ®C These two columns go hand in hand, the first is used to group several treasureclasses together to form a °∞super-treasureclass°±, the second one then gives each of these lines a level. The game will then use this to automatically 
+Group and Level ‚Äì These two columns go hand in hand, the first is used to group several treasureclasses together to form a ‚Äúsuper-treasureclass‚Äù, the second one then gives each of these lines a level. The game will then use this to automatically 
 attempt to balance the item drops according to the level you have put inside the second column. For example, if you give a level 10 monster a treasureclass, it will pick the treasureclass with the nearest level, so if you have one with 10 and another 
 with 20, it will pick the first over the second, even if you linked the monster to the second treasureclass.
 
 
 
-Picks ®C This column has two different functions, depending on the type of values you enter (either positive 0-6 or negative, -1 to -6). In the first case this is used as the number of loops to run the °∞pick drop°± routine, in the second case it is 
+Picks ‚Äì This column has two different functions, depending on the type of values you enter (either positive 0-6 or negative, -1 to -6). In the first case this is used as the number of loops to run the ‚Äúpick drop‚Äù routine, in the second case it is 
 used to determine exactly which items, and how many of each, to drop (see appendix). You cannot make the game drop more then 6 items with either method without code editing (there are other txt based methods to drop more then 6 items though).
 
 
 
-Unique, Set, Rare, Magic ®C This is used to manipulate and fine-tune the drop ratio of items of the respective quality. Listing the whole °∞quality°± calculation here is not necessary as this has been covered in many places, just know that the way this 
+Unique, Set, Rare, Magic ‚Äì This is used to manipulate and fine-tune the drop ratio of items of the respective quality. Listing the whole ‚Äúquality‚Äù calculation here is not necessary as this has been covered in many places, just know that the way this 
 column works is:
 
-if treasureclass-manipulator < 1024, then multiply chance by the term (1 ®C treasureclass-manipulator / 1024)
+if treasureclass-manipulator < 1024, then multiply chance by the term (1 ‚Äì treasureclass-manipulator / 1024)
 
 Thus a value of 1024 or larger will cause the game to always drop items of this quality, as the game will skip the multiplication and count the check an automatic success. (This does not mean a unique or set item is always generated, as there are other 
 rules for those grades. But if those rules prevent either quality, the fallback to increased-durability rares or magical items will happen.)
 
 Examples (chance is some number calculated from ItemRatio.txt and magic find rules):
 
-(chance) * (1 ®C 768 / 1024) = 25% * (chance) = 4x better odds for successful check
-(chance) * (1 ®C 512 / 1024) = 50% * (chance) = 2x better odds for successful check
-(chance) * (1 ®C 256 / 1024) = 75% * (chance) = 1.33x better odds for successful check
+(chance) * (1 ‚Äì 768 / 1024) = 25% * (chance) = 4x better odds for successful check
+(chance) * (1 ‚Äì 512 / 1024) = 50% * (chance) = 2x better odds for successful check
+(chance) * (1 ‚Äì 256 / 1024) = 75% * (chance) = 1.33x better odds for successful check
 
 I believe it should be clear now how this works.
 
 
 
-NoDrop ®C Probability for °∞nothing°±, I.E. just like all other items droppable by a treasureclass, this simply defines the probability of °∞nothing°± to drop.
+NoDrop ‚Äì Probability for ‚Äúnothing‚Äù, I.E. just like all other items droppable by a treasureclass, this simply defines the probability of ‚Äúnothing‚Äù to drop.
 
 
 
-Item1-10 ®C The different items and treasureclasses linked to this line (°∞what it can drop°±), this can either contain item codes, item pointers (=the °∞names°± of unique items and set items), auto-treasureclasses (see ItemTypes.txt or appendix) and 
-other treasureclasses. There are several special modifiers for this field that are supposedly enabled in 1.10, I have not used any of those myself so I don°Øt know if they work. For gold drops, you can use the mul flag to increase the number of coins in 
+Item1-10 ‚Äì The different items and treasureclasses linked to this line (‚Äúwhat it can drop‚Äù), this can either contain item codes, item pointers (=the ‚Äúnames‚Äù of unique items and set items), auto-treasureclasses (see ItemTypes.txt or appendix) and 
+other treasureclasses. There are several special modifiers for this field that are supposedly enabled in 1.10, I have not used any of those myself so I don‚Äôt know if they work. For gold drops, you can use the mul flag to increase the number of coins in 
 a gold pile (this is why bosses and champions always drop more gold then regular monsters).
 
 
 
-Prob1-10 ®C This is the individual probability for each of the drops defined in the Item1-10 columns. (see appendix)
+Prob1-10 ‚Äì This is the individual probability for each of the drops defined in the Item1-10 columns. (see appendix)
 
 
 
-SumItems, TotalProb and DropChance ®C These columns have no purpose other then being used as comment fields (that°Øs what blizzard has used them for if you wonder what those values in some of them mean).
+SumItems, TotalProb and DropChance ‚Äì These columns have no purpose other then being used as comment fields (that‚Äôs what blizzard has used them for if you wonder what those values in some of them mean).
 
 
 
-Term ®C This column is required to terminate the line if you°Øre using M$ Excel or another spreadsheet that likes messing up the table borders.
+Term ‚Äì This column is required to terminate the line if you‚Äôre using M$ Excel or another spreadsheet that likes messing up the table borders.
 
 
 
@@ -108,68 +108,68 @@ This will make the game drop 2,1 and 3 of these items respectively.
 */
 
 /*
-Œƒº˛√˚Ω‚Œˆ£∫
-Treasure£∫±¶≤ÿ°£
-Class£∫¿‡±°£
-Ex£∫Expansion£¨¿©’πµƒ£¨÷∏◊ ¡œ∆¨°£
-±æŒƒº˛√Ë ˆ¡À◊ ¡œ∆¨÷–À˘”–ø…ƒ‹≥ˆœ÷µƒ±¶≤ÿ¿‡±(TC)°£
-¥ÀŒƒº˛÷–µƒ√ø“ª––±Ì æ“ª∏ˆTC°£
+Êñá‰ª∂ÂêçËß£ÊûêÔºö
+TreasureÔºöÂÆùËóè„ÄÇ
+ClassÔºöÁ±ªÂà´„ÄÇ
+ExÔºöExpansionÔºåÊâ©Â±ïÁöÑÔºåÊåáËµÑÊñôÁâá„ÄÇ
+Êú¨Êñá‰ª∂ÊèèËø∞‰∫ÜËµÑÊñôÁâá‰∏≠ÊâÄÊúâÂèØËÉΩÂá∫Áé∞ÁöÑÂÆùËóèÁ±ªÂà´(TC)„ÄÇ
+Ê≠§Êñá‰ª∂‰∏≠ÁöÑÊØè‰∏ÄË°åË°®Á§∫‰∏Ä‰∏™TC„ÄÇ
 
 
-ªÿ∏¥
+ÂõûÂ§ç
 
-    2¬•
+    2Ê•º
     2011-09-25 21:11
 
-    æŸ±® |
+    ‰∏æÊä• |
 
     zqtjingzi
-    –°∞…÷˜
+    Â∞èÂêß‰∏ª
     12
 
-√ø¡–µƒ∫¨“Â»Áœ¬£∫
+ÊØèÂàóÁöÑÂê´‰πâÂ¶Ç‰∏ãÔºö
 
 
-ªÿ∏¥
+ÂõûÂ§ç
 
-    3¬•
+    3Ê•º
     2011-09-25 21:11
 
-    æŸ±® |
+    ‰∏æÊä• |
 
     zqtjingzi
-    –°∞…÷˜
+    Â∞èÂêß‰∏ª
     12
 
-Treasure Class£∫TC√˚°£π©∆‰À¸txtŒƒº˛ π”√°£
+Treasure ClassÔºöTCÂêç„ÄÇ‰æõÂÖ∂ÂÆÉtxtÊñá‰ª∂‰ΩøÁî®„ÄÇ
 
-group£∫¥ÀTCÀ˘ ÙµƒTC◊È°£TC…˝∏ﬂ ± π”√°£
+groupÔºöÊ≠§TCÊâÄÂ±ûÁöÑTCÁªÑ„ÄÇTCÂçáÈ´òÊó∂‰ΩøÁî®„ÄÇ
 
-level£∫¥ÀTCµƒ¿‡±°£TC…˝∏ﬂ ± π”√°£
+levelÔºöÊ≠§TCÁöÑÁ±ªÂà´„ÄÇTCÂçáÈ´òÊó∂‰ΩøÁî®„ÄÇ
 
-Picks£∫±¶≤ÿÃÙ—°¥Œ ˝°£’˝ ˝Œ™”–∑≈ªÿµƒÃÙ—°£¨∏∫ ˝Œ™≤ª∑≈ªÿµƒÃÙ—°°£
+PicksÔºöÂÆùËóèÊåëÈÄâÊ¨°Êï∞„ÄÇÊ≠£Êï∞‰∏∫ÊúâÊîæÂõûÁöÑÊåëÈÄâÔºåË¥üÊï∞‰∏∫‰∏çÊîæÂõûÁöÑÊåëÈÄâ„ÄÇ
 
-Unique£∫≥ˆœ÷∞µΩ◊∞±∏µƒ∏≈¬ –ﬁ’˝ ˝°£
+UniqueÔºöÂá∫Áé∞ÊöóÈáëË£ÖÂ§áÁöÑÊ¶ÇÁéá‰øÆÊ≠£Êï∞„ÄÇ
 
-Set£∫≥ˆœ÷Ã◊◊∞◊∞±∏µƒ∏≈¬ –ﬁ’˝ ˝°£
+SetÔºöÂá∫Áé∞Â•óË£ÖË£ÖÂ§áÁöÑÊ¶ÇÁéá‰øÆÊ≠£Êï∞„ÄÇ
 
-Rare£∫≥ˆœ÷¡¡Ω◊∞±∏µƒ∏≈¬ –ﬁ’˝ ˝°£
+RareÔºöÂá∫Áé∞‰∫ÆÈáëË£ÖÂ§áÁöÑÊ¶ÇÁéá‰øÆÊ≠£Êï∞„ÄÇ
 
-Magic£∫≥ˆœ÷¿∂…´◊∞±∏µƒ∏≈¬ –ﬁ’˝ ˝°£
+MagicÔºöÂá∫Áé∞ËìùËâ≤Ë£ÖÂ§áÁöÑÊ¶ÇÁéá‰øÆÊ≠£Êï∞„ÄÇ
 
-NoDrop£∫√ø¥ŒÃÙ—° ±≤ªµÙ¬‰»Œ∫ŒŒÔ∆∑µƒ∆µ¬ °£
+NoDropÔºöÊØèÊ¨°ÊåëÈÄâÊó∂‰∏çÊéâËêΩ‰ªª‰ΩïÁâ©ÂìÅÁöÑÈ¢ëÁéá„ÄÇ
 
-Item1-10£∫ø…ƒ‹≥ˆœ÷µƒŒÔ∆∑¿‡–Õ1-10°£
+Item1-10ÔºöÂèØËÉΩÂá∫Áé∞ÁöÑÁâ©ÂìÅÁ±ªÂûã1-10„ÄÇ
 
-Prob1-10£∫√ø¥ŒÃÙ—° ±µÙ¬‰1-10¿‡ŒÔ∆∑µƒ∆µ¬ °£
+Prob1-10ÔºöÊØèÊ¨°ÊåëÈÄâÊó∂ÊéâËêΩ1-10Á±ªÁâ©ÂìÅÁöÑÈ¢ëÁéá„ÄÇ
 
-SumItems£∫Œﬁ”√≤Œ ˝°£
+SumItemsÔºöÊó†Áî®ÂèÇÊï∞„ÄÇ
 
-TotalProb£∫Œﬁ”√≤Œ ˝°£
+TotalProbÔºöÊó†Áî®ÂèÇÊï∞„ÄÇ
 
-DropChance£∫Œﬁ”√≤Œ ˝°£
+DropChanceÔºöÊó†Áî®ÂèÇÊï∞„ÄÇ
 
-Term£∫––Œ≤±Í÷æ£¨±ÿ–ÎŒ™0°£
+TermÔºöË°åÂ∞æÊ†áÂøóÔºåÂøÖÈ°ª‰∏∫0„ÄÇ
 */
 
 typedef struct
@@ -265,9 +265,9 @@ void TreasureClassEx_SetOffset(unsigned int uiOffset)
 
 char *TreasureClassEx_GetItemTreasureClass(unsigned int id)
 {
-    //id -= 161;    //‘≠∞Ê
-    //id -= 321;  //ƒßµÁ
-    //id -= 193;  //±¶»’8.4
+    //id -= 161;    //ÂéüÁâà
+    //id -= 321;  //È≠îÁîµ
+    //id -= 193;  //ÂÆùÊó•8.4
     id -= m_uiTcOffset;
 
     if ( id < m_iTreasureClassEx && strcmp("Gold", m_astTreasureClassEx[id].vTreasuremyspClass) )

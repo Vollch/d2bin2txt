@@ -36,17 +36,17 @@ Beta 	Included in the original Diablo II beta tests and in the demo version..
 */
 
 /*
-A.Name = �������ֶΣ�����������Ϸ�С���ӦLevels.txt�еġ�Name���ֶΡ�
-B.Level = Levels.txt��ID����Cave1--а��Ѩ(Den of Evil)�������ĲƸ�����(treasure level)ֻ������(quest)����
-C.Rooms = ��ͨ�Ѷ�����ɸ��Թ�(maze)��ds1��ͼƬ��(sections)����С������
-D.Rooms(N) = ج���Ѷ�����ɸ��Թ�(maze)��ds1��ͼƬ��(sections)����С������
-E.Rooms(H) = �����Ѷ�����ɸ��Թ�(maze)��ds1��ͼƬ��(sections)����С������
-F.SizeX = ds1��ͼƬ���ڡ�X����������ĳߴ��С��
-G.SizeY = ds1��ͼƬ���ڡ�Y����������ĳߴ��С��
-H.Merge = (TBD-�����)��
-I.Beta = �Ƿ������ԭ��diablo2�Ĳ��԰汾����ʾ�汾�С�1=�ǣ�0=��
+A.Name = 描述性字段，不出现于游戏中。对应Levels.txt中的‘Name’字段。
+B.Level = Levels.txt中ID。如Cave1--邪恶洞穴(Den of Evil)，关联的财富级别(treasure level)只是任务(quest)级。
+C.Rooms = 普通难度下组成该迷宫(maze)的ds1地图片段(sections)的最小数量。
+D.Rooms(N) = 噩梦难度下组成该迷宫(maze)的ds1地图片段(sections)的最小数量。
+E.Rooms(H) = 地狱难度下组成该迷宫(maze)的ds1地图片段(sections)的最小数量。
+F.SizeX = ds1地图片段在‘X’方向分量的尺寸大小。
+G.SizeY = ds1地图片段在‘Y’方向分量的尺寸大小。
+H.Merge = (TBD-不清楚)。
+I.Beta = 是否包含在原版diablo2的测试版本和演示版本中。1=是，0=否。
 
-����˵������лPaul�ṩ��һЩ�����Ϣ�����У���SizeX���͡�SizeY����һ��ȡ��ͬ��ֵ�����ǳߴ���������ds1Ƭ��(sections)����Ϊds1������ʼ������(0,0)��һ����SizeX=8��SizeY=8����Ƭ�ι��С�9*9=81����СƬ(tiles)��
+补充说明：感谢Paul提供的一些相关信息。其中，‘SizeX’和‘SizeY’不一定取相同的值，但是尺寸必须与符合ds1片段(sections)。因为ds1网格起始坐标在(0,0)，一个‘SizeX=8，SizeY=8’的片段共有‘9*9=81’个小片(tiles)。
 */
 
 typedef struct

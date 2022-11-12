@@ -189,332 +189,332 @@ Beta 	Reference Only (can be used for comments)
 */
 
 /*
-Levels.txt�ļ������� 
+Levels.txt文件引导。 
 
-Name: �ڲ����ƣ��޸���Ч��
+Name: 内部名称，修改无效；
 
-Id: ��ͼ��ID���룻
+Id: 地图的ID代码；
 
-Pal: ��ǰ��ͼ�����õ���ɫ�壻
+Pal: 当前地图所采用的配色板；
 
-Act: ��ͼ���ڵ�λ�ã�0��4Ϊ��Ч��ֵ����
+Act: 地图所在的位置（0至4为有效数值）；
 
-QuestFlag:��������ԭ��İ����У���Ҫ��������ض������������õ�SETװ����������������ָ������
+QuestFlag:仅作用于原版的暗黑中，主要是在完成特定的任务后所获得的SET装备奖励，这里用来指定任务；
 
-QuestFlagEx:������������Ƭ��LOD������Ҫ��������ض������������õ�SETװ����������������ָ������
+QuestFlagEx:仅作用于资料片（LOD），主要是在完成特定的任务后所获得的SET装备奖励，这里用来指定任务；
 
-Layer: ��Ϸ�ڲ��ġ��㡱�趨���������ý�ɫ��С��ͼ�ϵ���ʾλ�ã�
+Layer: 游戏内部的“层”设定，用来设置角色在小地图上的显示位置；
 
-SizeX: �ڡ���ͨ���Ѷ��µ�ͼ��X�᳤�ȣ�ע�������ֵͬlvlprest.txt�ļ��Ĺ�������
+SizeX: 在“普通”难度下地图的X轴长度（注意这个数值同lvlprest.txt文件的关联）；
 
-SizeY: �ڡ���ͨ���Ѷ��µ�ͼ��Y�᳤�ȣ�ע�������ֵͬlvlprest.txt�ļ��Ĺ�������
+SizeY: 在“普通”难度下地图的Y轴长度（注意这个数值同lvlprest.txt文件的关联）；
 
-SizeX(N): �ڡ����Ρ��Ѷ��µ�ͼ��X�᳤�ȣ�ע�������ֵͬlvlprest.txt�ļ��Ĺ�������
+SizeX(N): 在“恶梦”难度下地图的X轴长度（注意这个数值同lvlprest.txt文件的关联）；
 
-SizeY(N): �ڡ����Ρ��Ѷ��µ�ͼ��Y�᳤�ȣ�ע�������ֵͬlvlprest.txt�ļ��Ĺ�������
+SizeY(N): 在“恶梦”难度下地图的Y轴长度（注意这个数值同lvlprest.txt文件的关联）；
 
-SizeX(H): �ڡ��������Ѷ��µ�ͼ��X�᳤�ȣ�ע�������ֵͬlvlprest.txt�ļ��Ĺ�������
+SizeX(H): 在“地狱”难度下地图的X轴长度（注意这个数值同lvlprest.txt文件的关联）；
 
-SizeY(H): �ڡ����Ρ��Ѷ��µ�ͼ��Y�᳤�ȣ�ע�������ֵͬlvlprest.txt�ļ��Ĺ�������
+SizeY(H): 在“恶梦”难度下地图的Y轴长度（注意这个数值同lvlprest.txt文件的关联）；
 
-OffsetX: ��ͼX����ò�����
+OffsetX: 地图X轴可用参数；
 
-OffsetY: ��ͼY����ò�����
+OffsetY: 地图Y轴可用参数；
 
-Depend: ����һЩ����Ҫ������ɵĵ�ͼʹ���������������˵��ACT4�ĳ��򣩣�
+Depend: 对于一些不需要随机生成的地图使用这个参数（比如说：ACT4的城镇）；
 
-Teleport: ���ò�����˵������ȷ��һ��˵���޸�����û��ʲô���壻
+Teleport: 无用参数，说明：更确切一点说是修改这里没有什么意义；
 
-Rain: �����ͼ�����Ƿ�����/��ѩ��1=������Ӱ�죬0=��Ӱ�죩��˵������ѩֻ��ACT5���֣� 
+Rain: 这个地图里面是否下雨/下雪（1=有天气影响，0=无影响），说明：下雪只在ACT5出现； 
 
-Mud: ���ò�����˵������ʵ��D2����ƽ׶�������������������У��������������Ч������һֱ��δʵʩ��
+Mud: 无用参数，说明：其实在D2的设计阶段曾打算如下雨等天气中，会有泥土溅起的效果，但一直并未实施；
 
-NoPer: �˵�ͼ�Ƿ�ǿ��ʹ��3D��ʾ��1=ǿ�ƣ�0=��ǿ�ƣ���
+NoPer: 此地图是否强制使用3D显示（1=强制，0=不强制）；
 
-LOSDraw: �Ƿ�ֱ�ӿ��Կ������ݵ��ڲ�������Ҫ���루1=������0=���������� 
+LOSDraw: 是否直接可以看到房屋的内部而不需要进入（1=允许，0=不允许）； 
 
-FloorFilter: �Ƿ���˷��ݡ������⾰��1=�ǣ�0=�񣩣�˵������Ҫ�����DT1�ļ��� 
+FloorFilter: 是否过滤房屋、树等外景（1=是，0=否），说明：主要是针对DT1文件； 
 
-BlankScreen: �⾰������1=�ǣ�0=�񣩣�
+BlankScreen: 外景参数（1=是，0=否）；
 
-DrawEdges: �Ƿ���ʾǽ����Ʒ�ı�Ե��1=�ǣ�0=�񣩣�
+DrawEdges: 是否显示墙等物品的边缘（1=是，0=否）；
 
-IsInside: �˵�ͼ��λ�ڲ��ɼ���λ�ã�����£�1=�ǣ�0=�񣩣�
+IsInside: 此地图是位于不可见的位置（如地下，1=是，0=否）；
 
-DrlgType: ��ͼ�����ɷ�ʽ��1=��������ɣ��������Ʒ��������LVLMAZE.TXT�ļ����壬2=�̶���ͼ���磺ACT1�Ĺصף���3=������ɣ�����ͼ��С�����ı䣻
+DrlgType: 地图的生成方式：1=随机的生成，房间等物品的数量由LVLMAZE.TXT文件定义，2=固定地图（如：ACT1的关底），3=随机生成，但地图大小不做改变；
 
-LevelType: ��ͼ�����ͣ�ͬlvltypes.txt�ļ���������
+LevelType: 地图的类型（同lvltypes.txt文件关联）；
 
-Sub Columns: ͬLVLSub.txt������й�����
+Sub Columns: 同LVLSub.txt的相关列关联；
 
-SubType: ��ͼ����ۼ��𣬱���˵��6=Ұ�⣬9=ɳĮ���ȵȣ�-1=�������ͣ� 
+SubType: 地图的外观级别，比如说：6=野外，9=沙漠，等等，-1=无子类型； 
 
-SubTheme: ��ͼ��������⣬һ�����0-4����ֵ��-1��ʾ��ʹ��������⣻ 
+SubTheme: 地图的外观主题，一般采用0-4的数值，-1表示不使用外观主题； 
 
-SubWaypoint: �趨·��Ĳ�����������������·���λ�ã���
+SubWaypoint: 设定路点的参数（并不真正控制路点的位置）；
 
-SubShrine: �趨�漴���ֵ���̳��������ʵ�ʲ�����������
+SubShrine: 设定随即出现的神坛参数（非实质操作参数）；
 
-Vis0: ��ͼ1�ŵ����/���ڣ�
+Vis0: 地图1号的入口/出口；
 
-Vis1: ��ͼ2�ŵ����/���ڣ�
+Vis1: 地图2号的入口/出口；
 
-Vis2: ��ͼ3�ŵ����/���ڣ�
+Vis2: 地图3号的入口/出口；
 
-Vis3: ��ͼ4�ŵ����/���ڣ�
+Vis3: 地图4号的入口/出口；
 
-Vis4: ��ͼ5�ŵ����/���ڣ�
+Vis4: 地图5号的入口/出口；
 
-Vis5: ��ͼ6�ŵ����/���ڣ�
+Vis5: 地图6号的入口/出口；
 
-Vis6: ��ͼ7�ŵ����/���ڣ�
+Vis6: 地图7号的入口/出口；
 
-Vis7: ��ͼ8�ŵ����/���ڣ�
+Vis7: 地图8号的入口/出口；
 
-Warp #: ͬlvlwarp.txt������
+Warp #: 同lvlwarp.txt关联；
 
-Intensity: ���ȵ�����ֵ��0-255����
+Intensity: 亮度的敏感值（0-255）；
 
-Red: ��������ֵ��
+Red: 红光的敏感值；
 
-Green: �̹������ֵ��
+Green: 绿光的敏感值；
 
-Blue: ���������ֵ��
+Blue: 蓝光的敏感值；
 
-Portal: ���ò�����˵����������������˵����Ϊ��Ч���������ұ�����Ϊ��һ�����ڵ��������ŵ����ͣ����Ż������ţ�ylycloakע����
+Portal: 无用参数，说明：尽管外文资料说此行为无效参数，但我本人认为这一列是在调整传送门的类型（红门还是蓝门，ylycloak注）；
 
-Position: ��ͼ�����ֵ�λ�ã�
+Position: 地图所出现的位置；
 
-SaveMonster: �Ƿ��¼�µ�ͼ�Ϲ����״̬����1=�ǣ�0=��һ������н�����ֵ����Ϊ0����Ϊ��Ҫ������ɫ���Ǻ����ʱ���н��׵���Ʒ���ࣩ��
+SaveMonster: 是否记录下地图上怪物的状态，（1=是，0=否，一般城镇中将此数值设置为0，因为需要调整角色出城后回来时进行交易的物品种类）；
 
-Quest: �������������
+Quest: 任务关联参数；
 
-WarpDist: ��������ͬ��ͼ�ϸ���Ԫ�صľ��룻
+WarpDist: 调整怪物同地图上各类元素的距离；
 
-MonLvl1: ����ͨ����������Ʒ�������е���ļ���ԭ�棩��
+MonLvl1: “普通”级别下物品从箱子中掉落的级别（原版）；
 
-MonLvl2: �����Ρ���������Ʒ�������е���ļ���ԭ�棩��
+MonLvl2: “恶梦”级别下物品从箱子中掉落的级别（原版）；
 
-MonLvl3: ����������������Ʒ�������е���ļ���ԭ�棩��
+MonLvl3: “地狱”级别下物品从箱子中掉落的级别（原版）；
 
-MonLvl1Ex: ����ͨ����������Ʒ�������е���ļ�������Ƭ����
+MonLvl1Ex: “普通”级别下物品从箱子中掉落的级别（资料片）；
 
-MonLvl2Ex: �����Ρ���������Ʒ�������е���ļ�������Ƭ����
+MonLvl2Ex: “恶梦”级别下物品从箱子中掉落的级别（资料片）；
 
-MonLvl3Ex: ����������������Ʒ�������е���ļ�������Ƭ����
+MonLvl3Ex: “地狱”级别下物品从箱子中掉落的级别（资料片）；
 
-MonDen: ����ͨ�������£���ǰ��ͼ�й�����ܶȣ�˵����������ֵ�ܹ�����10000�������鲻Ҫ����3000���������ֵ�ᵹ����Ϸ�����ٶȵĽ��ͣ�
+MonDen: “普通”级别下，当前地图中怪物的密度，说明：此项数值能够大于10000，但建议不要超过3000，过大的数值会倒置游戏运行速度的降低；
 
-MonDen(N): �����Ρ������£���ǰ��ͼ�й�����ܶȣ�˵����������ֵ�ܹ�����10000�������鲻Ҫ����3000���������ֵ�ᵹ����Ϸ�����ٶȵĽ��ͣ� 
+MonDen(N): “恶梦”级别下，当前地图中怪物的密度，说明：此项数值能够大于10000，但建议不要超过3000，过大的数值会倒置游戏运行速度的降低； 
 
-MonDen(H): �������������£���ǰ��ͼ�й�����ܶȣ�˵����������ֵ�ܹ�����10000�������鲻Ҫ����3000���������ֵ�ᵹ����Ϸ�����ٶȵĽ��ͣ�
+MonDen(H): “地狱”级别下，当前地图中怪物的密度，说明：此项数值能够大于10000，但建议不要超过3000，过大的数值会倒置游戏运行速度的降低；
 
-MonUMin: ��ǰ��ͼ�ж��й���ͳ����������С������
+MonUMin: 当前地图中独有怪物和超级怪物的最小数量；
 
-MonUMax: ��ǰ��ͼ�ж��й���ͳ�����������������
+MonUMax: 当前地图中独有怪物和超级怪物的最大数量；
 
-MonWndr: �������͵Ĳ���������ȷ���Ƿ������Ҫ�ض����������ܹ������ض��Ĺ������˵DIABLO��Ҫ�����ӡ�������
+MonWndr: 布尔类型的参数，用来确认是否存在需要特定的条件才能够激活特定的怪物（比如说DIABLO需要五个封印来激活）；
 
-MonSpcWalk: ���ò�����
+MonSpcWalk: 无用参数；
 
-NumMon: ��ǰ��ͼ�����������ڵĹ������ࣻ
+NumMon: 当前地图中所允许存在的怪物种类；
 
-Mon1-Mon10: ͬmonstats.txt�ļ��е�ID�ж�Ӧ����ʾ�ڡ���ͨ�������µ�ǰ��ͼ�г��ֵĹ�������ͣ�������չ��Mon25��
+Mon1-Mon10: 同monstats.txt文件中的ID列对应，表示在“普通”级别下当前地图中出现的怪物的类型，可以拓展至Mon25；
 
-rangedspawn: ���ò�����
+rangedspawn: 无用参数；
 
-nmon1-10: ͬmonstats.txt�ļ��е�ID�ж�Ӧ����ʾ�ڡ����Ρ��͡������������µ�ǰ��ͼ�г��ֵĹ�������ͣ�������չ��Mon25��
+nmon1-10: 同monstats.txt文件中的ID列对应，表示在“恶梦”和“地狱”级别下当前地图中出现的怪物的类型，可以拓展至Mon25；
 
-umon1-10: ͬmonstats.txt�ļ��е�ID�ж�Ӧ����ʾ�ڡ���ͨ�������µ�ǰ��ͼ�г����ض�����ͳ�����������ͣ�������չ��Mon25��
+umon1-10: 同monstats.txt文件中的ID列对应，表示在“普通”级别下当前地图中出现特定怪物和超级怪物的类型，可以拓展至Mon25；
 
-cmon1-4: ��������ã�ͬmonstats.txt��monstats2.txt�ļ���������
+cmon1-4: 杂物的设置（同monstats.txt和monstats2.txt文件关联）；
 
-cpct1-cpct4: ͬcmon1-4�й���������˵�����cmon1�е���ֵΪ1����ôcpct1����Ӧ�ľ�Ӧ��Ϊ30��
+cpct1-cpct4: 同cmon1-4列关联，比如说：如果cmon1列的数值为1，那么cpct1列相应的就应该为30；
 
-camt1-camt4: ���ò�����
+camt1-camt4: 无用参数；
 
-Themes: ��ǰ��ͼ�����õ����⣬��Ŀǰ����û��ʲô�ã�ylycloakע����
+Themes: 当前地图所采用的主题，（目前看来没有什么用，ylycloak注）；
 
-SoundEnv: ���뵱ǰ��ͼʱ�����õı������֣�
+SoundEnv: 进入当前地图时所采用的背景音乐；
 
-Waypoint: ·���λ�ã�255=û��·�㣬������ֵ����·���ID�����ǣ���ֱ�ӽ���ţ�أ��ǣ�������ɣ���
+Waypoint: 路点的位置，255=没有路点，其它数值代表路点的ID，（呵，想直接进入牛关？呵，改这里吧）；
 
-LevelName: ��ͼ���ƣ��ڲ����룩��
+LevelName: 地图名称（内部代码）；
 
-LevelWarp: �����뵱ǰ��ͼʱ����ʾ�����ƣ��ڲ����룩��
+LevelWarp: 当进入当前地图时所显示的名称（内部代码）；
 
-EntryFile: ��ǰ��ͼ��Ҫ������Щ�����ļ���*.Dc6��ʽ����
+EntryFile: 当前地图需要调用哪些背景文件（*.Dc6格式）；
 
-ObjGrp0-7: ��ǰ��ͼ�����õ�����飨ͬObjectGroups.txt��������
+ObjGrp0-7: 当前地图所采用的物件组（同ObjectGroups.txt关联）；
 
-ObjPrb0-7: �������������ֵĻ��ʣ�����˵���������ʹ��ObjGrp0����ô��ͱ����ObjPrb0����ֵ����Ϊ������100����
+ObjPrb0-7: 所采用物件组出现的机率（比如说：如果你想使用ObjGrp0，那么你就必须把ObjPrb0的数值设置为不大于100）；
 
-Beta: ע�͡�
+Beta: 注释。
 */
 
 /*
-�ļ���������
-Level(s)������������ָ��ͼ��
-���ļ���������Ϸ�����е�ͼ���ļ���
-���ļ��е�ÿһ�б�ʾһ�ŵ�ͼ��
+文件名解析：
+Level(s)：级别，在这里指地图。
+此文件是描述游戏中所有地图的文件。
+此文件中的每一行表示一张地图。
 
-ÿ�еĺ������£�
+每列的含义如下：
 
-Name����ǰ��ͼ�Ĵ��롣
+Name：当前地图的代码。
 
-Id����ǰ��ͼ�ı�š�
+Id：当前地图的编号。
 
-Pal����ǰ��ͼ�����õ���ɫ�塣
+Pal：当前地图所采用的配色板。
 
-Act����ͼ���ڵ�λ�ã����ڵڼ�Ļ��0��4�ֱ��ʾ��1��5Ļ��
+Act：地图所在的位置，即在第几幕。0至4分别表示第1到5幕。
 
-QuestFlag����ǰ��ͼ�Ƿ��Ӧ��ĳ�������ڷ�����Ƭ��
+QuestFlag：当前地图是否对应于某任务。用于非资料片。
 
-QuestFlagEx����ǰ��ͼ�Ƿ��Ӧ��ĳ������������Ƭ��
+QuestFlagEx：当前地图是否对应于某任务。用于资料片。
 
-Layer����Ϸ�ڲ��ġ��㡱�趨��
+Layer：游戏内部的“层”设定。
 
-SizeX����ǰ��ͼ����ͨ�Ѷ��µĿ��ȣ���LvlPrest.txt������
+SizeX：当前地图在普通难度下的宽度，与LvlPrest.txt关联。
 
-SizeY����ǰ��ͼ����ͨ�Ѷ��µĸ߶ȣ���LvlPrest.txt������
+SizeY：当前地图在普通难度下的高度，与LvlPrest.txt关联。
 
-SizeX(N)����ǰ��ͼ�ڶ����Ѷ��µĿ��ȣ���LvlPrest.txt������
+SizeX(N)：当前地图在恶梦难度下的宽度，与LvlPrest.txt关联。
 
-SizeY(N)����ǰ��ͼ�ڶ����Ѷ��µĸ߶ȣ���LvlPrest.txt������
+SizeY(N)：当前地图在恶梦难度下的高度，与LvlPrest.txt关联。
 
-SizeX(H)����ǰ��ͼ�ڵ����Ѷ��µĿ��ȣ���LvlPrest.txt������
+SizeX(H)：当前地图在地狱难度下的宽度，与LvlPrest.txt关联。
 
-SizeY(H)����ǰ��ͼ�ڵ����Ѷ��µĸ߶ȣ���LvlPrest.txt������
+SizeY(H)：当前地图在地狱难度下的高度，与LvlPrest.txt关联。
 
-OffsetX����ǰ��ͼ�Ŀ���ƫ������
+OffsetX：当前地图的宽度偏移量。
 
-OffsetY����ǰ��ͼ�ĸ߶�ƫ������
+OffsetY：当前地图的高度偏移量。
 
-Depend����ǰ��ͼ�Ƿ�������������ͼ��
+Depend：当前地图是否依附于其它地图。
 
-Teleport���ڵ�ǰ��ͼ˲���Ƿ���Ч����
+Teleport：在当前地图瞬移是否有效果。
 
-Rain����ǰ��ͼ�Ƿ���������ѩ��
+Rain：当前地图是否会下雨或下雪。
 
-Mud�����ò������ഫ��Ϊ��������Ч��������
+Mud：无用参数，相传是为制作泥土效果所留。
 
-NoPer����ǰ��ͼ�Ƿ�ʹ��3Dģʽ��ʾ��1��ʾʼ��ʹ�á�
+NoPer：当前地图是否使用3D模式显示，1表示始终使用。
 
-LOSDraw���ڵ�ǰ��ͼ�Ƿ������ĳ������ֱ�ӿ��������ڲ��Ķ�����1��ʾ���ԡ�
+LOSDraw：在当前地图是否可以在某房间外直接看到房间内部的东西，1表示可以。
 
-FloorFilter����ǰ��ͼ�Ƿ���˷��ݡ������⾰��1�����ǡ�
+FloorFilter：当前地图是否过滤房屋、树等外景，1代表是。
 
-BlankScreen����ǰ��ͼ�Ƿ����⾰��1�����ǡ�
+BlankScreen：当前地图是否含有外景。1代表是。
 
-DrawEdges����ǰ��ͼ�Ƿ���ʾ��Ե��1�����ǡ�
+DrawEdges：当前地图是否显示边缘。1代表是。
 
-IsInside����ǰ��ͼ�Ƿ����ⲿ���ɼ���1�����ǡ�
+IsInside：当前地图是否在外部不可见。1代表是。
 
-DrlgType����ǰ��ͼ�����ɷ�ʽ��1=��������ɣ��������Ʒ��������LVLMAZE.TXT�ļ����壬2=�̶���ͼ���磺ACT1�Ĺصף���3=������ɣ�����ͼ��С�����ı䡣
+DrlgType：当前地图的生成方式：1=随机的生成，房间等物品的数量由LVLMAZE.TXT文件定义，2=固定地图（如：ACT1的关底），3=随机生成，但地图大小不做改变。
 
-LevelType����ǰ��ͼ�����ͣ�ͬlvltypes.txt�ļ���������
+LevelType：当前地图的类型（同lvltypes.txt文件关联）。
 
-Sub Columns��ͬLVLSub.txt������й�����
+Sub Columns：同LVLSub.txt的相关列关联。
 
-SubType����ͼ����ۼ��𣬱���˵��6=Ұ�⣬9=ɳĮ���ȵȣ�-1=�������͡�
+SubType：地图的外观级别，比如说：6=野外，9=沙漠，等等，-1=无子类型。
 
-SubTheme����ͼ��������⣬һ�����0-4����ֵ��-1��ʾ��ʹ��������⡣
+SubTheme：地图的外观主题，一般采用0-4的数值，-1表示不使用外观主题。
 
-SubWaypoint���趨·��Ĳ�����������������·���λ�ã���
+SubWaypoint：设定路点的参数（并不真正控制路点的位置）。
 
-SubShrine���趨�漴���ֵ���̳��������ʵ�ʲ�����������
+SubShrine：设定随即出现的神坛参数（非实质操作参数）。
 
- Vis0-7����ͼ0-7�ŵ����/���ڡ�
+ Vis0-7：地图0-7号的入口/出口。
 
-Warp1-7��ͬlvlwarp.txt������
+Warp1-7：同lvlwarp.txt关联。
 
-Intensity�����ȵ�����ֵ��0-255����
+Intensity：亮度的敏感值（0-255）。
 
-Red����������ֵ��
+Red：红光的敏感值。
 
-Green���̹������ֵ��
+Green：绿光的敏感值。
 
-Blue�����������ֵ��
+Blue：蓝光的敏感值。
 
-Portal�����ò�����
+Portal：无用参数。
 
-Position����ͼ�����ֵ�λ�á�
+Position：地图所出现的位置。
 
-SaveMonster���Ƿ��¼�µ�ͼ�Ϲ����״̬����1=�ǣ�0=��һ������н�����ֵ����Ϊ0����Ϊ��Ҫ������ɫ���Ǻ����ʱ���н��׵���Ʒ���ࣩ��
+SaveMonster：是否记录下地图上怪物的状态，（1=是，0=否，一般城镇中将此数值设置为0，因为需要调整角色出城后回来时进行交易的物品种类）。
 
-Quest���������������
+Quest：任务关联参数。
 
-WarpDist����������ͬ��ͼ�ϸ���Ԫ�صľ��롣
+WarpDist：调整怪物同地图上各类元素的距离。
 
-MonLvl1����ͨ�Ѷ��´˵�ͼ�ļ��𣨷�����Ƭ����
+MonLvl1：普通难度下此地图的级别（非资料片）。
 
-MonLvl2�������Ѷ��´˵�ͼ�ļ��𣨷�����Ƭ����
+MonLvl2：恶梦难度下此地图的级别（非资料片）。
 
-MonLvl3�������Ѷ��´˵�ͼ�ļ��𣨷�����Ƭ����
+MonLvl3：地狱难度下此地图的级别（非资料片）。
 
-MonLvl1Ex����ͨ�Ѷ��´˵�ͼ�ļ�������Ƭ����
+MonLvl1Ex：普通难度下此地图的级别（资料片）。
 
-MonLvl2Ex�������Ѷ��´˵�ͼ�ļ�������Ƭ����
+MonLvl2Ex：恶梦难度下此地图的级别（资料片）。
 
-MonLvl3Ex�������Ѷ��´˵�ͼ�ļ�������Ƭ����
+MonLvl3Ex：地狱难度下此地图的级别（资料片）。
 
-MonDen����ͨ�Ѷ��µ�ǰ��ͼ�еĹ����ܶȡ�
+MonDen：普通难度下当前地图中的怪物密度。
 
-MonDen(N)�������Ѷ��µ�ǰ��ͼ�еĹ����ܶȡ�
+MonDen(N)：恶梦难度下当前地图中的怪物密度。
 
-MonDen(H)�������Ѷ��µ�ǰ��ͼ�еĹ����ܶȡ�
+MonDen(H)：地狱难度下当前地图中的怪物密度。
 
-MonUMin����ͨ�Ѷ��µ�ǰ��ͼ�н�ֵ���С��Ŀ��
+MonUMin：普通难度下当前地图中金怪的最小数目。
 
-MonUMax����ͨ�Ѷ��µ�ǰ��ͼ�н�ֵ������Ŀ��
+MonUMax：普通难度下当前地图中金怪的最大数目。
 
-MonUMin(N)�������Ѷ��µ�ǰ��ͼ�н�ֵ���С��Ŀ��
+MonUMin(N)：恶梦难度下当前地图中金怪的最小数目。
 
-MonUMax(N)�������Ѷ��µ�ǰ��ͼ�н�ֵ������Ŀ��
+MonUMax(N)：恶梦难度下当前地图中金怪的最大数目。
 
-MonUMin(H)�������Ѷ��µ�ǰ��ͼ�н�ֵ���С��Ŀ��
+MonUMin(H)：地狱难度下当前地图中金怪的最小数目。
 
-MonUMax(H)�������Ѷ��µ�ǰ��ͼ�н�ֵ������Ŀ��
+MonUMax(H)：地狱难度下当前地图中金怪的最大数目。
 
-MonWndr����ǰ��ͼ�еĹ����Ƿ���ε���
+MonWndr：当前地图中的怪物是否会游荡。
 
-MonSpcWalk�����ò�����
+MonSpcWalk：无用参数。
 
-NumMon����ǰ��ͼ�����������ڵĹ������ࡣ
+NumMon：当前地图中所允许存在的怪物种类。
 
-Mon1-Mon25����ͨ�Ѷ��µ�ǰ��ͼ�г��ֵĹ������͡���monstats.txt������
+Mon1-Mon25：普通难度下当前地图中出现的怪物类型。与monstats.txt关联。
 
-rangedspawn�����ò�����
+rangedspawn：无用参数。
 
-nmon1-nmon25�������Ѷ��µ�ǰ��ͼ�г��ֵĹ������͡���monstats.txt������
+nmon1-nmon25：恶梦难度下当前地图中出现的怪物类型。与monstats.txt关联。
 
-umon1-umon25�������Ѷ��µ�ǰ��ͼ�г��ֵĹ������͡���monstats.txt������
+umon1-umon25：地狱难度下当前地图中出现的怪物类型。与monstats.txt关联。
 
-cmon1-4����ͼ�ϵ�����缦������֮�ࣩ����ͬmonstats.txt��monstats2.txt�ļ�������
+cmon1-4：地图上的杂物（如鸡，兔子之类）。与同monstats.txt和monstats2.txt文件关联。
 
-cpct1-cpct4��cmon1-4���ܶȡ�
+cpct1-cpct4：cmon1-4的密度。
 
-camt1-camt4�����ò�����
+camt1-camt4：无用参数。
 
-Themes�����ò�����
+Themes：无用参数。
 
-SoundEnv�����뵱ǰ��ͼʱ�����õı������֡�
+SoundEnv：进入当前地图时所采用的背景音乐。
 
-Waypoint������Сվ��Сվ�б��е�λ�á�255��ʾ����Сվ�б��С�
+Waypoint：传送小站在小站列表中的位置。255表示不在小站列表中。
 
-LevelName����ͼ���ơ�
+LevelName：地图名称。
 
-LevelWarp�������뵱ǰ��ͼʱ����ʾ�����ơ�
+LevelWarp：当进入当前地图时所显示的名称。
 
-EntryFile����ǰ��ͼ��Ҫ������Щ�����ļ���
+EntryFile：当前地图需要调用哪些背景文件。
 
-ObjGrp0-7����ǰ��ͼ�����õ�����顣��ObjectGroups.txt������
+ObjGrp0-7：当前地图所采用的物件组。与ObjectGroups.txt关联。
 
-ObjPrb0-7���������������ֵĻ��ʡ�
+ObjPrb0-7：所采用物件组出现的机率。
 
-Beta�����ò�����
+Beta：无用参数。
 
-����˵�������ļ�������������ϷСվ�й��ڴ��ļ���˵������лylycloak��ǰ�������Ĺ�����
+特殊说明：本文件大量引用了游戏小站中关于此文件的说明，感谢ylycloak等前辈们做的工作。
 */
 
 typedef struct
@@ -953,7 +953,7 @@ static int Levels_CombineBin(char *acBinPath)
 
     memset(m_acGlobalBuffer, 0, m_iGlobaBufLength);
 
-    //��ȡbin�ļ����ļ�ͷ
+    //读取bin文件的文件头
     fread(&iLineCount, 1, sizeof(iLineCount), pfBinHandle);
     fread(m_acGlobalBuffer, 1, sizeof(iLineCount), pfBin2Handle);
 
@@ -969,7 +969,7 @@ static int Levels_CombineBin(char *acBinPath)
         iLineCount--;
     }
 
-    //д��bin�ļ�
+    //写回bin文件
     fwrite(m_acGlobalBuffer, 1, pcTemp - m_acGlobalBuffer, pfOutputHandle);
 
     goto out;
