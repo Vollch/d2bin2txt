@@ -126,6 +126,7 @@ static unsigned int m_iEventsCount = 0;
 static ST_EVENTS *m_astEvents = NULL;
 
 MODULE_SETLINES_FUNC(FILE_PREFIX, m_astEvents, ST_EVENTS);
+HAVENAME_FUNC(m_astEvents, vevent, m_iEventsCount);
 
 static int Events_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
 {
@@ -133,13 +134,7 @@ static int Events_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, 
 
     if ( !strcmp(acKey, "event") )
     {
-#ifdef USE_TEMPLATE
-        if ( 0 != pcTemplate[0] )
-        {
-            strcpy(acOutput, pcTemplate);
-        }
-        else
-#endif
+        if ( !String_BuildName(FORMAT(events), 0xFFFF, pcTemplate, NAME_PREFIX, m_iEventsCount, HAVENAME, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vevent);
         }

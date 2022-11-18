@@ -110,7 +110,7 @@ Tips, Ideas and Suggestions:
 
 typedef struct
 {
-    char acPadding[2];
+    unsigned short vId;
     unsigned char vFilename[64];//Where is the overlay? The game looks at data/global/overlays for a dcc file.
     unsigned short vversion;
 
@@ -146,7 +146,7 @@ typedef struct
 
 typedef struct
 {
-    unsigned char voverlay[32];
+    unsigned char voverlay[64];
 } ST_OVERLAY;
 
 static char *m_apcNotUsed[] =
@@ -165,24 +165,23 @@ static unsigned int m_iOverlayCount = 0;
 static ST_OVERLAY *m_astOverlay = NULL;
 
 MODULE_SETLINES_FUNC(FILE_PREFIX, m_astOverlay, ST_OVERLAY);
+HAVENAME_FUNC(m_astOverlay, voverlay, m_iOverlayCount);
 
 static int OverLay_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
+    ST_LINE_INFO *pstLineInfo = pvLineInfo;
+
     if ( !strcmp(acKey, "overlay") )
     {
-#ifdef USE_TEMPLATE
-        if ( 0 != pcTemplate[0] )
+        char acFile[33] = {0};
+        String_StripFileName(pstLineInfo->vFilename, acFile, 32);
+        if ( !String_BuildName(FORMAT(overlay), 0xFFFF, pcTemplate, acFile, pstLineInfo->vId, HAVENAME, acOutput) )
         {
-            strcpy(acOutput, pcTemplate);
-        }
-        else
-#endif
-        {
-            sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
+            sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vId);
         }
 
-        strncpy(m_astOverlay[m_iOverlayCount].voverlay, acOutput, sizeof(m_astOverlay[m_iOverlayCount].voverlay));
-        String_Trim(m_astOverlay[m_iOverlayCount].voverlay);
+        strncpy(m_astOverlay[pstLineInfo->vId].voverlay, acOutput, sizeof(m_astOverlay[pstLineInfo->vId].voverlay));
+        String_Trim(m_astOverlay[pstLineInfo->vId].voverlay);
         m_iOverlayCount++;
         return 1;
     }

@@ -29,16 +29,13 @@ static int StorePage_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLine
 
     if ( !strcmp(acKey, "Store Page") )
     {
-        if ( 0 != pcTemplate[0] )
-        {
-            strcpy(acOutput, pcTemplate);
-        }
-        else
+        strncpy(m_astStorePage[m_iStorePage].vCode, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
+
+        if ( !String_BuildName(FORMAT(storepage), 0xFFFF, pcTemplate, m_astStorePage[m_iStorePage].vCode, iLineNo, NULL, acOutput) )
         {
             strncpy(acOutput, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
         }
 
-        strncpy(m_astStorePage[m_iStorePage].vCode, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
         m_iStorePage++;
         return 1;
     }

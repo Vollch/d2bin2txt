@@ -191,7 +191,7 @@ int process_raresuffix(char *acTemplatePath, char *acBinPath, char *acTxtPath, E
         case EN_MODULE_SELF_DEPEND:
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
 
-            return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
+            return process_file(acTemplatePath, acBinPath, NULL, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo),
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);
             break;
 

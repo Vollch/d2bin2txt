@@ -16,13 +16,14 @@ static char *m_apcInternalProcess[] =
 
 typedef struct
 {
-    char vAI[32];
+    char vAI[64];
 } ST_MON_AI;
 
 static unsigned int m_iMonAiCount = 0;
 static ST_MON_AI *m_astMonAi = NULL;
 
 MODULE_SETLINES_FUNC(FILE_PREFIX, m_astMonAi, ST_MON_AI);
+HAVENAME_FUNC(m_astMonAi, vAI, m_iMonAiCount);
 
 static int MonAI_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
@@ -30,13 +31,7 @@ static int MonAI_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, 
 
     if ( !strcmp(acKey, "AI") )
     {
-#ifdef USE_TEMPLATE
-        if ( 0 != pcTemplate[0] )
-        {
-            strcpy(acOutput, pcTemplate);
-        }
-        else
-#endif
+        if ( !String_BuildName(FORMAT(monai), 0xFFFF, pcTemplate, NAME_PREFIX, pstLineInfo->vIndex, HAVENAME, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vIndex);
         }

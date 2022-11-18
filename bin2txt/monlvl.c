@@ -317,13 +317,7 @@ static int MonLvl_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo,
 {
     if ( !strcmp(acKey, "Level") )
     {
-#ifdef USE_TEMPLATE
-        if ( 0 != pcTemplate[0] )
-        {
-            strcpy(acOutput, pcTemplate);
-        }
-        else
-#endif
+        if ( !String_BuildName(FORMAT(monlvl), 0xFFFF, pcTemplate, NAME_PREFIX, m_iMonLvlCount, NULL, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, m_iMonLvlCount);
         }

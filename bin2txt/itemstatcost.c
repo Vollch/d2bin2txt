@@ -643,7 +643,7 @@ func = 28—— +[value] [技能名]
 */
 
 typedef struct
-{
+{//total 324 bytes
     unsigned int vID;
 
 #if 1
@@ -801,6 +801,7 @@ typedef struct
 typedef struct
 {
     char vStat[64];
+    unsigned short vString;
 } ST_ITEM_STATES;
 
 static char *m_apcInternalProcess[] =
@@ -814,6 +815,7 @@ static unsigned int m_iItemStatesCount = 0;
 static ST_ITEM_STATES *m_astItemStates = NULL;
 
 MODULE_SETLINES_FUNC(FILE_PREFIX, m_astItemStates, ST_ITEM_STATES);
+HAVENAME_FUNC(m_astItemStates, vStat, m_iItemStatesCount);
 
 static int ItemStatCost_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
@@ -821,19 +823,19 @@ static int ItemStatCost_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned in
 
     if ( !strcmp(acKey, "Stat") )
     {
-#ifdef USE_TEMPLATE
-        if ( 0 != pcTemplate[0] )
+        unsigned int iString = pstLineInfo->vdescstrpos;
+        if ( !String_FindString(iString, "dummy") )
         {
-            strcpy(acOutput, pcTemplate);
+            iString = pstLineInfo->vdescstrneg;
         }
-        else
-#endif
+        if ( !String_BuildName(FORMAT(itemstatcost), iString, pcTemplate, NAME_PREFIX, pstLineInfo->vID, HAVENAME, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vID);
         }
 
-        strncpy(m_astItemStates[m_iItemStatesCount].vStat, acOutput, sizeof(m_astItemStates[m_iItemStatesCount].vStat));
-        String_Trim(m_astItemStates[m_iItemStatesCount].vStat);
+        m_astItemStates[pstLineInfo->vID].vString = iString;
+        strncpy(m_astItemStates[pstLineInfo->vID].vStat, acOutput, sizeof(m_astItemStates[pstLineInfo->vID].vStat));
+        String_Trim(m_astItemStates[pstLineInfo->vID].vStat);
         m_iItemStatesCount++;
         return 1;
     }
@@ -854,16 +856,14 @@ static int ItemStatCost_FieldProc(void *pvLineInfo, char *acKey, unsigned int iL
 
     if ( !strcmp(acKey, "Stat") )
     {
-#ifdef USE_TEMPLATE
-        if ( 0 != pcTemplate[0] )
-        {
-            strcpy(acOutput, pcTemplate);
-        }
-        else
-#endif
-        {
-            sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vID);
-        }
+        strncpy(acOutput, m_astItemStates[pstLineInfo->vID].vStat, sizeof(m_astItemStates[pstLineInfo->vID].vStat));
+
+        return 1;
+    }
+    else if ( !strcmp(acKey, "*eol") )
+    {
+        acOutput[0] = '0';
+        acOutput[1] = 0;
 
         return 1;
     }
@@ -1119,11 +1119,9 @@ static char *ItemStatCost_GetKey(void *pvLineInfo, char *pcKey, unsigned int *iK
     return pcKey;
 }
 
-int process_itemstatcost(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
+static void ItemStatCost_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLineInfo)
 {
-    ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
-
-    ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
+    INIT_VALUE_BUFFER;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ID, UINT);
 
@@ -1198,10 +1196,21 @@ int process_itemstatcost(char *acTemplatePath, char *acBinPath, char *acTxtPath,
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, opmyspstat3, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stuff, UINT);
+}
+
+int process_itemstatcost(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
+{
+    ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
+
+    ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
     switch ( enPhase )
     {
         case EN_MODULE_SELF_DEPEND:
+            MODULE_DEPEND_CALL(string, acTemplatePath, acBinPath, acTxtPath);
+
+            ItemStatCost_InitValueMap(pstValueMap, pstLineInfo);
+
             m_iItemStatesCount = 0;
 
             //m_stCallback.pfnGetKey = ItemStatCost_GetKey;
@@ -1210,13 +1219,11 @@ int process_itemstatcost(char *acTemplatePath, char *acBinPath, char *acTxtPath,
             m_stCallback.pfnFinished = FINISHED_FUNC_NAME(FILE_PREFIX);
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
-            return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo),
+            return process_file(acTemplatePath, acBinPath, NULL, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo),
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);
             break;
 
         case EN_MODULE_OTHER_DEPEND:
-            MODULE_DEPEND_CALL(itemstatcost, acTemplatePath, acBinPath, acTxtPath);
-            MODULE_DEPEND_CALL(string, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(events, acTemplatePath, acBinPath, acTxtPath);
             break;
 
@@ -1225,6 +1232,8 @@ int process_itemstatcost(char *acTemplatePath, char *acBinPath, char *acTxtPath,
             break;
 
         case EN_MODULE_INIT:
+            ItemStatCost_InitValueMap(pstValueMap, pstLineInfo);
+
             //m_stCallback.pfnGetKey = ItemStatCost_GetKey;
             m_stCallback.pfnConvertValue = ItemStatCost_ConvertValue;
             m_stCallback.pfnFieldProc = ItemStatCost_FieldProc;
@@ -1252,3 +1261,12 @@ char *ItemStatCost_GetStateName(unsigned int id)
     return m_astItemStates[id].vStat;
 }
 
+unsigned int ItemStatCost_GetString(unsigned int id)
+{
+    if ( id >= m_iItemStatesCount )
+    {
+        return 0xFFFF;
+    }
+
+    return m_astItemStates[id].vString;
+}

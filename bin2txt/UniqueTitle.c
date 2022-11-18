@@ -42,20 +42,19 @@ static int UniqueTitle_ConvertValue(void *pvLineInfo, char *acKey, char *pcTempl
 static int UniqueTitle_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
-    int result = 0;
 
     if ( !strcmp("Namco", acKey) )
     {
-        if ( 0 == pcTemplate[0] )
+        if ( !String_BuildName(FORMAT(uniquetitle), pstLineInfo->vName, pcTemplate, NAME_PREFIX, m_iUniqueTitle, NULL, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, m_iUniqueTitle);
-            result = 1;
         }
 
         m_iUniqueTitle++;
+        return 1;
     }
 
-    return result;
+    return 0;
 }
 
 int process_uniquetitle(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)

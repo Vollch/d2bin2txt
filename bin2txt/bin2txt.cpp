@@ -4,11 +4,14 @@
 #include "stdafx.h"
 #include <stdarg.h>
 #include "global.h"
+#include <windows.h>
 
 typedef int (*fn_process_module)(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
 typedef struct
 {
     char *pcFileName;
+    char *pcNameFormat;
+    int iNameSize;
     fn_process_module pfnProcessModule;
     ENUM_MODULE_PHASE enPhase;
 } ST_MODULE;
@@ -17,16 +20,19 @@ typedef struct
     do\
     {\
         m_astProcessModule[MODULE_ID_DEFINE(key)].pcFileName = #key;\
+        m_astProcessModule[MODULE_ID_DEFINE(key)].pcNameFormat = NULL;\
+        m_astProcessModule[MODULE_ID_DEFINE(key)].iNameSize = 24;\
         m_astProcessModule[MODULE_ID_DEFINE(key)].pfnProcessModule = process_##key;\
         m_astProcessModule[MODULE_ID_DEFINE(key)].enPhase = EN_MODULE_PHASE_START;\
     } while (0)
 
 static ST_MODULE m_astProcessModule[EN_MID_MAX];
 
-#define DEBUG_MODULE "all"
-
 void Init_Module()
 {
+    MODULE_MAP_DEFINE(D2NewStats);
+    MODULE_MAP_DEFINE(D2KillCounter);
+    MODULE_MAP_DEFINE(bufficons);
     MODULE_MAP_DEFINE(arena);
     MODULE_MAP_DEFINE(armor);
     MODULE_MAP_DEFINE(armtype);
@@ -125,8 +131,58 @@ ENUM_MODULE_PHASE Get_ModulePhase(ENUM_MODULE_ID enMid)
     return m_astProcessModule[enMid].enPhase;
 }
 
+char *Get_ModuleNameFormat(ENUM_MODULE_ID enMid)
+{
+    return m_astProcessModule[enMid].pcNameFormat;
+}
+
+int Get_ModuleNameSize(ENUM_MODULE_ID enMid)
+{
+    return m_astProcessModule[enMid].iNameSize;
+}
+
 static FILE *m_pfLogHandle = NULL;
-static int m_iPrintFlag = 1;
+
+unsigned int bg_printf( const char *pcBG, const char *pcFormat,... )
+{
+    va_list args;
+    unsigned int dwStringLength;
+    static char m_acPrintTempBuf[2048];
+    char acLine[40];
+
+#ifdef NO_VERBOSE
+    return 0;
+#endif
+
+    if ( !pcFormat )
+    {
+        return 0;
+    }
+
+    va_start(args, pcFormat);
+    dwStringLength = vsnprintf( m_acPrintTempBuf, sizeof(m_acPrintTempBuf), pcFormat, args);
+
+    if ( dwStringLength > sizeof(acLine) )
+    {
+        dwStringLength = my_printf(pcFormat, args);
+        va_end(args);
+        return dwStringLength;
+    }
+    va_end(args);
+
+    memset(acLine, *pcBG, sizeof(acLine));
+    strncpy((acLine + (sizeof(acLine)/2 - dwStringLength/2)), m_acPrintTempBuf, dwStringLength);
+
+    printf("%.*s\r\n", sizeof(acLine), acLine);
+    fflush(stdout);
+
+    if ( NULL != m_pfLogHandle )
+    {
+        fwrite(acLine, 1, sizeof(acLine), m_pfLogHandle);
+    }
+
+    return dwStringLength;
+}
 
 unsigned int my_printf( const char *pcFormat,... )
 {
@@ -134,12 +190,7 @@ unsigned int my_printf( const char *pcFormat,... )
     unsigned int dwStringLength;
     static char m_acPrintTempBuf[2048];
 
-    if ( 0 == m_iPrintFlag )
-    {
-        return 0;
-    }
-
-    if( NULL == pcFormat )
+    if ( !pcFormat )
     {
         return 0;
     }
@@ -154,6 +205,7 @@ unsigned int my_printf( const char *pcFormat,... )
     }
 
     printf("%s", m_acPrintTempBuf);
+    fflush(stdout);
 
     if ( NULL != m_pfLogHandle )
     {
@@ -175,6 +227,9 @@ static ENUM_MODULE_ID Get_ModuleId(char *pcModuleName)
     {
         return EN_MID_MAX;
     }
+    MODULE_NAME_TO_ID(D2NewStats)
+    MODULE_NAME_TO_ID(D2KillCounter)
+    MODULE_NAME_TO_ID(bufficons)
     MODULE_NAME_TO_ID(arena)
     MODULE_NAME_TO_ID(armor)
     MODULE_NAME_TO_ID(armtype)
@@ -291,129 +346,198 @@ static void usage(int argc, char* argv[])
     my_printf("    -all | -file <specific file prefix>\r\n");
 }
 
+char *g_pcCustomTable1 = NULL;
+char *g_pcCustomTable2 = NULL;
+char *g_pcCustomTable3 = NULL;
+int g_iMercDesc = 0;
+int g_iTrimSpace = 0;
+
+void Init_Settings(char* acTemplatePath, char* acBinPath, char* acTxtPath)
+{
+    char acIniBuff[64 * 1024] = {0};
+    char *pcIniFile = ".\\bin2txt.ini";
+    char *pcAnchor, *pcAnchor2;
+
+    GetPrivateProfileString("GENERAL", "Template", ".\\template", acTemplatePath, 256, pcIniFile);
+    GetPrivateProfileString("GENERAL", "Bin", ".\\bin", acBinPath, 256, pcIniFile);
+    GetPrivateProfileString("GENERAL", "Output", ".\\txt", acTxtPath, 256, pcIniFile);
+
+    GetPrivateProfileString("GENERAL", "TreasureClassOffset", "0", acIniBuff, sizeof(acIniBuff), pcIniFile);
+    TreasureClassEx_SetOffset(atoi(acIniBuff));
+
+    GetPrivateProfileString("GENERAL", "LogEnabled", "0", acIniBuff, sizeof(acIniBuff), pcIniFile);
+    if ( atoi(acIniBuff) )
+    {
+        m_pfLogHandle = fopen("output.txt", "wt");
+    }
+
+    GetPrivateProfileString("GENERAL", "MercDesc", "0", acIniBuff, sizeof(acIniBuff), pcIniFile);
+    g_iMercDesc = atoi(acIniBuff);
+
+    GetPrivateProfileString("GENERAL", "TrimSpace", "0", acIniBuff, sizeof(acIniBuff), pcIniFile);
+    g_iTrimSpace = atoi(acIniBuff);
+
+    GetPrivateProfileString("GENERAL", "CustomTbl1", 0, acIniBuff, sizeof(acIniBuff), pcIniFile);
+    if ( strlen(acIniBuff) > 0 )
+    {
+        char *cpDot = strchr(acIniBuff, '.');
+        if ( cpDot )
+        {
+            memset(cpDot, 0, strlen(cpDot));
+        }
+        g_pcCustomTable1 = strdup(acIniBuff);
+    }
+
+    GetPrivateProfileString("GENERAL", "CustomTbl2", 0, acIniBuff, sizeof(acIniBuff), pcIniFile);
+    if ( strlen(acIniBuff) > 0 )
+    {
+        char *cpDot = strchr(acIniBuff, '.');
+        if ( cpDot )
+        {
+            memset(cpDot, 0, strlen(cpDot));
+        }
+        g_pcCustomTable2 = strdup(acIniBuff);
+    }
+
+    GetPrivateProfileString("GENERAL", "CustomTbl3", 0, acIniBuff, sizeof(acIniBuff), pcIniFile);
+    if ( strlen(acIniBuff) > 0 )
+    {
+        char *cpDot = strchr(acIniBuff, '.');
+        if ( cpDot )
+        {
+            memset(cpDot, 0, strlen(cpDot));
+        }
+        g_pcCustomTable3 = strdup(acIniBuff);
+    }
+
+    GetPrivateProfileSection("NAME_FORMAT", acIniBuff, sizeof(acIniBuff), pcIniFile);
+
+    pcAnchor = acIniBuff;
+    while ( *pcAnchor )
+    {
+        ENUM_MODULE_ID eModule;
+
+        pcAnchor2 = strchr(pcAnchor, '=');
+        *pcAnchor2 = 0;
+        pcAnchor2++;
+
+        if ( (eModule = Get_ModuleId(pcAnchor)) != EN_MID_MAX )
+        {
+            m_astProcessModule[eModule].pcNameFormat = strdup(pcAnchor2);
+        }
+        pcAnchor = pcAnchor2 + strlen(pcAnchor2) + 1;
+    }
+
+    GetPrivateProfileSection("NAME_SIZE", acIniBuff, sizeof(acIniBuff), pcIniFile);
+
+    pcAnchor = acIniBuff;
+    while ( *pcAnchor )
+    {
+        ENUM_MODULE_ID eModule;
+
+        pcAnchor2 = strchr(pcAnchor, '=');
+        *pcAnchor2 = 0;
+        pcAnchor2++;
+
+        if ( (eModule = Get_ModuleId(pcAnchor)) != EN_MID_MAX )
+        {
+            m_astProcessModule[eModule].iNameSize = atoi(pcAnchor2);
+            if ( m_astProcessModule[eModule].iNameSize > 64 )
+            {
+                m_astProcessModule[eModule].iNameSize = 64;
+            }
+            if ( m_astProcessModule[eModule].iNameSize < 6 )
+            {
+                m_astProcessModule[eModule].iNameSize = 6;
+            }
+        }
+        pcAnchor = pcAnchor2 + strlen(pcAnchor2) + 1;
+    }
+}
+
 int main(int argc, char* argv[])
 {
     static char acTemplatePath[256] = {0};
     static char acBinPath[256] = {0};
     static char acTxtPath[256] = {0};
 
-    ENUM_MODULE_ID enProcessModule = EN_MID_MAX;
+    int iModFrom = 0;
+    int iModTo = EN_MID_MAX;
 
     char acFailedList[100 * 32] = {0};
 
     char *pcFailed = acFailedList;
-    int i;
-    int j;
+    int i = 1, j = 0;
     int iCount = 0;
     int iSuccess = 0;
     int iFail = 0;
 
-    if ( 1 < argc && argv[1] == strstr(argv[1], "-h") )
+    Init_Module();
+    Init_Settings(acTemplatePath, acBinPath, acTxtPath);
+
+    while (i < argc)
     {
-        usage(argc, argv);
-        getchar();
-        return 0;
+        if ( !strcmp("-j", argv[i]) )
+        {
+            usage(argc, argv);
+            goto out;
+        }
+        else if ( !strcmp("-tc", argv[i]) && argc > i+1 )
+        {
+            //161 原版
+            //321 魔电v15
+            //193 宝日8.4
+            sscanf(argv[i + 1], "%d", &j);
+            TreasureClassEx_SetOffset(j);
+            i += 2;
+        }
+        else if ( !strcmp("-template", argv[i]) && argc > i+1 )
+        {
+            strcpy(acTemplatePath, argv[i + 1]);
+            i += 2;
+        }
+        else if ( !strcmp("-bin", argv[i]) && argc > i+1 )
+        {
+            strcpy(acBinPath, argv[i + 1]);
+            i += 2;
+        }
+        else if ( !strcmp("-output", argv[i]) && argc > i+1 )
+        {
+            strcpy(acTxtPath, argv[i + 1]);
+            i += 2;
+        }
+        else if ( !strcmp("-file", argv[i]) && argc > i+1 )
+        {
+            j = Get_ModuleId(argv[i + 1]);
+            if ( j >= EN_MID_MAX )
+            {
+                my_printf("Unknown module: %s\r\n", argv[i+1]);
+                goto out;
+            }
+            iModFrom = j;
+            iModTo = j + 1;
+            i += 2;
+        }
+        else
+        {
+            my_printf("Unknown argument: %s\r\n", argv[i]);
+            goto out;
+        }
     }
 
-    m_pfLogHandle = fopen("output.txt", "wt");
     MemMgr_Init();
-
-    i = 1;
-    j = argc;
-
-    if ( i + 1 < argc && !strcmp("-tc", argv[i]) )
-    {
-        sscanf(argv[i + 1], "%d", &iCount);
-        i += 2;
-    }
-    else
-    {
-        iCount = 0;
-    }
-
-    //for test
-    //iCount = 161;    //原版
-    //iCount = 321;  //魔电v15
-#ifdef _DEBUG
-    iCount = 193;  //宝日8.4
-#endif
-    my_printf("    tc offset %u\r\n", iCount);
-    TreasureClassEx_SetOffset(iCount);
-    iCount = 0;
-
-    if ( i + 1 < argc && !strcmp("-template", argv[i]) )
-    {
-        strcpy(acTemplatePath, argv[i + 1]);
-        i += 2;
-    }
-    else
-    {
-#ifdef _DEBUG
-        strcpy(acTemplatePath, "..\\test\\template");
-#else
-        strcpy(acTemplatePath, ".\\template");
-#endif
-    }
-
-    if ( i + 1 < argc && !strcmp("-bin", argv[i]) )
-    {
-        strcpy(acBinPath, argv[i + 1]);
-        i += 2;
-    }
-    else
-    {
-#ifdef _DEBUG
-        strcpy(acBinPath, "..\\test\\bin");
-#else
-        strcpy(acBinPath, ".\\bin");
-#endif
-    }
-
-    if ( i + 1 < argc && !strcmp("-output", argv[i]) )
-    {
-        strcpy(acTxtPath, argv[i + 1]);
-        i += 2;
-    }
-    else
-    {
-#ifdef _DEBUG
-        strcpy(acTxtPath, "..\\test\\txt");
-#else
-        strcpy(acTxtPath, ".\\txt");
-#endif
-    }
-
-    if ( i < argc && !strcmp("-all", argv[i]) )
-    {
-        enProcessModule = EN_MID_MAX;;
-    }
-    else if ( i + 1 < argc && !strcmp("-file", argv[i]) )
-    {
-        enProcessModule = Get_ModuleId(argv[i + 1]);
-    }
-    else
-    {
-        enProcessModule = EN_MID_MAX;;
-    }
-
-    //for test
-    //enProcessModule = MODULE_ID_DEFINE(setitems);
 
     my_printf("Args:\r\n");
     my_printf("    template path %s\r\n", acTemplatePath);
     my_printf("    bin path %s\r\n", acBinPath);
     my_printf("    output path %s\r\n", acTxtPath);
-    if ( EN_MID_MAX == enProcessModule )
+    if ( iModTo - iModFrom > 1 )
     {
         my_printf("    all module\r\n");
-    }
-    else if ( i + 1 < argc && !strcmp("-file", argv[i]) )
-    {
-        my_printf("    module %s\r\n", argv[i + 1]);
     }
     else
     {
-        my_printf("    all module\r\n");
+        my_printf("    module %s\r\n", m_astProcessModule[iModFrom].pcFileName);
     }
 
     my_printf("confirm start?(y/n)");
@@ -430,36 +554,21 @@ int main(int argc, char* argv[])
         system(m_acGlobalBuffer);
     }
 
-    Init_Module();
     Operater_Init();
 
     iCount = sizeof(m_astProcessModule) / sizeof(m_astProcessModule[0]);
     memset(acFailedList, 0, sizeof(acFailedList));
 
-    if ( EN_MID_MAX > enProcessModule )
+    for ( i = iModFrom; i < iModTo; i++ )
     {
-        i = enProcessModule;
         if ( m_astProcessModule[i].pcFileName && m_astProcessModule[i].pfnProcessModule )
         {
-            if ( !strcmp("all", DEBUG_MODULE) )
-            {
-                m_iPrintFlag = 1;
-            }
-            else if ( !strcmp(DEBUG_MODULE, m_astProcessModule[i].pcFileName) )
-            {
-                m_iPrintFlag = 1;
-            }
-            else
-            {
-                m_iPrintFlag = 0;
-            }
-
-            my_printf("****************[%d]****************\r\n", i);
-            my_printf("****************%s****************\r\n", m_astProcessModule[i].pcFileName);
+            bg_printf("*", "[%d]", i+1);
+            bg_printf("*", "%s", m_astProcessModule[i].pcFileName);
 
             for ( j = (int)Get_ModulePhase((ENUM_MODULE_ID)i) + 1; j < (int)EN_MODULE_PHASE_MAX; j++ )
             {
-                my_printf("****************phase %d****************\r\n", j);
+                bg_printf("*", "phase %d", j);
                 Set_ModulePhase((ENUM_MODULE_ID)i, (ENUM_MODULE_PHASE)j);
 
                 memset(&m_stCallback, 0, sizeof(m_stCallback));
@@ -472,12 +581,12 @@ int main(int argc, char* argv[])
                     iFail++;
                     sprintf(pcFailed, "%s\r\n", m_astProcessModule[i].pcFileName);
                     pcFailed += strlen(pcFailed);
-                    my_error("****************failed****************\r\n");
+                    bg_printf("*", "failed");
                     break;
                 }
                 else
                 {
-                    my_printf("****************success****************\r\n");
+                    bg_printf("*", "success");
                 }
             }
 
@@ -486,77 +595,20 @@ int main(int argc, char* argv[])
                 iSuccess++;
             }
 
-            my_printf("****************%s****************\r\n\r\n\r\n", m_astProcessModule[i].pcFileName);
-        }
-    }
-    else
-    {
-        for ( i = 0; i < iCount; i++ )
-        {
-            if ( m_astProcessModule[i].pcFileName && m_astProcessModule[i].pfnProcessModule )
-            {
-                if ( !strcmp("all", DEBUG_MODULE) )
-                {
-                    m_iPrintFlag = 1;
-                }
-                else if ( !strcmp(DEBUG_MODULE, m_astProcessModule[i].pcFileName) )
-                {
-                    m_iPrintFlag = 1;
-                }
-                else
-                {
-                    m_iPrintFlag = 0;
-                }
-
-                my_printf("****************[%d]****************\r\n", i);
-                my_printf("****************%s****************\r\n", m_astProcessModule[i].pcFileName);
-
-                for ( j = (int)Get_ModulePhase((ENUM_MODULE_ID)i) + 1; j < (int)EN_MODULE_PHASE_MAX; j++ )
-                {
-                    my_printf("****************phase %d****************\r\n", j);
-                    Set_ModulePhase((ENUM_MODULE_ID)i, (ENUM_MODULE_PHASE)j);
-
-                    memset(&m_stCallback, 0, sizeof(m_stCallback));
-                    memset(m_acLineInfoBuf, 0, m_iLineBufLength);
-                    memset(m_acValueMapBuf, 0, m_iValueBufLength);
-                    m_iValueMapIndex = 0;
-
-                    if ( 0 == m_astProcessModule[i].pfnProcessModule(acTemplatePath, acBinPath, acTxtPath, (ENUM_MODULE_PHASE)j) )
-                    {
-                        iFail++;
-                        sprintf(pcFailed, "%s\r\n", m_astProcessModule[i].pcFileName);
-                        pcFailed += strlen(pcFailed);
-                        my_error("****************failed****************\r\n");
-                        break;
-                    }
-                    else
-                    {
-                        my_printf("****************success****************\r\n");
-                    }
-                }
-
-                if ( j >= EN_MODULE_PHASE_MAX )
-                {
-                    iSuccess++;
-                }
-
-                my_printf("****************%s****************\r\n\r\n\r\n", m_astProcessModule[i].pcFileName);
-            }
+            bg_printf("*", "%s", m_astProcessModule[i].pcFileName);
+            bg_printf(" ", "");
+            bg_printf(" ", "");
         }
     }
 
+    my_printf("processed %d of %d modules\r\n", iSuccess, iCount);
     if ( 0 < iFail )
     {
-        my_error("finished... total %d... success %d... failed %d!\r\n", iCount, iSuccess, iFail);
-        my_error("Failed list:\r\n%s\r\n", acFailedList);
+        my_error("%d modules failed:\r\n%s\r\n", iFail, acFailedList);
     }
-    else
-    {
-        my_printf("finished... total %d... success %d!\r\n", iCount, iSuccess);
-    }
-    my_printf("press RETURN to exit!\r\n");
 
 out:
+    my_printf("press RETURN to exit!\r\n");
     if ( NULL != m_pfLogHandle )
     {
         fclose(m_pfLogHandle);

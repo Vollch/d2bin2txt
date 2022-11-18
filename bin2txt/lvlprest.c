@@ -212,15 +212,17 @@ static char *m_apcNotUsed[] =
 
 static int LvlPrest_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
+    ST_LINE_INFO *pstLineInfo = pvLineInfo;
+
     if ( !strcmp(acKey, "Name") )
     {
-#ifdef USE_TEMPLATE
-        if ( 0 != pcTemplate[0] )
-        {
-            strcpy(acOutput, pcTemplate);
-        }
-        else
-#endif
+        char acName[33] = {0};
+        ( String_StripFileName(pstLineInfo->vFile1, acName, 32) ||
+          String_StripFileName(pstLineInfo->vFile2, acName, 32) ||
+          String_StripFileName(pstLineInfo->vFile3, acName, 32) ||
+          String_StripFileName(pstLineInfo->vFile4, acName, 32) ||
+          String_StripFileName(pstLineInfo->vFile5, acName, 32) );
+        if ( !String_BuildName(FORMAT(lvlprest), 0xFFFF, pcTemplate, acName, iLineNo, NULL, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
         }
@@ -272,6 +274,17 @@ int process_lvlprest(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
     switch ( enPhase )
     {
         case EN_MODULE_SELF_DEPEND:
+            break;
+
+        case EN_MODULE_OTHER_DEPEND:
+            MODULE_DEPEND_CALL(levels, acTemplatePath, acBinPath, acTxtPath);
+            break;
+
+        case EN_MODULE_RESERVED_1:
+        case EN_MODULE_RESERVED_2:
+            break;
+
+        case EN_MODULE_INIT:
             m_stCallback.pfnFieldProc = LvlPrest_FieldProc;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
@@ -280,10 +293,6 @@ int process_lvlprest(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);
             break;
 
-        case EN_MODULE_OTHER_DEPEND:
-        case EN_MODULE_RESERVED_1:
-        case EN_MODULE_RESERVED_2:
-        case EN_MODULE_INIT:
         default:
             break;
     }

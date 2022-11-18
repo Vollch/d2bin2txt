@@ -78,6 +78,7 @@ static unsigned int m_iItemSoundsCount = 0;
 static ST_ITEM_SOUNDS *m_astItemSounds = NULL;
 
 MODULE_SETLINES_FUNC(FILE_PREFIX, m_astItemSounds, ST_ITEM_SOUNDS);
+HAVENAME_FUNC(m_astItemSounds, vSound, m_iItemSoundsCount);
 
 static int Sounds_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
@@ -85,22 +86,10 @@ static int Sounds_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo,
 
     if ( !strcmp(acKey, "Sound") )
     {
-#ifdef USE_TEMPLATE
-        if ( 0 != pcTemplate[0] )
+        if ( !String_BuildName(FORMAT(sounds), 0xFFFF, pcTemplate, (pstLineInfo->vIndex ? NULL : "none"), pstLineInfo->vIndex, HAVENAME, acOutput) )
         {
-            strcpy(acOutput, pcTemplate);
+            sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vIndex);
         }
-        else if ( 0 < iLineNo )
-        {
-            sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-#else
-        sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
-#endif
 
         strncpy(m_astItemSounds[pstLineInfo->vIndex].vSound, acOutput, sizeof(m_astItemSounds[pstLineInfo->vIndex].vSound));
         m_iItemSoundsCount++;
@@ -173,3 +162,12 @@ char *Sounds_GetSoundName(unsigned int id)
     return m_astItemSounds[id].vSound;
 }
 
+char *Sounds_GetSoundName2(unsigned int id)
+{
+    if ( !id || id >= m_iItemSoundsCount )
+    {
+        return NULL;
+    }
+
+    return m_astItemSounds[id].vSound;
+}

@@ -42,7 +42,7 @@ eol: End of line, this field prevents M$ Excel from messing up the file, if you 
 
 typedef struct
 {
-    unsigned short iPadding0;
+    unsigned short vId;
     unsigned char vmode;   //monmode
     unsigned char vframe;
 
@@ -52,7 +52,7 @@ typedef struct
 
 typedef struct
 {
-    unsigned char vsequence[32];
+    unsigned char vsequence[64];
 } ST_MONSEQ;
 
 static char *m_apcInternalProcess[] =
@@ -66,37 +66,23 @@ static unsigned int m_iMonSeqCount = 0;
 static ST_MONSEQ *m_astMonSeq = NULL;
 
 MODULE_SETLINES_FUNC(FILE_PREFIX, m_astMonSeq, ST_MONSEQ);
+HAVENAME_FUNC(m_astMonSeq, vsequence, m_iMonSeqCount);
 
 static int MonSeq_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
-    unsigned int i;
 
     if ( !strcmp(acKey, "sequence") )
     {
-#ifdef USE_TEMPLATE
-        if ( 0 != pcTemplate[0] )
+        if ( m_iMonSeqCount > pstLineInfo->vId )
         {
-            strcpy(acOutput, pcTemplate);
+            strcpy(acOutput, m_astMonSeq[pstLineInfo->vId].vsequence);
+            return 1;
         }
-        else if ( 0 < iLineNo )
-        {
-            sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->iPadding0);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-#else
-        sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->iPadding0);
-#endif
 
-        for ( i = 0; i < m_iMonSeqCount; i++ )
+        if ( !String_BuildName(FORMAT(monseq), 0xFFFF, pcTemplate, NAME_PREFIX, pstLineInfo->vId, HAVENAME, acOutput) )
         {
-            if ( !strcmp(acOutput, m_astMonSeq[i].vsequence) )
-            {
-                return 1;
-            }
+            sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vId);
         }
 
         strncpy(m_astMonSeq[m_iMonSeqCount].vsequence, acOutput, sizeof(m_astMonSeq[m_iMonSeqCount].vsequence));
@@ -120,22 +106,8 @@ static int MonSeq_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo,
 
     if ( !strcmp(acKey, "sequence") )
     {
-#ifdef USE_TEMPLATE
-        if ( 0 != pcTemplate[0] )
-        {
-            strcpy(acOutput, pcTemplate);
-        }
-        else if ( 0 < iLineNo )
-        {
-            sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->iPadding0);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-#else
-        sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->iPadding0);
-#endif
+        strncpy(acOutput, m_astMonSeq[pstLineInfo->vId].vsequence, sizeof(m_astMonSeq[pstLineInfo->vId].vsequence));
+
         return 1;
     }
     else if ( !strcmp(acKey, "eol") )
@@ -204,7 +176,7 @@ int process_monseq(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_
             m_stCallback.pfnFinished = FINISHED_FUNC_NAME(FILE_PREFIX);
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
-            return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
+            return process_file(acTemplatePath, acBinPath, NULL, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);
             break;
 

@@ -64,7 +64,7 @@ CvtTgt1 to CvtTgt3: This is related to sounds that are played when certain skill
 
 typedef struct
 {
-    unsigned int iPadding0;
+    unsigned int vId;
 
     unsigned int vAttack1;    //sounds
 
@@ -129,7 +129,7 @@ typedef struct
 
 typedef struct
 {
-    unsigned char vId[32];
+    unsigned char vId[64];
 } ST_MONSOUND;
 
 static char *m_apcInternalProcess[] = 
@@ -143,6 +143,7 @@ static unsigned int m_iMonSoundsCount = 0;
 static ST_MONSOUND *m_astMonSounds = NULL;
 
 MODULE_SETLINES_FUNC(FILE_PREFIX, m_astMonSounds, ST_MONSOUND);
+HAVENAME_FUNC(m_astMonSounds, vId, m_iMonSoundsCount);
 
 char *MonSounds_GetItemSoundsCode(unsigned int id)
 {
@@ -156,27 +157,35 @@ char *MonSounds_GetItemSoundsCode(unsigned int id)
 
 static int MonSounds_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
+    ST_LINE_INFO *pstLineInfo = pvLineInfo;
+
     if ( !strcmp(acKey, "Id") )
     {
-#ifdef USE_TEMPLATE
-        if ( 0 != pcTemplate[0] )
-        {
-            strcpy(acOutput, pcTemplate);
-        }
-        else if ( 0 < iLineNo )
-        {
-            sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-#else
-        sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
-#endif
+        char *pcName;
+        ( (pcName = Sounds_GetSoundName2(pstLineInfo->vAttack1)) ||
+          (pcName = Sounds_GetSoundName2(pstLineInfo->vAttack2)) ||
+          (pcName = Sounds_GetSoundName2(pstLineInfo->vHitSound)) ||
+          (pcName = Sounds_GetSoundName2(pstLineInfo->vDeathSound)) ||
+          (pcName = Sounds_GetSoundName2(pstLineInfo->vNeutral)) ||
+          (pcName = Sounds_GetSoundName2(pstLineInfo->vTaunt)) ||
+          (pcName = Sounds_GetSoundName2(pstLineInfo->vFlee)) ||
+          (pcName = Sounds_GetSoundName2(pstLineInfo->vInit)) ||
+          (pcName = Sounds_GetSoundName2(pstLineInfo->vWeapon1)) ||
+          (pcName = Sounds_GetSoundName2(pstLineInfo->vWeapon2)) ||
+          (pcName = Sounds_GetSoundName2(pstLineInfo->vSkill1)) ||
+          (pcName = Sounds_GetSoundName2(pstLineInfo->vSkill2)) ||
+          (pcName = Sounds_GetSoundName2(pstLineInfo->vSkill3)) ||
+          (pcName = Sounds_GetSoundName2(pstLineInfo->vSkill4)) ||
+          (pcName = Sounds_GetSoundName2(pstLineInfo->vFootstep)) ||
+          (pcName = Sounds_GetSoundName2(pstLineInfo->vFootstepLayer)) );
 
-        strncpy(m_astMonSounds[m_iMonSoundsCount].vId, acOutput, sizeof(m_astMonSounds[m_iMonSoundsCount].vId));
-        String_Trim(m_astMonSounds[m_iMonSoundsCount].vId);
+        if ( !String_BuildName(FORMAT(monsounds), 0xFFFF, pcTemplate, pcName, pstLineInfo->vId, HAVENAME, acOutput) )
+        {
+            sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vId);
+        }
+
+        strncpy(m_astMonSounds[pstLineInfo->vId].vId, acOutput, sizeof(m_astMonSounds[pstLineInfo->vId].vId));
+        String_Trim(m_astMonSounds[pstLineInfo->vId].vId);
         m_iMonSoundsCount++;
         return 1;
     }
@@ -195,22 +204,7 @@ static int MonSounds_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLine
 {
     if ( !strcmp(acKey, "Id") )
     {
-#ifdef USE_TEMPLATE
-        if ( 0 != pcTemplate[0] )
-        {
-            strcpy(acOutput, pcTemplate);
-        }
-        else if ( 0 < iLineNo )
-        {
-            sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-#else
-        sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
-#endif
+        strncpy(acOutput, m_astMonSounds[iLineNo].vId, sizeof(m_astMonSounds[iLineNo].vId));
 
         return 1;
     }
@@ -560,11 +554,10 @@ static int MonSounds_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplat
     return result;
 }
 
-int process_monsounds(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
-{
-    ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
 
-    ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
+static void MonSounds_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLineInfo)
+{
+    INIT_VALUE_BUFFER;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Attack1, USHORT);    //sounds
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Weapon1, USHORT);    //sounds
@@ -622,10 +615,21 @@ int process_monsounds(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, CvtTgt3, UCHAR);  //monmode
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, CvtSk3, UINT);   //skills
+}
+
+int process_monsounds(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
+{
+    ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
+
+    ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
     switch ( enPhase )
     {
         case EN_MODULE_SELF_DEPEND:
+            MODULE_DEPEND_CALL(sounds, acTemplatePath, acBinPath, acTxtPath);
+
+            MonSounds_InitValueMap(pstValueMap, pstLineInfo);
+
             m_iMonSoundsCount = 0;
 
             m_stCallback.pfnFieldProc = MonSounds_FieldProc_Pre;
@@ -639,7 +643,6 @@ int process_monsounds(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
             break;
 
         case EN_MODULE_OTHER_DEPEND:
-            MODULE_DEPEND_CALL(sounds, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(monmode, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(skills, acTemplatePath, acBinPath, acTxtPath);
             break;
@@ -649,6 +652,8 @@ int process_monsounds(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
             break;
 
         case EN_MODULE_INIT:
+            MonSounds_InitValueMap(pstValueMap, pstLineInfo);
+
             m_stCallback.pfnFieldProc = MonSounds_FieldProc;
             m_stCallback.pfnConvertValue = MonSounds_ConvertValue;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;

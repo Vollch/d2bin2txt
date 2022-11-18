@@ -55,15 +55,11 @@ static char *m_apcInternalProcess[] =
 
 static int Books_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
+    ST_LINE_INFO *pstLineInfo = pvLineInfo;
+
     if ( !strcmp(acKey, "Namco") )
     {
-#ifdef USE_TEMPLATE
-        if ( 0 != pcTemplate[0] )
-        {
-            strcpy(acOutput, pcTemplate);
-        }
-        else
-#endif
+        if ( !String_BuildName(FORMAT(books), pstLineInfo->vName, pcTemplate, Skills_GetSkillName(pstLineInfo->vBookSkill), iLineNo, NULL, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
         }
@@ -72,17 +68,8 @@ static int Books_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, 
     }
     else if ( !strcmp(acKey, "Completed") )
     {
-#ifdef USE_TEMPLATE
-        if ( 0 != pcTemplate[0] )
-        {
-            strcpy(acOutput, pcTemplate);
-        }
-        else
-#endif
-        {
-            acOutput[0] = '1';
-            acOutput[1] = 0;
-        }
+        acOutput[0] = '1';
+        acOutput[1] = 0;
 
         return 1;
     }
@@ -168,6 +155,7 @@ int process_books(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_M
         case EN_MODULE_OTHER_DEPEND:
             MODULE_DEPEND_CALL(string, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(skills, acTemplatePath, acBinPath, acTxtPath);
+            MODULE_DEPEND_CALL(misc, acTemplatePath, acBinPath, acTxtPath);
             break;
 
         case EN_MODULE_RESERVED_1:

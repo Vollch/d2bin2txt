@@ -231,7 +231,7 @@ typedef struct
 
 typedef struct
 {
-    unsigned char vSuperunique[32];
+    unsigned char vSuperunique[64];
 } ST_SUPER_UNIQUES;
 
 static char *m_apcInternalProcess[] =
@@ -245,6 +245,7 @@ static unsigned int m_iSuperUniquesCount = 0;
 static ST_SUPER_UNIQUES *m_astSuperUniques = NULL;
 
 MODULE_SETLINES_FUNC(FILE_PREFIX, m_astSuperUniques, ST_SUPER_UNIQUES);
+HAVENAME_FUNC(m_astSuperUniques, vSuperunique, m_iSuperUniquesCount);
 
 char *SuperUniques_GetItemUniqueCode(unsigned int id)
 {
@@ -256,39 +257,44 @@ char *SuperUniques_GetItemUniqueCode(unsigned int id)
     return NULL;
 }
 
-static int SuperUniques_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
+static int SuperUniques_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
-#ifdef USE_NAME_TOBE_ID
     char *pcResult = NULL;
-#endif
-    int result = 0;
 
-    if ( !strcmp("Superunique", acKey) )
+    if ( !strcmp(acKey, "Superunique") )
     {
-#ifdef USE_TEMPLATE
-        if ( 0 != pcTemplate[0] )
+        if ( !String_BuildName(FORMAT(superuniques), pstLineInfo->vName, pcTemplate, NAME_PREFIX, pstLineInfo->wHcIdx, HAVENAME, acOutput) )
         {
-            strcpy(acOutput, pcTemplate);
-        }
-        else
-#endif
-        {
-#ifdef USE_NAME_TOBE_ID
             pcResult = String_FindString(pstLineInfo->vName, "dummy");
-
             if ( pcResult )
             {
                 strcpy(acOutput, pcResult);
             }
             else
-#endif
             {
-                sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
+                sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->wHcIdx);
             }
         }
 
-        result = 1;
+        strncpy(m_astSuperUniques[pstLineInfo->wHcIdx].vSuperunique, acOutput, sizeof(m_astSuperUniques[pstLineInfo->wHcIdx].vSuperunique));
+        String_Trim(m_astSuperUniques[pstLineInfo->wHcIdx].vSuperunique);
+        m_iSuperUniquesCount++;
+        return 1;
+    }
+
+    return 0;
+}
+
+static int SuperUniques_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
+{
+    ST_LINE_INFO *pstLineInfo = pvLineInfo;
+
+    if ( !strcmp("Superunique", acKey) )
+    {
+        strncpy(acOutput, m_astSuperUniques[pstLineInfo->wHcIdx].vSuperunique, sizeof(m_astSuperUniques[pstLineInfo->wHcIdx].vSuperunique));
+
+        return 1;
     }
     else if ( !strcmp(acKey, "*eol") )
     {
@@ -298,40 +304,7 @@ static int SuperUniques_FieldProc(void *pvLineInfo, char *acKey, unsigned int iL
         return 1;
     }
 
-    return result;
-}
-
-static int SuperUniques_ConvertValue_Pre(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
-{
-    ST_LINE_INFO *pstLineInfo = pvLineInfo;
-#ifdef USE_NAME_TOBE_ID
-    char *pcResult = NULL;
-#endif
-    int result = 0;
-
-    if ( !strcmp(acKey, "Name") )
-    {
-#ifdef USE_NAME_TOBE_ID
-        pcResult = String_FindString(pstLineInfo->vName, "dummy");
-
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-#endif
-        {
-            sprintf(acOutput, "%s%u", NAME_PREFIX, m_iSuperUniquesCount);
-        }
-
-        strncpy(m_astSuperUniques[m_iSuperUniquesCount].vSuperunique, acOutput, sizeof(m_astSuperUniques[m_iSuperUniquesCount].vSuperunique));
-        String_Trim(m_astSuperUniques[m_iSuperUniquesCount].vSuperunique);
-        m_iSuperUniquesCount++;
-
-        result = 1;
-    }
-
-    return result;
+    return 0;
 }
 
 static int SuperUniques_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
@@ -478,12 +451,12 @@ int process_superuniques(char *acTemplatePath, char *acBinPath, char *acTxtPath,
 
             m_iSuperUniquesCount = 0;
 
-            m_stCallback.pfnConvertValue = SuperUniques_ConvertValue_Pre;
+            m_stCallback.pfnFieldProc = SuperUniques_FieldProc_Pre;
             m_stCallback.pfnSetLines = SETLINES_FUNC_NAME(FILE_PREFIX);
             m_stCallback.pfnFinished = FINISHED_FUNC_NAME(FILE_PREFIX);
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
-            return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
+            return process_file(acTemplatePath, acBinPath, NULL, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);
             break;
 

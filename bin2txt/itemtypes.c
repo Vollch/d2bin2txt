@@ -300,16 +300,7 @@ static int ItemTypes_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int i
 
     if ( !strcmp(acKey, "ItemType") )
     {
-#ifdef USE_TEMPLATE
-        if ( 0 != pcTemplate[0] )
-        {
-            strcpy(acOutput, pcTemplate);
-        }
-        else
-#endif
-        {
-            strncpy(acOutput, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
-        }
+        strncpy(acOutput, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
 
         strncpy(m_astItemTypes[m_iItemTypesCount].vCode, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
         String_Trim(m_astItemTypes[m_iItemTypesCount].vCode);
@@ -333,16 +324,14 @@ static int ItemTypes_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLine
 
     if ( !strcmp(acKey, "ItemType") )
     {
-#ifdef USE_TEMPLATE
-        if ( 0 != pcTemplate[0] )
-        {
-            strcpy(acOutput, pcTemplate);
-        }
-        else
-#endif
+        char acName[5];
+        strncpy(acName, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
+
+        if ( !String_BuildName(FORMAT(itemtypes), 0xFFFF, pcTemplate, acName, iLineNo, NULL, acOutput) )
         {
             strncpy(acOutput, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
         }
+
         return 1;
     }
     else if ( !strcmp(acKey, "*eol") )
@@ -446,7 +435,7 @@ int process_itemtypes(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
 
             m_uiTcOffset = 0;
 
-            result = process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo),
+            result = process_file(acTemplatePath, acBinPath, NULL, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo),
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);
 
             m_uiTcOffset++;

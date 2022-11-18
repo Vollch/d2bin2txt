@@ -1,8 +1,10 @@
 #include "global.h"
+#include "ctype.h"
 
 typedef struct
 {
-    char vString[64];
+    char *vString;
+    char *vText;
 } ST_STRING;
 
 static unsigned int m_iStringCount;
@@ -10,20 +12,26 @@ static ST_STRING m_astString[10000];
 static unsigned int m_iPatchStringCount;
 static ST_STRING m_astPatchString[10000];
 static unsigned int m_iExpansionsStringCount;
-static ST_STRING m_astExpansionsString[20000];
+static ST_STRING m_astExpansionsString[30000];
 
-static int process_string_x(char *acTemplatePath, char *acBinPath, char *acTxtPath)
+static unsigned int m_iCustom1Count;
+static ST_STRING m_astCustom1[10000];
+static unsigned int m_iCustom2Count;
+static ST_STRING m_astCustom2[10000];
+static unsigned int m_iCustom3Count;
+static ST_STRING m_astCustom3[10000];
+
+static int load_strings(char *acTemplatePath, char *acTxtPath, char *pcTxtFile, ST_STRING *aStringList, int iListSize)
 {
     char acTxtFile[256] = {0};
     FILE *pfTxtHandle = NULL;
-    char *pcStart;
-    char *pcSkill;
     char *pcAnchor;
+    int iStringCount = 0;
+    size_t iCurBufLength = 0;
 
-    m_iStringCount = 0;
-    memset(m_astString, 0, sizeof(m_astString));
+    memset(aStringList, 0, iListSize * sizeof(aStringList[0]));
 
-    sprintf(acTxtFile, "%s\\%s.txt", acTemplatePath, "string");
+    sprintf(acTxtFile, "%s\\%s.txt", acTemplatePath, pcTxtFile);
     pfTxtHandle = fopen(acTxtFile, "rb");
     if ( pfTxtHandle )
     {
@@ -31,104 +39,53 @@ static int process_string_x(char *acTemplatePath, char *acBinPath, char *acTxtPa
 
         while ( fgets(m_acGlobalBuffer, m_iGlobaBufLength, pfTxtHandle) )
         {
-            pcStart = m_acGlobalBuffer;
-
-            pcSkill = pcStart;
-            pcAnchor = strchr(pcStart, '\t');
+            iCurBufLength = strlen(m_acGlobalBuffer);
+            pcAnchor = strchr(m_acGlobalBuffer, '\t');
             *pcAnchor = 0;
             pcAnchor++;
 
-            strcpy(m_astString[m_iStringCount].vString, pcSkill);
-            m_iStringCount++;
+            aStringList[iStringCount].vString = strdup(m_acGlobalBuffer);
+            aStringList[iStringCount].vText = strdup(pcAnchor);
+            iStringCount++;
 
-            memset(m_acGlobalBuffer, 0, m_iGlobaBufLength);
+            memset(m_acGlobalBuffer, 0, iCurBufLength);
         }
 
         fclose(pfTxtHandle);
 
-        my_printf("%d string\r\n", m_iStringCount);
+        my_printf("%d %s\r\n", iStringCount, pcTxtFile);
 
-        File_CopyFile(acTemplatePath, acTxtPath, "string", ".txt");
+        File_CopyFile(acTemplatePath, acTxtPath, pcTxtFile, ".txt");
     }
     else
     {
         my_printf("fail to open %s\r\n", acTxtFile);
-        return 0;
     }
 
-    m_iPatchStringCount = 0;
-    memset(m_astPatchString, 0, sizeof(m_astPatchString));
+    return iStringCount;
+}
 
-    sprintf(acTxtFile, "%s\\%s.txt", acTemplatePath, "patchstring");
-    pfTxtHandle = fopen(acTxtFile, "rb");
-    if ( pfTxtHandle )
+static int process_string_x(char *acTemplatePath, char *acBinPath, char *acTxtPath)
+{
+    m_iStringCount = load_strings(acTemplatePath, acTxtPath, "string", m_astString, 10000);
+    m_iPatchStringCount = load_strings(acTemplatePath, acTxtPath, "patchstring", m_astPatchString, 10000);
+    m_iExpansionsStringCount = load_strings(acTemplatePath, acTxtPath, "expansionstring", m_astExpansionsString, 30000);
+
+    if ( g_pcCustomTable1 )
     {
-        memset(m_acGlobalBuffer, 0, m_iGlobaBufLength);
-
-        while ( fgets(m_acGlobalBuffer, m_iGlobaBufLength, pfTxtHandle) )
-        {
-            pcStart = m_acGlobalBuffer;
-
-            pcSkill = pcStart;
-            pcAnchor = strchr(pcStart, '\t');
-            *pcAnchor = 0;
-            pcAnchor++;
-
-            strcpy(m_astPatchString[m_iPatchStringCount].vString, pcSkill);
-            m_iPatchStringCount++;
-
-            memset(m_acGlobalBuffer, 0, m_iGlobaBufLength);
-        }
-
-        fclose(pfTxtHandle);
-
-        my_printf("%d patchstring\r\n", m_iPatchStringCount);
-
-        File_CopyFile(acTemplatePath, acTxtPath, "patchstring", ".txt");
+        m_iCustom1Count = load_strings(acTemplatePath, acTxtPath, g_pcCustomTable1, m_astCustom1, 10000);
     }
-    else
+    if ( g_pcCustomTable2 )
     {
-        my_printf("fail to open %s\r\n", acTxtFile);
-        return 0;
+        m_iCustom2Count = load_strings(acTemplatePath, acTxtPath, g_pcCustomTable2, m_astCustom2, 10000);
     }
-
-    m_iExpansionsStringCount = 0;
-    memset(m_astExpansionsString, 0, sizeof(m_astExpansionsString));
-
-    sprintf(acTxtFile, "%s\\%s.txt", acTemplatePath, "expansionstring");
-    pfTxtHandle = fopen(acTxtFile, "rb");
-    if ( pfTxtHandle )
+    if ( g_pcCustomTable3 )
     {
-        memset(m_acGlobalBuffer, 0, m_iGlobaBufLength);
-
-        while ( fgets(m_acGlobalBuffer, m_iGlobaBufLength, pfTxtHandle) )
-        {
-            pcStart = m_acGlobalBuffer;
-
-            pcSkill = pcStart;
-            pcAnchor = strchr(pcStart, '\t');
-            *pcAnchor = 0;
-            pcAnchor++;
-
-            strcpy(m_astExpansionsString[m_iExpansionsStringCount].vString, pcSkill);
-            m_iExpansionsStringCount++;
-
-            memset(m_acGlobalBuffer, 0, m_iGlobaBufLength);
-        }
-
-        fclose(pfTxtHandle);
-
-        my_printf("%d expansionstring\r\n", m_iExpansionsStringCount);
-
-        File_CopyFile(acTemplatePath, acTxtPath, "expansionstring", ".txt");
-    }
-    else
-    {
-        my_printf("fail to open %s\r\n", acTxtFile);
-        return 0;
+        m_iCustom3Count = load_strings(acTemplatePath, acTxtPath, g_pcCustomTable3, m_astCustom3, 10000);
     }
 
-    return 1;
+    return (m_iStringCount && m_iPatchStringCount && m_iExpansionsStringCount &&
+        (!g_pcCustomTable1 || m_iCustom1Count) && (!g_pcCustomTable2 || m_iCustom2Count) && (!g_pcCustomTable3 || m_iCustom3Count));
 }
 
 int process_string(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
@@ -150,77 +107,277 @@ int process_string(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_
     return 1;
 }
 
-char *String_FindString(unsigned int id, char* pcFilter)
+ST_STRING *String_ResolveID(unsigned int id)
 {
-    char *pcResult = NULL;
+    ST_STRING *pcResult = NULL;
 
-    if ( 0xFFFF <= id  )
+    if ( 0xFFFF <= id )
     {
         return NULL;
     }
 
     if ( id < m_iStringCount )
     {
-        pcResult = m_astString[id].vString;
+        pcResult = &m_astString[id];
     }
-
-    if ( 10000 <= id && (id - 10000) < m_iPatchStringCount )
+    else if ( 10000 <= id && (id - 10000) < m_iPatchStringCount )
     {
-        pcResult = m_astPatchString[id - 10000].vString;
+        pcResult = &m_astPatchString[id - 10000];
     }
-
-    if ( 20000 <= id && (id - 20000) < m_iExpansionsStringCount )
+    else if ( 20000 <= id && (id - 20000) < m_iExpansionsStringCount )
     {
-        pcResult = m_astExpansionsString[id - 20000].vString;
+        pcResult = &m_astExpansionsString[id - 20000];
     }
-
-    if ( pcResult && !strcmp("DescBlank", pcResult) )
+    else if ( g_pcCustomTable1 && (30000 <= id && (id - 30000) < m_iCustom1Count) )
     {
-        printf("\r\n======%d======\r\n", id);
+        pcResult = &m_astCustom1[id - 30000];
     }
-
-    if ( NULL != pcResult && NULL != pcFilter && !strcmp(pcResult, pcFilter) )
+    else if ( g_pcCustomTable2 && (40000 <= id && (id - 40000) < m_iCustom2Count) )
     {
-        return NULL;
+        pcResult = &m_astCustom2[id - 40000];
+    }
+    else if ( g_pcCustomTable3 && (50000 <= id && (id - 50000) < m_iCustom3Count) )
+    {
+        pcResult = &m_astCustom3[id - 50000];
     }
 
     return pcResult;
 }
 
+char *String_GetString(unsigned int id, char* pcFilter, char* pcFilter2)
+{
+    ST_STRING *pcResult = String_ResolveID(id);
+
+    if ( !pcResult )
+    {
+        return NULL;
+    }
+
+    if ( NULL != pcFilter && !strcmp(pcResult->vString, pcFilter) )
+    {
+        return NULL;
+    }
+
+    if ( NULL != pcFilter2 && !strcmp(pcResult->vString, pcFilter2) )
+    {
+        return NULL;
+    }
+
+    return pcResult->vText;
+}
+
+int String_StripFileName(char *pcInput, char *acOutput, unsigned int iSize)
+{
+    char *pcFrom, *pcTo, *pcAnchor;
+
+    if ( !pcInput || !iSize || !strcmp(pcInput, "0") || !stricmp(pcInput, "null") )
+    {
+        return 0;
+    }
+
+    pcFrom = pcInput;
+    while ( (pcTo = strchr(pcFrom, '/')) || (pcTo = strchr(pcFrom, '\\')) )
+    {
+        pcFrom = pcTo + 1;
+    }
+    pcTo = strchr(pcFrom, '.');
+
+    pcAnchor = acOutput;
+    iSize--;
+    while ( iSize && *pcFrom && (!pcTo || pcFrom < pcTo)  )
+    {
+        if ( isalpha(*pcFrom) || isdigit(*pcFrom) )
+        {
+            *pcAnchor = *pcFrom;
+            pcAnchor++;
+            iSize--;
+        }
+        pcFrom++;
+    }
+    *pcAnchor = 0;
+
+    return pcAnchor - acOutput;
+}
+
+int String_BuildName(char *pcNameFormat, int iNameSize, unsigned int iStingId, char *pcTemplate, char *pcName, unsigned int iLine, fnHaveName pfnHaveName, char* acOutput)
+{
+    char *pcOutPos = acOutput;
+    char *pcFormatPos = pcNameFormat;
+    char *pcTemp;
+    int iTemplateFlag = 1;
+    int iStringFlag = 0;
+    unsigned int iMaxLength = iNameSize;
+    unsigned int iCutOff = 0;
+
+    if ( !pcNameFormat )
+    {
+        return 0;
+    }
+
+    while ( *pcFormatPos )
+    {
+        pcTemp = NULL;
+        iStringFlag = 0;
+        if ( !strncmp(pcFormatPos, "%S", 2) )
+        {
+            pcTemp = String_FindString_2(iStingId, "dummy", "Dummy");
+            iStringFlag = 1;
+        }
+        else if ( !strncmp(pcFormatPos, "%s", 2) )
+        {
+            pcTemp = String_GetString(iStingId, "dummy", "Dummy");
+            iStringFlag = 1;
+        }
+        else if ( !strncmp(pcFormatPos, "%n", 2) )
+        {
+            pcTemp = pcName;
+            iStringFlag = 1;
+        }
+
+        if ( iStringFlag == 1 )
+        {
+            if ( pcTemp && *pcTemp )
+            {
+                while ( *pcTemp )
+                {
+                    if ( *pcTemp == (char)0xC3 ) { // Strip colors
+                        pcTemp += 4;
+                        continue;
+                    }
+                    if ( isalpha(*pcTemp) || isdigit(*pcTemp) )
+                    {
+                        *pcOutPos = *pcTemp;
+                        pcOutPos++;
+                        if ( (pcOutPos - acOutput) >= 32 )
+                            break;
+                    }
+                    pcTemp++;
+                }
+                pcOutPos += strlen(pcOutPos);
+                pcFormatPos += 2;
+                iTemplateFlag = 0;
+            }
+            else
+            {
+                memset(acOutput, 0, strlen(acOutput));
+                if ( !(pcTemp = strchr(pcFormatPos, '|')) )
+                    return 0;
+                pcFormatPos = pcTemp + 1;
+                pcOutPos = acOutput;
+                iTemplateFlag = 1;
+            }
+        }
+        else
+        {
+            if ( !strncmp(pcFormatPos, "%t", 2) )
+            {
+                if ( *pcTemplate )
+                {
+                    strcpy(pcOutPos, pcTemplate);
+                    pcOutPos += strlen(pcOutPos);
+                    pcFormatPos += 2;
+                }
+                else
+                {
+                    memset(acOutput, 0, strlen(acOutput));
+                    if ( !(pcTemp = strchr(pcFormatPos, '|')) )
+                        return 0;
+                    pcFormatPos = pcTemp + 1;
+                    pcOutPos = acOutput;
+                }
+            }
+            else if ( !strncmp(pcFormatPos, "%l", 2) )
+            {
+                sprintf(pcOutPos, "%u", iLine);
+                pcOutPos += strlen(pcOutPos);
+                pcFormatPos += 2;
+                iTemplateFlag = 0;
+            }
+            else if ( *pcFormatPos == '|')
+            {
+                break;
+            }
+            else
+            {
+                *pcOutPos = *pcFormatPos;
+                pcOutPos++;
+                pcFormatPos++;
+                iTemplateFlag = 0;
+            }
+        }
+    }
+
+    do
+    {
+        if ( !strlen(acOutput) )
+        {
+            return 0;
+        }
+
+        if ( pfnHaveName )
+        {
+            int iNameSuffux = 0;
+            while ( pfnHaveName(acOutput) )
+            {
+                sprintf(pcOutPos, "%i", iNameSuffux++);
+            }
+        }
+
+        if ( !iTemplateFlag && (strlen(acOutput) > (iMaxLength + iCutOff)) )
+        {
+            memset(acOutput+iMaxLength, 0, (strlen(acOutput)-iMaxLength));
+            pcOutPos = acOutput+iMaxLength;
+            iMaxLength--;
+            iCutOff++;
+            continue;
+        }
+        break;
+    } while(1);
+
+    return 1;
+}
+
+char *String_FindString(unsigned int id, char* pcFilter)
+{
+    ST_STRING *pcResult = String_ResolveID(id);
+
+    if ( !pcResult )
+    {
+        return NULL;
+    }
+
+    if ( !strcmp("DescBlank", pcResult->vString) )
+    {
+        printf("\r\n======%d======\r\n", id);
+    }
+
+    if ( NULL != pcFilter && !strcmp(pcResult->vString, pcFilter) )
+    {
+        return NULL;
+    }
+
+    return pcResult->vString;
+}
+
 char *String_FindString_2(unsigned int id, char* pcFilter, char* pcFilter2)
 {
-    char *pcResult = NULL;
+    ST_STRING *pcResult = String_ResolveID(id);
 
-    if ( 0xFFFF <= id  )
+    if ( !pcResult )
     {
         return NULL;
     }
 
-    if ( id < m_iStringCount )
-    {
-        pcResult = m_astString[id].vString;
-    }
-
-    if ( 10000 <= id && (id - 10000) < m_iPatchStringCount )
-    {
-        pcResult = m_astPatchString[id - 10000].vString;
-    }
-
-    if ( 20000 <= id && (id - 20000) < m_iExpansionsStringCount )
-    {
-        pcResult = m_astExpansionsString[id - 20000].vString;
-    }
-
-    if ( NULL != pcResult && NULL != pcFilter && !strcmp(pcResult, pcFilter) )
+    if ( NULL != pcFilter && !strcmp(pcResult->vString, pcFilter) )
     {
         return NULL;
     }
 
-    if ( NULL != pcResult && NULL != pcFilter2 && !strcmp(pcResult, pcFilter2) )
+    if ( NULL != pcFilter2 && !strcmp(pcResult->vString, pcFilter2) )
     {
         return NULL;
     }
 
-    return pcResult;
+    return pcResult->vString;
 }
 

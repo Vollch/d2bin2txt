@@ -1147,7 +1147,9 @@ typedef struct
 
 typedef struct
 {
-    unsigned char vId[32];
+    unsigned char vId[64];
+    unsigned short vMonProp;
+    unsigned short vNameStr;
 } ST_MONSTAT;
 
 static char *m_apcInternalProcess[] = 
@@ -1161,6 +1163,7 @@ static unsigned int m_iMonStatsCount = 0;
 static ST_MONSTAT *m_astMonStats = NULL;
 
 MODULE_SETLINES_FUNC(FILE_PREFIX, m_astMonStats, ST_MONSTAT);
+HAVENAME_FUNC(m_astMonStats, vId, m_iMonStatsCount);
 
 static int MonStats_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
@@ -1168,17 +1171,15 @@ static int MonStats_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iL
 
     if ( !strcmp(acKey, "Id") )
     {
-#ifdef USE_TEMPLATE
-        if ( 0 != pcTemplate[0] )
+        char acName[5];
+        strncpy(acName, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
+        if ( !String_BuildName(FORMAT(monstats), pstLineInfo->vNameStr, pcTemplate, acName, pstLineInfo->vhcIdx, HAVENAME, acOutput) )
         {
-            strcpy(acOutput, pcTemplate);
-        }
-        else
-#endif
-        {
-            sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
+            sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vhcIdx);
         }
 
+        m_astMonStats[pstLineInfo->vhcIdx].vNameStr = pstLineInfo->vNameStr;
+        m_astMonStats[pstLineInfo->vhcIdx].vMonProp = pstLineInfo->vMonProp;
         strncpy(m_astMonStats[pstLineInfo->vhcIdx].vId, acOutput, sizeof(m_astMonStats[pstLineInfo->vhcIdx].vId));
         String_Trim(m_astMonStats[pstLineInfo->vhcIdx].vId);
         m_iMonStatsCount++;
@@ -1197,18 +1198,11 @@ static int MonStats_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iL
 
 static int MonStats_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
+    ST_LINE_INFO *pstLineInfo = pvLineInfo;
+
     if ( !strcmp(acKey, "Id") )
     {
-#ifdef USE_TEMPLATE
-        if ( 0 != pcTemplate[0] )
-        {
-            strcpy(acOutput, pcTemplate);
-        }
-        else
-#endif
-        {
-            sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
-        }
+        strncpy(acOutput, m_astMonStats[pstLineInfo->vhcIdx].vId, sizeof(m_astMonStats[pstLineInfo->vhcIdx].vId));
 
         return 1;
     }
@@ -1231,6 +1225,20 @@ char *MonStats_GetStatsName(unsigned int id)
     }
 
     return m_astMonStats[id].vId;
+}
+
+unsigned int MonStats_GetPropString(unsigned int id)
+{
+    unsigned int i;
+    for ( i = 0; i < m_iMonStatsCount; i++ )
+    {
+        if ( m_astMonStats[i].vMonProp == id )
+        {
+            return m_astMonStats[i].vNameStr;
+        }
+    }
+
+    return 0xFFFF;
 }
 
 static int MonStats_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
@@ -2063,11 +2071,9 @@ static int MonStats_BitProc(void *pvLineInfo, char *acKey, char *acOutput)
     return result;
 }
 
-int process_monstats(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
+static void MonStats_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLineInfo)
 {
-    ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
-
-    ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
+    INIT_VALUE_BUFFER;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, hcIdx, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, BaseId, USHORT); //monstats
@@ -2439,10 +2445,21 @@ int process_monstats(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SplGetModeChart, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SplEndGeneric, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SplClientEnd, UCHAR);
+}
+
+int process_monstats(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
+{
+    ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
+
+    ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
     switch ( enPhase )
     {
         case EN_MODULE_SELF_DEPEND:
+            MODULE_DEPEND_CALL(string, acTemplatePath, acBinPath, acTxtPath);
+
+            MonStats_InitValueMap(pstValueMap, pstLineInfo);
+
             m_stCallback.pfnFieldProc = MonStats_FieldProc_Pre;
             m_stCallback.pfnSetLines = SETLINES_FUNC_NAME(FILE_PREFIX);
             m_stCallback.pfnFinished = FINISHED_FUNC_NAME(FILE_PREFIX);
@@ -2450,14 +2467,13 @@ int process_monstats(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
 
             m_iMonStatsCount = 0;
 
-            return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo),
+            return process_file(acTemplatePath, acBinPath, NULL, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo),
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);
             break;
 
         case EN_MODULE_OTHER_DEPEND:
             MODULE_DEPEND_CALL(monstats, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(monstats2, acTemplatePath, acBinPath, acTxtPath);
-            MODULE_DEPEND_CALL(string, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(monsounds, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(monprop, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(montype, acTemplatePath, acBinPath, acTxtPath);
@@ -2475,6 +2491,8 @@ int process_monstats(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
             break;
 
         case EN_MODULE_INIT:
+            MonStats_InitValueMap(pstValueMap, pstLineInfo);
+
             m_stCallback.pfnFieldProc = MonStats_FieldProc;
             m_stCallback.pfnConvertValue = MonStats_ConvertValue;
             m_stCallback.pfnBitProc = MonStats_BitProc;

@@ -74,16 +74,13 @@ static int Experience_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLin
 {
     if ( !strcmp(acKey, "Level") )
     {
-#ifdef USE_TEMPLATE
-        if ( 0 != pcTemplate[0] )
-        {
-            strcpy(acOutput, pcTemplate);
-        }
-        else
-#endif
+        char acName[16] = {0};
+        sprintf(acName, "%d", iLineNo - 1);
+        if ( !String_BuildName(FORMAT(experience), 0xFFFF, pcTemplate, ( iLineNo > 0 ? acName : "MaxLvl" ), iLineNo, NULL, acOutput) )
         {
             sprintf(acOutput, "%u", iLineNo - 1);
         }
+
         return 1;
     }
 

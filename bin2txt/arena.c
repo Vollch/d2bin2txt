@@ -24,14 +24,11 @@ static int Arena_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, 
 {
     if ( !strcmp(acKey, "Arena") )
     {
-        if ( 0 != pcTemplate[0] )
-        {
-            strcpy(acOutput, pcTemplate);
-        }
-        else
+        if ( !String_BuildName(FORMAT(arena), 0xFFFF, pcTemplate, NAME_PREFIX, iLineNo, NULL, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
         }
+
         return 1;
     }
 

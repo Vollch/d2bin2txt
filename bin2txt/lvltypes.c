@@ -59,37 +59,29 @@ static unsigned int m_iLvlTypesCount = 0;
 
 static int LvlTypes_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
-    int result = 0;
+    ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
     if ( !strcmp(acKey, "Name") )
     {
-#ifdef USE_TEMPLATE
-        if ( 0 != pcTemplate[0] )
-        {
-            strcpy(acOutput, pcTemplate);
-        }
-        else
-#endif
+        char acName[33] = {0};
+        String_StripFileName(pstLineInfo->vFilemysp1, acName, 32);
+        if ( !String_BuildName(FORMAT(lvltypes), 0xFFFF, pcTemplate, acName, iLineNo, NULL, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
         }
 
-        result = 1;
+        return 1;
     }
     else if ( !strcmp("Id", acKey) )
     {
-#ifdef USE_TEMPLATE
-        if ( 0 == pcTemplate[0] )
-#endif
-        {
-            sprintf(acOutput, "%d", m_iLvlTypesCount);
-            result = 1;
-        }
+        sprintf(acOutput, "%d", m_iLvlTypesCount);
 
         m_iLvlTypesCount++;
+
+        return 1;
     }
 
-    return result;
+    return 0;
 }
 
 int process_lvltypes(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)

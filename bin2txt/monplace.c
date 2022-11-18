@@ -10,7 +10,7 @@ typedef struct
 
 typedef struct
 {
-    char vcode[32];
+    char vcode[64];
 } ST_MON_PLACE;
 
 static char *m_apcInternalProcess[] =
@@ -23,6 +23,7 @@ static unsigned int m_iMonPlaceCount = 0;
 static ST_MON_PLACE *m_astMonPlace = NULL;
 
 MODULE_SETLINES_FUNC(FILE_PREFIX, m_astMonPlace, ST_MON_PLACE);
+HAVENAME_FUNC(m_astMonPlace, vcode, m_iMonPlaceCount);
 
 static int MonPlace_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
@@ -30,13 +31,7 @@ static int MonPlace_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineN
 
     if ( !strcmp(acKey, "code") )
     {
-#ifdef USE_TEMPLATE
-        if ( 0 != pcTemplate[0] )
-        {
-            strcpy(acOutput, pcTemplate);
-        }
-        else
-#endif
+        if ( !String_BuildName(FORMAT(monplace), 0xFFFF, pcTemplate, NAME_PREFIX, pstLineInfo->vId, HAVENAME, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vId);
         }

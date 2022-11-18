@@ -41,7 +41,7 @@ int File_GetFileSize(char *pcFileName)
 int File_CopyFile(char *pcFromPath, char *pcToPath, char *pcFileName, char *pcSuffix)
 {
     memset(m_acTempBuffer, 0, sizeof(m_acTempBuffer));
-    sprintf(m_acTempBuffer, "copy /y %s\\%s%s %s\\%s%s", pcFromPath, pcFileName, pcSuffix, pcToPath, pcFileName, pcSuffix);
+    sprintf(m_acTempBuffer, "copy /y %s\\%s%s %s\\%s%s >NUL", pcFromPath, pcFileName, pcSuffix, pcToPath, pcFileName, pcSuffix);
     system(m_acTempBuffer);
 
     return 1;
@@ -50,6 +50,26 @@ int File_CopyFile(char *pcFromPath, char *pcToPath, char *pcFileName, char *pcSu
 unsigned char *String_Trim(unsigned char *pcValue)
 {
     int j;
+
+    if ( g_iTrimSpace == 0)
+    {
+        return pcValue;
+    }
+    else if ( g_iTrimSpace == 1 )
+    {
+        for ( j = (int)strlen(pcValue) - 1; j >= 0; j-- )
+        {
+            if ( ' ' != pcValue[j] )
+            {
+                break;
+            }
+        }
+        if ( j < 0 )
+        {
+            return pcValue;
+        }
+    }
+
 
     for ( j = (int)strlen(pcValue) - 1; j >= 0; j-- )
     {
@@ -64,7 +84,60 @@ unsigned char *String_Trim(unsigned char *pcValue)
     return pcValue;
 }
 
-static int TXTBUF_ReplaceSpecialChar(char *key, char *acTempKey)
+void String_RestoreSpecialChar( char *key, char *acOutput )
+{
+    while ( *key )
+    {
+        if ( !strncmp(key, "mysp", strlen("mysp")) )
+        {
+            key += strlen("mysp");
+            *acOutput = ' ';
+            acOutput++;
+
+        }
+        else if ( !strncmp(key, "mypoint", strlen("mypoint")) )
+        {
+            key += strlen("mypoint");
+            *acOutput = '.';
+            acOutput++;
+        }
+        else if ( !strncmp(key, "mysub", strlen("mysub")) )
+        {
+            key += strlen("mysub");
+            *acOutput = '-';
+            acOutput++;
+        }
+        else if ( !strncmp(key, "myslash", strlen("myslash")) )
+        {
+            key += strlen("myslash");
+            *acOutput = '/';
+            acOutput++;
+        }
+        else if ( !strncmp(key, "mybr1", strlen("mybr1")) )
+        {
+            key += strlen("mybr1");
+            *acOutput = '(';
+            acOutput++;
+
+        }
+        else if ( !strncmp(key, "mybr2", strlen("mybr2")) )
+        {
+            key += strlen("mybr2");
+            *acOutput = ')';
+            acOutput++;
+
+        }
+        else
+        {
+            *acOutput = *key;
+            key++;
+            acOutput++;
+        }
+    }
+    *acOutput = 0;
+}
+
+static int String_ReplaceSpecialChar(char *key, char *acTempKey)
 {
     int i, j;
 
@@ -126,7 +199,7 @@ static char * TXTBUF_FILL(char *key, ST_VALUE_MAP *map, int count, char *start, 
     static char acTempValue[1024] = {0};
 
     //1、对表头的字段名进行转换，关联到结构体的字段名，空格符在字段变量名中用mysp替代
-    TXTBUF_ReplaceSpecialChar(key, acTempKey);
+    String_ReplaceSpecialChar(key, acTempKey);
 
     for ( i = 0; i < count; i++ )
     {
@@ -390,7 +463,7 @@ static int check_missing(char *pcHeader, char *pcLineEnd, ST_VALUE_MAP *astValue
         *pcAnchor = 0;
 
         //检查字段是否存在
-        TXTBUF_ReplaceSpecialChar(pcHeader, acTempKey);
+        String_ReplaceSpecialChar(pcHeader, acTempKey);
         for ( i = 0; i < iCount; i++ )
         {
             if ( !strcmp(acTempKey, astValueMap[i].acKeyName) )
@@ -473,7 +546,6 @@ static int process_line_withkey(char *acTplBuf, char *acTxtBuf, void *pvLineInfo
         int i = 0;
 
         //如果没有该key，则说明是bin文件比模板文件多出来的内容，构造一行空模板行便于后续处理
-        memset(m_acTempBuffer, 0, sizeof(m_acTempBuffer));
         pcLineStart = pcHeader;
 
         while ( pcLineStart != pcLineEnd )
@@ -547,7 +619,6 @@ loop:
         int j = 0;
 
         //如果没有下一行了，则说明是bin文件比模板文件多出来的内容，构造一行空模板行便于后续处理
-        memset(m_acTempBuffer, 0, sizeof(m_acTempBuffer));
         pcLineStart = pcHeader;
 
         while ( pcLineStart != pcLineEnd )
@@ -560,9 +631,9 @@ loop:
 
             pcLineStart++;
         }
-        m_acTempBuffer[j] = '\r';
-        j++;
-        m_acTempBuffer[j] = '\n';
+        m_acTempBuffer[j++] = '\r';
+        m_acTempBuffer[j++] = '\n';
+        m_acTempBuffer[j] = 0;
         pcLineStart = m_acTempBuffer;
     }
     else
@@ -609,7 +680,9 @@ static int process_file_x(char *acTemplatePath, char *acBinPath, char *acTxtPath
     memset(acTplBuf, 0, sizeof(acTplBuf));
     memset(acTxtBuf, 0, sizeof(acTxtBuf));
     memset(m_acGlobalBuffer, 0, sizeof(m_acGlobalBuffer));
+    memset(m_acTempBuffer, 0, sizeof(m_acTempBuffer));
 
+    sprintf(acTxtFile, "%s\\%s.txt", acTxtPath, pcFilename);
     sprintf(acTemplateFile, "%s\\%s.txt", acTemplatePath, pcFilename);
     if ( pcBinSplitter )
     {
@@ -619,34 +692,89 @@ static int process_file_x(char *acTemplatePath, char *acBinPath, char *acTxtPath
     {
         sprintf(acBinFile, "%s%s.bin", acBinPath, pcFilename);
     }
-    sprintf(acTxtFile, "%s\\%s.txt", acTxtPath, pcFilename);
-
-    pfTplHandle = fopen(acTemplateFile, "rb");
-    if ( NULL == pfTplHandle )
-    {
-        my_error("open template file fail\r\n");
-        goto error;
-    }
 
     pfBinHandle = fopen(acBinFile, "rb");
     if ( NULL == pfBinHandle )
     {
-        my_error("open bin file fail\r\n");
+        if ( pstCallback->iOptional )
+        {
+            my_printf("%s bin not found, module will be skipped\r\n", pcFilename);
+            goto out;
+        }
+        my_error("open %s bin file fail\r\n", pcFilename);
         goto error;
     }
 
-    pfTxtHandle = fopen(acTxtFile, "wb");
-    if ( NULL == pfTxtHandle )
+    pfTplHandle = fopen(acTemplateFile, "rb");
+    if ( NULL == pfTplHandle )
     {
-        my_error("create txt file fail\r\n");
-        goto error;
+        char *pcEol = NULL;
+        char *pcColumn = acTplBuf;
+
+        my_printf("%s template found, auto generated will be used\r\n", pcFilename);
+
+        if ( pstCallback->ppcKeyInternalProcess )
+        {
+            i = 0;
+            while ( pstCallback->ppcKeyInternalProcess[i] != NULL )
+            {
+                if ( !stricmp(pstCallback->ppcKeyInternalProcess[i], "eol") ||
+                     !stricmp(pstCallback->ppcKeyInternalProcess[i], "*eol"))
+                {
+                    pcEol = pstCallback->ppcKeyInternalProcess[i];
+                }
+                else
+                {
+                    String_RestoreSpecialChar(pstCallback->ppcKeyInternalProcess[i], m_acTempBuffer);
+                    pcColumn += sprintf(pcColumn, "%s\t", m_acTempBuffer);
+                }
+                i++;
+            }
+        }
+
+        for ( i = 0; i < (unsigned int)iValueCount; i++ )
+        {
+            String_RestoreSpecialChar(pstValueMap[i].acKeyName, m_acTempBuffer);
+            pcColumn += sprintf(pcColumn, "%s\t", m_acTempBuffer);
+        }
+
+        if ( pcEol )
+        {
+            pcColumn += sprintf(pcColumn, "%s\t", pcEol);
+        }
+
+        sprintf(pcColumn - 1, "\r\n");
+    }
+    else
+    {
+        //先把整个模板文件读入内存
+        if ( 0 >= fread(acTplBuf, 1, sizeof(acTplBuf), pfTplHandle) )
+        {
+            my_error("read %s template file fail\r\n", pcFilename);
+            goto error;
+        }
     }
 
-    //先把整个模板文件读入内存
-    if ( 0 >= fread(acTplBuf, 1, sizeof(acTplBuf), pfTplHandle) )
+    //读取模板文件的表头，放入txt
+    if ( strchr(acTplBuf, '\n') )
     {
-        my_error("read template file fail\r\n");
-        goto error;
+        strncpy(acTxtBuf, acTplBuf, (strchr(acTplBuf, '\n') - acTplBuf + 1));
+    }
+    else 
+    {
+        strcpy(acTxtBuf, acTplBuf);
+        sprintf(&acTxtBuf[strlen(acTxtBuf)], "\r\n");
+        sprintf(&acTplBuf[strlen(acTplBuf)], "\r\n");
+    }
+
+    if ( acTxtPath )
+    {
+        pfTxtHandle = fopen(acTxtFile, "wb");
+        if ( NULL == pfTxtHandle )
+        {
+            my_error("create %s txt file fail\r\n", pcFilename);
+            goto error;
+        }
     }
 
     //找到Expansion行，bin文件里不存在，直接写回txt
@@ -671,10 +799,6 @@ static int process_file_x(char *acTemplatePath, char *acBinPath, char *acTxtPath
         pcAnchor = strchr(pcExpansion, '\r');
     }
 
-    //读取模板文件的表头，放入txt
-    fseek(pfTplHandle, 0, SEEK_SET);
-    fgets(acTxtBuf, sizeof(acTxtBuf), pfTplHandle);
-
     //检查有哪些字段没有处理
     if ( 0 == check_missing(acTxtBuf, strchr(acTxtBuf, '\r'), pstValueMap, iValueCount, pcFilename, pstCallback) )
     {
@@ -684,7 +808,7 @@ static int process_file_x(char *acTemplatePath, char *acBinPath, char *acTxtPath
     //读取bin文件的文件头
     if ( sizeof(stFileHeader) != fread(&stFileHeader, 1, sizeof(stFileHeader), pfBinHandle) )
     {
-        my_error("read bin file head fail\r\n");
+        my_error("read %s bin file head fail\r\n", pcFilename);
         goto error;
     }
 
@@ -711,20 +835,10 @@ static int process_file_x(char *acTemplatePath, char *acBinPath, char *acTxtPath
             continue;
         }
 
-        if ( 0 == i )
-        {
-            my_printf("%05d / %05d", i + 1, stFileHeader.iLines);
-        }
-        if ( 0 == (i % 10) )
-        {
-            my_printf("\b\b\b\b\b\b\b\b\b\b\b\b\b");
-            my_printf("%05d / %05d", i + 1, stFileHeader.iLines);
-        }
-
         //从bin文件依次读取一行内容
         if ( iLineLength != fread(pvLineInfo, 1, iLineLength, pfBinHandle) )
         {
-            my_error("read bin file line %d fail\r\n", i);
+            my_error("\r\nread %s bin fail at line %d\r\n", pcFilename, i);
             break;
         }
 
@@ -738,7 +852,7 @@ static int process_file_x(char *acTemplatePath, char *acBinPath, char *acTxtPath
             if ( 1 != process_line_withkey(acTplBuf, acTxtBuf, pvLineInfo, iLineLength, pcKey, iKeyLen, 
                 pstValueMap, iValueCount, pstCallback, i) )
             {
-                my_error("fail at line %s\r\n", pcKey);
+                my_error("\r\nprocess %s failed at %s line\r\n", pcFilename, pcKey);
                 iFailed++;
             }
             else
@@ -752,7 +866,7 @@ static int process_file_x(char *acTemplatePath, char *acBinPath, char *acTxtPath
             if ( 1 != process_line_withoutkey(acTplBuf, acTxtBuf, pvLineInfo, iLineLength, i, pstValueMap, iValueCount, 
                 pstCallback, pcFilename, &pcIterator) )
             {
-                my_error("process %s fail\r\n", pcFilename);
+                my_error("\r\nprocess %s failed at %d line\r\n", pcFilename, i);
                 iFailed++;
             }
             else
@@ -760,24 +874,24 @@ static int process_file_x(char *acTemplatePath, char *acBinPath, char *acTxtPath
                 iSuccess++;
             }
         }
-    }
 
-    my_printf("\b\b\b\b\b\b\b\b\b\b\b\b\b");
-    my_printf("%05d / %05d", i, stFileHeader.iLines);
+        if ( 0 == (i % 10) || i == (stFileHeader.iLines - 1))
+        {
+            if ( i > 0 )
+            {
+                my_printf("\33[2K\r");
+            }
+            my_printf("%sprocessed %d of %d entries of %s", (acTxtPath ? "" : "pre-"), i + 1, stFileHeader.iLines, pcFilename);
+        }
 
-    //写回txt文件
-    fwrite(acTxtBuf, 1, strlen(acTxtBuf), pfTxtHandle);
-
-    if ( 0 < iFailed )
-    {
-        my_error("\r\nfinished... total %d... success %d... failed %d!\r\n", 
-            stFileHeader.iLines, iSuccess, iFailed);
+        //写回txt文件
+        if ( acTxtPath )
+        {
+            fwrite(acTxtBuf, 1, strlen(acTxtBuf), pfTxtHandle);
+        }
+        memset(acTxtBuf, 0, strlen(acTxtBuf));
     }
-    else
-    {
-        my_printf("\r\nfinished... total %d... success %d!\r\n", 
-            stFileHeader.iLines, iSuccess);
-    }
+    my_printf("\r\n");
 
     goto out;
 

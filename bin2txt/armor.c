@@ -647,7 +647,7 @@ nameable：是否能够被重命名，即能否被个人化。0表示不能，1�
 */
 
 typedef struct
-{
+{//total 424 bytes
     unsigned char vflippyfile[32];
 
     unsigned char vinvfile[32];
@@ -918,6 +918,7 @@ static char *m_apcNotUsed[] =
 typedef struct
 {
     unsigned char vcode[5];
+    unsigned short vString;
 } ST_ARMOR;
 
 static unsigned int m_iArmorCount = 0;
@@ -938,12 +939,35 @@ char *Armor_GetArmorCode(unsigned int id)
     return m_astArmor[id].vcode;
 }
 
+unsigned int Armor_GetArmorString(unsigned int id)
+{
+    if ( id >= m_iArmorCount )
+    {
+        return 0xFFFF;
+    }
+
+    return m_astArmor[id].vString;
+}
+
+unsigned int Armor_GetArmorString2(char *pcVcode)
+{
+    unsigned int i;
+    for ( i = 0; i < m_iArmorCount; i++ )
+    {
+        if ( !strcmp(m_astArmor[i].vcode, pcVcode) )
+        {
+            return m_astArmor[i].vString;
+        }
+    }
+
+    return 0xFFFF;
+}
+
 unsigned int Armor_GetArmorCount()
 {
     return m_iArmorCount;
 }
 
-extern char *String_FindString2(unsigned int id, char** ppcFilter);
 static int Armor_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
@@ -1054,17 +1078,9 @@ static int Armor_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLine
 
     if ( !strcmp(acKey, "name") )
     {
-#ifdef USE_TEMPLATE
-        if ( 0 != pcTemplate[0] )
-        {
-            strcpy(acOutput, pcTemplate);
-        }
-        else
-#endif
-        {
-            strncpy(acOutput, pstLineInfo->vcode, sizeof(pstLineInfo->vcode));
-        }
+        strncpy(acOutput, pstLineInfo->vcode, sizeof(pstLineInfo->vcode));
 
+        m_astArmor[m_iArmorCount].vString = pstLineInfo->vnamestr;
         strncpy(m_astArmor[m_iArmorCount].vcode, pstLineInfo->vcode, sizeof(pstLineInfo->vcode));
         String_Trim(m_astArmor[m_iArmorCount].vcode);
         m_iArmorCount++;
@@ -1080,13 +1096,7 @@ static int Armor_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, 
 
     if ( !strcmp(acKey, "name") )
     {
-#ifdef USE_TEMPLATE
-        if ( 0 != pcTemplate[0] )
-        {
-            strcpy(acOutput, pcTemplate);
-        }
-        else
-#endif
+        if ( !String_BuildName(FORMAT(armor), pstLineInfo->vnamestr, pcTemplate, m_astArmor[iLineNo].vcode, iLineNo, NULL, acOutput) )
         {
             strncpy(acOutput, pstLineInfo->vcode, sizeof(pstLineInfo->vcode));
         }
@@ -1344,7 +1354,7 @@ int process_armor(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_M
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
-            return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
+            return process_file(acTemplatePath, acBinPath, NULL, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo),
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);
             break;
 

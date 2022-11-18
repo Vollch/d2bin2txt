@@ -30,19 +30,15 @@ static int BodyLocs_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineN
 
     if ( !strcmp(acKey, "Body Location") )
     {
-        if ( 0 != pcTemplate[0] )
-        {
-            strcpy(acOutput, pcTemplate);
-        }
-        else
+        strncpy(m_astBodyLocs[m_iBodyLocs].vCode, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
+
+        if ( !String_BuildName(FORMAT(bodylocs), 0xFFFF, pcTemplate, m_astBodyLocs[m_iBodyLocs].vCode, iLineNo, NULL, acOutput) )
         {
             strncpy(acOutput, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
         }
 
-        strncpy(m_astBodyLocs[m_iBodyLocs].vCode, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
         String_Trim(m_astBodyLocs[m_iBodyLocs].vCode);
         m_iBodyLocs++;
-
         return 1;
     }
     else if ( !strcmp(acKey, "*EOL") )

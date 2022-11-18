@@ -33,25 +33,17 @@ static char *m_apcNotUsed[] =
 
 static int LvlWarp_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
-    int result = 0;
-
     if ( !strcmp(acKey, "Name") )
     {
-#ifdef USE_TEMPLATE
-        if ( 0 != pcTemplate[0] )
-        {
-            strcpy(acOutput, pcTemplate);
-        }
-        else
-#endif
+        if ( !String_BuildName(FORMAT(lvlwarp), 0xFFFF, pcTemplate, NAME_PREFIX, iLineNo, NULL, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
         }
 
-        result = 1;
+        return 1;
     }
 
-    return result;
+    return 0;
 }
 
 int process_lvlwarp(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)

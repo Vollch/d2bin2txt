@@ -112,18 +112,14 @@ static int Belts_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, 
 
     if ( !strcmp(acKey, "name") )
     {
-#ifdef USE_TEMPLATE
-        if ( 0 != pcTemplate[0] )
+        char acName[16] = {0};
+        sprintf(acName, "%d", pstLineInfo->vnumboxes);
+        if ( !String_BuildName(FORMAT(belts), 0xFFFF, pcTemplate, acName, m_uiBeltsCount, NULL, acOutput) )
         {
-            strcpy(acOutput, pcTemplate);
-        }
-        else
-#endif
-        {
-            sprintf(acOutput, "%s%u", NAME_PREFIX, m_uiBeltsCount);//pstLineInfo->vId);
-            m_uiBeltsCount++;
+            sprintf(acOutput, "%s%u", NAME_PREFIX, m_uiBeltsCount);
         }
 
+        m_uiBeltsCount++;
         return 1;
     }
     else if ( !strcmp(acKey, "*EOL") )

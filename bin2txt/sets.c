@@ -272,13 +272,14 @@ static char *m_apcNotUsed[] =
 
 typedef struct
 {
-    unsigned char vindex[32];
+    unsigned char vindex[64];
 } ST_SET_INDEX;
 
 static unsigned int m_iSetCount = 0;
 static ST_SET_INDEX *m_astSets = NULL;
 
 MODULE_SETLINES_FUNC(FILE_PREFIX, m_astSets, ST_SET_INDEX);
+HAVENAME_FUNC(m_astSets, vindex, m_iSetCount);
 
 char *Sets_GetSetName(unsigned int id)
 {
@@ -293,35 +294,25 @@ char *Sets_GetSetName(unsigned int id)
 static int Sets_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
-#ifdef USE_NAME_TOBE_ID
     char *pcResult;
-#endif
 
     if ( !strcmp(acKey, "index") )
     {
-#ifdef USE_TEMPLATE
-        if ( 0 != pcTemplate[0] )
+        if ( !String_BuildName(FORMAT(sets), pstLineInfo->vname, pcTemplate, NAME_PREFIX, pstLineInfo->wSetId, HAVENAME, acOutput) )
         {
-            strcpy(acOutput, pcTemplate);
-        }
-        else
-#endif
-        {
-#ifdef USE_NAME_TOBE_ID
-            pcResult = String_FindString(pstLineInfo->vname, NULL);
-            if ( pcResult && strcmp("dummy", pcResult) )
+            pcResult = String_FindString(pstLineInfo->vname, "dummy");
+            if ( pcResult )
             {
                 strcpy(acOutput, pcResult);
             }
             else
-#endif
             {
                 sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->wSetId);
             }
         }
 
-        strncpy(m_astSets[m_iSetCount].vindex, acOutput, sizeof(m_astSets[m_iSetCount].vindex));
-        String_Trim(m_astSets[m_iSetCount].vindex);
+        strncpy(m_astSets[pstLineInfo->wSetId].vindex, acOutput, sizeof(m_astSets[pstLineInfo->wSetId].vindex));
+        String_Trim(m_astSets[pstLineInfo->wSetId].vindex);
         m_iSetCount++;
 
         return 1;
@@ -340,32 +331,10 @@ static int Sets_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLineN
 static int Sets_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
-#ifdef USE_NAME_TOBE_ID
-    char *pcResult;
-#endif
 
     if ( !strcmp(acKey, "index") )
     {
-#ifdef USE_TEMPLATE
-        if ( 0 != pcTemplate[0] )
-        {
-            strcpy(acOutput, pcTemplate);
-        }
-        else
-#endif
-        {
-#ifdef USE_NAME_TOBE_ID
-            pcResult = String_FindString(pstLineInfo->vname, NULL);
-            if ( pcResult && strcmp("dummy", pcResult) )
-            {
-                strcpy(acOutput, pcResult);
-            }
-            else
-#endif
-            {
-                sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->wSetId);
-            }
-        }
+        strncpy(acOutput, m_astSets[pstLineInfo->wSetId].vindex, sizeof(m_astSets[pstLineInfo->wSetId].vindex));
 
         return 1;
     }
@@ -389,8 +358,8 @@ static int Sets_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, ch
 
     if ( !strcmp("name", acKey) )
     {
-        pcResult = String_FindString(pstLineInfo->vname, NULL);
-        if ( pcResult && strcmp("dummy", pcResult) )
+        pcResult = String_FindString(pstLineInfo->vname, "dummy");
+        if ( pcResult )
         {
             strcpy(acOutput, pcResult);
         }
@@ -682,7 +651,7 @@ int process_sets(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MO
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
 
-            return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
+            return process_file(acTemplatePath, acBinPath, NULL, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);
             break;
 

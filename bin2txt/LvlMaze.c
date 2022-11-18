@@ -74,15 +74,11 @@ static char *m_apcNotUsed[] =
 
 static int LvlMaze_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
+    ST_LINE_INFO *pstLineInfo = pvLineInfo;
+
     if ( !strcmp(acKey, "Name") )
     {
-#ifdef USE_TEMPLATE
-        if ( 0 != pcTemplate[0] )
-        {
-            strcpy(acOutput, pcTemplate);
-        }
-        else
-#endif
+        if ( !String_BuildName(FORMAT(lvlmaze), 0xFFFF, pcTemplate, Levels_GetLevelName(pstLineInfo->vLevel), iLineNo, NULL, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
         }
@@ -110,6 +106,17 @@ int process_lvlmaze(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
     switch ( enPhase )
     {
         case EN_MODULE_SELF_DEPEND:
+            break;
+
+        case EN_MODULE_OTHER_DEPEND:
+            MODULE_DEPEND_CALL(levels, acTemplatePath, acBinPath, acTxtPath);
+            break;
+
+        case EN_MODULE_RESERVED_1:
+        case EN_MODULE_RESERVED_2:
+            break;
+
+        case EN_MODULE_INIT:
             m_stCallback.pfnFieldProc = LvlMaze_FieldProc;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
@@ -118,10 +125,6 @@ int process_lvlmaze(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);
             break;
 
-        case EN_MODULE_OTHER_DEPEND:
-        case EN_MODULE_RESERVED_1:
-        case EN_MODULE_RESERVED_2:
-        case EN_MODULE_INIT:
         default:
             break;
     }

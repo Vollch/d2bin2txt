@@ -30,21 +30,15 @@ static int ElemTypes_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLine
 
     if ( !strcmp(acKey, "Elemental Type") )
     {
-#ifdef USE_TEMPLATE
-        if ( 0 != pcTemplate[0] )
-        {
-            strcpy(acOutput, pcTemplate);
-        }
-        else
-#endif
+        strncpy(m_astElemTypes[m_iElemTypes].vCode, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
+
+        if ( !String_BuildName(FORMAT(elemtypes), 0xFFFF, pcTemplate, m_astElemTypes[m_iElemTypes].vCode, m_iElemTypes, NULL, acOutput) )
         {
             strncpy(acOutput, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
         }
 
-        strncpy(m_astElemTypes[m_iElemTypes].vCode, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
         String_Trim(m_astElemTypes[m_iElemTypes].vCode);
         m_iElemTypes++;
-
         return 1;
     }
     else if ( !strcmp(acKey, "*EOL") )

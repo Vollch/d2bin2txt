@@ -212,14 +212,11 @@ static int DifficultyLevels_FieldProc(void *pvLineInfo, char *acKey, unsigned in
 {
     if ( !strcmp(acKey, "Name") )
     {
-        if ( 0 != pcTemplate[0] )
-        {
-            strcpy(acOutput, pcTemplate);
-        }
-        else
+        if ( !String_BuildName(FORMAT(difficultylevels), 0xFFFF, pcTemplate, NAME_PREFIX, iLineNo, NULL, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
         }
+
         return 1;
     }
 

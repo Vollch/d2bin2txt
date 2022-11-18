@@ -692,6 +692,7 @@ typedef struct
 typedef struct
 {
     unsigned char vcode[5];
+    unsigned short vString;
 } ST_WEAPON;
 
 static char *m_apcInternalProcess[] =
@@ -725,6 +726,30 @@ char *Weapons_GetWeaponCode(unsigned int id)
     return m_astWeapon[id].vcode;
 }
 
+unsigned int Weapons_GetWeaponString(unsigned int id)
+{
+    if ( id >= m_iWeaponCount )
+    {
+        return 0xFFFF;
+    }
+
+    return m_astWeapon[id].vString;
+}
+
+unsigned int Weapons_GetWeaponString2(char *pcVcode)
+{
+    unsigned int i;
+    for ( i = 0; i < m_iWeaponCount; i++ )
+    {
+        if ( !strcmp(m_astWeapon[i].vcode, pcVcode) )
+        {
+            return m_astWeapon[i].vString;
+        }
+    }
+
+    return 0xFFFF;
+}
+
 unsigned int Weapons_GetWeaponCount()
 {
     return m_iWeaponCount;
@@ -740,19 +765,31 @@ static char *Weapons_GetKey(void *pvLineInfo, char *pcKey, unsigned int *iKeyLen
     return pcKey;
 }
 
+static int Weapons_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
+{
+    ST_LINE_INFO *pstLineInfo = pvLineInfo;
+
+    if ( !strcmp(acKey, "name") )
+    {
+        strncpy(acOutput, pstLineInfo->vcode, sizeof(pstLineInfo->vcode));
+
+        m_astWeapon[m_iWeaponCount].vString = pstLineInfo->vnamestr;
+        strncpy(m_astWeapon[m_iWeaponCount].vcode, pstLineInfo->vcode, sizeof(pstLineInfo->vcode));
+        String_Trim(m_astWeapon[m_iWeaponCount].vcode);
+        m_iWeaponCount++;
+        return 1;
+    }
+
+    return 0;
+}
+
 static int Weapons_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
     if ( !strcmp(acKey, "name") )
     {
-#ifdef USE_TEMPLATE
-        if ( 0 != pcTemplate[0] )
-        {
-            strcpy(acOutput, pcTemplate);
-        }
-        else
-#endif
+        if ( !String_BuildName(FORMAT(weapons), pstLineInfo->vnamestr, pcTemplate, m_astWeapon[iLineNo].vcode, iLineNo, NULL, acOutput) )
         {
             strncpy(acOutput, pstLineInfo->vcode, sizeof(pstLineInfo->vcode));
         }
@@ -761,21 +798,6 @@ static int Weapons_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo
     }
 
     return 0;
-}
-
-static int Weapons_ConvertValue_Pre(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
-{
-    ST_LINE_INFO *pstLineInfo = pvLineInfo;
-    int result = 0;
-
-    if ( !strcmp(acKey, "code") )
-    {
-        strncpy(m_astWeapon[m_iWeaponCount].vcode, pstLineInfo->vcode, sizeof(pstLineInfo->vcode));
-        String_Trim(m_astWeapon[m_iWeaponCount].vcode);
-        m_iWeaponCount++;
-    }
-
-    return result;
 }
 
 static int Weapons_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
@@ -1099,13 +1121,13 @@ int process_weapons(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
         case EN_MODULE_SELF_DEPEND:
             m_iWeaponCount = 0;
 
-            m_stCallback.pfnConvertValue = Weapons_ConvertValue_Pre;
+            m_stCallback.pfnFieldProc = Weapons_FieldProc_Pre;
             m_stCallback.pfnSetLines = SETLINES_FUNC_NAME(FILE_PREFIX);
             m_stCallback.pfnFinished = FINISHED_FUNC_NAME(FILE_PREFIX);
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
-            return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
+            return process_file(acTemplatePath, acBinPath, NULL, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);
             break;
 

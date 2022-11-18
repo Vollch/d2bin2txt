@@ -925,6 +925,7 @@ typedef struct
 typedef struct
 {
     unsigned char vcode[5];
+    unsigned short vString;
 } ST_MISC;
 
 static char *m_apcInternalProcess[] =
@@ -981,19 +982,78 @@ char *Misc_GetItemUniqueCode(unsigned int id)
     return NULL;
 }
 
+unsigned int Misc_GetItemString(unsigned int id)
+{
+    unsigned int iWeaponCnt, iArmorCnt, iMiscCnt;
+
+    iWeaponCnt = Weapons_GetWeaponCount();
+    iArmorCnt = Armor_GetArmorCount();
+    iMiscCnt = m_iMiscCount;
+
+    //weapon
+    if ( id < iWeaponCnt )
+    {
+        return Weapons_GetWeaponString(id);
+    }
+
+    id -= iWeaponCnt;
+    //armor
+    if ( id < iArmorCnt )
+    {
+        return Armor_GetArmorString(id);
+    }
+
+    id -= iArmorCnt;
+    //misc
+    if ( id < iMiscCnt )
+    {
+        return m_astMisc[id].vString;
+    }
+
+    return 0xFFFF;
+}
+
+unsigned int Misc_GetItemString2(char *pcVcode)
+{
+    unsigned int iWeaponCnt, iArmorCnt, iMiscCnt;
+    unsigned int iString, i;
+    char acCode[4];
+    strncpy(acCode, pcVcode, 3);
+
+    iWeaponCnt = Weapons_GetWeaponCount();
+    iArmorCnt = Armor_GetArmorCount();
+    iMiscCnt = m_iMiscCount;
+
+    //weapon
+    if ( (iString = Weapons_GetWeaponString2(acCode)) != 0xFFFF )
+    {
+        return iString;
+    }
+
+    if ( (iString = Armor_GetArmorString2(acCode)) != 0xFFFF )
+    {
+        return iString;
+    }
+
+    for ( i = 0; i < iMiscCnt; i++ )
+    {
+        if ( !strcmp(m_astMisc[i].vcode, acCode) )
+        {
+            return m_astMisc[i].vString;
+        }
+    }
+
+    return 0xFFFF;
+}
+
 static int Misc_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
+    ST_LINE_INFO *pstLineInfo = pvLineInfo;
     if ( !strcmp(acKey, "name") )
     {
-#ifdef USE_TEMPLATE
-        if ( 0 != pcTemplate[0] )
+        if ( !String_BuildName(FORMAT(misc), pstLineInfo->vnamestr, pcTemplate, m_astMisc[iLineNo].vcode, iLineNo, NULL, acOutput) )
         {
-            strcpy(acOutput, pcTemplate);
-        }
-        else
-#endif
-        {
-            sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
+            strncpy(acOutput, pstLineInfo->vcode, sizeof(pstLineInfo->vcode));
         }
 
         return 1;
@@ -1009,19 +1069,23 @@ static int Misc_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, c
     return 0;
 }
 
-static int Misc_ConvertValue_Pre(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
+static int Misc_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
-    int result = 0;
 
-    if ( !strcmp(acKey, "code") )
+    if ( !strcmp(acKey, "name") )
     {
+        strncpy(acOutput, pstLineInfo->vcode, sizeof(pstLineInfo->vcode));
+
+        m_astMisc[m_iMiscCount].vString = pstLineInfo->vnamestr;
         strncpy(m_astMisc[m_iMiscCount].vcode, pstLineInfo->vcode, sizeof(pstLineInfo->vcode));
         String_Trim(m_astMisc[m_iMiscCount].vcode);
         m_iMiscCount++;
+        return 1;
+
     }
 
-    return result;
+    return 0;
 }
 
 static int Misc_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
@@ -1474,6 +1538,7 @@ int process_misc(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MO
     switch ( enPhase )
     {
         case EN_MODULE_SELF_DEPEND:
+            MODULE_DEPEND_CALL(string, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(armor, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(weapons, acTemplatePath, acBinPath, acTxtPath);
 
@@ -1481,13 +1546,13 @@ int process_misc(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MO
 
             m_iMiscCount = 0;
 
-            m_stCallback.pfnConvertValue = Misc_ConvertValue_Pre;
+            m_stCallback.pfnFieldProc = Misc_FieldProc_Pre;
             m_stCallback.pfnSetLines = SETLINES_FUNC_NAME(FILE_PREFIX);
             m_stCallback.pfnFinished = FINISHED_FUNC_NAME(FILE_PREFIX);
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
 
-            return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo),
+            return process_file(acTemplatePath, acBinPath, NULL, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo),
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);
             break;
 
@@ -1496,7 +1561,6 @@ int process_misc(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MO
             MODULE_DEPEND_CALL(sounds, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(states, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(itemstatcost, acTemplatePath, acBinPath, acTxtPath);
-            MODULE_DEPEND_CALL(string, acTemplatePath, acBinPath, acTxtPath);
 
             if ( 0 == ItemsCode_ParseBin(acTemplatePath, acBinPath, acTxtPath) )
             {

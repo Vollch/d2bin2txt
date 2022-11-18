@@ -1,6 +1,8 @@
 #ifndef __ANDERS_GLOBAL__
 #define __ANDERS_GLOBAL__
 
+#pragma warning( disable: 4996 )
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -14,13 +16,16 @@ extern "C" {
 #include <FCNTL.H>
 #include <assert.h>
 
-//#define USE_TEMPLATE
-//#define USE_NAME_TOBE_ID
+#define NO_VERBOSE
 
+#define FORMAT(module) Get_ModuleNameFormat( EN_MID_##module ), Get_ModuleNameSize( EN_MID_##module )
 #define MODULE_ID_DEFINE(key) EN_MID_##key
 
 typedef enum
 {
+    MODULE_ID_DEFINE(D2NewStats),
+    MODULE_ID_DEFINE(D2KillCounter),
+    MODULE_ID_DEFINE(bufficons),
     MODULE_ID_DEFINE(arena),
     MODULE_ID_DEFINE(armor),
     MODULE_ID_DEFINE(armtype),
@@ -158,13 +163,14 @@ typedef struct
     } while (0)
 
 #define MODULE_DEPEND_CALL(module, template, bin ,txt) \
-    do {\
+    while (Get_ModulePhase(MODULE_ID_DEFINE(module)) < EN_MODULE_SELF_DEPEND) {\
         int k;\
         ENUM_MODULE_PHASE enCurrentPhase = Get_ModulePhase(MODULE_ID_DEFINE(module));\
-        my_printf("\r\n#############depend %s#############\r\n", #module);\
+        bg_printf(" ", "");\
+        bg_printf("#", "depend %s", #module);\
         for ( k = (int)enCurrentPhase + 1; k <= (int)EN_MODULE_SELF_DEPEND; k++ )\
         {\
-            my_printf("################phase %d################\r\n", k);\
+            bg_printf("#", "phase %d", k);\
             Set_ModulePhase(MODULE_ID_DEFINE(module), k);\
             memset(&m_stCallback, 0, sizeof(m_stCallback));\
             memset(m_acLineInfoBuf, 0, m_iLineBufLength);\
@@ -172,16 +178,17 @@ typedef struct
             m_iValueMapIndex = 0;\
             if ( 0 != process_##module(template, bin, txt, k) ) \
             {\
-                my_printf("################success################\r\n");\
+                bg_printf("#", "success");\
             }\
             else\
             {\
-                my_printf("################failed################\r\n");\
+                bg_printf("#", "failed");\
                 break;\
             }\
         }\
-        my_printf("################%s################\r\n\r\n", #module);\
-    }while (0)\
+        bg_printf("#", "%s", #module);\
+        bg_printf(" ", "");\
+    }\
 
 #define VALUE_MAP_DEFINE(map, line, key, type) \
     do {\
@@ -201,6 +208,7 @@ typedef struct
         m_iValueMapIndex++;\
     } while (0)
 
+// This defines *all* expanded as FILE_PREFIX_SetLines instead of individual prefixes. But since they're static, and used once per module it's not causing any problems. It could be fixed by adding nested concat macro, but correct implementation won't work at all being proccessed to e.g. "misc"_SetLines, which isn't correct function name due to quotes. It'd need some refactoing across whole codebase to be fixed properly. And untill that live with the knowledge that all such functions have messed names.
 #define SETLINES_FUNC_NAME(module) module##_SetLines
 #define FINISHED_FUNC_NAME(module) module##_Finished
 #define MODULE_SETLINES_FUNC(module, buffer, datastruct) \
@@ -229,6 +237,22 @@ typedef struct
         }\
     }
 
+
+#define HAVENAME module_HaveName
+#define HAVENAME_FUNC(buffer, key, counter) \
+    static int module_HaveName(char* pcTestName)\
+    {\
+	    unsigned int i;\
+	    for ( i = 0; i < counter; i++ )\
+	    {\
+	    if ( !stricmp(buffer[i].##key, pcTestName) )\
+		    {\
+			    return 1;\
+		    }\
+	    }\
+	    return 0;\
+    }
+
 extern void MemMgr_Init();
 extern void *MemMgr_Malloc(unsigned int size);
 extern void MemMgr_Free(void *pvAddr);
@@ -247,9 +271,13 @@ typedef int (*fnFieldProc) (void *pvLineInfo, char *acKey, unsigned int iLineNo,
 typedef void (*fnSetFileLines)(unsigned int uiLines);
 //通知该模块释放内存
 typedef void (*fnFinished)();
+//Check if name already used in module
+typedef int (*fnHaveName) (char *pcTestName);
 
 typedef struct
 {
+    int iOptional;
+
     fnGetKey pfnGetKey;
     fnConvertValue pfnConvertValue;
     fnBitProc pfnBitProc;
@@ -276,11 +304,19 @@ extern unsigned int m_iValueMapIndex;
 extern ST_CALLBACK m_stCallback;
 extern unsigned int Global_GetValueMapCount();
 
+extern char *g_pcCustomTable1;
+extern char *g_pcCustomTable2;
+extern char *g_pcCustomTable3;
+extern int g_iMercDesc;
+extern int g_iTrimSpace;
+
 extern int File_GetFileSize(char *pcFileName);
 extern int File_CopyFile(char *pcFromPath, char *pcToPath, char *pcFileName, char *pcSuffix);
 extern unsigned char *String_Trim(unsigned char *pcValue);
 extern void Set_ModulePhase(ENUM_MODULE_ID enMid, ENUM_MODULE_PHASE enPhase);
 extern ENUM_MODULE_PHASE Get_ModulePhase(ENUM_MODULE_ID enMid);
+extern char* Get_ModuleNameFormat(ENUM_MODULE_ID enMid);
+extern int Get_ModuleNameSize(ENUM_MODULE_ID enMid);
 
 #define MAX_OPERATER_LEVEL  0xFF
 #define FUNCTION_OPERATER_LEVEL  1
@@ -336,6 +372,7 @@ extern int process_file_special_bin(char *acTemplatePath, char *acBinPath, char 
     ST_CALLBACK *pstCallback);
 
 extern unsigned int my_printf( const char *pcFormat,... );
+extern unsigned int bg_printf( const char *pcBG, const char *pcFormat,... );
 #define my_error my_printf("[error]: %s-%u\r\n\t", __FILE__, __LINE__);my_printf
 
 extern void * Stack_Create(unsigned int uiElemSize, unsigned int uiElemCount);
@@ -345,6 +382,12 @@ extern int Stack_Pop(void *pvStack, unsigned char **ppcElement);
 extern int Stack_IsEmpty(void *pvStack);
 
 //以下是各个模块提供的外部接口
+extern int process_D2NewStats(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
+
+extern int process_D2KillCounter(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
+
+extern int process_bufficons(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
+
 extern int process_arena(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
 
 extern int process_automap(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
@@ -354,15 +397,21 @@ extern int process_belts(char *acTemplatePath, char *acBinPath, char *acTxtPath,
 extern int process_armtype(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
 
 extern int process_string(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
+extern int String_StripFileName(char *pcInput, char *pcOutput, unsigned int iSize);
+extern int String_BuildName(char *pcNameFormat, int iNameSize, unsigned int iStingId, char *pcTemplate, char *pcName, unsigned int iLine, fnHaveName pfnHaveName, char* acOutput);
 extern char *String_FindString(unsigned int id, char* pcFilter);
 extern char *String_FindString_2(unsigned int id, char* pcFilter, char* pcFilter2);
 
 extern int process_armor(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
 extern char *Armor_GetArmorCode(unsigned int id);
+extern unsigned int Armor_GetArmorString(unsigned int id);
+extern unsigned int Armor_GetArmorString2(char *pcVcode);
 extern unsigned int Armor_GetArmorCount();
 
 extern int process_weapons(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
 extern char *Weapons_GetWeaponCode(unsigned int id);
+extern unsigned int Weapons_GetWeaponString(unsigned int id);
+extern unsigned int Weapons_GetWeaponString2(char *pcVcode);
 extern unsigned int Weapons_GetWeaponCount();
 
 extern int process_colors(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
@@ -394,6 +443,7 @@ extern char *HitClass_GetClassStr(unsigned int id);
 
 extern int process_skilldesc(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
 extern char *SkillDesc_GetDesc(unsigned int id);
+extern unsigned int SkillDesc_GetString(unsigned int id);
 
 extern int process_overlay(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
 extern char *Overlay_GetOverlay(unsigned int id);
@@ -422,6 +472,7 @@ extern char *Skills_GetSkillName(unsigned int id);
 
 extern int process_sounds(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
 extern char *Sounds_GetSoundName(unsigned int id);
+extern char *Sounds_GetSoundName2(unsigned int id);
 
 extern int process_itemtypes(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
 extern char *ItemTypes_GetItemCode(unsigned int id);
@@ -431,15 +482,19 @@ extern char *States_GetStateName(unsigned int id);
 
 extern int process_itemstatcost(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
 extern char *ItemStatCost_GetStateName(unsigned int id);
+extern unsigned int ItemStatCost_GetString(unsigned int id);
 
 extern int process_properties(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
 extern char *Properties_GetProperty(unsigned int id);
 
 extern int process_misc(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
 extern char *Misc_GetItemUniqueCode(unsigned int id);
+extern unsigned int Misc_GetItemString2(char *pcVcode);
+extern unsigned int Misc_GetItemString(unsigned int id);
 
 extern int process_monstats(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
 extern char *MonStats_GetStatsName(unsigned int id);
+extern unsigned int MonStats_GetPropString(unsigned int id);
 
 extern int process_pettype(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
 extern char *Pettype_GetPetType(unsigned int id);
@@ -460,6 +515,8 @@ extern int process_gems(char *acTemplatePath, char *acBinPath, char *acTxtPath, 
 
 extern int process_hiredesc(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
 extern char *HireDesc_GetDesc(unsigned int id);
+extern int process_hiredesc_MercDesc(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
+extern char *HireDesc_MercDesc_GetDesc(unsigned int id);
 
 extern int process_hireling(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
 
@@ -468,6 +525,7 @@ extern int process_inventory(char *acTemplatePath, char *acBinPath, char *acTxtP
 extern int process_itemratio(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
 
 extern int process_levels(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
+extern char *Levels_GetLevelName(unsigned int id);
 
 extern int process_lowqualityitems(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
 
@@ -529,6 +587,7 @@ extern int process_monumod(char *acTemplatePath, char *acBinPath, char *acTxtPat
 extern int process_npc(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
 
 extern int process_objects(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
+extern char *Objects_GetObjectName(unsigned int id);
 
 extern int process_objgroup(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
 

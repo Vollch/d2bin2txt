@@ -319,7 +319,7 @@ typedef struct
 
 typedef struct
 {
-    unsigned char vId[32];
+    unsigned char vId[64];
 } ST_MON_PROP;
 
 static char *m_apcInternalProcess[] =
@@ -332,6 +332,7 @@ static unsigned int m_iMonPropCount = 0;
 static ST_MON_PROP *m_astMonProp = NULL;
 
 MODULE_SETLINES_FUNC(FILE_PREFIX, m_astMonProp, ST_MON_PROP);
+HAVENAME_FUNC(m_astMonProp, vId, m_iMonPropCount);
 
 char *MonProp_GetPropId(unsigned int id)
 {
@@ -359,33 +360,21 @@ static int MonProp_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo
 static int MonProp_ConvertValue_Pre(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
-#if 0
-    char *pcResult;
-#endif
-    int result = 0;
 
     if ( !strcmp(acKey, "Id") )
     {
-#if 0
-        pcResult = MonStats_GetStatsName(pstLineInfo->vId);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-#endif
+        if ( !String_BuildName(FORMAT(monprop), MonStats_GetPropString(pstLineInfo->vId), pcTemplate, NULL, m_iMonPropCount, HAVENAME, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vId);
         }
 
-        strncpy(m_astMonProp[m_iMonPropCount].vId, acOutput, sizeof(m_astMonProp[m_iMonPropCount].vId));
-        String_Trim(m_astMonProp[m_iMonPropCount].vId);
+        strncpy(m_astMonProp[pstLineInfo->vId].vId, acOutput, sizeof(m_astMonProp[pstLineInfo->vId].vId));
+        String_Trim(m_astMonProp[pstLineInfo->vId].vId);
         m_iMonPropCount++;
-
-        result = 1;
+        return 1;
     }
 
-    return result;
+    return 0;
 }
 
 static int MonProp_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
@@ -393,23 +382,12 @@ static int MonProp_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate,
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
     char *pcResult;
     int id;
-    int result = 0;
 
     if ( !strcmp(acKey, "Id") )
     {
-#if 0
-        pcResult = MonStats_GetStatsName(pstLineInfo->vId);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-#endif
-        {
-            sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vId);
-        }
+        strncpy(acOutput, m_astMonProp[pstLineInfo->vId].vId, sizeof(m_astMonProp[pstLineInfo->vId].vId));
 
-        result = 1;
+        return 1;
     }
     else if ( strlen("prop1") == strlen(acKey) && 1 == sscanf(acKey, "prop%d", &id) )
     {
@@ -423,7 +401,7 @@ static int MonProp_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate,
         {
             acOutput[0] = 0;
         }
-        result = 1;
+        return 1;
     }
     else if ( strstr(acKey, " (N)") && 1 == sscanf(acKey, "prop%d (N)", &id) )
     {
@@ -437,7 +415,7 @@ static int MonProp_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate,
         {
             acOutput[0] = 0;
         }
-        result = 1;
+        return 1;
     }
     else if ( strstr(acKey, " (H)") && 1 == sscanf(acKey, "prop%d (H)", &id) )
     {
@@ -451,10 +429,10 @@ static int MonProp_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate,
         {
             acOutput[0] = 0;
         }
-        result = 1;
+        return 1;
     }
 
-    return result;
+    return 0;
 }
 
 static void MonProp_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLineInfo)
@@ -586,7 +564,7 @@ int process_monprop(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
     switch ( enPhase )
     {
         case EN_MODULE_SELF_DEPEND:
-            //MODULE_DEPEND_CALL(monstats, acTemplatePath, acBinPath, acTxtPath);
+            MODULE_DEPEND_CALL(monstats, acTemplatePath, acBinPath, acTxtPath);
 
             MonProp_InitValueMap(pstValueMap, pstLineInfo);
 
@@ -597,12 +575,11 @@ int process_monprop(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
             m_stCallback.pfnFinished = FINISHED_FUNC_NAME(FILE_PREFIX);
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
-            return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
+            return process_file(acTemplatePath, acBinPath, NULL, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);
             break;
 
         case EN_MODULE_OTHER_DEPEND:
-            //MODULE_DEPEND_CALL(monstats, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(properties, acTemplatePath, acBinPath, acTxtPath);
             break;
 

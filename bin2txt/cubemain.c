@@ -425,6 +425,12 @@ static char *Cubemain_GenerateInputProp(char *acOutput, unsigned char bType, uns
         acOutput += strlen(acOutput);
     }
 
+    if ( 0 != (8 & bPrefix ) )
+    {
+        strcpy(acOutput, ",nru");
+        acOutput += strlen(acOutput);
+    }
+
     if ( 1 == bPostFix )
     {
         strcpy(acOutput, ",low");
@@ -1047,7 +1053,7 @@ struct D2CubeOutputItem
 
         if ( !strcmp(acKey, "output") && (0 == strlen(acOutput) || !strcmp(acOutput, "\"\"")) )
         {
-            strcpy(acOutput, "void");
+            //strcpy(acOutput, "void");
         }
 
         if ( 0 == result )
@@ -1065,13 +1071,7 @@ static int Cubemain_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineN
 
     if ( !strcmp("description", acKey) )
     {
-#ifdef USE_TEMPLATE
-        if ( 0 != pcTemplate[0] )
-        {
-            strcpy(acOutput, pcTemplate);
-        }
-        else
-#endif
+        if ( !String_BuildName(FORMAT(cubemain), 0xFFFF, pcTemplate, NAME_PREFIX, iLineNo, NULL, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
         }

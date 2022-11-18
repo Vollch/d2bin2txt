@@ -180,16 +180,17 @@ static int CharTemplate_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemp
 
 static int CharTemplate_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
+    ST_LINE_INFO *pstLineInfo = pvLineInfo;
+
     if ( !strcmp(acKey, "Template") )
     {
-        if ( 0 != pcTemplate[0] )
-        {
-            strcpy(acOutput, pcTemplate);
-        }
-        else
+        char acName[31];
+        strncpy(acName, pstLineInfo->vName, sizeof(pstLineInfo->vName));
+        if ( !String_BuildName(FORMAT(chartemplate), Misc_GetItemString2(pstLineInfo->vitem1), pcTemplate, acName, iLineNo, NULL, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
         }
+
         return 1;
     }
 
@@ -324,6 +325,7 @@ int process_chartemplate(char *acTemplatePath, char *acBinPath, char *acTxtPath,
 
         case EN_MODULE_OTHER_DEPEND:
             MODULE_DEPEND_CALL(playerclass, acTemplatePath, acBinPath, acTxtPath);
+            MODULE_DEPEND_CALL(misc, acTemplatePath, acBinPath, acTxtPath);
             break;
 
         case EN_MODULE_RESERVED_1:

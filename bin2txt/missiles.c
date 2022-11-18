@@ -911,7 +911,7 @@ typedef struct
 
 typedef struct
 {
-    unsigned char vMissile[32];
+    unsigned char vMissile[64];
 } ST_MISSILES;
 
 static char *m_apcNotUsed[] = 
@@ -953,6 +953,7 @@ static unsigned int m_iMisslesCount = 0;
 static ST_MISSILES *m_astMissiles = NULL;
 
 MODULE_SETLINES_FUNC(FILE_PREFIX, m_astMissiles, ST_MISSILES);
+HAVENAME_FUNC(m_astMissiles, vMissile, m_iMisslesCount);
 
 static int Missiles_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
@@ -960,19 +961,15 @@ static int Missiles_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iL
 
     if ( !strcmp(acKey, "Missile") )
     {
-#ifdef USE_TEMPLATE
-        if ( 0 != pcTemplate[0] )
+        char acName[33] = {0};
+        String_StripFileName(pstLineInfo->vCelFile, acName, 32);
+        if ( !String_BuildName(FORMAT(missiles), 0xFFFF, pcTemplate, acName, pstLineInfo->vId, HAVENAME, acOutput) )
         {
-            strcpy(acOutput, pcTemplate);
-        }
-        else
-#endif
-        {
-            sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
+            sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vId);
         }
 
-        strncpy(m_astMissiles[m_iMisslesCount].vMissile, acOutput, sizeof(m_astMissiles[m_iMisslesCount].vMissile));
-        String_Trim(m_astMissiles[m_iMisslesCount].vMissile);
+        strncpy(m_astMissiles[pstLineInfo->vId].vMissile, acOutput, sizeof(m_astMissiles[pstLineInfo->vId].vMissile));
+        String_Trim(m_astMissiles[pstLineInfo->vId].vMissile);
         m_iMisslesCount++;
         return 1;
     }
@@ -989,18 +986,12 @@ static int Missiles_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iL
 
 static int Missiles_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
+    ST_LINE_INFO *pstLineInfo = pvLineInfo;
+
     if ( !strcmp(acKey, "Missile") )
     {
-#ifdef USE_TEMPLATE
-        if ( 0 != pcTemplate[0] )
-        {
-            strcpy(acOutput, pcTemplate);
-        }
-        else
-#endif
-        {
-            sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
-        }
+        strncpy(acOutput, m_astMissiles[pstLineInfo->vId].vMissile, sizeof(m_astMissiles[pstLineInfo->vId].vMissile));
+
         return 1;
     }
     else if ( !strcmp(acKey, "EOL") )
@@ -1703,7 +1694,7 @@ int process_missiles(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
 
             m_iMisslesCount = 0;
 
-            return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo),
+            return process_file(acTemplatePath, acBinPath, NULL, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo),
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);
             break;
 

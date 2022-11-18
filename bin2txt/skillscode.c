@@ -1183,9 +1183,9 @@ int SkillsCode_ParseBin(char *acTemplatePath, char *acBinPath, char*acTxtPath)
     }
 
     //写回bin文件
+    memset(m_acGlobalBuffer, 0, m_iGlobaBufLength);
     for ( i = 0; i < m_uiSkillCodeCount; i++ )
     {
-        memset(m_acGlobalBuffer, 0, m_iGlobaBufLength);
         sprintf(m_acGlobalBuffer, "%u\t%s\r\n\t", i, m_astSkillCode[i].acExpressionTxt);
 
         for ( j = 0; j < m_astSkillCode[i].uiBinLen; j++ )
@@ -1196,6 +1196,7 @@ int SkillsCode_ParseBin(char *acTemplatePath, char *acBinPath, char*acTxtPath)
         strcpy(&m_acGlobalBuffer[strlen(m_acGlobalBuffer)], "\r\n");
 
         fwrite(m_acGlobalBuffer, 1, strlen(m_acGlobalBuffer), pfOutputHandle);
+        memset(m_acGlobalBuffer, 0, strlen(m_acGlobalBuffer));
     }
 
     goto out;

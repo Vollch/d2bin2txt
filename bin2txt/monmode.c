@@ -10,7 +10,7 @@ typedef struct
 
 typedef struct
 {
-    unsigned char vname[32];
+    unsigned char vname[64];
     //unsigned char vtoken[20];
     unsigned char vcode[20];
 } ST_MONMODE;
@@ -25,30 +25,28 @@ static unsigned int m_iMonModeCount = 0;
 static ST_MONMODE *m_astMonMode = NULL;
 
 MODULE_SETLINES_FUNC(FILE_PREFIX, m_astMonMode, ST_MONMODE);
+HAVENAME_FUNC(m_astMonMode, vname, m_iMonModeCount);
 
 static int MonMode_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
-    int result = 0;
 
     if ( !strcmp("code", acKey) )
     {
-        if ( 0 == pcTemplate[0] )
+        char acName[21];
+        strncpy(acName, pstLineInfo->vtoken, sizeof(pstLineInfo->vtoken));
+        if ( !String_BuildName(FORMAT(monmode), 0xFFFF, pcTemplate, acName, m_iMonModeCount, HAVENAME, acOutput) )
         {
-            strncpy(m_astMonMode[m_iMonModeCount].vcode, pstLineInfo->vtoken, sizeof(m_astMonMode[m_iMonModeCount].vcode));
-            strncpy(m_astMonMode[m_iMonModeCount].vname, pstLineInfo->vname, sizeof(m_astMonMode[m_iMonModeCount].vname));
-            strcpy(acOutput, m_astMonMode[m_iMonModeCount].vcode);
-            result = 1;
+            strncpy(acOutput, pstLineInfo->vtoken, sizeof(pstLineInfo->vtoken));
         }
-        else
-        {
-            strncpy(m_astMonMode[m_iMonModeCount].vcode, pcTemplate, sizeof(m_astMonMode[m_iMonModeCount].vcode));
-            strncpy(m_astMonMode[m_iMonModeCount].vname, pstLineInfo->vname, sizeof(m_astMonMode[m_iMonModeCount].vname));
-        }
+
+        strncpy(m_astMonMode[m_iMonModeCount].vcode, acOutput, sizeof(m_astMonMode[m_iMonModeCount].vcode));
+        strncpy(m_astMonMode[m_iMonModeCount].vname, pstLineInfo->vname, sizeof(m_astMonMode[m_iMonModeCount].vname));
         m_iMonModeCount++;
+        return 1;
     }
 
-    return result;
+    return 0;
 }
 
 static char *MonMode_GetKey(void *pvLineInfo, char *pcKey, unsigned int *iKeyLen)

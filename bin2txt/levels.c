@@ -822,6 +822,11 @@ typedef struct
     int vLOSDraw;
 } ST_LINE_INFO;
 
+typedef struct
+{
+    char vname[64];
+} ST_LEVEL_DESC;
+
 static char *m_apcNotUsed[] =
 {
     "camt1",
@@ -837,20 +842,43 @@ static char *m_apcInternalProcess[] =
      NULL,
 };
 
-static int Levels_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
+static unsigned int m_iLevelsCount = 0;
+static ST_LEVEL_DESC *m_astLevels = NULL;
+
+MODULE_SETLINES_FUNC(FILE_PREFIX, m_astLevels, ST_LEVEL_DESC);
+HAVENAME_FUNC(m_astLevels, vname, m_iLevelsCount);
+
+static int Levels_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
+    ST_LINE_INFO *pstLineInfo = pvLineInfo;
+
     if ( !strcmp(acKey, "Name") )
     {
-#ifdef USE_TEMPLATE
-        if ( 0 != pcTemplate[0] )
+        char acName[41];
+        strncpy(acName, pstLineInfo->vLevelName, sizeof(pstLineInfo->vLevelName));
+
+        if ( !String_BuildName(FORMAT(levels), 0xFFFF, pcTemplate, acName, pstLineInfo->vId, HAVENAME, acOutput) )
         {
-            strcpy(acOutput, pcTemplate);
+            strncpy(acOutput, pstLineInfo->vLevelName, sizeof(pstLineInfo->vLevelName));
         }
-        else
-#endif
-        {
-            sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
-        }
+
+        strncpy(m_astLevels[pstLineInfo->vId].vname, acOutput, sizeof(m_astLevels[pstLineInfo->vId].vname));
+        String_Trim(m_astLevels[pstLineInfo->vId].vname);
+        m_iLevelsCount++;
+        return 1;
+    }
+
+    return 0;
+}
+
+static int Levels_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
+{
+    ST_LINE_INFO *pstLineInfo = pvLineInfo;
+
+    if ( !strcmp(acKey, "Name") )
+    {
+        strncpy(acOutput, m_astLevels[pstLineInfo->vId].vname, sizeof(m_astLevels[pstLineInfo->vId].vname));
+
         return 1;
     }
 
@@ -997,18 +1025,9 @@ out:
     return result;
 }
 
-int process_levels(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
+static void Levels_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLineInfo)
 {
-    char acBinTempFile[256] = {0};
-
-    ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
-
-    ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
-
-    if ( 1 != Levels_CombineBin(acBinPath) )
-    {
-        return 0;
-    }
+    INIT_VALUE_BUFFER;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Id, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Pal, UCHAR);
@@ -1261,10 +1280,38 @@ int process_levels(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Position, UINT);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, LOSDraw, INT);
+}
+
+int process_levels(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
+{
+    char acBinTempFile[256] = {0};
+
+    ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
+
+    ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
     switch ( enPhase )
     {
         case EN_MODULE_SELF_DEPEND:
+            if ( 1 != Levels_CombineBin(acBinPath) )
+            {
+                return 0;
+            }
+
+            Levels_InitValueMap(pstValueMap, pstLineInfo);
+
+            m_iLevelsCount = 0;
+
+            m_stCallback.pfnFieldProc = Levels_FieldProc_Pre;
+            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME(FILE_PREFIX);
+            m_stCallback.pfnFinished = FINISHED_FUNC_NAME(FILE_PREFIX);
+            m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
+            m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
+
+            sprintf(acBinTempFile, "%s\\%s", acBinPath, BIN_TEMP);
+
+            return process_file_special_bin(acTemplatePath, acBinTempFile, NULL, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo),
+                pstValueMap, Global_GetValueMapCount(), &m_stCallback);
             break;
 
         case EN_MODULE_OTHER_DEPEND:
@@ -1276,6 +1323,13 @@ int process_levels(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_
             break;
 
         case EN_MODULE_INIT:
+            if ( 1 != Levels_CombineBin(acBinPath) )
+            {
+                return 0;
+            }
+
+            Levels_InitValueMap(pstValueMap, pstLineInfo);
+
             m_stCallback.pfnConvertValue = Levels_ConvertValue;
             m_stCallback.pfnFieldProc = Levels_FieldProc;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
@@ -1294,3 +1348,12 @@ int process_levels(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_
     return 1;
 }
 
+char *Levels_GetLevelName(unsigned int id)
+{
+    if ( id >= m_iLevelsCount )
+    {
+        return NULL;
+    }
+
+    return m_astLevels[id].vname;
+}

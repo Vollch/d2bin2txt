@@ -26,7 +26,7 @@ The other place is the dmg-mon and att-mon properties.
 
 typedef struct
 {
-    unsigned short iPadding0;
+    unsigned short vId;
     unsigned short vequiv1;
 
     unsigned short vequiv2;
@@ -38,7 +38,7 @@ typedef struct
 
 typedef struct
 {
-    unsigned char vtype[32];
+    unsigned char vtype[64];
 } ST_MONTYPE;
 
 static char *m_apcInternalProcess[] =
@@ -52,6 +52,7 @@ static unsigned int m_iMonTypeCount = 0;
 static ST_MONTYPE *m_astMonType = NULL;
 
 MODULE_SETLINES_FUNC(FILE_PREFIX, m_astMonType, ST_MONTYPE);
+HAVENAME_FUNC(m_astMonType, vtype, m_iMonTypeCount);
 
 char *MonType_GetType(unsigned int id)
 {
@@ -65,27 +66,18 @@ char *MonType_GetType(unsigned int id)
 
 static int MonType_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
+     ST_LINE_INFO *pstLineInfo = pvLineInfo;
+
     if ( !strcmp(acKey, "type") )
     {
-#ifdef USE_TEMPLATE
-        if ( 0 != pcTemplate[0] )
+        char *pcName = String_FindString(pstLineInfo->vstrplur, "dummy");
+        if ( !String_BuildName(FORMAT(montype), pstLineInfo->vstrsing, pcTemplate, pcName, pstLineInfo->vId, HAVENAME, acOutput) )
         {
-            strcpy(acOutput, pcTemplate);
+            sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vId);
         }
-        else if ( 0 < iLineNo )
-        {
-            sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-#else
-        sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
-#endif
 
-        strncpy(m_astMonType[m_iMonTypeCount].vtype, acOutput, sizeof(m_astMonType[m_iMonTypeCount].vtype));
-        String_Trim(m_astMonType[m_iMonTypeCount].vtype);
+        strncpy(m_astMonType[pstLineInfo->vId].vtype, acOutput, sizeof(m_astMonType[pstLineInfo->vId].vtype));
+        String_Trim(m_astMonType[pstLineInfo->vId].vtype);
         m_iMonTypeCount++;
 
         return 1;
@@ -105,22 +97,7 @@ static int MonType_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo
 {
     if ( !strcmp(acKey, "type") )
     {
-#ifdef USE_TEMPLATE
-        if ( 0 != pcTemplate[0] )
-        {
-            strcpy(acOutput, pcTemplate);
-        }
-        else if ( 0 < iLineNo )
-        {
-            sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-#else
-        sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
-#endif
+        strncpy(acOutput, m_astMonType[iLineNo].vtype, sizeof(m_astMonType[iLineNo].vtype));
 
         return 1;
     }
@@ -210,11 +187,9 @@ static int MonType_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate,
     return result;
 }
 
-int process_montype(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
+static void MonType_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLineInfo)
 {
-    ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
-
-    ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
+    INIT_VALUE_BUFFER;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, equiv1, USHORT);
 
@@ -223,10 +198,21 @@ int process_montype(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, strsing, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, strplur, USHORT);
+}
+
+int process_montype(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
+{
+    ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
+
+    ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
     switch ( enPhase )
     {
         case EN_MODULE_SELF_DEPEND:
+            MODULE_DEPEND_CALL(string, acTemplatePath, acBinPath, acTxtPath);
+
+            MonType_InitValueMap(pstValueMap, pstLineInfo);
+
             m_iMonTypeCount = 0;
 
             m_stCallback.pfnFieldProc = MonType_FieldProc_Pre;
@@ -234,20 +220,17 @@ int process_montype(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
             m_stCallback.pfnFinished = FINISHED_FUNC_NAME(FILE_PREFIX);
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
-            return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
+            return process_file(acTemplatePath, acBinPath, NULL, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);
             break;
 
         case EN_MODULE_OTHER_DEPEND:
-            MODULE_DEPEND_CALL(string, acTemplatePath, acBinPath, acTxtPath);
-            MODULE_DEPEND_CALL(montype, acTemplatePath, acBinPath, acTxtPath);
-            break;
-
         case EN_MODULE_RESERVED_1:
         case EN_MODULE_RESERVED_2:
             break;
 
         case EN_MODULE_INIT:
+            MonType_InitValueMap(pstValueMap, pstLineInfo);
             File_CopyFile(acTemplatePath, acTxtPath, "monname", ".txt");
 
             m_stCallback.pfnConvertValue = MonType_ConvertValue;

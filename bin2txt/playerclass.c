@@ -18,7 +18,7 @@ static char *m_apcInternalProcess[] =
     NULL,
 };
 
-static unsigned int m_iPlayerClass= 0;
+static unsigned int m_iPlayerClass = 0;
 static ST_PLAYER_CLASS *m_astPlayerClass = NULL;
 
 MODULE_SETLINES_FUNC(FILE_PREFIX, m_astPlayerClass, ST_PLAYER_CLASS);
@@ -29,19 +29,15 @@ static int PlayerClass_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLi
 
     if ( !strcmp(acKey, "Player Class") )
     {
-        if ( 0 != pcTemplate[0] )
-        {
-            strcpy(acOutput, pcTemplate);
-        }
-        else
+        strncpy(m_astPlayerClass[m_iPlayerClass].vCode, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
+
+        if ( !String_BuildName(FORMAT(playerclass), 0xFFFF, pcTemplate, m_astPlayerClass[m_iPlayerClass].vCode, iLineNo, NULL, acOutput) )
         {
             strncpy(acOutput, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
         }
 
-        strncpy(m_astPlayerClass[m_iPlayerClass].vCode, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
         String_Trim(m_astPlayerClass[m_iPlayerClass].vCode);
         m_iPlayerClass++;
-
         return 1;
     }
 

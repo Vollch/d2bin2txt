@@ -30,21 +30,15 @@ static int HitClass_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineN
 
     if ( !strcmp(acKey, "Hit Class") )
     {
-#ifdef USE_TEMPLATE
-        if ( 0 != pcTemplate[0] )
-        {
-            strcpy(acOutput, pcTemplate);
-        }
-        else
-#endif
+        strncpy(m_astHitClass[m_iHitClassCount].vCode, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
+
+        if ( !String_BuildName(FORMAT(hitclass), 0xFFFF, pcTemplate, m_astHitClass[m_iHitClassCount].vCode, m_iHitClassCount, NULL, acOutput) )
         {
             strncpy(acOutput, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
         }
 
-        strncpy(m_astHitClass[m_iHitClassCount].vCode, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
         String_Trim(m_astHitClass[m_iHitClassCount].vCode);
         m_iHitClassCount++;
-
         return 1;
     }
     else if ( !strcmp(acKey, "*EOL") )

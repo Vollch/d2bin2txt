@@ -53,43 +53,22 @@ typedef struct
 
 static char *m_apcInternalProcess[] =
 {
-    "Shrine Type",
     "Shrine name",
     NULL,
 };
 
 static char *m_apcNotUsed[] =
 {
+    "Shrine Type",
     "Effect",
     NULL,
 };
 
 static int Shrines_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
-    if ( !strcmp(acKey, "Shrine Type") )
+    if ( !strcmp(acKey, "Shrine name") )
     {
-#ifdef USE_TEMPLATE
-        if ( 0 != pcTemplate[0] )
-        {
-            strcpy(acOutput, pcTemplate);
-        }
-        else
-#endif
-        {
-            sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
-        }
-
-        return 1;
-    }
-    else if ( !strcmp(acKey, "Shrine name") )
-    {
-#ifdef USE_TEMPLATE
-        if ( 0 != pcTemplate[0] )
-        {
-            strcpy(acOutput, pcTemplate);
-        }
-        else
-#endif
+        if ( !String_BuildName(FORMAT(shrines), 0xFFFF, pcTemplate, NAME_PREFIX, iLineNo, NULL, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
         }

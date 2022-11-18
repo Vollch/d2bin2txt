@@ -73,37 +73,39 @@ static unsigned int m_iObjGroupCount = 0;
 
 static int ObjGroup_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
-    int result = 0;
+    ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
     if ( !strcmp("Offset", acKey) )
     {
-#ifdef USE_TEMPLATE
-        if ( 0 == pcTemplate[0] )
-#endif
-        {
-            sprintf(acOutput, "%u", m_iObjGroupCount);
-            result = 1;
-        }
+        sprintf(acOutput, "%u", m_iObjGroupCount);
 
         m_iObjGroupCount++;
+        return 1;
     }
     else if ( !strcmp("GroupName", acKey) )
     {
-#ifdef USE_TEMPLATE
-        if ( 0 != pcTemplate[0] )
+        char acObjects[513] = {0};
+        unsigned int* piObjects[] = { &pstLineInfo->vID0, &pstLineInfo->vID1, &pstLineInfo->vID2, &pstLineInfo->vID3,
+                                      &pstLineInfo->vID4, &pstLineInfo->vID5, &pstLineInfo->vID6, &pstLineInfo->vID7 };
+        int i;
+        for ( i = 0; i < 8; i++ )
         {
-            strcpy(acOutput, pcTemplate);
+            char *pcName = Objects_GetObjectName(*piObjects[i]);
+            if ( pcName && stricmp(pcName, "dummy") )
+            {
+                strncpy(acObjects + strlen(acObjects), pcName, 64);
+            }
         }
-        else
-#endif
+
+        if ( !String_BuildName(FORMAT(objgroup), 0xFFFF, pcTemplate, acObjects, iLineNo, NULL, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
         }
 
-        result = 1;
+        return 1;
     }
 
-    return result;
+    return 0;
 }
 
 int process_objgroup(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
@@ -147,14 +149,10 @@ int process_objgroup(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
     switch ( enPhase )
     {
         case EN_MODULE_SELF_DEPEND:
-            m_stCallback.pfnFieldProc = ObjGroup_FieldProc;
-            m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
-
-            return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
-                pstValueMap, Global_GetValueMapCount(), &m_stCallback);
             break;
 
         case EN_MODULE_OTHER_DEPEND:
+            MODULE_DEPEND_CALL(objects, acTemplatePath, acBinPath, acTxtPath);
             break;
 
         case EN_MODULE_RESERVED_1:
@@ -162,6 +160,11 @@ int process_objgroup(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
             break;
 
         case EN_MODULE_INIT:
+            m_stCallback.pfnFieldProc = ObjGroup_FieldProc;
+            m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
+
+            return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
+                pstValueMap, Global_GetValueMapCount(), &m_stCallback);
             break;
 
         default:

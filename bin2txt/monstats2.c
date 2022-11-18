@@ -1388,7 +1388,7 @@ int process_monstats2(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
 
             m_iMonStatsCount = 0;
 
-            return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo),
+            return process_file(acTemplatePath, acBinPath, NULL, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo),
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);
             break;
 

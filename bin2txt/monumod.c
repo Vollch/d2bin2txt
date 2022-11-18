@@ -393,22 +393,10 @@ static int MonUMOD_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo
 
     if ( !strcmp(acKey, "uniquemod") )
     {
-#ifdef USE_TEMPLATE
-        if ( 0 != pcTemplate[0] )
-        {
-            strcpy(acOutput, pcTemplate);
-        }
-        else if ( 0 < iLineNo )
+        if ( !String_BuildName(FORMAT(monumod), 0xFFFF, pcTemplate, NAME_PREFIX, pstLineInfo->vid, NULL, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vid);
         }
-        else
-        {
-            acOutput[0] = 0;
-        }
-#else
-        sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vid);
-#endif
 
         return 1;
     }

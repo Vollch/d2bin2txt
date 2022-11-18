@@ -19,13 +19,10 @@ static int Gamble_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo,
 
     if ( !strcmp(acKey, "name") )
     {
-#ifdef USE_TEMPLATE
-        if ( 0 != pcTemplate[0] )
-        {
-            strcpy(acOutput, pcTemplate);
-        }
-        else
-#endif
+        char acName[13];
+        strncpy(acName, pstLineInfo->vcode, sizeof(pstLineInfo->vcode));
+
+        if ( !String_BuildName(FORMAT(gamble), Misc_GetItemString2(pstLineInfo->vcode), pcTemplate, acName, iLineNo, NULL, acOutput) )
         {
             strncpy(acOutput, pstLineInfo->vcode, sizeof(pstLineInfo->vcode));
         }
@@ -57,18 +54,26 @@ int process_gamble(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_
     switch ( enPhase )
     {
         case EN_MODULE_SELF_DEPEND:
+            break;
+
+        case EN_MODULE_OTHER_DEPEND:
+            MODULE_DEPEND_CALL(string, acTemplatePath, acBinPath, acTxtPath);
+            MODULE_DEPEND_CALL(armor, acTemplatePath, acBinPath, acTxtPath);
+            MODULE_DEPEND_CALL(weapons, acTemplatePath, acBinPath, acTxtPath);
+            MODULE_DEPEND_CALL(misc, acTemplatePath, acBinPath, acTxtPath);
+            break;
+
+        case EN_MODULE_RESERVED_1:
+        case EN_MODULE_RESERVED_2:
+            break;
+
+        case EN_MODULE_INIT:
             //m_stCallback.pfnGetKey = Gamble_GetKey;
             m_stCallback.pfnFieldProc = Gamble_FieldProc;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);
-            break;
-
-        case EN_MODULE_OTHER_DEPEND:
-        case EN_MODULE_RESERVED_1:
-        case EN_MODULE_RESERVED_2:
-        case EN_MODULE_INIT:
         default:
             break;
     }

@@ -260,7 +260,7 @@ MODULE_SETLINES_FUNC(FILE_PREFIX, m_astTreasureClassEx, ST_TREASURECLASSEX);
 void TreasureClassEx_SetOffset(unsigned int uiOffset)
 {
     m_uiTcOffset = uiOffset;
-    my_printf("set tc to %d\r\n", uiOffset);
+    //my_printf("set tc to %d\r\n", uiOffset);
 }
 
 char *TreasureClassEx_GetItemTreasureClass(unsigned int id)

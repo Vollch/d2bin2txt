@@ -300,16 +300,11 @@ static int ItemRatio_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLine
 {
     if ( !strcmp(acKey, "Function") )
     {
-#ifdef USE_TEMPLATE
-        if ( 0 != pcTemplate[0] )
-        {
-            strcpy(acOutput, pcTemplate);
-        }
-        else
-#endif
+        if ( !String_BuildName(FORMAT(itemratio), 0xFFFF, pcTemplate, NAME_PREFIX, iLineNo, NULL, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
         }
+
         return 1;
     }
 

@@ -10,7 +10,7 @@ typedef struct
 
 typedef struct
 {
-    unsigned char vName[32];
+    unsigned char vName[64];
     //unsigned char vToken[20];
     unsigned char vCode[20];
 } ST_PLRMODE;
@@ -25,30 +25,28 @@ static unsigned int m_iPlrModeCount = 0;
 static ST_PLRMODE *m_astPlrMode = NULL;
 
 MODULE_SETLINES_FUNC(FILE_PREFIX, m_astPlrMode, ST_PLRMODE);
+HAVENAME_FUNC(m_astPlrMode, vName, m_iPlrModeCount);
 
 static int PlrMode_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
-    int result = 0;
 
     if ( !strcmp("Code", acKey) )
     {
-        if ( 0 == pcTemplate[0] )
+        char acName[21];
+        strncpy(acName, pstLineInfo->vToken, sizeof(pstLineInfo->vToken));
+        if ( !String_BuildName(FORMAT(plrmode), 0xFFFF, pcTemplate, acName, iLineNo, HAVENAME, acOutput) )
         {
-            strncpy(m_astPlrMode[m_iPlrModeCount].vCode, pstLineInfo->vToken, sizeof(m_astPlrMode[m_iPlrModeCount].vCode));
-            strncpy(m_astPlrMode[m_iPlrModeCount].vName, pstLineInfo->vName, sizeof(m_astPlrMode[m_iPlrModeCount].vName));
-            strcpy(acOutput, m_astPlrMode[m_iPlrModeCount].vCode);
-            result = 1;
+            strcpy(acOutput, pstLineInfo->vToken);
         }
-        else
-        {
-            strncpy(m_astPlrMode[m_iPlrModeCount].vCode, pcTemplate, sizeof(m_astPlrMode[m_iPlrModeCount].vCode));
-            strncpy(m_astPlrMode[m_iPlrModeCount].vName, pstLineInfo->vName, sizeof(m_astPlrMode[m_iPlrModeCount].vName));
-        }
+
+        strncpy(m_astPlrMode[m_iPlrModeCount].vCode, acOutput, sizeof(m_astPlrMode[m_iPlrModeCount].vCode));
+        strncpy(m_astPlrMode[m_iPlrModeCount].vName, pstLineInfo->vName, sizeof(m_astPlrMode[m_iPlrModeCount].vName));
         m_iPlrModeCount++;
+        return 1;
     }
 
-    return result;
+    return 0;
 }
 
 static char *PlrMode_GetKey(void *pvLineInfo, char *pcKey, unsigned int *iKeyLen)

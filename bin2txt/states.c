@@ -320,24 +320,32 @@ static unsigned int m_iItemStatesCount = 0;
 static ST_ITEM_STATES *m_astItemStates = NULL;
 
 MODULE_SETLINES_FUNC(FILE_PREFIX, m_astItemStates, ST_ITEM_STATES);
+HAVENAME_FUNC(m_astItemStates, vstate, m_iItemStatesCount);
 
 static int States_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
+    ST_LINE_INFO *pstLineInfo = pvLineInfo;
+
     if ( !strcmp(acKey, "state") )
     {
-#ifdef USE_TEMPLATE
-        if ( 0 != pcTemplate[0] )
+        char *pcName;
+        ( (pcName = Overlay_GetOverlay(pstLineInfo->voverlay1)) ||
+          (pcName = Overlay_GetOverlay(pstLineInfo->voverlay2)) ||
+          (pcName = Overlay_GetOverlay(pstLineInfo->voverlay3)) ||
+          (pcName = Overlay_GetOverlay(pstLineInfo->voverlay4)) ||
+          (pcName = Overlay_GetOverlay(pstLineInfo->vcastoverlay)) ||
+          (pcName = Overlay_GetOverlay(pstLineInfo->vremoverlay)) ||
+          (pcName = Overlay_GetOverlay(pstLineInfo->vpgsvoverlay)) ||
+          (pcName = Sounds_GetSoundName2(pstLineInfo->vonsound)) ||
+          (pcName = Sounds_GetSoundName2(pstLineInfo->voffsound)) );
+
+        if ( !String_BuildName(FORMAT(states), 0xFFFF, pcTemplate, pcName, pstLineInfo->vid, HAVENAME, acOutput) )
         {
-            strcpy(acOutput, pcTemplate);
-        }
-        else
-#endif
-        {
-            sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
+            sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vid);
         }
 
-        strncpy(m_astItemStates[m_iItemStatesCount].vstate, acOutput, sizeof(m_astItemStates[m_iItemStatesCount].vstate));
-        String_Trim(m_astItemStates[m_iItemStatesCount].vstate);
+        strncpy(m_astItemStates[pstLineInfo->vid].vstate, acOutput, sizeof(m_astItemStates[pstLineInfo->vid].vstate));
+        String_Trim(m_astItemStates[pstLineInfo->vid].vstate);
         m_iItemStatesCount++;
         return 1;
     }
@@ -354,18 +362,11 @@ static int States_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLin
 
 static int States_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
+    ST_LINE_INFO *pstLineInfo = pvLineInfo;
+
     if ( !strcmp(acKey, "state") )
     {
-#ifdef USE_TEMPLATE
-        if ( 0 != pcTemplate[0] )
-        {
-            strcpy(acOutput, pcTemplate);
-        }
-        else
-#endif
-        {
-            sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
-        }
+        strncpy(acOutput, m_astItemStates[pstLineInfo->vid].vstate, sizeof(m_astItemStates[pstLineInfo->vid].vstate));
 
         return 1;
     }
@@ -794,11 +795,9 @@ static int States_BitProc(void *pvLineInfo, char *acKey, char *acOutput)
     return result;
 }
 
-int process_states(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
+static void States_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLineInfo)
 {
-    ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
-
-    ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
+    INIT_VALUE_BUFFER;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, id, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, overlay1, USHORT);
@@ -890,10 +889,22 @@ int process_states(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, skill, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, missile, USHORT);
+}
+
+int process_states(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
+{
+    ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
+
+    ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
     switch ( enPhase )
     {
         case EN_MODULE_SELF_DEPEND:
+            MODULE_DEPEND_CALL(overlay, acTemplatePath, acBinPath, acTxtPath);
+            MODULE_DEPEND_CALL(sounds, acTemplatePath, acBinPath, acTxtPath);
+
+            States_InitValueMap(pstValueMap, pstLineInfo);
+
             m_stCallback.pfnFieldProc = States_FieldProc_Pre;
             m_stCallback.pfnSetLines = SETLINES_FUNC_NAME(FILE_PREFIX);
             m_stCallback.pfnFinished = FINISHED_FUNC_NAME(FILE_PREFIX);
@@ -902,14 +913,12 @@ int process_states(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_
 
             m_iItemStatesCount = 0;
 
-            return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo),
+            return process_file(acTemplatePath, acBinPath, NULL, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo),
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);
             break;
 
         case EN_MODULE_OTHER_DEPEND:
-            MODULE_DEPEND_CALL(overlay, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(itemstatcost, acTemplatePath, acBinPath, acTxtPath);
-            MODULE_DEPEND_CALL(sounds, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(itemtypes, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(events, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(skills, acTemplatePath, acBinPath, acTxtPath);
@@ -922,6 +931,8 @@ int process_states(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_
             break;
 
         case EN_MODULE_INIT:
+            States_InitValueMap(pstValueMap, pstLineInfo);
+
             m_stCallback.pfnFieldProc = States_FieldProc;
             m_stCallback.pfnConvertValue = States_ConvertValue;
             m_stCallback.pfnBitProc = States_BitProc;

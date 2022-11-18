@@ -345,7 +345,7 @@ typedef struct
 
 typedef struct
 {
-    unsigned char vcode[32];
+    unsigned char vcode[64];
 } ST_PROPERTY;
 
 static char *m_apcInternalProcess[] =
@@ -369,6 +369,7 @@ static unsigned int m_iPropertyCount = 0;
 static ST_PROPERTY *m_astProperty = NULL;
 
 MODULE_SETLINES_FUNC(FILE_PREFIX, m_astProperty, ST_PROPERTY);
+HAVENAME_FUNC(m_astProperty, vcode, m_iPropertyCount);
 
 static int Properties_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
@@ -396,17 +397,10 @@ char *Properties_GetProperty(unsigned int id)
 static int Properties_ConvertValue_Pre(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
-    int result = 0;
 
     if ( !strcmp("code", acKey) )
     {
-#ifdef USE_TEMPLATE
-        if ( 0 != pcTemplate[0] )
-        {
-            strcpy(acOutput, pcTemplate);
-        }
-        else
-#endif
+        if ( !String_BuildName(FORMAT(properties), ItemStatCost_GetString(pstLineInfo->vstat1), pcTemplate, ItemStatCost_GetStateName(pstLineInfo->vstat1), pstLineInfo->vcode, HAVENAME, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vcode);
         }
@@ -414,33 +408,23 @@ static int Properties_ConvertValue_Pre(void *pvLineInfo, char *acKey, char *pcTe
         strncpy(m_astProperty[pstLineInfo->vcode].vcode, acOutput, sizeof(m_astProperty[pstLineInfo->vcode].vcode));
         String_Trim(m_astProperty[pstLineInfo->vcode].vcode);
         m_iPropertyCount++;
-        result = 1;
+        return 1;
     }
 
-    return result;
+    return 0;
 }
 
 static int Properties_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
     char *pcResult;
-    int result = 0;
     int id;
 
     if ( !strcmp("code", acKey) )
     {
-#ifdef USE_TEMPLATE
-        if ( 0 != pcTemplate[0] )
-        {
-            strcpy(acOutput, pcTemplate);
-        }
-        else
-#endif
-        {
-            sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vcode);
-        }
+        strncpy(acOutput, m_astProperty[pstLineInfo->vcode].vcode, sizeof(m_astProperty[pstLineInfo->vcode].vcode));
 
-        result = 1;
+        return 1;
     }
     else if ( strstr(acKey, "stat") && 1 == sscanf(acKey, "stat%d", &id) )
     {
@@ -454,17 +438,15 @@ static int Properties_ConvertValue(void *pvLineInfo, char *acKey, char *pcTempla
         {
             acOutput[0] = 0;
         }
-        result = 1;
+        return 1;
     }
 
-    return result;
+    return 0;
 }
 
-int process_properties(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
+static void Properties_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLineInfo)
 {
-    ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
-
-    ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
+    INIT_VALUE_BUFFER;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, code, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, set1, UCHAR);
@@ -506,10 +488,21 @@ int process_properties(char *acTemplatePath, char *acBinPath, char *acTxtPath, E
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat6, USHORT);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat7, USHORT);
+}
+
+int process_properties(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
+{
+    ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
+
+    ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
     switch ( enPhase )
     {
         case EN_MODULE_SELF_DEPEND:
+            MODULE_DEPEND_CALL(itemstatcost, acTemplatePath, acBinPath, acTxtPath);
+
+            Properties_InitValueMap(pstValueMap, pstLineInfo);
+
             m_iPropertyCount = 0;
 
             m_stCallback.pfnConvertValue = Properties_ConvertValue_Pre;
@@ -518,19 +511,18 @@ int process_properties(char *acTemplatePath, char *acBinPath, char *acTxtPath, E
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
-            return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
+            return process_file(acTemplatePath, acBinPath, NULL, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);
             break;
 
         case EN_MODULE_OTHER_DEPEND:
-            MODULE_DEPEND_CALL(itemstatcost, acTemplatePath, acBinPath, acTxtPath);
-            break;
-
         case EN_MODULE_RESERVED_1:
         case EN_MODULE_RESERVED_2:
             break;
 
         case EN_MODULE_INIT:
+            Properties_InitValueMap(pstValueMap, pstLineInfo);
+
             m_stCallback.pfnConvertValue = Properties_ConvertValue;
             m_stCallback.pfnFieldProc = Properties_FieldProc;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;

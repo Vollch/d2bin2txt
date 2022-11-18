@@ -611,18 +611,17 @@ static char *m_apcInternalProcess[] =
 
 static int Inventory_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
+    ST_LINE_INFO *pstLineInfo = pvLineInfo;
+
     if ( !strcmp(acKey, "class") )
     {
-#ifdef USE_TEMPLATE
-        if ( 0 != pcTemplate[0] )
-        {
-            strcpy(acOutput, pcTemplate);
-        }
-        else
-#endif
+        char acSize[16] = {0};
+        sprintf(acSize, "%dx%d", pstLineInfo->vgridX, pstLineInfo->vgridY);
+        if ( !String_BuildName(FORMAT(inventory), 0xFFFF, pcTemplate, acSize, iLineNo, NULL, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
         }
+
         return 1;
     }
 

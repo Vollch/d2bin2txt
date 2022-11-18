@@ -5,6 +5,7 @@
 typedef struct
 {
     char vCode[4];
+    unsigned short vNameStr;
 } ST_LINE_INFO;
 
 typedef struct
@@ -24,13 +25,8 @@ static char *m_apcInternalProcess[] =
 
 MODULE_SETLINES_FUNC(FILE_PREFIX, m_astHireDesc, ST_HIRE_DESC);
 
-char *HireDesc_GetDesc(unsigned int id)
+char *HireDesc_MercDesc_GetDesc(unsigned int id)
 {
-    if ( g_iMercDesc )
-    {
-        return HireDesc_MercDesc_GetDesc(id);
-    }
-
     if ( id >= m_iHireDesc )
     {
         return NULL;
@@ -47,7 +43,7 @@ static int HireDesc_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineN
     {
         strncpy(m_astHireDesc[m_iHireDesc].vCode, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
 
-        if ( !String_BuildName(FORMAT(hiredesc), 0xFFFF, pcTemplate, m_astHireDesc[m_iHireDesc].vCode, m_iHireDesc, NULL, acOutput) )
+        if ( !String_BuildName(FORMAT(hiredesc), pstLineInfo->vNameStr, pcTemplate, m_astHireDesc[m_iHireDesc].vCode, m_iHireDesc, NULL, acOutput) )
         {
             strncpy(acOutput, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
         }
@@ -56,11 +52,26 @@ static int HireDesc_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineN
         m_iHireDesc++;
         return 1;
     }
-    else if ( !strcmp(acKey, "*EOL") )
-    {
-        acOutput[0] = '0';
-        acOutput[1] = 0;
 
+    return 0;
+}
+
+static int HireDesc_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
+{
+    ST_LINE_INFO *pstLineInfo = pvLineInfo;
+    char *pcResult;
+
+    if ( !strcmp("NameStr", acKey) )
+    {
+        pcResult = String_FindString(pstLineInfo->vNameStr, "dummy");
+        if ( pcResult )
+        {
+            strcpy(acOutput, pcResult);
+        }
+        else
+        {
+            acOutput[0] = 0;
+        }
         return 1;
     }
 
@@ -77,26 +88,33 @@ static char *HireDesc_GetKey(void *pvLineInfo, char *pcKey, unsigned int *iKeyLe
     return pcKey;
 }
 
-int process_hiredesc(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
+
+static void Hiredesc_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLineInfo)
+{
+    INIT_VALUE_BUFFER;
+
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Code, STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, NameStr, SHORT);
+}
+
+int process_hiredesc_MercDesc(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
     ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
 
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
-    if ( g_iMercDesc )
-    {
-        return process_hiredesc_MercDesc(acTemplatePath, acBinPath, acTxtPath, enPhase);
-    }
-
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Code, STRING);
-
     switch ( enPhase )
     {
         case EN_MODULE_SELF_DEPEND:
+            MODULE_DEPEND_CALL(string, acTemplatePath, acBinPath, acTxtPath);
+
+            Hiredesc_InitValueMap(pstValueMap, pstLineInfo);
+
             m_iHireDesc = 0;
 
             //m_stCallback.pfnGetKey = HireDesc_GetKey;
             m_stCallback.pfnFieldProc = HireDesc_FieldProc;
+            m_stCallback.pfnConvertValue = HireDesc_ConvertValue;
             m_stCallback.pfnSetLines = SETLINES_FUNC_NAME(FILE_PREFIX);
             m_stCallback.pfnFinished = FINISHED_FUNC_NAME(FILE_PREFIX);
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;

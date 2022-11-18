@@ -29,18 +29,13 @@ static int Compcode_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineN
 
     if ( !strcmp(acKey, "component") )
     {
-#ifdef USE_TEMPLATE
-        if ( 0 != pcTemplate[0] )
-        {
-            strcpy(acOutput, pcTemplate);
-        }
-        else
-#endif
+        strncpy(m_astCompcode[m_iCompcodeCount].vcomponent, pstLineInfo->vcode, sizeof(pstLineInfo->vcode));
+
+        if ( !String_BuildName(FORMAT(compcode), 0xFFFF, pcTemplate, m_astCompcode[m_iCompcodeCount].vcomponent, m_iCompcodeCount, NULL, acOutput) )
         {
             strncpy(acOutput, pstLineInfo->vcode, sizeof(pstLineInfo->vcode));
         }
 
-        strncpy(m_astCompcode[m_iCompcodeCount].vcomponent, pstLineInfo->vcode, sizeof(pstLineInfo->vcode));
         m_iCompcodeCount++;
         return 1;
     }

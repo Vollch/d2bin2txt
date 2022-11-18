@@ -29,18 +29,13 @@ static int Colors_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo,
 
     if ( !strcmp(acKey, "Transform Color") )
     {
-#ifdef USE_TEMPLATE
-        if ( 0 != pcTemplate[0] )
-        {
-            strcpy(acOutput, pcTemplate);
-        }
-        else
-#endif
+        strncpy(m_astColors[m_iColorCount].vCode, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
+
+        if ( !String_BuildName(FORMAT(colors), 0xFFFF, pcTemplate, m_astColors[m_iColorCount].vCode, m_iColorCount, NULL, acOutput) )
         {
             strncpy(acOutput, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
         }
 
-        strncpy(m_astColors[m_iColorCount].vCode, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
         String_Trim(m_astColors[m_iColorCount].vCode);
         m_iColorCount++;
         return 1;

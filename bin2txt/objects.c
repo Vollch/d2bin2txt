@@ -693,6 +693,11 @@ typedef struct
     unsigned int vAutoMap;
 } ST_LINE_INFO;
 
+typedef struct
+{
+    char vName[64];
+} ST_OBJECTS;
+
 static char *m_apcNotUsed[] =
 {
     "description - not loaded",
@@ -707,25 +712,25 @@ static char *m_apcInternalProcess[] =
 };
 
 static unsigned int m_iObjectsCount = 0;
+static ST_OBJECTS *m_astObjects = NULL;
+
+MODULE_SETLINES_FUNC(FILE_PREFIX, m_astObjects, ST_OBJECTS);
 
 static int Objects_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
-    int result = 0;
+    ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
     if ( !strcmp("Id", acKey) )
     {
-#ifdef USE_TEMPLATE
-        if ( 0 == pcTemplate[0] )
-#endif
-        {
-            sprintf(acOutput, "%u", m_iObjectsCount);
-            result = 1;
-        }
+        sprintf(acOutput, "%u", m_iObjectsCount);
 
+        strncpy(m_astObjects[m_iObjectsCount].vName, pstLineInfo->vName, sizeof(m_astObjects[m_iObjectsCount].vName));
+        String_Trim(m_astObjects[m_iObjectsCount].vName);
         m_iObjectsCount++;
+        return 1;
     }
 
-    return result;
+    return 0;
 }
 
 int process_objects(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
@@ -945,6 +950,8 @@ int process_objects(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
     {
         case EN_MODULE_SELF_DEPEND:
             m_stCallback.pfnFieldProc = Objects_FieldProc;
+            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME(FILE_PREFIX);
+            m_stCallback.pfnFinished = FINISHED_FUNC_NAME(FILE_PREFIX);
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
@@ -969,3 +976,12 @@ int process_objects(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
     return 1;
 }
 
+char *Objects_GetObjectName(unsigned int id)
+{
+    if ( id >= m_iObjectsCount )
+    {
+        return NULL;
+    }
+
+    return m_astObjects[id].vName;
+}
