@@ -707,6 +707,7 @@ static int check_missing(char *pcHeader, char *pcLineEnd, ST_VALUE_MAP *astValue
     int i;
     char acTempKey[256] = {0};
 
+    m_acTempBuffer[0] = 0;
     //逐字段处理
     do
     {
@@ -736,7 +737,7 @@ static int check_missing(char *pcHeader, char *pcLineEnd, ST_VALUE_MAP *astValue
         }
         else
         {
-            my_error("invalid head at %s\r\n", pcHeader);
+            my_error("invalid head at %s of %s\r\n", pcHeader, pcFileName);
             result = 0;
             break;
         }
@@ -749,6 +750,7 @@ static int check_missing(char *pcHeader, char *pcLineEnd, ST_VALUE_MAP *astValue
         {
             if ( !stricmp(acTempKey, astValueMap[i].acKeyName) )
             {
+                astValueMap[i].iActiveColumn = 0;
                 break;
             }
         }
@@ -760,20 +762,35 @@ static int check_missing(char *pcHeader, char *pcLineEnd, ST_VALUE_MAP *astValue
             }
             else if ( pstCallback && Is_StringInList(pstCallback->ppcKeyNotUsed, pcHeader) )
             {
-                my_printf("Not Used Field: %s\r\n", pcHeader);
+                sprintf(&m_acTempBuffer[strlen(m_acTempBuffer)], "  Not Used Field: %s\r\n", pcHeader);
             }
             else if ( pstCallback && Is_StringInList(pstCallback->ppcKeyNotParsed, pcHeader) )
             {
-                my_printf("Not Parsed Field: %s\r\n", pcHeader);
+                sprintf(&m_acTempBuffer[strlen(m_acTempBuffer)], "  Not Parsed Field: %s\r\n", pcHeader);
             }
             else
             {
-                my_printf("Unknown Field: %s\r\n", pcHeader);
+                sprintf(&m_acTempBuffer[strlen(m_acTempBuffer)], "  Unknown Field: %s\r\n", pcHeader);
             }
         }
 
         *pcAnchor = bAnchor;
     } while ( (pcHeader = strchr(pcHeader, '\t')) && pcHeader < pcLineEnd && pcHeader++ );
+
+    for ( i = 0; i < iCount; i++ )
+    {
+        if ( astValueMap[i].iActiveColumn )
+        {
+            char acField[128] = {0};
+            String_RestoreSpecialChar(astValueMap[i].acKeyName, acField);
+            sprintf(&m_acTempBuffer[strlen(m_acTempBuffer)], "  Missing Field: %s\r\n", acField);
+        }
+    }
+
+    if ( m_acTempBuffer[0] )
+    {
+        my_printf("%s.txt template:\r\n%s", pcFileName, m_acTempBuffer);
+    }
 
     return result;
 }
@@ -931,6 +948,51 @@ loop:
     return process_line_x(pcHeader, pcLineEnd, pcLineStart, pcTxt, acClass, pvLineInfo, astValueMap, iCount, pstCallback, iLineNo);
 }
 
+static int check_active(void *pvLineInfo, int iLineLength, ST_VALUE_MAP *pstValueMap, int iValueCount, FILE *pfBinHandle, ST_FILE_HEADER stFileHeader)
+{
+    unsigned int i, j;
+
+    memset(m_acTempBuffer, 0, iLineLength * 3);
+
+    if ( iLineLength != fread((m_acTempBuffer+iLineLength), 1, iLineLength, pfBinHandle) )
+    {
+        return 0;
+    }
+
+    for ( i = 1; i < stFileHeader.iLines; i++ )
+    {
+        if ( iLineLength != fread((m_acTempBuffer+iLineLength*2), 1, iLineLength, pfBinHandle) )
+        {
+            return 0;
+        }
+
+        for ( j = 0; j < (unsigned int)iLineLength; j ++ )
+        {
+            if ( m_acTempBuffer[iLineLength+j] != m_acTempBuffer[iLineLength*2+j] )
+            {
+                m_acTempBuffer[j] = 1;
+            }
+        }
+    }
+    fseek(pfBinHandle, sizeof(stFileHeader), SEEK_SET);
+
+    for ( j = 0; j < (unsigned int)iValueCount; j++ )
+    {
+        unsigned int iFrom = (unsigned int)pstValueMap[j].pvValue - (unsigned int)pvLineInfo;
+        unsigned int iTo = iFrom + pstValueMap[j].iValueLen;
+        for ( i = iFrom; i < iTo; i++ )
+        {
+            if ( m_acTempBuffer[i] )
+            {
+                pstValueMap[j].iActiveColumn = 1;
+                break;
+            }
+        }
+    }
+
+    return 1;
+}
+
 static int process_file_x(char *acTemplatePath, char *acBinPath, char *acTxtPath, char *pcFilename,
     void *pvLineInfo, int iLineLength, ST_VALUE_MAP *pstValueMap, int iValueCount,
     ST_CALLBACK *pstCallback, char *pcBinSplitter)
@@ -1080,17 +1142,26 @@ static int process_file_x(char *acTemplatePath, char *acBinPath, char *acTxtPath
         pcAnchor = strchr(pcExpansion, '\r');
     }
 
-    //检查有哪些字段没有处理
-    if ( 0 == check_missing(acTxtBuf, strchr(acTxtBuf, '\r'), pstValueMap, iValueCount, pcFilename, pstCallback) )
-    {
-        goto error;
-    }
-
     //读取bin文件的文件头
     if ( sizeof(stFileHeader) != fread(&stFileHeader, 1, sizeof(stFileHeader), pfBinHandle) )
     {
         my_error("read %s bin file head fail\r\n", pcFilename);
         goto error;
+    }
+
+    if ( acTxtPath )
+    {
+        if ( !check_active(pvLineInfo, iLineLength, pstValueMap, iValueCount, pfBinHandle, stFileHeader) )
+        {
+            my_error("active columns detection failed\r\n", pcFilename);
+            goto error;
+        }
+
+        //检查有哪些字段没有处理
+        if ( !check_missing(acTxtBuf, strchr(acTxtBuf, '\r'), pstValueMap, iValueCount, pcFilename, pstCallback) )
+        {
+            goto error;
+        }
     }
 
     //通知该模块，bin文件的行数，便于分配内存

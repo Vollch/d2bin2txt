@@ -187,6 +187,7 @@ typedef struct
     void *pvValue;
     ENUM_VALUE_TYPE enValueType;
     int iValueLen;
+    int iActiveColumn;
 } ST_VALUE_MAP;
 
 #define INIT_VALUE_BUFFER \
@@ -231,6 +232,7 @@ typedef struct
         map[m_iValueMapIndex].pvValue = &line->v##key;\
         map[m_iValueMapIndex].enValueType = EN_VALUE_##type;\
         map[m_iValueMapIndex].iValueLen = sizeof(line->v##key);\
+        map[m_iValueMapIndex].iActiveColumn = 0;\
         m_iValueMapIndex++;\
     } while (0)
 
@@ -240,6 +242,7 @@ typedef struct
         map[m_iValueMapIndex].pvValue = &line->v##field;\
         map[m_iValueMapIndex].enValueType = EN_VALUE_##type;\
         map[m_iValueMapIndex].iValueLen = sizeof(line->v##field);\
+        map[m_iValueMapIndex].iActiveColumn = 0;\
         m_iValueMapIndex++;\
     } while (0)
 
