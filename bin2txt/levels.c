@@ -885,73 +885,6 @@ static int Levels_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo,
     return 0;
 }
 
-static int Levels_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
-{
-    ST_LINE_INFO *pstLineInfo = pvLineInfo;
-    char *pcResult;
-    int id;
-    int result = 0;
-
-    if ( 1 == sscanf(acKey, "mon%d", &id) )
-    {
-        unsigned short *pwMon = &pstLineInfo->vmon1;
-        pcResult = MonStats_GetStatsName(pwMon[id - 1]);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( 1 == sscanf(acKey, "nmon%d", &id) )
-    {
-        unsigned short *pwMon = &pstLineInfo->vnmon1;
-        pcResult = MonStats_GetStatsName(pwMon[id - 1]);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( 1 == sscanf(acKey, "umon%d", &id) )
-    {
-        unsigned short *pwMon = &pstLineInfo->vumon1;
-        pcResult = MonStats_GetStatsName(pwMon[id - 1]);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( 1 == sscanf(acKey, "cmon%d", &id) )
-    {
-        unsigned short *pwMon = &pstLineInfo->vcmon1;
-        pcResult = MonStats_GetStatsName(pwMon[id - 1]);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-
-    return result;
-}
-
 static int Levels_CombineBin(char *acBinPath)
 {
     int result = 1;
@@ -1070,124 +1003,124 @@ static void Levels_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLine
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, rangedspawn, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, NumMon, USHORT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mon1, USHORT);   //MonStats
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mon1, USHORT_MONSTAT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mon2, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mon3, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mon2, USHORT_MONSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mon3, USHORT_MONSTAT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mon4, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mon5, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mon4, USHORT_MONSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mon5, USHORT_MONSTAT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mon6, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mon7, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mon6, USHORT_MONSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mon7, USHORT_MONSTAT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mon8, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mon9, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mon8, USHORT_MONSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mon9, USHORT_MONSTAT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mon10, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mon11, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mon10, USHORT_MONSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mon11, USHORT_MONSTAT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mon12, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mon13, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mon12, USHORT_MONSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mon13, USHORT_MONSTAT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mon14, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mon15, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mon14, USHORT_MONSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mon15, USHORT_MONSTAT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mon16, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mon17, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mon16, USHORT_MONSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mon17, USHORT_MONSTAT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mon18, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mon19, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mon18, USHORT_MONSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mon19, USHORT_MONSTAT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mon20, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mon21, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mon20, USHORT_MONSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mon21, USHORT_MONSTAT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mon22, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mon23, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mon22, USHORT_MONSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mon23, USHORT_MONSTAT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mon24, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mon25, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mon24, USHORT_MONSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mon25, USHORT_MONSTAT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, nmon1, USHORT);   //MonStats
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, nmon2, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, nmon1, USHORT_MONSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, nmon2, USHORT_MONSTAT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, nmon3, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, nmon4, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, nmon3, USHORT_MONSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, nmon4, USHORT_MONSTAT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, nmon5, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, nmon6, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, nmon5, USHORT_MONSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, nmon6, USHORT_MONSTAT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, nmon7, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, nmon8, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, nmon7, USHORT_MONSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, nmon8, USHORT_MONSTAT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, nmon9, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, nmon10, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, nmon9, USHORT_MONSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, nmon10, USHORT_MONSTAT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, nmon11, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, nmon12, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, nmon11, USHORT_MONSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, nmon12, USHORT_MONSTAT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, nmon13, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, nmon14, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, nmon13, USHORT_MONSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, nmon14, USHORT_MONSTAT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, nmon15, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, nmon16, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, nmon15, USHORT_MONSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, nmon16, USHORT_MONSTAT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, nmon17, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, nmon18, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, nmon17, USHORT_MONSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, nmon18, USHORT_MONSTAT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, nmon19, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, nmon20, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, nmon19, USHORT_MONSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, nmon20, USHORT_MONSTAT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, nmon21, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, nmon22, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, nmon21, USHORT_MONSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, nmon22, USHORT_MONSTAT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, nmon23, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, nmon24, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, nmon23, USHORT_MONSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, nmon24, USHORT_MONSTAT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, nmon25, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, umon1, USHORT);  //monstats
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, nmon25, USHORT_MONSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, umon1, USHORT_MONSTAT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, umon2, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, umon3, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, umon2, USHORT_MONSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, umon3, USHORT_MONSTAT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, umon4, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, umon5, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, umon4, USHORT_MONSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, umon5, USHORT_MONSTAT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, umon6, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, umon7, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, umon6, USHORT_MONSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, umon7, USHORT_MONSTAT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, umon8, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, umon9, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, umon8, USHORT_MONSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, umon9, USHORT_MONSTAT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, umon10, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, umon11, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, umon10, USHORT_MONSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, umon11, USHORT_MONSTAT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, umon12, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, umon13, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, umon12, USHORT_MONSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, umon13, USHORT_MONSTAT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, umon14, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, umon15, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, umon14, USHORT_MONSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, umon15, USHORT_MONSTAT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, umon16, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, umon17, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, umon16, USHORT_MONSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, umon17, USHORT_MONSTAT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, umon18, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, umon19, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, umon18, USHORT_MONSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, umon19, USHORT_MONSTAT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, umon20, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, umon21, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, umon20, USHORT_MONSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, umon21, USHORT_MONSTAT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, umon22, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, umon23, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, umon22, USHORT_MONSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, umon23, USHORT_MONSTAT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, umon24, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, umon25, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, umon24, USHORT_MONSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, umon25, USHORT_MONSTAT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cmon1, USHORT);  //monstats
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cmon2, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cmon1, USHORT_MONSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cmon2, USHORT_MONSTAT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cmon3, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cmon4, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cmon3, USHORT_MONSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cmon4, USHORT_MONSTAT);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cpct1, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cpct2, USHORT);
@@ -1330,7 +1263,6 @@ int process_levels(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_
 
             Levels_InitValueMap(pstValueMap, pstLineInfo);
 
-            m_stCallback.pfnConvertValue = Levels_ConvertValue;
             m_stCallback.pfnFieldProc = Levels_FieldProc;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;

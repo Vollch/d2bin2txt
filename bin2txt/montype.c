@@ -112,92 +112,17 @@ static int MonType_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo
     return 0;
 }
 
-static int MonType_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
-{
-    ST_LINE_INFO *pstLineInfo = pvLineInfo;
-    char *pcResult;
-    int result = 0;
-
-    if ( !strcmp(acKey, "equiv1") )
-    {
-        pcResult = MonType_GetType(pstLineInfo->vequiv1);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "equiv2") )
-    {
-        pcResult = MonType_GetType(pstLineInfo->vequiv2);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "equiv3") )
-    {
-        pcResult = MonType_GetType(pstLineInfo->vequiv3);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "strsing") )
-    {
-        pcResult = String_FindString(pstLineInfo->vstrsing, "dummy");
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "strplur") )
-    {
-        pcResult = String_FindString(pstLineInfo->vstrplur, "dummy");
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-
-    return result;
-}
-
 static void MonType_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLineInfo)
 {
     INIT_VALUE_BUFFER;
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, equiv1, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, equiv1, USHORT_MONTYPE);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, equiv2, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, equiv3, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, equiv2, USHORT_MONTYPE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, equiv3, USHORT_MONTYPE);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, strsing, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, strplur, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, strsing, USHORT_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, strplur, USHORT_STRING);
 }
 
 int process_montype(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
@@ -233,7 +158,6 @@ int process_montype(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
             MonType_InitValueMap(pstValueMap, pstLineInfo);
             File_CopyFile(acTemplatePath, acTxtPath, "monname", ".txt");
 
-            m_stCallback.pfnConvertValue = MonType_ConvertValue;
             m_stCallback.pfnFieldProc = MonType_FieldProc;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 

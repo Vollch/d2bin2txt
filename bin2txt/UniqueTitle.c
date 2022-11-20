@@ -16,29 +16,6 @@ static char *m_apcInternalProcess[] =
 
 static unsigned int m_iUniqueTitle = 0;
 
-static int UniqueTitle_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
-{
-    ST_LINE_INFO *pstLineInfo = pvLineInfo;
-    char *pcResult;
-    int result = 0;
-
-    if ( !strcmp(acKey, "Name") )
-    {
-        pcResult = String_FindString(pstLineInfo->vName, NULL);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-
-    return result;
-}
-
 static int UniqueTitle_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
@@ -63,7 +40,7 @@ int process_uniquetitle(char *acTemplatePath, char *acBinPath, char *acTxtPath, 
 
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Name, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Name, USHORT_STRING);
 
     switch ( enPhase )
     {
@@ -79,7 +56,6 @@ int process_uniquetitle(char *acTemplatePath, char *acBinPath, char *acTxtPath, 
             break;
 
         case EN_MODULE_INIT:
-            m_stCallback.pfnConvertValue = UniqueTitle_ConvertValue;
             m_stCallback.pfnFieldProc = UniqueTitle_FieldProc;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 

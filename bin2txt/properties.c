@@ -417,27 +417,11 @@ static int Properties_ConvertValue_Pre(void *pvLineInfo, char *acKey, char *pcTe
 static int Properties_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
-    char *pcResult;
-    int id;
 
     if ( !strcmp("code", acKey) )
     {
         strncpy(acOutput, m_astProperty[pstLineInfo->vcode].vcode, sizeof(m_astProperty[pstLineInfo->vcode].vcode));
 
-        return 1;
-    }
-    else if ( strstr(acKey, "stat") && 1 == sscanf(acKey, "stat%d", &id) )
-    {
-        unsigned short *psSkill = (short *)&pstLineInfo->vstat1;
-        pcResult = ItemStatCost_GetStateName(psSkill[id-1]);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
         return 1;
     }
 
@@ -478,16 +462,16 @@ static void Properties_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pst
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, func6, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, func7, UCHAR);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat1, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat2, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat1, USHORT_ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat2, USHORT_ITEMSTAT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat3, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat4, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat3, USHORT_ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat4, USHORT_ITEMSTAT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat5, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat6, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat5, USHORT_ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat6, USHORT_ITEMSTAT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat7, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat7, USHORT_ITEMSTAT);
 }
 
 int process_properties(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)

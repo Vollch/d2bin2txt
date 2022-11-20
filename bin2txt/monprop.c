@@ -194,92 +194,92 @@ typedef struct
 {
     unsigned int vId;   //monstats
 
-    int vprop1;    //properties
+    unsigned int vprop1;    //properties
     int vpar1;
     int vmin1;
     int vmax1;
 
-    int vprop2;    //properties
+    unsigned int vprop2;    //properties
     int vpar2;
     int vmin2;
     int vmax2;
 
-    int vprop3;    //properties
+    unsigned int vprop3;    //properties
     int vpar3;
     int vmin3;
     int vmax3;
 
-    int vprop4;    //properties
+    unsigned int vprop4;    //properties
     int vpar4;
     int vmin4;
     int vmax4;
 
-    int vprop5;    //properties
+    unsigned int vprop5;    //properties
     int vpar5;
     int vmin5;
     int vmax5;
 
-    int vprop6;    //properties
+    unsigned int vprop6;    //properties
     int vpar6;
     int vmin6;
     int vmax6;
 
-    int vprop1myspmybr1Nmybr2;    //properties
+    unsigned int vprop1myspmybr1Nmybr2;    //properties
     int vpar1myspmybr1Nmybr2;
     int vmin1myspmybr1Nmybr2;
     int vmax1myspmybr1Nmybr2;
 
-    int vprop2myspmybr1Nmybr2;    //properties
+    unsigned int vprop2myspmybr1Nmybr2;    //properties
     int vpar2myspmybr1Nmybr2;
     int vmin2myspmybr1Nmybr2;
     int vmax2myspmybr1Nmybr2;
 
-    int vprop3myspmybr1Nmybr2;    //properties
+    unsigned int vprop3myspmybr1Nmybr2;    //properties
     int vpar3myspmybr1Nmybr2;
     int vmin3myspmybr1Nmybr2;
     int vmax3myspmybr1Nmybr2;
 
-    int vprop4myspmybr1Nmybr2;    //properties
+    unsigned int vprop4myspmybr1Nmybr2;    //properties
     int vpar4myspmybr1Nmybr2;
     int vmin4myspmybr1Nmybr2;
     int vmax4myspmybr1Nmybr2;
 
-    int vprop5myspmybr1Nmybr2;    //properties
+    unsigned int vprop5myspmybr1Nmybr2;    //properties
     int vpar5myspmybr1Nmybr2;
     int vmin5myspmybr1Nmybr2;
     int vmax5myspmybr1Nmybr2;
 
-    int vprop6myspmybr1Nmybr2;    //properties
+    unsigned int vprop6myspmybr1Nmybr2;    //properties
     int vpar6myspmybr1Nmybr2;
     int vmin6myspmybr1Nmybr2;
     int vmax6myspmybr1Nmybr2;
 
-    int vprop1myspmybr1Hmybr2;    //properties
+    unsigned int vprop1myspmybr1Hmybr2;    //properties
     int vpar1myspmybr1Hmybr2;
     int vmin1myspmybr1Hmybr2;
     int vmax1myspmybr1Hmybr2;
 
-    int vprop2myspmybr1Hmybr2;    //properties
+    unsigned int vprop2myspmybr1Hmybr2;    //properties
     int vpar2myspmybr1Hmybr2;
     int vmin2myspmybr1Hmybr2;
     int vmax2myspmybr1Hmybr2;
 
-    int vprop3myspmybr1Hmybr2;    //properties
+    unsigned int vprop3myspmybr1Hmybr2;    //properties
     int vpar3myspmybr1Hmybr2;
     int vmin3myspmybr1Hmybr2;
     int vmax3myspmybr1Hmybr2;
 
-    int vprop4myspmybr1Hmybr2;    //properties
+    unsigned int vprop4myspmybr1Hmybr2;    //properties
     int vpar4myspmybr1Hmybr2;
     int vmin4myspmybr1Hmybr2;
     int vmax4myspmybr1Hmybr2;
 
-    int vprop5myspmybr1Hmybr2;    //properties
+    unsigned int vprop5myspmybr1Hmybr2;    //properties
     int vpar5myspmybr1Hmybr2;
     int vmin5myspmybr1Hmybr2;
     int vmax5myspmybr1Hmybr2;
 
-    int vprop6myspmybr1Hmybr2;    //properties
+    unsigned int vprop6myspmybr1Hmybr2;    //properties
     int vpar6myspmybr1Hmybr2;
     int vmin6myspmybr1Hmybr2;
     int vmax6myspmybr1Hmybr2;
@@ -380,55 +380,11 @@ static int MonProp_ConvertValue_Pre(void *pvLineInfo, char *acKey, char *pcTempl
 static int MonProp_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
-    char *pcResult;
-    int id;
 
     if ( !strcmp(acKey, "Id") )
     {
         strncpy(acOutput, m_astMonProp[pstLineInfo->vId].vId, sizeof(m_astMonProp[pstLineInfo->vId].vId));
 
-        return 1;
-    }
-    else if ( strlen("prop1") == strlen(acKey) && 1 == sscanf(acKey, "prop%d", &id) )
-    {
-        ST_PROP *pstProp = (ST_PROP *)&pstLineInfo->vprop1;
-        pcResult = Properties_GetProperty(pstProp[id - 1].vprop1);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        return 1;
-    }
-    else if ( strstr(acKey, " (N)") && 1 == sscanf(acKey, "prop%d (N)", &id) )
-    {
-        ST_PROP *pstProp = (ST_PROP *)&pstLineInfo->vprop1myspmybr1Nmybr2;
-        pcResult = Properties_GetProperty(pstProp[id - 1].vprop1);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        return 1;
-    }
-    else if ( strstr(acKey, " (H)") && 1 == sscanf(acKey, "prop%d (H)", &id) )
-    {
-        ST_PROP *pstProp = (ST_PROP *)&pstLineInfo->vprop1myspmybr1Hmybr2;
-        pcResult = Properties_GetProperty(pstProp[id - 1].vprop1);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
         return 1;
     }
 
@@ -441,92 +397,92 @@ static void MonProp_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLin
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Id, UINT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop1, INT);    //properties
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop1, UINT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, par1, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, min1, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, max1, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop2, INT);    //properties
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop2, UINT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, par2, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, min2, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, max2, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop3, INT);    //properties
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop3, UINT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, par3, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, min3, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, max3, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop4, INT);    //properties
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop4, UINT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, par4, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, min4, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, max4, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop5, INT);    //properties
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop5, UINT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, par5, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, min5, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, max5, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop6, INT);    //properties
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop6, UINT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, par6, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, min6, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, max6, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop1myspmybr1Nmybr2, INT);    //properties
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop1myspmybr1Nmybr2, UINT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, par1myspmybr1Nmybr2, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, min1myspmybr1Nmybr2, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, max1myspmybr1Nmybr2, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop2myspmybr1Nmybr2, INT);    //properties
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop2myspmybr1Nmybr2, UINT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, par2myspmybr1Nmybr2, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, min2myspmybr1Nmybr2, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, max2myspmybr1Nmybr2, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop3myspmybr1Nmybr2, INT);    //properties
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop3myspmybr1Nmybr2, UINT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, par3myspmybr1Nmybr2, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, min3myspmybr1Nmybr2, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, max3myspmybr1Nmybr2, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop4myspmybr1Nmybr2, INT);    //properties
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop4myspmybr1Nmybr2, UINT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, par4myspmybr1Nmybr2, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, min4myspmybr1Nmybr2, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, max4myspmybr1Nmybr2, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop5myspmybr1Nmybr2, INT);    //properties
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop5myspmybr1Nmybr2, UINT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, par5myspmybr1Nmybr2, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, min5myspmybr1Nmybr2, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, max5myspmybr1Nmybr2, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop6myspmybr1Nmybr2, INT);    //properties
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop6myspmybr1Nmybr2, UINT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, par6myspmybr1Nmybr2, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, min6myspmybr1Nmybr2, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, max6myspmybr1Nmybr2, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop1myspmybr1Hmybr2, INT);    //properties
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop1myspmybr1Hmybr2, UINT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, par1myspmybr1Hmybr2, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, min1myspmybr1Hmybr2, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, max1myspmybr1Hmybr2, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop2myspmybr1Hmybr2, INT);    //properties
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop2myspmybr1Hmybr2, UINT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, par2myspmybr1Hmybr2, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, min2myspmybr1Hmybr2, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, max2myspmybr1Hmybr2, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop3myspmybr1Hmybr2, INT);    //properties
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop3myspmybr1Hmybr2, UINT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, par3myspmybr1Hmybr2, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, min3myspmybr1Hmybr2, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, max3myspmybr1Hmybr2, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop4myspmybr1Hmybr2, INT);    //properties
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop4myspmybr1Hmybr2, UINT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, par4myspmybr1Hmybr2, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, min4myspmybr1Hmybr2, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, max4myspmybr1Hmybr2, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop5myspmybr1Hmybr2, INT);    //properties
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop5myspmybr1Hmybr2, UINT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, par5myspmybr1Hmybr2, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, min5myspmybr1Hmybr2, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, max5myspmybr1Hmybr2, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop6myspmybr1Hmybr2, INT);    //properties
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop6myspmybr1Hmybr2, UINT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, par6myspmybr1Hmybr2, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, min6myspmybr1Hmybr2, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, max6myspmybr1Hmybr2, INT);

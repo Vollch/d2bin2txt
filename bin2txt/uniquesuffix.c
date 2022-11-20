@@ -8,36 +8,13 @@ typedef struct
     unsigned short vName;   //strings
 } ST_LINE_INFO;
 
-static int UniqueSuffix_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
-{
-    ST_LINE_INFO *pstLineInfo = pvLineInfo;
-    char *pcResult;
-    int result = 0;
-
-    if ( !strcmp(acKey, "Name") )
-    {
-        pcResult = String_FindString(pstLineInfo->vName, "dummy");
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vName);
-        }
-        result = 1;
-    }
-
-    return result;
-}
-
 int process_uniquesuffix(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
     ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
 
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Name, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Name, USHORT_STRING);
 
     switch ( enPhase )
     {
@@ -53,8 +30,6 @@ int process_uniquesuffix(char *acTemplatePath, char *acBinPath, char *acTxtPath,
             break;
 
         case EN_MODULE_INIT:
-            m_stCallback.pfnConvertValue = UniqueSuffix_ConvertValue;
-
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);
             break;

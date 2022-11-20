@@ -183,28 +183,6 @@ static int PetType_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo
     return 0;
 }
 
-static int PetType_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
-{
-    ST_LINE_INFO *pstLineInfo = pvLineInfo;
-    char *pcResult;
-
-    if ( !strcmp("name", acKey) )
-    {
-        pcResult = String_FindString(pstLineInfo->vname, "dummy");
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        return 1;
-    }
-
-    return 0;
-}
-
 static char *PetType_GetKey(void *pvLineInfo, char *pcKey, unsigned int *iKeyLen)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
@@ -267,7 +245,7 @@ static void PetType_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLin
     VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, range, CombinedBit, BIT);
     VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, warp, CombinedBit, BIT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, name, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, name, USHORT_STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, group, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, basemax, USHORT);
 
@@ -325,7 +303,6 @@ int process_pettype(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
             m_stCallback.pfnFieldProc = PetType_FieldProc;
             //m_stCallback.pfnGetKey = PetType_GetKey;
             m_stCallback.pfnBitProc = PetType_BitProc;
-            m_stCallback.pfnConvertValue = PetType_ConvertValue;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo),

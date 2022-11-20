@@ -871,185 +871,6 @@ static int ItemStatCost_FieldProc(void *pvLineInfo, char *acKey, unsigned int iL
     return 0;
 }
 
-static int ItemStatCost_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
-{
-    ST_LINE_INFO *pstLineInfo = pvLineInfo;
-    char *pcResult;
-    int result = 0;
-
-    if ( !strcmp(acKey, "maxstat") )
-    {
-        pcResult = ItemStatCost_GetStateName(pstLineInfo->vmaxstat);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "descstrpos") )
-    {
-        pcResult = String_FindString(pstLineInfo->vdescstrpos, "dummy");
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "descstrneg") )
-    {
-        pcResult = String_FindString(pstLineInfo->vdescstrneg, "dummy");
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "descstr2") )
-    {
-        pcResult = String_FindString(pstLineInfo->vdescstr2, "dummy");
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "dgrpstrpos") )
-    {
-        pcResult = String_FindString(pstLineInfo->vdgrpstrpos, "dummy");
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "dgrpstrneg") )
-    {
-        pcResult = String_FindString(pstLineInfo->vdgrpstrneg, "dummy");
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "dgrpstr2") )
-    {
-        pcResult = String_FindString(pstLineInfo->vdgrpstr2, "dummy");
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "itemevent1") )
-    {
-        pcResult = Events_GetEventName(pstLineInfo->vitemevent1);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "itemevent2") )
-    {
-        pcResult = Events_GetEventName(pstLineInfo->vitemevent2);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "op stat1") )
-    {
-        pcResult = ItemStatCost_GetStateName(pstLineInfo->vopmyspstat1);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "op stat2") )
-    {
-        pcResult = ItemStatCost_GetStateName(pstLineInfo->vopmyspstat2);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "op stat3") )
-    {
-        pcResult = ItemStatCost_GetStateName(pstLineInfo->vopmyspstat3);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "op base") )
-    {
-        pcResult = ItemStatCost_GetStateName(pstLineInfo->vopmyspbase);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-
-    return result;
-}
-
 static int ItemStatCost_BitProc(void *pvLineInfo, char *acKey, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
@@ -1160,27 +981,27 @@ static void ItemStatCost_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *p
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MinAccr, UINT);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Encode, UCHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, maxstat, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, maxstat, USHORT_ITEMSTAT);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, descpriority, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, descfunc, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, descval, UCHAR);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, descstrpos, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, descstrneg, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, descstrpos, USHORT_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, descstrneg, USHORT_STRING);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, descstr2, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, descstr2, USHORT_STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dgrp, USHORT);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dgrpfunc, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dgrpval, UCHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dgrpstrpos, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dgrpstrpos, USHORT_STRING);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dgrpstrneg, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dgrpstr2, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dgrpstrneg, USHORT_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dgrpstr2, USHORT_STRING);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itemevent1, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itemevent2, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itemevent1, USHORT_EVENT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itemevent2, USHORT_EVENT);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itemeventfunc1, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itemeventfunc2, USHORT);
@@ -1189,12 +1010,12 @@ static void ItemStatCost_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *p
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, op, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, opmyspparam, UCHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, opmyspbase, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, opmyspbase, USHORT_ITEMSTAT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, opmyspstat1, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, opmyspstat2, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, opmyspstat1, USHORT_ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, opmyspstat2, USHORT_ITEMSTAT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, opmyspstat3, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, opmyspstat3, USHORT_ITEMSTAT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stuff, UINT);
 }
 
@@ -1235,7 +1056,6 @@ int process_itemstatcost(char *acTemplatePath, char *acBinPath, char *acTxtPath,
             ItemStatCost_InitValueMap(pstValueMap, pstLineInfo);
 
             //m_stCallback.pfnGetKey = ItemStatCost_GetKey;
-            m_stCallback.pfnConvertValue = ItemStatCost_ConvertValue;
             m_stCallback.pfnFieldProc = ItemStatCost_FieldProc;
             m_stCallback.pfnBitProc = ItemStatCost_BitProc;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;

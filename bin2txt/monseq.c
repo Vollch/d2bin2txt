@@ -131,36 +131,13 @@ char *MonSeq_GetSequence(unsigned int id)
     return NULL;
 }
 
-static int MonSeq_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
-{
-    ST_LINE_INFO *pstLineInfo = pvLineInfo;
-    char *pcResult;
-    int result = 0;
-
-    if ( !strcmp(acKey, "mode") )
-    {
-        pcResult = MonMode_GetCode(pstLineInfo->vmode);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-
-    return result;
-}
-
 int process_monseq(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
     ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
 
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mode, UCHAR);   //monmode
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mode, UCHAR_MONMODE);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, frame, UCHAR);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dir, UCHAR);
@@ -189,7 +166,6 @@ int process_monseq(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_
             break;
 
         case EN_MODULE_INIT:
-            m_stCallback.pfnConvertValue = MonSeq_ConvertValue;
             m_stCallback.pfnFieldProc = MonSeq_FieldProc;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 

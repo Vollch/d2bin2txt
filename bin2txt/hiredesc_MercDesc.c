@@ -56,28 +56,6 @@ static int HireDesc_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineN
     return 0;
 }
 
-static int HireDesc_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
-{
-    ST_LINE_INFO *pstLineInfo = pvLineInfo;
-    char *pcResult;
-
-    if ( !strcmp("NameStr", acKey) )
-    {
-        pcResult = String_FindString(pstLineInfo->vNameStr, "dummy");
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        return 1;
-    }
-
-    return 0;
-}
-
 static char *HireDesc_GetKey(void *pvLineInfo, char *pcKey, unsigned int *iKeyLen)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
@@ -94,7 +72,7 @@ static void Hiredesc_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLi
     INIT_VALUE_BUFFER;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Code, STRING);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, NameStr, SHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, NameStr, USHORT_STRING);
 }
 
 int process_hiredesc_MercDesc(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
@@ -114,7 +92,6 @@ int process_hiredesc_MercDesc(char *acTemplatePath, char *acBinPath, char *acTxt
 
             //m_stCallback.pfnGetKey = HireDesc_GetKey;
             m_stCallback.pfnFieldProc = HireDesc_FieldProc;
-            m_stCallback.pfnConvertValue = HireDesc_ConvertValue;
             m_stCallback.pfnSetLines = SETLINES_FUNC_NAME(FILE_PREFIX);
             m_stCallback.pfnFinished = FINISHED_FUNC_NAME(FILE_PREFIX);
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;

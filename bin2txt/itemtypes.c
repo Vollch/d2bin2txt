@@ -167,133 +167,6 @@ char *ItemTypes_GetItemCode(unsigned int id)
     return m_astItemTypes[id].vCode;
 }
 
-static int ItemTypes_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
-{
-    ST_LINE_INFO *pstLineInfo = pvLineInfo;
-    char *pcResult;
-    int result = 0;
-
-    if ( !strcmp(acKey, "BodyLoc1") )
-    {
-        pcResult = BodyLocs_GetLocStr(pstLineInfo->vBodyLoc1);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "BodyLoc2") )
-    {
-        pcResult = BodyLocs_GetLocStr(pstLineInfo->vBodyLoc2);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "StaffMods") )
-    {
-        pcResult = PlayerClass_GetClass(pstLineInfo->vStaffMods);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "Class") )
-    {
-        pcResult = PlayerClass_GetClass(pstLineInfo->vClass);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "StorePage") )
-    {
-        pcResult = StorePage_GetCode(pstLineInfo->vStorePage);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "Equiv1") )
-    {
-        pcResult = ItemTypes_GetItemCode(pstLineInfo->vEquiv1);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "Equiv2") )
-    {
-        pcResult = ItemTypes_GetItemCode(pstLineInfo->vEquiv2);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "Shoots") )
-    {
-        pcResult = ItemTypes_GetItemCode(pstLineInfo->vShoots);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "Quiver") )
-    {
-        pcResult = ItemTypes_GetItemCode(pstLineInfo->vQuiver);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-
-    return result;
-}
-
 static int ItemTypes_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
@@ -378,16 +251,16 @@ int process_itemtypes(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Code, STRING);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Equiv1, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Equiv2, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Equiv1, USHORT_ITEMTYPE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Equiv2, USHORT_ITEMTYPE);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Repair, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Body, UCHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, BodyLoc1, UCHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, BodyLoc2, UCHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, BodyLoc1, UCHAR_BODYLOC);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, BodyLoc2, UCHAR_BODYLOC);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Shoots, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Quiver, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Shoots, USHORT_ITEMTYPE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Quiver, USHORT_ITEMTYPE);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Throwable, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Reload, UCHAR);
@@ -407,11 +280,11 @@ int process_itemtypes(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MaxSock40, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TreasureClass, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Rarity, UCHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, StaffMods, UCHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, StaffMods, UCHAR_PLRCLASS);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, CostFormula, UCHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Class, UCHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, StorePage, UCHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Class, UCHAR_PLRCLASS);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, StorePage, UCHAR_STORE);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, VarInvGfx, UCHAR);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, InvGfx1, STRING);
@@ -457,7 +330,6 @@ int process_itemtypes(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
 
         case EN_MODULE_INIT:
             //m_stCallback.pfnGetKey = ItemTypes_GetKey;
-            m_stCallback.pfnConvertValue = ItemTypes_ConvertValue;
             m_stCallback.pfnFieldProc = ItemTypes_FieldProc;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 

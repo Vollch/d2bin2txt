@@ -199,7 +199,8 @@ typedef struct
     unsigned short wHcIdx;
     unsigned short vName;   //strings
 
-    unsigned int vClass;    //monstats
+    unsigned short vClass;    //monstats
+    unsigned short sPad1;
 
     unsigned int vhcIdx;
 
@@ -207,7 +208,8 @@ typedef struct
     unsigned int vMod2;
     unsigned int vMod3;
 
-    unsigned int vMonSound; //sounds
+    unsigned short vMonSound; //sounds
+    unsigned short sPad2;
 
     unsigned int vMinGrp;
     unsigned int vMaxGrp;
@@ -307,108 +309,13 @@ static int SuperUniques_FieldProc(void *pvLineInfo, char *acKey, unsigned int iL
     return 0;
 }
 
-static int SuperUniques_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
-{
-    ST_LINE_INFO *pstLineInfo = pvLineInfo;
-    char *pcResult = NULL;
-    int result = 0;
-
-    if ( !strcmp(acKey, "Name") )
-    {
-        pcResult = String_FindString(pstLineInfo->vName, "dummy");
-
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            sprintf(acOutput, "%s%u", NAME_PREFIX, m_iSuperUniquesCount);
-        }
-
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "Class") )
-    {
-        pcResult = MonStats_GetStatsName(pstLineInfo->vClass);
-
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "MonSound") )
-    {
-        pcResult = MonSounds_GetItemSoundsCode(pstLineInfo->vMonSound);
-
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "TC") )
-    {
-        pcResult = TreasureClassEx_GetItemTreasureClass(pstLineInfo->vTC);
-
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "TC(N)") )
-    {
-        pcResult = TreasureClassEx_GetItemTreasureClass(pstLineInfo->vTCmybr1Nmybr2);
-
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "TC(H)") )
-    {
-        pcResult = TreasureClassEx_GetItemTreasureClass(pstLineInfo->vTCmybr1Hmybr2);
-
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-
-    return result;
-}
-
 static void SuperUniques_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLineInfo)
 {
     INIT_VALUE_BUFFER;
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Name, USHORT);   //strings
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Name, USHORT_STRING);   //strings
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Class, UINT);    //monstats
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Class, USHORT_MONSTAT);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, hcIdx, UINT);
 
@@ -416,7 +323,7 @@ static void SuperUniques_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *p
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Mod2, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Mod3, UINT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MonSound, UINT); //sounds
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MonSound, USHORT_MONSOUND);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MinGrp, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MaxGrp, UINT);
@@ -430,10 +337,10 @@ static void SuperUniques_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *p
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Utransmybr1Nmybr2, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Utransmybr1Hmybr2, UCHAR);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TC, USHORT);             //TreasureClassEx
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TCmybr1Nmybr2, USHORT);  //TreasureClassEx
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TC, USHORT_TREASURE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TCmybr1Nmybr2, USHORT_TREASURE);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TCmybr1Hmybr2, USHORT);  //TreasureClassEx
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TCmybr1Hmybr2, USHORT_TREASURE);
 }
 
 int process_superuniques(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
@@ -474,7 +381,6 @@ int process_superuniques(char *acTemplatePath, char *acBinPath, char *acTxtPath,
         case EN_MODULE_INIT:
             SuperUniques_InitValueMap(pstValueMap, pstLineInfo);
 
-            m_stCallback.pfnConvertValue = SuperUniques_ConvertValue;
             m_stCallback.pfnFieldProc = SuperUniques_FieldProc;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 

@@ -125,37 +125,37 @@ typedef struct
     unsigned int vRune5;
     unsigned int vRune6;
 
-    int vT1Code1;  //properties
+    unsigned int vT1Code1;  //properties
     int vT1Param1;
     int vT1Min1;
     int vT1Max1;
 
-    int vT1Code2;  //properties
+    unsigned int vT1Code2;  //properties
     int vT1Param2;
     int vT1Min2;
     int vT1Max2;
 
-    int vT1Code3;  //properties
+    unsigned int vT1Code3;  //properties
     int vT1Param3;
     int vT1Min3;
     int vT1Max3;
 
-    int vT1Code4;  //properties
+    unsigned int vT1Code4;  //properties
     int vT1Param4;
     int vT1Min4;
     int vT1Max4;
 
-    int vT1Code5;  //properties
+    unsigned int vT1Code5;  //properties
     int vT1Param5;
     int vT1Min5;
     int vT1Max5;
 
-    int vT1Code6;  //properties
+    unsigned int vT1Code6;  //properties
     int vT1Param6;
     int vT1Min6;
     int vT1Max6;
 
-    int vT1Code7;  //properties
+    unsigned int vT1Code7;  //properties
     int vT1Param7;
     int vT1Min7;
     int vT1Max7;
@@ -199,65 +199,8 @@ static int Runes_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, c
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
     char *pcResult;
     int id;
-    int result = 0;
 
-    if ( strlen("itype1") == strlen(acKey) && 1 == sscanf(acKey, "itype%d", &id) )
-    {
-        unsigned short *pwItype = &pstLineInfo->vitype1;
-        pcResult = ItemTypes_GetItemCode(pwItype[id - 1]);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( strlen("etype1") == strlen(acKey) && 1 == sscanf(acKey, "etype%d", &id) )
-    {
-        unsigned short *pwItype = &pstLineInfo->vetype1;
-        pcResult = ItemTypes_GetItemCode(pwItype[id - 1]);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( strlen("Rune1") == strlen(acKey) && 1 == sscanf(acKey, "Rune%d", &id) )
-    {
-        unsigned int *pwItype = &pstLineInfo->vRune1;
-        pcResult = Misc_GetItemUniqueCode(pwItype[id - 1]);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( strlen("T1Code1") == strlen(acKey) && 1 == sscanf(acKey, "T1Code%d", &id) )
-    {
-        ST_RUNE_CODE *pwItype = (ST_RUNE_CODE *)&pstLineInfo->vT1Code1;
-        pcResult = Properties_GetProperty(pwItype[id - 1].vT1Code1);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( strlen("T1Param1") == strlen(acKey) && 1 == sscanf(acKey, "T1Param%d", &id) )
+    if ( strlen("T1Param1") == strlen(acKey) && 1 == sscanf(acKey, "T1Param%d", &id) )
     {
         ST_RUNE_CODE *pwItype = (ST_RUNE_CODE *)&pstLineInfo->vT1Code1;
         if ( 0 != pwItype[id - 1].vT1Param1 )
@@ -276,10 +219,10 @@ static int Runes_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, c
         {
             acOutput[0] = 0;
         }
-        result = 1;
+        return 1;
     }
 
-    return result;
+    return 0;
 }
 
 int process_runes(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
@@ -295,60 +238,60 @@ int process_runes(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_M
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, complete, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, server, UCHAR);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itype1, USHORT); //itemtypes
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itype1, USHORT_ITEMTYPE);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itype2, USHORT); //itemtypes
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itype3, USHORT); //itemtypes
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itype2, USHORT_ITEMTYPE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itype3, USHORT_ITEMTYPE);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itype4, USHORT); //itemtypes
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itype5, USHORT); //itemtypes
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itype4, USHORT_ITEMTYPE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itype5, USHORT_ITEMTYPE);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itype6, USHORT); //itemtypes
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, etype1, USHORT); //itemtypes
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itype6, USHORT_ITEMTYPE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, etype1, USHORT_ITEMTYPE);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, etype2, USHORT); //itemtypes
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, etype3, USHORT); //itemtypes
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, etype2, USHORT_ITEMTYPE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, etype3, USHORT_ITEMTYPE);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Rune1, UINT);    //miscs
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Rune2, UINT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Rune1, UINT_ITEM);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Rune2, UINT_ITEM);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Rune3, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Rune4, UINT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Rune3, UINT_ITEM);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Rune4, UINT_ITEM);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Rune5, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Rune6, UINT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Rune5, UINT_ITEM);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Rune6, UINT_ITEM);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Code1, INT);  //properties
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Code1, UINT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Param1, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Min1, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Max1, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Code2, INT);  //properties
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Code2, UINT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Param2, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Min2, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Max2, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Code3, INT);  //properties
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Code3, UINT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Param3, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Min3, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Max3, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Code4, INT);  //properties
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Code4, UINT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Param4, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Min4, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Max4, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Code5, INT);  //properties
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Code5, UINT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Param5, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Min5, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Max5, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Code6, INT);  //properties
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Code6, UINT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Param6, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Min6, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Max6, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Code7, INT);  //properties
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Code7, UINT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Param7, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Min7, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Max7, INT);

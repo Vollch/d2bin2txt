@@ -63,42 +63,6 @@ static int D2NewStats_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLin
     return 0;
 }
 
-static int D2NewStats_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
-{
-    ST_LINE_INFO *pstLineInfo = pvLineInfo;
-    char *pcResult;
-    int result = 0;
-
-    if ( !strcmp(acKey, "Stat") )
-    {
-        pcResult = ItemStatCost_GetStateName(pstLineInfo->vStat);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "tblIDx") )
-    {
-        pcResult = String_FindString(pstLineInfo->vtblIDx, "dummy");
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-
-    return result;
-}
-
 int process_D2NewStats(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
     ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
@@ -107,8 +71,8 @@ int process_D2NewStats(char *acTemplatePath, char *acBinPath, char *acTxtPath, E
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, StatOnly, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, StrOnly, UCHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, tblIDx, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, tblIDx, USHORT_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat, USHORT_ITEMSTAT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Xleft, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Xright, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Y, USHORT);
@@ -137,7 +101,6 @@ int process_D2NewStats(char *acTemplatePath, char *acBinPath, char *acTxtPath, E
 
         case EN_MODULE_INIT:
             m_stCallback.iOptional = 1;
-            m_stCallback.pfnConvertValue = D2NewStats_ConvertValue;
             m_stCallback.pfnFieldProc = D2NewStats_FieldProc;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 

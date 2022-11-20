@@ -35,8 +35,10 @@ typedef struct
 
     unsigned int vpSpell;
 
-    unsigned int vScrollSkill;  //skills
-    unsigned int vBookSkill;    //skills
+    unsigned short vScrollSkill;  //skills
+    unsigned short sPad1;
+    unsigned short vBookSkill;    //skills
+    unsigned short sPad2;
 
     unsigned int vBaseCost;
 
@@ -77,68 +79,19 @@ static int Books_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, 
     return 0;
 }
 
-static int Books_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
-{
-    ST_LINE_INFO *pstLineInfo = pvLineInfo;
-    char *pcResult;
-    int result = 0;
-
-    if ( !strcmp(acKey, "Name") )
-    {
-        pcResult = String_FindString(pstLineInfo->vName, "dummy");
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "ScrollSkill") )
-    {
-        pcResult = Skills_GetSkillName(pstLineInfo->vScrollSkill);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "BookSkill") )
-    {
-        pcResult = Skills_GetSkillName(pstLineInfo->vBookSkill);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-
-    return result;
-}
-
 int process_books(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
     ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
 
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Name, USHORT); //strings
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Name, USHORT_STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SpellIcon, CHAR);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, pSpell, UINT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ScrollSkill, UINT);  //skills
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, BookSkill, UINT);    //skills
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ScrollSkill, USHORT_SKILL);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, BookSkill, USHORT_SKILL);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, BaseCost, UINT);
 
@@ -164,7 +117,6 @@ int process_books(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_M
 
         case EN_MODULE_INIT:
             m_stCallback.pfnFieldProc = Books_FieldProc;
-            m_stCallback.pfnConvertValue = Books_ConvertValue;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 

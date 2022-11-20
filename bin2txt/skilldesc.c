@@ -695,790 +695,17 @@ unsigned int SkillDesc_GetString(unsigned int id)
 static int SkillDesc_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
-    char *pcResult;
-    int id;
-    int result = 0;
 
-    if ( !strcmp(acKey, "ListRow") && 255 == pstLineInfo->vListRow )
+    if ( !strcmp(acKey, "ListRow") )
     {
-        strcpy(acOutput, "-1");
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "str name") )
-    {
-        pcResult = String_FindString_2(pstLineInfo->vstrmyspname, "dummy", "x");
-        if ( pcResult )
+        if ( 255 == pstLineInfo->vListRow )
         {
-            strcpy(acOutput, pcResult);
+            strcpy(acOutput, "-1");
+            return 1;
         }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "str short") )
-    {
-        pcResult = String_FindString_2(pstLineInfo->vstrmyspshort, "dummy", "x");
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "str long") )
-    {
-        pcResult = String_FindString_2(pstLineInfo->vstrmysplong, "dummy", "x");
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "str alt") )
-    {
-        pcResult = String_FindString_2(pstLineInfo->vstrmyspalt, "dummy", "x");
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "str mana") )
-    {
-        pcResult = String_FindString_2(pstLineInfo->vstrmyspmana, "dummy", "x");
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( 1 == sscanf(acKey, "desctexta%d", &id) )
-    {
-        unsigned short *psSkill = (short *)&pstLineInfo->vdesctexta1;
-        pcResult = String_FindString_2(psSkill[id - 1], "dummy", "x");
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( 1 == sscanf(acKey, "dsc2texta%d", &id) )
-    {
-        unsigned short *psSkill = (short *)&pstLineInfo->vdsc2texta1;
-        pcResult = String_FindString_2(psSkill[id - 1], "dummy", "x");
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( 1 == sscanf(acKey, "dsc3texta%d", &id) )
-    {
-        unsigned short *psSkill = (short *)&pstLineInfo->vdsc3texta1;
-        pcResult = String_FindString_2(psSkill[id - 1], "dummy", "x");
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( 1 == sscanf(acKey, "desctextb%d", &id) )
-    {
-        unsigned short *psSkill = (short *)&pstLineInfo->vdesctextb1;
-        pcResult = String_FindString_2(psSkill[id - 1], "dummy", "x");
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( 1 == sscanf(acKey, "dsc2textb%d", &id) )
-    {
-        unsigned short *psSkill = (short *)&pstLineInfo->vdsc2textb1;
-        pcResult = String_FindString_2(psSkill[id - 1], "dummy", "x");
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( 1 == sscanf(acKey, "dsc3textb%d", &id) )
-    {
-        unsigned short *psSkill = (short *)&pstLineInfo->vdsc3textb1;
-        pcResult = String_FindString_2(psSkill[id - 1], "dummy", "x");
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "p1dmelem") )
-    {
-        pcResult = ElemTypes_GetElemStr(pstLineInfo->vp1dmelem);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "p2dmelem") )
-    {
-        pcResult = ElemTypes_GetElemStr(pstLineInfo->vp2dmelem);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "p3dmelem") )
-    {
-        pcResult = ElemTypes_GetElemStr(pstLineInfo->vp3dmelem);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "descmissile1") )
-    {
-        pcResult = Missiles_GetMissile(pstLineInfo->vdescmissile1);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "descmissile2") )
-    {
-        pcResult = Missiles_GetMissile(pstLineInfo->vdescmissile2);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "descmissile3") )
-    {
-        pcResult = Missiles_GetMissile(pstLineInfo->vdescmissile3);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "ddam calc1") )
-    {
-        pcResult = SkillDescCode_GetExpression(pstLineInfo->vddammyspcalc1);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "ddam calc2") )
-    {
-        pcResult = SkillDescCode_GetExpression(pstLineInfo->vddammyspcalc2);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "p1dmmin") )
-    {
-        pcResult = SkillDescCode_GetExpression(pstLineInfo->vp1dmmin);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "p2dmmin") )
-    {
-        pcResult = SkillDescCode_GetExpression(pstLineInfo->vp2dmmin);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "p3dmmin") )
-    {
-        pcResult = SkillDescCode_GetExpression(pstLineInfo->vp3dmmin);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "p1dmmax") )
-    {
-        pcResult = SkillDescCode_GetExpression(pstLineInfo->vp1dmmax);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "p2dmmax") )
-    {
-        pcResult = SkillDescCode_GetExpression(pstLineInfo->vp2dmmax);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "p3dmmax") )
-    {
-        pcResult = SkillDescCode_GetExpression(pstLineInfo->vp3dmmax);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "desccalca1") )
-    {
-        pcResult = SkillDescCode_GetExpression(pstLineInfo->vdesccalca1);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "desccalca2") )
-    {
-        pcResult = SkillDescCode_GetExpression(pstLineInfo->vdesccalca2);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "desccalca3") )
-    {
-        pcResult = SkillDescCode_GetExpression(pstLineInfo->vdesccalca3);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "desccalca4") )
-    {
-        pcResult = SkillDescCode_GetExpression(pstLineInfo->vdesccalca4);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "desccalca5") )
-    {
-        pcResult = SkillDescCode_GetExpression(pstLineInfo->vdesccalca5);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "desccalca6") )
-    {
-        pcResult = SkillDescCode_GetExpression(pstLineInfo->vdesccalca6);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "dsc2calca1") )
-    {
-        pcResult = SkillDescCode_GetExpression(pstLineInfo->vdsc2calca1);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "dsc2calca2") )
-    {
-        pcResult = SkillDescCode_GetExpression(pstLineInfo->vdsc2calca2);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "dsc2calca3") )
-    {
-        pcResult = SkillDescCode_GetExpression(pstLineInfo->vdsc2calca3);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "dsc2calca4") )
-    {
-        pcResult = SkillDescCode_GetExpression(pstLineInfo->vdsc2calca4);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "dsc3calca1") )
-    {
-        pcResult = SkillDescCode_GetExpression(pstLineInfo->vdsc3calca1);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "dsc3calca2") )
-    {
-        pcResult = SkillDescCode_GetExpression(pstLineInfo->vdsc3calca2);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "dsc3calca3") )
-    {
-        pcResult = SkillDescCode_GetExpression(pstLineInfo->vdsc3calca3);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "dsc3calca4") )
-    {
-        pcResult = SkillDescCode_GetExpression(pstLineInfo->vdsc3calca4);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "dsc3calca5") )
-    {
-        pcResult = SkillDescCode_GetExpression(pstLineInfo->vdsc3calca5);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "dsc3calca6") )
-    {
-        pcResult = SkillDescCode_GetExpression(pstLineInfo->vdsc3calca6);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "dsc3calca7") )
-    {
-        pcResult = SkillDescCode_GetExpression(pstLineInfo->vdsc3calca7);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "desccalcb1") )
-    {
-        pcResult = SkillDescCode_GetExpression(pstLineInfo->vdesccalcb1);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "desccalcb2") )
-    {
-        pcResult = SkillDescCode_GetExpression(pstLineInfo->vdesccalcb2);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "desccalcb3") )
-    {
-        pcResult = SkillDescCode_GetExpression(pstLineInfo->vdesccalcb3);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "desccalcb4") )
-    {
-        pcResult = SkillDescCode_GetExpression(pstLineInfo->vdesccalcb4);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "desccalcb5") )
-    {
-        pcResult = SkillDescCode_GetExpression(pstLineInfo->vdesccalcb5);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "desccalcb6") )
-    {
-        pcResult = SkillDescCode_GetExpression(pstLineInfo->vdesccalcb6);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "dsc2calcb1") )
-    {
-        pcResult = SkillDescCode_GetExpression(pstLineInfo->vdsc2calcb1);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "dsc2calcb2") )
-    {
-        pcResult = SkillDescCode_GetExpression(pstLineInfo->vdsc2calcb2);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "dsc2calcb3") )
-    {
-        pcResult = SkillDescCode_GetExpression(pstLineInfo->vdsc2calcb3);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "dsc2calcb4") )
-    {
-        pcResult = SkillDescCode_GetExpression(pstLineInfo->vdsc2calcb4);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "dsc3calcb1") )
-    {
-        pcResult = SkillDescCode_GetExpression(pstLineInfo->vdsc3calcb1);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "dsc3calcb2") )
-    {
-        pcResult = SkillDescCode_GetExpression(pstLineInfo->vdsc3calcb2);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "dsc3calcb3") )
-    {
-        pcResult = SkillDescCode_GetExpression(pstLineInfo->vdsc3calcb3);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "dsc3calcb4") )
-    {
-        pcResult = SkillDescCode_GetExpression(pstLineInfo->vdsc3calcb4);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "dsc3calcb5") )
-    {
-        pcResult = SkillDescCode_GetExpression(pstLineInfo->vdsc3calcb5);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "dsc3calcb6") )
-    {
-        pcResult = SkillDescCode_GetExpression(pstLineInfo->vdsc3calcb6);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "dsc3calcb7") )
-    {
-        pcResult = SkillDescCode_GetExpression(pstLineInfo->vdsc3calcb7);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
     }
 
-    return result;
+    return 0;
 }
 
 static void SkillDesc_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLineInfo)
@@ -1493,21 +720,21 @@ static void SkillDesc_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstL
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ListPool, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, IconCel, UCHAR);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, strmyspname, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, strmyspshort, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, strmysplong, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, strmyspalt, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, strmyspmana, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, strmyspname, USHORT_STRING2);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, strmyspshort, USHORT_STRING2);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, strmysplong, USHORT_STRING2);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, strmyspalt, USHORT_STRING2);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, strmyspmana, USHORT_STRING2);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, descdam, USHORT);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, descatt, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, p1dmelem, UCHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, p2dmelem, UCHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, p3dmelem, UCHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, p1dmelem, UCHAR_ELEM);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, p2dmelem, UCHAR_ELEM);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, p3dmelem, UCHAR_ELEM);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, descmissile1, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, descmissile2, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, descmissile3, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, descmissile1, USHORT_MISSILE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, descmissile2, USHORT_MISSILE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, descmissile3, USHORT_MISSILE);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, descline1, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, descline2, UCHAR);
@@ -1527,87 +754,87 @@ static void SkillDesc_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstL
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3line6, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3line7, UCHAR);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, desctexta1, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, desctexta2, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, desctexta3, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, desctexta4, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, desctexta5, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, desctexta6, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc2texta1, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc2texta2, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc2texta3, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc2texta4, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3texta1, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3texta2, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3texta3, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3texta4, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3texta5, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3texta6, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3texta7, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, desctexta1, USHORT_STRING2);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, desctexta2, USHORT_STRING2);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, desctexta3, USHORT_STRING2);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, desctexta4, USHORT_STRING2);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, desctexta5, USHORT_STRING2);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, desctexta6, USHORT_STRING2);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc2texta1, USHORT_STRING2);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc2texta2, USHORT_STRING2);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc2texta3, USHORT_STRING2);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc2texta4, USHORT_STRING2);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3texta1, USHORT_STRING2);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3texta2, USHORT_STRING2);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3texta3, USHORT_STRING2);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3texta4, USHORT_STRING2);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3texta5, USHORT_STRING2);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3texta6, USHORT_STRING2);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3texta7, USHORT_STRING2);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, desctextb1, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, desctextb2, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, desctextb3, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, desctextb4, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, desctextb5, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, desctextb6, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc2textb1, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc2textb2, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc2textb3, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc2textb4, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3textb1, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3textb2, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3textb3, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3textb4, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3textb5, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3textb6, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3textb7, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, desctextb1, USHORT_STRING2);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, desctextb2, USHORT_STRING2);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, desctextb3, USHORT_STRING2);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, desctextb4, USHORT_STRING2);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, desctextb5, USHORT_STRING2);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, desctextb6, USHORT_STRING2);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc2textb1, USHORT_STRING2);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc2textb2, USHORT_STRING2);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc2textb3, USHORT_STRING2);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc2textb4, USHORT_STRING2);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3textb1, USHORT_STRING2);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3textb2, USHORT_STRING2);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3textb3, USHORT_STRING2);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3textb4, USHORT_STRING2);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3textb5, USHORT_STRING2);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3textb6, USHORT_STRING2);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3textb7, USHORT_STRING2);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ddammyspcalc1, UINT);    //skilldesccode
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ddammyspcalc2, UINT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ddammyspcalc1, UINT_DESCCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ddammyspcalc2, UINT_DESCCODE);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, p1dmmin, UINT);  //skilldesccode
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, p2dmmin, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, p3dmmin, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, p1dmmax, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, p2dmmax, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, p3dmmax, UINT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, p1dmmin, UINT_DESCCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, p2dmmin, UINT_DESCCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, p3dmmin, UINT_DESCCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, p1dmmax, UINT_DESCCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, p2dmmax, UINT_DESCCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, p3dmmax, UINT_DESCCODE);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, desccalca1, UINT);   //skilldesccode
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, desccalca2, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, desccalca3, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, desccalca4, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, desccalca5, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, desccalca6, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc2calca1, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc2calca2, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc2calca3, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc2calca4, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3calca1, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3calca2, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3calca3, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3calca4, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3calca5, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3calca6, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3calca7, UINT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, desccalca1, UINT_DESCCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, desccalca2, UINT_DESCCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, desccalca3, UINT_DESCCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, desccalca4, UINT_DESCCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, desccalca5, UINT_DESCCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, desccalca6, UINT_DESCCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc2calca1, UINT_DESCCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc2calca2, UINT_DESCCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc2calca3, UINT_DESCCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc2calca4, UINT_DESCCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3calca1, UINT_DESCCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3calca2, UINT_DESCCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3calca3, UINT_DESCCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3calca4, UINT_DESCCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3calca5, UINT_DESCCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3calca6, UINT_DESCCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3calca7, UINT_DESCCODE);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, desccalcb1, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, desccalcb2, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, desccalcb3, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, desccalcb4, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, desccalcb5, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, desccalcb6, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc2calcb1, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc2calcb2, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc2calcb3, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc2calcb4, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3calcb1, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3calcb2, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3calcb3, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3calcb4, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3calcb5, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3calcb6, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3calcb7, UINT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, desccalcb1, UINT_DESCCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, desccalcb2, UINT_DESCCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, desccalcb3, UINT_DESCCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, desccalcb4, UINT_DESCCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, desccalcb5, UINT_DESCCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, desccalcb6, UINT_DESCCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc2calcb1, UINT_DESCCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc2calcb2, UINT_DESCCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc2calcb3, UINT_DESCCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc2calcb4, UINT_DESCCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3calcb1, UINT_DESCCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3calcb2, UINT_DESCCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3calcb3, UINT_DESCCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3calcb4, UINT_DESCCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3calcb5, UINT_DESCCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3calcb6, UINT_DESCCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3calcb7, UINT_DESCCODE);
 }
 
 int process_skilldesc(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)

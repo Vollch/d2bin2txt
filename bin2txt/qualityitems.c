@@ -245,42 +245,6 @@ static char *m_apcNotUsed[] =
     NULL,
 };
 
-static int QualityItems_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
-{
-    ST_LINE_INFO *pstLineInfo = pvLineInfo;
-    char *pcResult;
-    int result = 0;
-
-    if ( !strcmp(acKey, "mod1code") )
-    {
-        pcResult = Properties_GetProperty(pstLineInfo->vmod1code);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "mod2code") )
-    {
-        pcResult = Properties_GetProperty(pstLineInfo->vmod2code);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-
-    return result;
-}
-
 int process_qualityitems(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
     ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
@@ -301,12 +265,12 @@ int process_qualityitems(char *acTemplatePath, char *acBinPath, char *acTxtPath,
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, belt, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, nummods, UCHAR);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod1code, UINT); //properties
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod1code, UINT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod1param, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod1min, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod1max, UINT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod2code, UINT); //properties
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod2code, UINT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod2param, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod2min, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod2max, UINT);
@@ -332,7 +296,6 @@ int process_qualityitems(char *acTemplatePath, char *acBinPath, char *acTxtPath,
             break;
 
         case EN_MODULE_INIT:
-            m_stCallback.pfnConvertValue = QualityItems_ConvertValue;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
 
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 

@@ -435,66 +435,56 @@ struct D2WeaponClassTxt
 };
 
 typedef struct
-{
+{//total 424 bytes
     unsigned char vflippyfile[32];
-
     unsigned char vinvfile[32];
-
     unsigned char vuniqueinvfile[32];
-
     unsigned char vsetinvfile[32];
 
     unsigned char vcode[4];
-
     unsigned char vnormcode[4];
-
     unsigned char vubercode[4];
-
     unsigned char vultracode[4];
+    unsigned char valternategfx[4];
 
-    unsigned char valternateGfx[4];
+    unsigned int vpSpell;
 
-    unsigned int iPadding37;
-    unsigned int iPadding38;
-    unsigned int iPadding39;
+    unsigned short vstate;
+    unsigned short vcstate1;
+    unsigned short vcstate2;
+    unsigned short vstat1;
+    unsigned short vstat2;
+    unsigned short vstat3;
 
-    unsigned int iPadding40;
-    unsigned int iPadding41;
-    unsigned int iPadding42;
-    unsigned int iPadding43;
-    unsigned int iPadding44;
-    unsigned int iPadding45;
-    unsigned int iPadding46;
-    unsigned int iPadding47;
+    unsigned int vcalc1;
+    unsigned int vcalc2;
+    unsigned int vcalc3;
+    unsigned int vlen;
 
+    unsigned short vspelldesc;
+    unsigned short vspelldescstr;
+    unsigned int vspelldesccalc;
+
+    unsigned char vBetterGem[4];
     unsigned char vwclass[4];
-
     unsigned char v2handedwclass[4];
+    unsigned char vTMogType[4];
 
-    unsigned int iPadding50;
-    unsigned int iPadding51;
-    unsigned int iPadding52;
-
+    unsigned int vminac;
+    unsigned int vmaxac;
     unsigned int vgamblemyspcost;
+    unsigned int vspeed;
 
-    short vspeed;
-    unsigned char iPadding54[2];
-
-    unsigned char vbitfield1;
-    unsigned char iPadding55[3];
-
+    unsigned int vbitfield1;
     unsigned int vcost;
 
     unsigned int vminstack;
     unsigned int vmaxstack;
     unsigned int vspawnstack;
-
-    unsigned char vgemoffset;
-    unsigned char iPadding60[3];
+    unsigned int vgemoffset;
 
     unsigned short vnamestr;    //string
     unsigned short vversion;
-
     unsigned short vautomyspprefix;
     unsigned short vmissiletype;
 
@@ -510,32 +500,34 @@ typedef struct
 
     unsigned short vrangeadder;
     unsigned short vStrBonus;
-
     unsigned short vDexBonus;
     unsigned short vreqstr;
-
     unsigned short vreqdex;
-    unsigned char iPadding67;
+
+    unsigned char vabsorbs;
     unsigned char vinvwidth;
 
     unsigned char vinvheight;
-    unsigned char iPadding68;
+    unsigned char vblock;
     unsigned char vdurability;
     unsigned char vnodurability;
 
-    unsigned char iPadding69;
+    unsigned char bPad1;
     unsigned char vcomponent;
-    unsigned char iPadding69_1[2];
+    unsigned char vrArm;
+    unsigned char vlArm;
 
-    unsigned int iPadding70;
+    unsigned char vTorso;
+    unsigned char vLegs;
+    unsigned char vrSPad;
+    unsigned char vlSPad;
 
     unsigned char v2handed;
     unsigned char vuseable;
     unsigned short vtype;   //itemtypes
-
     unsigned short vtype2;   //itemtypes
-    unsigned short iPadding72;
 
+    unsigned char acPad1[2];
     unsigned short vdropsound;
     unsigned short vusesound;
 
@@ -546,21 +538,23 @@ typedef struct
 
     unsigned char vtransparent;
     unsigned char vtranstbl;
-    unsigned char iPadding75;
+    unsigned char bPad2;
     unsigned char vlightradius;
 
     unsigned char vbelt;
-    unsigned char iPadding76;
+    unsigned char vautobelt;
     unsigned char vstackable;
     unsigned char vspawnable;
 
-    unsigned char iPadding77;
+    char vspellicon;
     unsigned char vdurwarning;
     unsigned char vqntwarning;
     unsigned char vhasinv;
 
     unsigned char vgemsockets;
-    unsigned char iPadding78[3];
+    unsigned char vTransmogrify;
+    unsigned char vTMogMin;
+    unsigned char vTMogMax;
 
     unsigned char vhitmyspclass;  //hitclass
     unsigned char v1or2handed;
@@ -680,13 +674,14 @@ typedef struct
     unsigned char vMalahMagicLvl;
     unsigned char vLarzukMagicLvl;
     unsigned char vDrehyaMagicLvl;
-    unsigned char iPadding102;
+    unsigned char bPad3;
 
     unsigned char vNightmareUpgrade[4];
-
     unsigned char vHellUpgrade[4];
 
-    unsigned int vPermStoreItem;
+    unsigned char vPermStoreItem;
+    unsigned char vmultibuy;
+    unsigned char acPad20[2];
 } ST_LINE_INFO;
 
 typedef struct
@@ -806,33 +801,7 @@ static int Weapons_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate,
     char *pcResult;
     int result = 0;
 
-    if ( !strcmp(acKey, "dropsound") )
-    {
-        pcResult = Sounds_GetSoundName(pstLineInfo->vdropsound);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "usesound") )
-    {
-        pcResult = Sounds_GetSoundName(pstLineInfo->vusesound);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "namestr") )
+    if ( !strcmp(acKey, "namestr") )
     {
         pcResult = String_FindString(pstLineInfo->vnamestr, "dummy");
         if ( pcResult )
@@ -841,49 +810,17 @@ static int Weapons_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate,
         }
         else
         {
-            //acOutput[0] = 0;
             strcpy(acOutput, pstLineInfo->vcode);
         }
         result = 1;
     }
-    else if ( !strcmp(acKey, "type") )
+    else if ( !strcmp(acKey, "rarity") )
     {
-        pcResult = ItemTypes_GetItemCode(pstLineInfo->vtype);
-        if ( pcResult )
+        if ( (999 % 256) == pstLineInfo->vrarity )
         {
-            strcpy(acOutput, pcResult);
+            strcpy(acOutput, "999");
+            result = 1;
         }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "type2") )
-    {
-        pcResult = ItemTypes_GetItemCode(pstLineInfo->vtype2);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "hit class") )
-    {
-        pcResult = HitClass_GetClassStr(pstLineInfo->vhitmyspclass);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
     }
 
     return result;
@@ -896,44 +833,54 @@ int process_weapons(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, flippyfile, STRING);
-
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, invfile, STRING);
-
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, uniqueinvfile, STRING);
-
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, setinvfile, STRING);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, code, STRING);
-
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, normcode, STRING);
-
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ubercode, STRING);
-
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ultracode, STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, alternategfx, STRING);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, alternateGfx, STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, pSpell, UINT);
 
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, state, USHORT_STATE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cstate1, USHORT_STATE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cstate2, USHORT_STATE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat1, USHORT_ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat2, USHORT_ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat3, USHORT_ITEMSTAT);
+
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, calc1, UINT_ITEMCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, calc2, UINT_ITEMCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, calc3, UINT_ITEMCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, len, UINT_ITEMCODE);
+
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, spelldesc, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, spelldescstr, USHORT_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, spelldesccalc, UINT_ITEMCODE);
+
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, BetterGem, STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, wclass, STRING);
-
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, 2handedwclass, STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TMogType, STRING);
 
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, minac, UINT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, maxac, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, gamblemyspcost, UINT);
-
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, speed, SHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, speed, UINT);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, bitfield1, UCHAR);
-
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cost, UINT);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, minstack, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, maxstack, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, spawnstack, UINT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, gemoffset, UINT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, gemoffset, UCHAR);
-
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, namestr, USHORT);    //string
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, namestr, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, version, USHORT);
-
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, automyspprefix, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, missiletype, USHORT);
 
@@ -949,27 +896,34 @@ int process_weapons(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, rangeadder, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, StrBonus, USHORT);
-
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, DexBonus, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, reqstr, USHORT);
-
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, reqdex, USHORT);
 
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, absorbs, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, invwidth, UCHAR);
+
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, invheight, UCHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, block, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, durability, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, nodurability, UCHAR);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, component, UCHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, rArm, UCHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, lArm, UCHAR);
+
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Torso, UCHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Legs, UCHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, rSPad, UCHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, lSPad, UCHAR);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, 2handed, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, useable, UCHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, type, USHORT);   //itemtypes
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, type, USHORT_ITEMTYPE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, type2, USHORT_ITEMTYPE);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, type2, USHORT);   //itemtypes
-
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dropsound, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, usesound, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dropsound, USHORT_SOUND);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, usesound, USHORT_SOUND);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dropsfxframe, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, unique, UCHAR);
@@ -977,21 +931,25 @@ int process_weapons(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, questdiffcheck, UCHAR);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, transparent, UCHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, transtbl, UCHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, gemsockets, UCHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, transtbl, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, lightradius, UCHAR);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, belt, UCHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, autobelt, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stackable, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, spawnable, UCHAR);
 
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, spellicon, CHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, durwarning, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, qntwarning, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, hasinv, UCHAR);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, gemsockets, UCHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Transmogrify, UCHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TMogMin, UCHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TMogMax, UCHAR);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, hitmyspclass, UCHAR);  //hitclass
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, hitmyspclass, UCHAR_HITCLASS); 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, 1or2handed, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, gemapplytype, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, levelreq, UCHAR);
@@ -1111,10 +1069,10 @@ int process_weapons(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, DrehyaMagicLvl, UCHAR);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, NightmareUpgrade, STRING);
-
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, HellUpgrade, STRING);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PermStoreItem, UINT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PermStoreItem, UCHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, multibuy, UCHAR);
 
     switch ( enPhase )
     {
@@ -1136,6 +1094,11 @@ int process_weapons(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
             MODULE_DEPEND_CALL(string, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(itemtypes, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(hitclass, acTemplatePath, acBinPath, acTxtPath);
+
+            if ( 0 == ItemsCode_ParseBin(acTemplatePath, acBinPath, acTxtPath) )
+            {
+                return 0;
+            }
             break;
 
         case EN_MODULE_RESERVED_1:

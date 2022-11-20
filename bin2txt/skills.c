@@ -1964,8 +1964,8 @@ typedef struct
 
     unsigned int vDmgSymPerCalc;    //skillscode
 
-    unsigned short vEType;  //elemtypes
-    unsigned short iPadding119;
+    unsigned char vEType;  //elemtypes
+    unsigned char acPad1[3];
 
     unsigned int vEMin;
     unsigned int vEMax;
@@ -2076,1011 +2076,8 @@ static int Skills_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo,
 static int Skills_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
-    char *pcResult;
-    int result = 0;
 
-    if ( !strcmp(acKey, "charclass") )
-    {
-        pcResult = PlayerClass_GetClass(pstLineInfo->vcharclass);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-        }
-    else if ( !strcmp(acKey, "skilldesc") )
-    {
-        pcResult = SkillDesc_GetDesc(pstLineInfo->vskilldesc);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "anim") )
-    {
-        pcResult = PlrMode_GetCode(pstLineInfo->vanim);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "monanim") )
-    {
-        pcResult = MonMode_GetCode(pstLineInfo->vmonanim);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "seqtrans") )
-    {
-        pcResult = PlrMode_GetCode(pstLineInfo->vseqtrans);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "monanim") )
-    {
-        pcResult = MonMode_GetCode(pstLineInfo->vmonanim);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "itypea1") )
-    {
-        pcResult = ItemTypes_GetItemCode(pstLineInfo->vitypea1);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "itypea2") )
-    {
-        pcResult = ItemTypes_GetItemCode(pstLineInfo->vitypea2);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "itypea3") )
-    {
-        pcResult = ItemTypes_GetItemCode(pstLineInfo->vitypea3);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "etypea1") )
-    {
-        pcResult = ItemTypes_GetItemCode(pstLineInfo->vetypea1);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "etypea2") )
-    {
-        pcResult = ItemTypes_GetItemCode(pstLineInfo->vetypea2);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "itypeb1") )
-    {
-        pcResult = ItemTypes_GetItemCode(pstLineInfo->vitypeb1);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "itypeb2") )
-    {
-        pcResult = ItemTypes_GetItemCode(pstLineInfo->vitypeb2);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "itypeb3") )
-    {
-        pcResult = ItemTypes_GetItemCode(pstLineInfo->vitypeb3);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "etypeb1") )
-    {
-        pcResult = ItemTypes_GetItemCode(pstLineInfo->vetypeb1);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "etypeb2") )
-    {
-        pcResult = ItemTypes_GetItemCode(pstLineInfo->vetypeb2);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "srvmissile") )
-    {
-        pcResult = Missiles_GetMissile(pstLineInfo->vsrvmissile);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "srvmissilea") )
-    {
-        pcResult = Missiles_GetMissile(pstLineInfo->vsrvmissilea);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "srvmissileb") )
-    {
-        pcResult = Missiles_GetMissile(pstLineInfo->vsrvmissileb);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "srvmissilec") )
-    {
-        pcResult = Missiles_GetMissile(pstLineInfo->vsrvmissilec);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "srvoverlay") )
-    {
-        pcResult = Overlay_GetOverlay(pstLineInfo->vsrvoverlay);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "aurastat1") )
-    {
-        pcResult = ItemStatCost_GetStateName(pstLineInfo->vaurastat1);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "aurastat2") )
-    {
-        pcResult = ItemStatCost_GetStateName(pstLineInfo->vaurastat2);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "aurastat3") )
-    {
-        pcResult = ItemStatCost_GetStateName(pstLineInfo->vaurastat3);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "aurastat4") )
-    {
-        pcResult = ItemStatCost_GetStateName(pstLineInfo->vaurastat4);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "aurastat5") )
-    {
-        pcResult = ItemStatCost_GetStateName(pstLineInfo->vaurastat5);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "aurastat6") )
-    {
-        pcResult = ItemStatCost_GetStateName(pstLineInfo->vaurastat6);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "aurastate") )
-    {
-        pcResult = States_GetStateName(pstLineInfo->vaurastate);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "auratargetstate") )
-    {
-        pcResult = States_GetStateName(pstLineInfo->vauratargetstate);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "auraevent1") )
-    {
-        pcResult = Events_GetEventName(pstLineInfo->vauraevent1);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "auraevent2") )
-    {
-        pcResult = Events_GetEventName(pstLineInfo->vauraevent2);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "auraevent3") )
-    {
-        pcResult = Events_GetEventName(pstLineInfo->vauraevent3);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "auratgtevent") )
-    {
-        pcResult = Events_GetEventName(pstLineInfo->vauratgtevent);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "passivestate") )
-    {
-        pcResult = States_GetStateName(pstLineInfo->vpassivestate);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "passiveitype") )
-    {
-        pcResult = ItemTypes_GetItemCode(pstLineInfo->vpassiveitype);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "passivestat1") )
-    {
-        pcResult = ItemStatCost_GetStateName(pstLineInfo->vpassivestat1);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "passivestat2") )
-    {
-        pcResult = ItemStatCost_GetStateName(pstLineInfo->vpassivestat2);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "passivestat3") )
-    {
-        pcResult = ItemStatCost_GetStateName(pstLineInfo->vpassivestat3);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "passivestat4") )
-    {
-        pcResult = ItemStatCost_GetStateName(pstLineInfo->vpassivestat4);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "passivestat5") )
-    {
-        pcResult = ItemStatCost_GetStateName(pstLineInfo->vpassivestat5);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "passiveevent") )
-    {
-        pcResult = Events_GetEventName(pstLineInfo->vpassiveevent);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "summon") )
-    {
-        pcResult = MonStats_GetStatsName(pstLineInfo->vsummon);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "pettype") )
-    {
-        pcResult = Pettype_GetPetType(pstLineInfo->vpettype);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "summode") )
-    {
-        pcResult = MonMode_GetCode(pstLineInfo->vsummode);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "sumskill1") )
-    {
-        pcResult = Skills_GetSkillName(pstLineInfo->vsumskill1);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "sumskill2") )
-    {
-        pcResult = Skills_GetSkillName(pstLineInfo->vsumskill2);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "sumskill3") )
-    {
-        pcResult = Skills_GetSkillName(pstLineInfo->vsumskill3);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "sumskill4") )
-    {
-        pcResult = Skills_GetSkillName(pstLineInfo->vsumskill4);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "sumskill5") )
-    {
-        pcResult = Skills_GetSkillName(pstLineInfo->vsumskill5);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "sumoverlay") )
-    {
-        pcResult = Overlay_GetOverlay(pstLineInfo->vsumoverlay);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "cltmissile") )
-    {
-        pcResult = Missiles_GetMissile(pstLineInfo->vcltmissile);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "cltmissilea") )
-    {
-        pcResult = Missiles_GetMissile(pstLineInfo->vcltmissilea);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "cltmissileb") )
-    {
-        pcResult = Missiles_GetMissile(pstLineInfo->vcltmissileb);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "cltmissilec") )
-    {
-        pcResult = Missiles_GetMissile(pstLineInfo->vcltmissilec);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "cltmissiled") )
-    {
-        pcResult = Missiles_GetMissile(pstLineInfo->vcltmissiled);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "stsound") )
-    {
-        pcResult = Sounds_GetSoundName(pstLineInfo->vstsound);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "stsoundclass") )
-    {
-        pcResult = Sounds_GetSoundName(pstLineInfo->vstsoundclass);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "dosound") )
-    {
-        pcResult = Sounds_GetSoundName(pstLineInfo->vdosound);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "dosound a") )
-    {
-        pcResult = Sounds_GetSoundName(pstLineInfo->vdosoundmyspa);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "dosound b") )
-    {
-        pcResult = Sounds_GetSoundName(pstLineInfo->vdosoundmyspb);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "castoverlay") )
-    {
-        pcResult = Overlay_GetOverlay(pstLineInfo->vcastoverlay);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "tgtoverlay") )
-    {
-        pcResult = Overlay_GetOverlay(pstLineInfo->vtgtoverlay);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "tgtsound") )
-    {
-        pcResult = Sounds_GetSoundName(pstLineInfo->vtgtsound);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "prgoverlay") )
-    {
-        pcResult = Overlay_GetOverlay(pstLineInfo->vprgoverlay);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "prgsound") )
-    {
-        pcResult = Sounds_GetSoundName(pstLineInfo->vprgsound);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "cltoverlaya") )
-    {
-        pcResult = Overlay_GetOverlay(pstLineInfo->vcltoverlaya);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "cltoverlayb") )
-    {
-        pcResult = Overlay_GetOverlay(pstLineInfo->vcltoverlayb);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "ItemCastSound") )
-    {
-        pcResult = Sounds_GetSoundName(pstLineInfo->vItemCastSound);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "ItemCastOverlay") )
-    {
-        pcResult = Overlay_GetOverlay(pstLineInfo->vItemCastOverlay);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "reqskill1") )
-    {
-        pcResult = Skills_GetSkillName(pstLineInfo->vreqskill1);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "reqskill2") )
-    {
-        pcResult = Skills_GetSkillName(pstLineInfo->vreqskill2);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "reqskill3") )
-    {
-        pcResult = Skills_GetSkillName(pstLineInfo->vreqskill3);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "skilldesc") )
-    {
-        pcResult = SkillDesc_GetDesc(pstLineInfo->vskilldesc);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "EType") )
-    {
-        pcResult = ElemTypes_GetElemStr(pstLineInfo->vEType);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "State1") )
-    {
-        pcResult = States_GetStateName(pstLineInfo->vState1);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "State2") )
-    {
-        pcResult = States_GetStateName(pstLineInfo->vState2);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "State3") )
-    {
-        pcResult = States_GetStateName(pstLineInfo->vState3);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "range") )
+    if ( !strcmp(acKey, "range") )
     {
         if ( 3 == pstLineInfo->vrange )
         {
@@ -3102,478 +2099,10 @@ static int Skills_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, 
         {
             acOutput[0] = 0;
         }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "prgcalc1") )
-    {
-        pcResult = SkillsCode_GetExpression(pstLineInfo->vprgcalc1);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "prgcalc2") )
-    {
-        pcResult = SkillsCode_GetExpression(pstLineInfo->vprgcalc2);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "prgcalc3") )
-    {
-        pcResult = SkillsCode_GetExpression(pstLineInfo->vprgcalc3);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "auralencalc") )
-    {
-        pcResult = SkillsCode_GetExpression(pstLineInfo->vauralencalc);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "aurarangecalc") )
-    {
-        pcResult = SkillsCode_GetExpression(pstLineInfo->vaurarangecalc);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "aurastatcalc1") )
-    {
-        pcResult = SkillsCode_GetExpression(pstLineInfo->vaurastatcalc1);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "aurastatcalc2") )
-    {
-        pcResult = SkillsCode_GetExpression(pstLineInfo->vaurastatcalc2);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "aurastatcalc3") )
-    {
-        pcResult = SkillsCode_GetExpression(pstLineInfo->vaurastatcalc3);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "aurastatcalc4") )
-    {
-        pcResult = SkillsCode_GetExpression(pstLineInfo->vaurastatcalc4);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "aurastatcalc5") )
-    {
-        pcResult = SkillsCode_GetExpression(pstLineInfo->vaurastatcalc5);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "aurastatcalc6") )
-    {
-        pcResult = SkillsCode_GetExpression(pstLineInfo->vaurastatcalc6);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "passivecalc1") )
-    {
-        pcResult = SkillsCode_GetExpression(pstLineInfo->vpassivecalc1);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "passivecalc2") )
-    {
-        pcResult = SkillsCode_GetExpression(pstLineInfo->vpassivecalc2);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "passivecalc3") )
-    {
-        pcResult = SkillsCode_GetExpression(pstLineInfo->vpassivecalc3);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "passivecalc4") )
-    {
-        pcResult = SkillsCode_GetExpression(pstLineInfo->vpassivecalc4);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "passivecalc5") )
-    {
-        pcResult = SkillsCode_GetExpression(pstLineInfo->vpassivecalc5);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "petmax") )
-    {
-        pcResult = SkillsCode_GetExpression(pstLineInfo->vpetmax);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "sumsk1calc") )
-    {
-        pcResult = SkillsCode_GetExpression(pstLineInfo->vsumsk1calc);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "sumsk2calc") )
-    {
-        pcResult = SkillsCode_GetExpression(pstLineInfo->vsumsk2calc);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "sumsk3calc") )
-    {
-        pcResult = SkillsCode_GetExpression(pstLineInfo->vsumsk3calc);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "sumsk4calc") )
-    {
-        pcResult = SkillsCode_GetExpression(pstLineInfo->vsumsk4calc);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "sumsk5calc") )
-    {
-        pcResult = SkillsCode_GetExpression(pstLineInfo->vsumsk5calc);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "cltcalc1") )
-    {
-        pcResult = SkillsCode_GetExpression(pstLineInfo->vcltcalc1);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "cltcalc2") )
-    {
-        pcResult = SkillsCode_GetExpression(pstLineInfo->vcltcalc2);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "cltcalc3") )
-    {
-        pcResult = SkillsCode_GetExpression(pstLineInfo->vcltcalc3);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "perdelay") )
-    {
-        pcResult = SkillsCode_GetExpression(pstLineInfo->vperdelay);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "calc1") )
-    {
-        pcResult = SkillsCode_GetExpression(pstLineInfo->vcalc1);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "calc2") )
-    {
-        pcResult = SkillsCode_GetExpression(pstLineInfo->vcalc2);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "calc3") )
-    {
-        pcResult = SkillsCode_GetExpression(pstLineInfo->vcalc3);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "calc4") )
-    {
-        pcResult = SkillsCode_GetExpression(pstLineInfo->vcalc4);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "skpoints") )
-    {
-        pcResult = SkillsCode_GetExpression(pstLineInfo->vskpoints);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "delay") )
-    {
-        pcResult = SkillsCode_GetExpression(pstLineInfo->vdelay);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "ToHitCalc") )
-    {
-        pcResult = SkillsCode_GetExpression(pstLineInfo->vToHitCalc);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "DmgSymPerCalc") )
-    {
-        pcResult = SkillsCode_GetExpression(pstLineInfo->vDmgSymPerCalc);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "EDmgSymPerCalc") )
-    {
-        pcResult = SkillsCode_GetExpression(pstLineInfo->vEDmgSymPerCalc);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "ELenSymPerCalc") )
-    {
-        pcResult = SkillsCode_GetExpression(pstLineInfo->vELenSymPerCalc);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
+        return 1;
     }
 
-    return result;
+    return 0;
 }
 
 static int Skills_BitProc(void *pvLineInfo, char *acKey, char *acOutput)
@@ -3835,29 +2364,29 @@ static void Skills_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLine
     VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, ItemCheckStart, BitCombined2, BIT);
     VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, TgtPlaceCheck, BitCombined2, BIT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, charclass, UCHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, charclass, UCHAR_PLRCLASS);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, anim, UCHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, monanim, UCHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, seqtrans, UCHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, anim, UCHAR_PLRMODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, monanim, UCHAR_MONMODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, seqtrans, UCHAR_PLRMODE);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, seqnum, UCHAR);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, range, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SelectProc, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, seqinput, USHORT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itypea1, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itypea2, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itypea1, USHORT_ITEMTYPE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itypea2, USHORT_ITEMTYPE);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itypea3, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, etypea1, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itypea3, USHORT_ITEMTYPE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, etypea1, USHORT_ITEMTYPE);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, etypea2, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itypeb1, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itypeb2, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itypeb3, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, etypeb1, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, etypeb2, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, etypea2, USHORT_ITEMTYPE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itypeb1, USHORT_ITEMTYPE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itypeb2, USHORT_ITEMTYPE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itypeb3, USHORT_ITEMTYPE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, etypeb1, USHORT_ITEMTYPE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, etypeb2, USHORT_ITEMTYPE);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, srvstfunc, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, srvdofunc, USHORT);
@@ -3868,73 +2397,73 @@ static void Skills_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLine
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, srvprgfunc3, USHORT);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prgdam, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, srvmissile, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, srvmissile, USHORT_MISSILE);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, srvmissilea, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, srvmissileb, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, srvmissilea, USHORT_MISSILE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, srvmissileb, USHORT_MISSILE);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, srvmissilec, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, srvoverlay, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, srvmissilec, USHORT_MISSILE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, srvoverlay, USHORT_OVERLAY);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, aurafilter, UINT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, aurastat1, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, aurastat2, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, aurastat3, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, aurastat4, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, aurastat5, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, aurastat6, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, aurastat1, USHORT_ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, aurastat2, USHORT_ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, aurastat3, USHORT_ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, aurastat4, USHORT_ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, aurastat5, USHORT_ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, aurastat6, USHORT_ITEMSTAT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, aurastate, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, auratargetstate, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, aurastate, USHORT_STATE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, auratargetstate, USHORT_STATE);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, auraevent1, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, auraevent2, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, auraevent1, USHORT_EVENT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, auraevent2, USHORT_EVENT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, auraevent3, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, auraevent3, USHORT_EVENT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, auraeventfunc1, USHORT);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, auraeventfunc2, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, auraeventfunc3, USHORT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, auratgtevent, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, auratgtevent, USHORT_EVENT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, auratgteventfunc, USHORT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, passivestate, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, passiveitype, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, passivestate, USHORT_STATE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, passiveitype, USHORT_ITEMTYPE);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, passivestat1, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, passivestat2, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, passivestat1, USHORT_ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, passivestat2, USHORT_ITEMSTAT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, passivestat3, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, passivestat4, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, passivestat3, USHORT_ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, passivestat4, USHORT_ITEMSTAT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, passivestat5, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, passivestat5, USHORT_ITEMSTAT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, passiveevent, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, passiveevent, USHORT_EVENT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, passiveeventfunc, USHORT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, summon, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, pettype, UCHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, summode, UCHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, summon, USHORT_MONSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, pettype, UCHAR_PET);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, summode, UCHAR_MONMODE);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sumskill1, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sumskill2, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sumskill1, USHORT_SKILL);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sumskill2, USHORT_SKILL);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sumskill3, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sumskill4, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sumskill3, USHORT_SKILL);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sumskill4, USHORT_SKILL);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sumskill5, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sumskill5, USHORT_SKILL);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sumumod, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sumoverlay, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sumoverlay, USHORT_OVERLAY);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cltmissile, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cltmissilea, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cltmissileb, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cltmissilec, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cltmissile, USHORT_MISSILE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cltmissilea, USHORT_MISSILE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cltmissileb, USHORT_MISSILE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cltmissilec, USHORT_MISSILE);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cltmissiled, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cltmissiled, USHORT_MISSILE);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cltstfunc, USHORT);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cltdofunc, USHORT);
@@ -3943,28 +2472,28 @@ static void Skills_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLine
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cltprgfunc2, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cltprgfunc3, USHORT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stsound, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stsoundclass, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stsound, USHORT_SOUND);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stsoundclass, USHORT_SOUND);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dosound, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dosoundmyspa, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dosound, USHORT_SOUND);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dosoundmyspa, USHORT_SOUND);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dosoundmyspb, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, castoverlay, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dosoundmyspb, USHORT_SOUND);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, castoverlay, USHORT_OVERLAY);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, tgtoverlay, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, tgtsound, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, tgtoverlay, USHORT_OVERLAY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, tgtsound, USHORT_SOUND);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prgoverlay, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prgsound, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prgoverlay, USHORT_OVERLAY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prgsound, USHORT_SOUND);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cltoverlaya, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cltoverlayb, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cltoverlaya, USHORT_OVERLAY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cltoverlayb, USHORT_OVERLAY);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ItemTarget, UCHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ItemCastSound, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ItemCastSound, USHORT_SOUND);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ItemCastOverlay, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ItemCastOverlay, USHORT_OVERLAY);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, maxlvl, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ResultFlags, USHORT);
@@ -3993,10 +2522,10 @@ static void Skills_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLine
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, reqint, USHORT);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, reqvit, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, reqskill1, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, reqskill1, USHORT_SKILL);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, reqskill2, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, reqskill3, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, reqskill2, USHORT_SKILL);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, reqskill3, USHORT_SKILL);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, startmana, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, minmana, USHORT);
@@ -4008,7 +2537,7 @@ static void Skills_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLine
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, attackrank, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, LineOfSight, UCHAR);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, skilldesc, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, skilldesc, USHORT_SKILLDESC);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ToHit, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, LevToHit, UINT);
@@ -4030,7 +2559,7 @@ static void Skills_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLine
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MaxLevDam4, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MaxLevDam5, UINT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, EType, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, EType, UCHAR_ELEM);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, EMin, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, EMax, UINT);
@@ -4051,52 +2580,52 @@ static void Skills_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLine
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ELevLen3, UINT);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, restrict, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, State1, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, State1, USHORT_STATE);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, State2, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, State3, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, State2, USHORT_STATE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, State3, USHORT_STATE);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, aitype, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, aibonus, SHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, costmyspmult, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, costmyspadd, UINT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prgcalc1, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prgcalc2, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prgcalc3, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, auralencalc, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, aurarangecalc, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, aurastatcalc1, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, aurastatcalc2, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, aurastatcalc3, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, aurastatcalc4, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, aurastatcalc5, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, aurastatcalc6, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, passivecalc1, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, passivecalc2, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, passivecalc3, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, passivecalc4, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, passivecalc5, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, petmax, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sumsk1calc, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sumsk2calc, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sumsk3calc, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sumsk4calc, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sumsk5calc, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cltcalc1, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cltcalc2, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cltcalc3, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, perdelay, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, calc1, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, calc2, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, calc3, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, calc4, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, skpoints, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, delay, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ToHitCalc, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, DmgSymPerCalc, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, EDmgSymPerCalc, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ELenSymPerCalc, UINT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prgcalc1, UINT_SKILLCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prgcalc2, UINT_SKILLCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prgcalc3, UINT_SKILLCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, auralencalc, UINT_SKILLCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, aurarangecalc, UINT_SKILLCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, aurastatcalc1, UINT_SKILLCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, aurastatcalc2, UINT_SKILLCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, aurastatcalc3, UINT_SKILLCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, aurastatcalc4, UINT_SKILLCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, aurastatcalc5, UINT_SKILLCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, aurastatcalc6, UINT_SKILLCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, passivecalc1, UINT_SKILLCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, passivecalc2, UINT_SKILLCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, passivecalc3, UINT_SKILLCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, passivecalc4, UINT_SKILLCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, passivecalc5, UINT_SKILLCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, petmax, UINT_SKILLCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sumsk1calc, UINT_SKILLCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sumsk2calc, UINT_SKILLCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sumsk3calc, UINT_SKILLCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sumsk4calc, UINT_SKILLCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sumsk5calc, UINT_SKILLCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cltcalc1, UINT_SKILLCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cltcalc2, UINT_SKILLCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cltcalc3, UINT_SKILLCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, perdelay, UINT_SKILLCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, calc1, UINT_SKILLCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, calc2, UINT_SKILLCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, calc3, UINT_SKILLCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, calc4, UINT_SKILLCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, skpoints, UINT_SKILLCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, delay, UINT_SKILLCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ToHitCalc, UINT_SKILLCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, DmgSymPerCalc, UINT_SKILLCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, EDmgSymPerCalc, UINT_SKILLCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ELenSymPerCalc, UINT_SKILLCODE);
 }
 
 int process_skills(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)

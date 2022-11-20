@@ -134,45 +134,6 @@ static char *m_apcNotUsed[] =
     NULL,
 };
 
-static int RarePrefix_ConverValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
-{
-    ST_LINE_INFO *pstLineInfo = pvLineInfo;
-    char *pcResult;
-    int id;
-    int result = 0;
-
-    if ( strlen("itype1") == strlen(acKey) && 1 == sscanf(acKey, "itype%d", &id) )
-    {
-        unsigned short *pwItype = &pstLineInfo->vitype1;
-        pcResult = ItemTypes_GetItemCode(pwItype[id - 1]);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( strlen("etype1") == strlen(acKey) && 1 == sscanf(acKey, "etype%d", &id) )
-    {
-        unsigned short *pwItype = &pstLineInfo->vetype1;
-        pcResult = ItemTypes_GetItemCode(pwItype[id - 1]);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-
-    return result;
-}
-
 int process_rareprefix(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
     ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
@@ -181,22 +142,22 @@ int process_rareprefix(char *acTemplatePath, char *acBinPath, char *acTxtPath, E
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, version, USHORT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itype1, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itype2, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itype1, USHORT_ITEMTYPE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itype2, USHORT_ITEMTYPE);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itype3, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itype4, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itype3, USHORT_ITEMTYPE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itype4, USHORT_ITEMTYPE);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itype5, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itype6, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itype5, USHORT_ITEMTYPE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itype6, USHORT_ITEMTYPE);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itype7, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, etype1, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itype7, USHORT_ITEMTYPE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, etype1, USHORT_ITEMTYPE);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, etype2, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, etype3, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, etype2, USHORT_ITEMTYPE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, etype3, USHORT_ITEMTYPE);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, etype4, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, etype4, USHORT_ITEMTYPE);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, name, STRING);
 
     switch ( enPhase )
@@ -217,7 +178,6 @@ int process_rareprefix(char *acTemplatePath, char *acBinPath, char *acTxtPath, E
             break;
 
         case EN_MODULE_INIT:
-            m_stCallback.pfnConvertValue = RarePrefix_ConverValue;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
 
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 

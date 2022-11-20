@@ -181,7 +181,8 @@ typedef struct
 
     unsigned char vspawnable;
     unsigned char iPadding21;
-    unsigned short vtransformcolor;
+    unsigned char vtransformcolor;
+    unsigned char bPad1;
 
     unsigned int vlevel;
 
@@ -235,250 +236,6 @@ static char *AutoMagic_GetKey(void *pvLineInfo, char *pcKey, unsigned int *iKeyL
     return pcKey;
 }
 
-static int AutoMagic_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
-{
-    ST_LINE_INFO *pstLineInfo = pvLineInfo;
-    char *pcResult;
-    int result = 0;
-
-    if ( !strcmp(acKey, "classspecific") )
-    {
-        pcResult = PlayerClass_GetClass(pstLineInfo->vclassspecific);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "class") )
-    {
-        pcResult = PlayerClass_GetClass(pstLineInfo->vclass);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "itype1") )
-    {
-        pcResult = ItemTypes_GetItemCode(pstLineInfo->vitype1);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "itype2") )
-    {
-        pcResult = ItemTypes_GetItemCode(pstLineInfo->vitype2);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "itype3") )
-    {
-        pcResult = ItemTypes_GetItemCode(pstLineInfo->vitype3);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "itype4") )
-    {
-        pcResult = ItemTypes_GetItemCode(pstLineInfo->vitype4);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "itype5") )
-    {
-        pcResult = ItemTypes_GetItemCode(pstLineInfo->vitype5);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "itype6") )
-    {
-        pcResult = ItemTypes_GetItemCode(pstLineInfo->vitype6);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "itype7") )
-    {
-        pcResult = ItemTypes_GetItemCode(pstLineInfo->vitype7);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "etype1") )
-    {
-        pcResult = ItemTypes_GetItemCode(pstLineInfo->vetype1);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "etype2") )
-    {
-        pcResult = ItemTypes_GetItemCode(pstLineInfo->vetype2);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "etype3") )
-    {
-        pcResult = ItemTypes_GetItemCode(pstLineInfo->vetype3);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "etype4") )
-    {
-        pcResult = ItemTypes_GetItemCode(pstLineInfo->vetype4);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "etype5") )
-    {
-        pcResult = ItemTypes_GetItemCode(pstLineInfo->vetype5);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "transformcolor") )
-    {
-        pcResult = Colors_GetColorCode(pstLineInfo->vtransformcolor);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "mod1code") )
-    {
-        pcResult = Properties_GetProperty(pstLineInfo->vmod1code);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "mod2code") )
-    {
-        pcResult = Properties_GetProperty(pstLineInfo->vmod2code);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "mod3code") )
-    {
-        pcResult = Properties_GetProperty(pstLineInfo->vmod3code);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-
-    return result;
-}
-
 int process_automagic(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
     ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
@@ -488,23 +245,23 @@ int process_automagic(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Name, STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, version, USHORT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod1code, UINT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod1code, UINT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod1param, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod1min, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod1max, UINT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod2code, UINT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod2code, UINT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod2param, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod2min, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod2max, UINT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod3code, UINT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod3code, UINT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod3param, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod3min, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod3max, UINT);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, spawnable, UCHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, transformcolor, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, transformcolor, UCHAR_COLOR);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, level, UINT);
 
@@ -514,26 +271,26 @@ int process_automagic(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, rare, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, levelreq, UCHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, classspecific, UCHAR);   //playerclass
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, class, UCHAR);   //playerclass
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, classspecific, UCHAR_PLRCLASS);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, class, UCHAR_PLRCLASS);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, classlevelreq, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itype1, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itype1, USHORT_ITEMTYPE);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itype2, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itype3, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itype2, USHORT_ITEMTYPE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itype3, USHORT_ITEMTYPE);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itype4, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itype5, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itype6, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itype7, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itype4, USHORT_ITEMTYPE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itype5, USHORT_ITEMTYPE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itype6, USHORT_ITEMTYPE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itype7, USHORT_ITEMTYPE);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, etype1, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, etype2, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, etype3, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, etype4, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, etype1, USHORT_ITEMTYPE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, etype2, USHORT_ITEMTYPE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, etype3, USHORT_ITEMTYPE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, etype4, USHORT_ITEMTYPE);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, etype5, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, etype5, USHORT_ITEMTYPE);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, frequency, USHORT);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, divide, UINT);
@@ -558,7 +315,6 @@ int process_automagic(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
 
         case EN_MODULE_INIT:
             //m_stCallback.pfnGetKey = AutoMagic_GetKey;
-            m_stCallback.pfnConvertValue = AutoMagic_ConvertValue;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
 
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 

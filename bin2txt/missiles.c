@@ -833,7 +833,8 @@ typedef struct
 
     unsigned int vDmgSymPerCalc;    //misscode
 
-    unsigned int vEType;   //对应elemtypes的索引
+    unsigned char vEType;   //对应elemtypes的索引
+    unsigned char acPad1[3];
 
     unsigned int vEMin;
     unsigned int vEmax;
@@ -1107,383 +1108,17 @@ static int Missiles_BitProc(void *pvLineInfo, char *acKey, char *acOutput)
 static int Missiles_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
-    char *pcResult;
-    int result = 0;
 
-    if ( !strcmp(acKey, "ExplosionMissile") )
-    {
-        pcResult = Missiles_GetMissile(pstLineInfo->vExplosionMissile);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "SubMissile1") )
-    {
-        pcResult = Missiles_GetMissile(pstLineInfo->vSubMissile1);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "SubMissile2") )
-    {
-        pcResult = Missiles_GetMissile(pstLineInfo->vSubMissile2);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "SubMissile3") )
-    {
-        pcResult = Missiles_GetMissile(pstLineInfo->vSubMissile3);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "HitSubMissile1") )
-    {
-        pcResult = Missiles_GetMissile(pstLineInfo->vHitSubMissile1);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "HitSubMissile2") )
-    {
-        pcResult = Missiles_GetMissile(pstLineInfo->vHitSubMissile2);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "HitSubMissile3") )
-    {
-        pcResult = Missiles_GetMissile(pstLineInfo->vHitSubMissile3);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "HitSubMissile4") )
-    {
-        pcResult = Missiles_GetMissile(pstLineInfo->vHitSubMissile4);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "CltSubMissile1") )
-    {
-        pcResult = Missiles_GetMissile(pstLineInfo->vCltSubMissile1);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "CltSubMissile2") )
-    {
-        pcResult = Missiles_GetMissile(pstLineInfo->vCltSubMissile2);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "CltSubMissile3") )
-    {
-        pcResult = Missiles_GetMissile(pstLineInfo->vCltSubMissile3);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "CltHitSubMissile1") )
-    {
-        pcResult = Missiles_GetMissile(pstLineInfo->vCltHitSubMissile1);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "CltHitSubMissile2") )
-    {
-        pcResult = Missiles_GetMissile(pstLineInfo->vCltHitSubMissile2);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "CltHitSubMissile3") )
-    {
-        pcResult = Missiles_GetMissile(pstLineInfo->vCltHitSubMissile3);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "CltHitSubMissile4") )
-    {
-        pcResult = Missiles_GetMissile(pstLineInfo->vCltHitSubMissile4);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "ProgOverlay") )
-    {
-        pcResult = Overlay_GetOverlay(pstLineInfo->vProgOverlay);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "EType") )
-    {
-        pcResult = ElemTypes_GetElemStr(pstLineInfo->vEType);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "TravelSound") )
-    {
-        pcResult = Sounds_GetSoundName(pstLineInfo->vTravelSound);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "HitSound") )
-    {
-        pcResult = Sounds_GetSoundName(pstLineInfo->vHitSound);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "ProgSound") )
-    {
-        pcResult = Sounds_GetSoundName(pstLineInfo->vProgSound);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "SrcDamage") )
+    if ( !strcmp(acKey, "SrcDamage") )
     {
         if ( 0xFF == pstLineInfo->vSrcDamage )
         {
             strcpy(acOutput, "-1");
-            result = 1;
+            return 1;
         }
-    }
-    else if ( !strcmp(acKey, "Skill") )
-    {
-        pcResult = Skills_GetSkillName(pstLineInfo->vSkill);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "SrvCalc1") )
-    {
-        pcResult = MissCode_GetExpression(pstLineInfo->vSrvCalc1);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "CltCalc1") )
-    {
-        pcResult = MissCode_GetExpression(pstLineInfo->vCltCalc1);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "SHitCalc1") )
-    {
-        pcResult = MissCode_GetExpression(pstLineInfo->vSHitCalc1);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "CHitCalc1") )
-    {
-        pcResult = MissCode_GetExpression(pstLineInfo->vCHitCalc1);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "DmgCalc1") )
-    {
-        pcResult = MissCode_GetExpression(pstLineInfo->vDmgCalc1);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "DmgSymPerCalc") )
-    {
-        pcResult = MissCode_GetExpression(pstLineInfo->vDmgSymPerCalc);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "EDmgSymPerCalc") )
-    {
-        pcResult = MissCode_GetExpression(pstLineInfo->vEDmgSymPerCalc);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
     }
 
-    return result;
+    return 0;
 }
 
 int process_missiles(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
@@ -1518,34 +1153,34 @@ int process_missiles(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, pSrvHitFunc, USHORT);
     
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, pSrvDmgFunc, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TravelSound, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TravelSound, USHORT_SOUND);
     
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, HitSound, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ExplosionMissile, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, HitSound, USHORT_SOUND);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ExplosionMissile, USHORT_MISSILE);
     
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SubMissile1, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SubMissile2, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SubMissile1, USHORT_MISSILE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SubMissile2, USHORT_MISSILE);
     
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SubMissile3, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, HitSubMissile1, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SubMissile3, USHORT_MISSILE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, HitSubMissile1, USHORT_MISSILE);
     
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, HitSubMissile2, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, HitSubMissile3, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, HitSubMissile2, USHORT_MISSILE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, HitSubMissile3, USHORT_MISSILE);
     
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, HitSubMissile4, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, CltSubMissile1, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, HitSubMissile4, USHORT_MISSILE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, CltSubMissile1, USHORT_MISSILE);
     
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, CltSubMissile2, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, CltSubMissile3, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, CltSubMissile2, USHORT_MISSILE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, CltSubMissile3, USHORT_MISSILE);
     
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, CltHitSubMissile1, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, CltHitSubMissile2, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, CltHitSubMissile1, USHORT_MISSILE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, CltHitSubMissile2, USHORT_MISSILE);
     
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, CltHitSubMissile3, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, CltHitSubMissile4, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, CltHitSubMissile3, USHORT_MISSILE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, CltHitSubMissile4, USHORT_MISSILE);
     
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ProgSound, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ProgOverlay, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ProgSound, USHORT_SOUND);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ProgOverlay, USHORT_OVERLAY);
     
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Param1, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Param2, INT);
@@ -1604,7 +1239,7 @@ int process_missiles(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MaxLevDam4, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MaxLevDam5, UINT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, EType, UINT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, EType, UCHAR_ELEM);
     
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, EMin, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Emax, UINT);
@@ -1665,7 +1300,7 @@ int process_missiles(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SpecialSetup, UINT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skill, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skill, USHORT_SKILL);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, HitShift, USHORT);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, DamageRate, USHORT);
@@ -1675,13 +1310,13 @@ int process_missiles(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, AnimSpeed, UCHAR);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SrvCalc1, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, CltCalc1, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SHitCalc1, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, CHitCalc1, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, DmgCalc1, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, DmgSymPerCalc, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, EDmgSymPerCalc, UINT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SrvCalc1, UINT_MISSCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, CltCalc1, UINT_MISSCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SHitCalc1, UINT_MISSCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, CHitCalc1, UINT_MISSCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, DmgCalc1, UINT_MISSCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, DmgSymPerCalc, UINT_MISSCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, EDmgSymPerCalc, UINT_MISSCODE);
 
     switch ( enPhase )
     {
@@ -1699,7 +1334,6 @@ int process_missiles(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
             break;
 
         case EN_MODULE_OTHER_DEPEND:
-            MODULE_DEPEND_CALL(missiles, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(overlay, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(elemtypes, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(sounds, acTemplatePath, acBinPath, acTxtPath);

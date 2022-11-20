@@ -143,146 +143,6 @@ typedef struct
     int vshieldMod3Max;
 } ST_LINE_INFO;
 
-static int Gems_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
-{
-    ST_LINE_INFO *pstLineInfo = pvLineInfo;
-    char *pcResult;
-    int result = 0;
-
-    if ( !strcmp(acKey, "code") )
-    {
-        pcResult = Misc_GetItemUniqueCode(pstLineInfo->vcode);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "weaponMod1Code") )
-    {
-        pcResult = Properties_GetProperty(pstLineInfo->vweaponMod1Code);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "weaponMod2Code") )
-    {
-        pcResult = Properties_GetProperty(pstLineInfo->vweaponMod2Code);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "weaponMod3Code") )
-    {
-        pcResult = Properties_GetProperty(pstLineInfo->vweaponMod3Code);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "helmMod1Code") )
-    {
-        pcResult = Properties_GetProperty(pstLineInfo->vhelmMod1Code);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "helmMod2Code") )
-    {
-        pcResult = Properties_GetProperty(pstLineInfo->vhelmMod2Code);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "helmMod3Code") )
-    {
-        pcResult = Properties_GetProperty(pstLineInfo->vhelmMod3Code);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "shieldMod1Code") )
-    {
-        pcResult = Properties_GetProperty(pstLineInfo->vshieldMod1Code);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "shieldMod2Code") )
-    {
-        pcResult = Properties_GetProperty(pstLineInfo->vshieldMod2Code);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "shieldMod3Code") )
-    {
-        pcResult = Properties_GetProperty(pstLineInfo->vshieldMod3Code);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-
-    return result;
-}
-
 int process_gems(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
     ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
@@ -292,52 +152,52 @@ int process_gems(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MO
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, name, STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, letter, STRING);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, code, UINT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, code, UINT_ITEM);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, nummods, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, transform, UCHAR);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, weaponMod1Code, UINT);   //
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, weaponMod1Code, UINT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, weaponMod1Param, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, weaponMod1Min, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, weaponMod1Max, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, weaponMod2Code, UINT);   //
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, weaponMod2Code, UINT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, weaponMod2Param, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, weaponMod2Min, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, weaponMod2Max, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, weaponMod3Code, UINT);   //
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, weaponMod3Code, UINT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, weaponMod3Param, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, weaponMod3Min, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, weaponMod3Max, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, helmMod1Code, UINT); //
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, helmMod1Code, UINT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, helmMod1Param, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, helmMod1Min, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, helmMod1Max, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, helmMod2Code, UINT); //
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, helmMod2Code, UINT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, helmMod2Param, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, helmMod2Min, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, helmMod2Max, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, helmMod3Code, UINT); //
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, helmMod3Code, UINT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, helmMod3Param, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, helmMod3Min, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, helmMod3Max, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, shieldMod1Code, UINT); //
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, shieldMod1Code, UINT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, shieldMod1Param, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, shieldMod1Min, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, shieldMod1Max, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, shieldMod2Code, UINT); //
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, shieldMod2Code, UINT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, shieldMod2Param, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, shieldMod2Min, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, shieldMod2Max, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, shieldMod3Code, UINT); //
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, shieldMod3Code, UINT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, shieldMod3Param, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, shieldMod3Min, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, shieldMod3Max, INT);
@@ -357,8 +217,6 @@ int process_gems(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MO
             break;
 
         case EN_MODULE_INIT:
-            m_stCallback.pfnConvertValue = Gems_ConvertValue;
-
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);
             break;

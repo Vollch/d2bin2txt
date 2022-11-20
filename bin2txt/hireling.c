@@ -227,12 +227,18 @@ typedef struct
     unsigned int vWeapon;
     unsigned int vShield;
 
-    unsigned int vSkill1;   //skills
-    unsigned int vSkill2;
-    unsigned int vSkill3;
-    unsigned int vSkill4;
-    unsigned int vSkill5;
-    unsigned int vSkill6;
+    unsigned short vSkill1;   //skills
+    unsigned short sPad1;
+    unsigned short vSkill2;
+    unsigned short sPad2;
+    unsigned short vSkill3;
+    unsigned short sPad3;
+    unsigned short vSkill4;
+    unsigned short sPad4;
+    unsigned short vSkill5;
+    unsigned short sPad5;
+    unsigned short vSkill6;
+    unsigned short sPad6;
 
     unsigned int vChance1;
     unsigned int vChance2;
@@ -286,45 +292,6 @@ static char *m_apcNotUsed[] =
     NULL,
 };
 
-static int Hireling_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
-{
-    ST_LINE_INFO *pstLineInfo = pvLineInfo;
-    char *pcResult;
-    int id;
-    int result = 0;
-
-    if ( strlen("Skill1") == strlen(acKey) && 1 == sscanf(acKey, "Skill%d", &id) )
-    {
-        unsigned int *psSkill = &pstLineInfo->vSkill1;
-
-        pcResult = Skills_GetSkillName(psSkill[id - 1]);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "HireDesc") )
-    {
-        pcResult = HireDesc_GetDesc(pstLineInfo->vHireDesc);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-
-    return result;
-}
-
 int process_hireling(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
     ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
@@ -365,12 +332,12 @@ int process_hireling(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Weapon, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Shield, UINT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skill1, UINT);   //skills
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skill2, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skill3, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skill4, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skill5, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skill6, UINT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skill1, USHORT_SKILL);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skill2, USHORT_SKILL);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skill3, USHORT_SKILL);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skill4, USHORT_SKILL);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skill5, USHORT_SKILL);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skill6, USHORT_SKILL);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Chance1, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Chance2, UINT);
@@ -408,7 +375,7 @@ int process_hireling(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, LvlPerLvl5, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, LvlPerLvl6, UCHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, HireDesc, UCHAR); //hiredesc
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, HireDesc, UCHAR_HIREDESC);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, NameFirst, STRING);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, NameLast, STRING);
@@ -428,7 +395,6 @@ int process_hireling(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
             break;
 
         case EN_MODULE_INIT:
-            m_stCallback.pfnConvertValue = Hireling_ConvertValue;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
 
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 

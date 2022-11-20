@@ -411,42 +411,6 @@ static int MonUMOD_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo
     return 0;
 }
 
-static int MonUMod_ConverValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
-{
-    ST_LINE_INFO *pstLineInfo = pvLineInfo;
-    char *pcResult;
-    int result = 0;
-
-    if ( !strcmp(acKey, "exclude1") )
-    {
-        pcResult = MonType_GetType(pstLineInfo->vexclude1);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "exclude2") )
-    {
-        pcResult = MonType_GetType(pstLineInfo->vexclude2);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-
-    return result;
-}
-
 int process_monumod(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
     ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
@@ -461,9 +425,9 @@ int process_monumod(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, champion, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, fPick, UCHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, exclude1, USHORT);   //MonType
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, exclude1, USHORT_MONTYPE);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, exclude2, USHORT);   //MonType
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, exclude2, USHORT_MONTYPE);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cpick, USHORT);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cpickmyspmybr1Nmybr2, USHORT);
@@ -490,7 +454,6 @@ int process_monumod(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
             break;
 
         case EN_MODULE_INIT:
-            m_stCallback.pfnConvertValue = MonUMod_ConverValue;
             m_stCallback.pfnFieldProc = MonUMOD_FieldProc;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;

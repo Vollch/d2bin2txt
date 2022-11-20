@@ -332,123 +332,6 @@ static char *CharStats_GetKey(void *pvLineInfo, char *pcKey, unsigned int *iKeyL
     return pcKey;
 }
 
-static int CharStats_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
-{
-    ST_LINE_INFO *pstLineInfo = pvLineInfo;
-    int id;
-    char *pcResult;
-    int result = 0;
-
-    if ( strstr(acKey, "loc") && 1 == sscanf(acKey, "item%dloc", &id) )
-    {
-        ST_ITEM_INFO *pstItemInfo = (ST_ITEM_INFO *)pstLineInfo->vitem1;
-        pcResult = BodyLocs_GetLocStr(pstItemInfo[id - 1].vitemloc);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "StartSkill") )
-    {
-        pcResult = Skills_GetSkillName(pstLineInfo->vStartSkill);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( 1 == sscanf(acKey, "Skill %d", &id) )
-    {
-        unsigned short *psSkill = (short *)&pstLineInfo->vSkillmysp1;
-        pcResult = Skills_GetSkillName(psSkill[id-1]);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "StrAllSkills") )
-    {
-        pcResult = String_FindString(pstLineInfo->vStrAllSkills, NULL);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "StrSkillTab1") )
-    {
-        pcResult = String_FindString(pstLineInfo->vStrSkillTab1, NULL);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "StrSkillTab2") )
-    {
-        pcResult = String_FindString(pstLineInfo->vStrSkillTab2, NULL);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "StrSkillTab3") )
-    {
-        pcResult = String_FindString(pstLineInfo->vStrSkillTab3, NULL);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "StrClassOnly") )
-    {
-        pcResult = String_FindString(pstLineInfo->vStrClassOnly, NULL);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-
-    return result;
-}
-
 int process_charstats(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
     ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
@@ -480,56 +363,56 @@ int process_charstats(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, BlockFactor, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, baseWClass, STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, StatPerLevel, UCHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, StrAllSkills, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, StrAllSkills, USHORT_STRING);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, StrSkillTab1, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, StrSkillTab2, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, StrSkillTab1, USHORT_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, StrSkillTab2, USHORT_STRING);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, StrSkillTab3, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, StrClassOnly, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, StrSkillTab3, USHORT_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, StrClassOnly, USHORT_STRING);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, item1, STRING);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, item1loc, UCHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, item1loc, UCHAR_BODYLOC);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, item1count, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, item2, STRING);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, item2loc, UCHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, item2loc, UCHAR_BODYLOC);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, item2count, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, item3, STRING);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, item3loc, UCHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, item3loc, UCHAR_BODYLOC);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, item3count, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, item4, STRING);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, item4loc, UCHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, item4loc, UCHAR_BODYLOC);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, item4count, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, item5, STRING);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, item5loc, UCHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, item5loc, UCHAR_BODYLOC);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, item5count, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, item6, STRING);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, item6loc, UCHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, item6loc, UCHAR_BODYLOC);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, item6count, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, item7, STRING);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, item7loc, UCHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, item7loc, UCHAR_BODYLOC);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, item7count, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, item8, STRING);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, item8loc, UCHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, item8loc, UCHAR_BODYLOC);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, item8count, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, item9, STRING);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, item9loc, UCHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, item9loc, UCHAR_BODYLOC);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, item9count, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, item10, STRING);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, item10loc, UCHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, item10loc, UCHAR_BODYLOC);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, item10count, UCHAR);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, StartSkill, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skillmysp1, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skillmysp2, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skillmysp3, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skillmysp4, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skillmysp5, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skillmysp6, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skillmysp7, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skillmysp8, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skillmysp9, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skillmysp10, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, StartSkill, USHORT_SKILL);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skillmysp1, USHORT_SKILL);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skillmysp2, USHORT_SKILL);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skillmysp3, USHORT_SKILL);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skillmysp4, USHORT_SKILL);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skillmysp5, USHORT_SKILL);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skillmysp6, USHORT_SKILL);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skillmysp7, USHORT_SKILL);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skillmysp8, USHORT_SKILL);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skillmysp9, USHORT_SKILL);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skillmysp10, USHORT_SKILL);
 
     switch ( enPhase )
     {
@@ -548,7 +431,6 @@ int process_charstats(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
 
         case EN_MODULE_INIT:
             m_stCallback.pfnGetKey = CharStats_GetKey;
-            m_stCallback.pfnConvertValue = CharStats_ConvertValue;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
 
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 

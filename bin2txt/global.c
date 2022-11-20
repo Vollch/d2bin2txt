@@ -203,7 +203,7 @@ static char * TXTBUF_FILL(char *key, ST_VALUE_MAP *map, int count, char *start, 
 
     for ( i = 0; i < count; i++ )
     {
-        if ( strcmp(acTempKey, map[i].acKeyName) )
+        if ( stricmp(acTempKey, map[i].acKeyName) )
         {
             continue;
         }
@@ -242,17 +242,298 @@ static char * TXTBUF_FILL(char *key, ST_VALUE_MAP *map, int count, char *start, 
             {
                 sprintf(acTempValue, "%u", *(unsigned int *)map[i].pvValue);
             }
-            else if ( EN_VALUE_STRING == map[i].enValueType )
-            {
-                strncpy(acTempValue, map[i].pvValue, map[i].iValueLen);
-            }
             else if ( EN_VALUE_BIT == map[i].enValueType && callback && callback->pfnBitProc )
             {
                 callback->pfnBitProc(pvLineInfo, key, acTempValue);
             }
+            else if ( EN_VALUE_STRING == map[i].enValueType )
+            {
+                strncpy(acTempValue, map[i].pvValue, map[i].iValueLen);
+            }
+            else if ( EN_VALUE_UINT_ITEM == map[i].enValueType )
+            {
+                char *pcResult = Misc_GetItemUniqueCode(*(unsigned int *)map[i].pvValue);
+                if ( pcResult )
+                {
+                    strcpy(acTempValue, pcResult);
+                }
+            }
+            else if ( EN_VALUE_UINT_ITEMCODE == map[i].enValueType )
+            {
+                char *pcResult = ItemsCode_GetExpression(*(unsigned int *)map[i].pvValue);
+                if ( pcResult )
+                {
+                    strcpy(acTempValue, pcResult);
+                }
+            }
+            else if ( EN_VALUE_UINT_MISSCODE == map[i].enValueType )
+            {
+                char *pcResult = MissCode_GetExpression(*(unsigned int *)map[i].pvValue);
+                if ( pcResult )
+                {
+                    strcpy(acTempValue, pcResult);
+                }
+            }
+            else if ( EN_VALUE_UINT_SKILLCODE == map[i].enValueType )
+            {
+                char *pcResult = SkillsCode_GetExpression(*(unsigned int *)map[i].pvValue);
+                if ( pcResult )
+                {
+                    strcpy(acTempValue, pcResult);
+                }
+            }
+            else if ( EN_VALUE_UINT_DESCCODE == map[i].enValueType )
+            {
+                char *pcResult = SkillDescCode_GetExpression(*(unsigned int *)map[i].pvValue);
+                if ( pcResult )
+                {
+                    strcpy(acTempValue, pcResult);
+                }
+            }
+            else if ( EN_VALUE_UINT_PROPERTY == map[i].enValueType )
+            {
+                char *pcResult = Properties_GetProperty(*(unsigned int *)map[i].pvValue);
+                if ( pcResult )
+                {
+                    strcpy(acTempValue, pcResult);
+                }
+            }
+            else if ( EN_VALUE_USHORT_EVENT == map[i].enValueType )
+            {
+                char *pcResult = Events_GetEventName(*(unsigned short *)map[i].pvValue);
+                if ( pcResult )
+                {
+                    strcpy(acTempValue, pcResult);
+                }
+            }
+            else if ( EN_VALUE_USHORT_ITEMTYPE == map[i].enValueType )
+            {
+                char *pcResult = ItemTypes_GetItemCode(*(unsigned short *)map[i].pvValue);
+                if ( pcResult )
+                {
+                    strcpy(acTempValue, pcResult);
+                }
+            }
+            else if ( EN_VALUE_USHORT_ITEMSTAT == map[i].enValueType )
+            {
+                char *pcResult = ItemStatCost_GetStateName(*(unsigned short *)map[i].pvValue);
+                if ( pcResult )
+                {
+                    strcpy(acTempValue, pcResult);
+                }
+            }
+            else if ( EN_VALUE_USHORT_MISSILE == map[i].enValueType )
+            {
+                char *pcResult = Missiles_GetMissile(*(unsigned short *)map[i].pvValue);
+                if ( pcResult )
+                {
+                    strcpy(acTempValue, pcResult);
+                }
+            }
+            else if ( EN_VALUE_USHORT_MONAI == map[i].enValueType )
+            {
+                char *pcResult = MonAi_GetAiName(*(unsigned short *)map[i].pvValue);
+                if ( pcResult )
+                {
+                    strcpy(acTempValue, pcResult);
+                }
+            }
+            else if ( EN_VALUE_USHORT_MONPROP == map[i].enValueType )
+            {
+                char *pcResult = MonProp_GetPropId(*(unsigned short *)map[i].pvValue);
+                if ( pcResult )
+                {
+                    strcpy(acTempValue, pcResult);
+                }
+            }
+            else if ( EN_VALUE_USHORT_MONSOUND == map[i].enValueType )
+            {
+                char *pcResult = MonSounds_GetItemSoundsCode(*(unsigned short *)map[i].pvValue);
+                if ( pcResult )
+                {
+                    strcpy(acTempValue, pcResult);
+                }
+            }
+            else if ( EN_VALUE_USHORT_MONSTAT == map[i].enValueType )
+            {
+                char *pcResult = MonStats_GetStatsName(*(unsigned short *)map[i].pvValue);
+                if ( pcResult )
+                {
+                    strcpy(acTempValue, pcResult);
+                }
+            }
+            else if ( EN_VALUE_USHORT_MONSTAT2 == map[i].enValueType )
+            {
+                char *pcResult = MonStats2_GetStatsName(*(unsigned short *)map[i].pvValue);
+                if ( pcResult )
+                {
+                    strcpy(acTempValue, pcResult);
+                }
+            }
+            else if ( EN_VALUE_USHORT_MONTYPE == map[i].enValueType )
+            {
+                char *pcResult = MonType_GetType(*(unsigned short *)map[i].pvValue);
+                if ( pcResult )
+                {
+                    strcpy(acTempValue, pcResult);
+                }
+            }
+            else if ( EN_VALUE_USHORT_OVERLAY == map[i].enValueType )
+            {
+                char *pcResult = Overlay_GetOverlay(*(unsigned short *)map[i].pvValue);
+                if ( pcResult )
+                {
+                    strcpy(acTempValue, pcResult);
+                }
+            }
+            else if ( EN_VALUE_USHORT_SET == map[i].enValueType )
+            {
+                char *pcResult = Sets_GetSetName(*(unsigned short *)map[i].pvValue);
+                if ( pcResult )
+                {
+                    strcpy(acTempValue, pcResult);
+                }
+            }
+            else if ( EN_VALUE_USHORT_SKILLDESC == map[i].enValueType )
+            {
+                char *pcResult = SkillDesc_GetDesc(*(unsigned short *)map[i].pvValue);
+                if ( pcResult )
+                {
+                    strcpy(acTempValue, pcResult);
+                }
+            }
+            else if ( EN_VALUE_USHORT_SKILL == map[i].enValueType )
+            {
+                char *pcResult = Skills_GetSkillName(*(unsigned short *)map[i].pvValue);
+                if ( pcResult )
+                {
+                    strcpy(acTempValue, pcResult);
+                }
+            }
+            else if ( EN_VALUE_USHORT_STRING == map[i].enValueType )
+            {
+                char *pcResult = String_FindString(*(unsigned short *)map[i].pvValue, "dummy");
+                if ( pcResult )
+                {
+                    strcpy(acTempValue, pcResult);
+                }
+            }
+            else if ( EN_VALUE_USHORT_STRING2 == map[i].enValueType )
+            {
+                char *pcResult = String_FindString_2(*(unsigned short *)map[i].pvValue, "dummy", "x");
+                if ( pcResult )
+                {
+                    strcpy(acTempValue, pcResult);
+                }
+            }
+            else if ( EN_VALUE_USHORT_TREASURE == map[i].enValueType )
+            {
+                char *pcResult = TreasureClassEx_GetItemTreasureClass(*(unsigned short *)map[i].pvValue);
+                if ( pcResult )
+                {
+                    strcpy(acTempValue, pcResult);
+                }
+            }
+            else if ( EN_VALUE_USHORT_SOUND == map[i].enValueType )
+            {
+                char *pcResult = Sounds_GetSoundName(*(unsigned short *)map[i].pvValue);
+                if ( pcResult )
+                {
+                    strcpy(acTempValue, pcResult);
+                }
+            }
+            else if ( EN_VALUE_USHORT_STATE == map[i].enValueType )
+            {
+                char *pcResult = States_GetStateName(*(unsigned short *)map[i].pvValue);
+                if ( pcResult )
+                {
+                    strcpy(acTempValue, pcResult);
+                }
+            }
+            else if ( EN_VALUE_UCHAR_BODYLOC == map[i].enValueType )
+            {
+                char *pcResult = BodyLocs_GetLocStr(*(unsigned char *)map[i].pvValue);
+                if ( pcResult )
+                {
+                    strcpy(acTempValue, pcResult);
+                }
+            }
+            else if ( EN_VALUE_UCHAR_COLOR == map[i].enValueType )
+            {
+                char *pcResult = Colors_GetColorCode(*(unsigned char *)map[i].pvValue);
+                if ( pcResult )
+                {
+                    strcpy(acTempValue, pcResult);
+                }
+            }
+            else if ( EN_VALUE_UCHAR_ELEM == map[i].enValueType )
+            {
+                char *pcResult = ElemTypes_GetElemStr(*(unsigned char *)map[i].pvValue);
+                if ( pcResult )
+                {
+                    strcpy(acTempValue, pcResult);
+                }
+            }
+            else if ( EN_VALUE_UCHAR_HIREDESC == map[i].enValueType )
+            {
+                char *pcResult = HireDesc_GetDesc(*(unsigned char *)map[i].pvValue);
+                if ( pcResult )
+                {
+                    strcpy(acTempValue, pcResult);
+                }
+            }
+            else if ( EN_VALUE_UCHAR_HITCLASS == map[i].enValueType )
+            {
+                char *pcResult = HitClass_GetClassStr(*(unsigned char *)map[i].pvValue);
+                if ( pcResult )
+                {
+                    strcpy(acTempValue, pcResult);
+                }
+            }
+            else if ( EN_VALUE_UCHAR_PLRCLASS == map[i].enValueType )
+            {
+                char *pcResult = PlayerClass_GetClass(*(unsigned char *)map[i].pvValue);
+                if ( pcResult )
+                {
+                    strcpy(acTempValue, pcResult);
+                }
+            }
+            else if ( EN_VALUE_UCHAR_MONMODE == map[i].enValueType )
+            {
+                char *pcResult = MonMode_GetCode(*(unsigned char *)map[i].pvValue);
+                if ( pcResult )
+                {
+                    strcpy(acTempValue, pcResult);
+                }
+            }
+            else if ( EN_VALUE_UCHAR_PLRMODE == map[i].enValueType )
+            {
+                char *pcResult = PlrMode_GetCode(*(unsigned char *)map[i].pvValue);
+                if ( pcResult )
+                {
+                    strcpy(acTempValue, pcResult);
+                }
+            }
+            else if ( EN_VALUE_UCHAR_PET == map[i].enValueType )
+            {
+                char *pcResult = Pettype_GetPetType(*(unsigned char *)map[i].pvValue);
+                if ( pcResult )
+                {
+                    strcpy(acTempValue, pcResult);
+                }
+            }
+            else if ( EN_VALUE_UCHAR_STORE == map[i].enValueType )
+            {
+                char *pcResult = StorePage_GetCode(*(unsigned char *)map[i].pvValue);
+                if ( pcResult )
+                {
+                    strcpy(acTempValue, pcResult);
+                }
+            }
+
 
             //4、清除值字段末尾的所有空格
-            if ( 0 != acTempValue[0] && !('0' == acTempValue[0] && 0 == acTempValue[1] && EN_VALUE_STRING != map[i].enValueType) )
+            if ( 0 != acTempValue[0] && !('0' == acTempValue[0] && 0 == acTempValue[1] && EN_VALUE_STRING > map[i].enValueType) )
             {
                 String_Trim(acTempValue);
                 strcpy(start, acTempValue);
@@ -466,7 +747,7 @@ static int check_missing(char *pcHeader, char *pcLineEnd, ST_VALUE_MAP *astValue
         String_ReplaceSpecialChar(pcHeader, acTempKey);
         for ( i = 0; i < iCount; i++ )
         {
-            if ( !strcmp(acTempKey, astValueMap[i].acKeyName) )
+            if ( !stricmp(acTempKey, astValueMap[i].acKeyName) )
             {
                 break;
             }

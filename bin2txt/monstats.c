@@ -823,7 +823,8 @@ typedef struct
     char vspawnx;
     char vspawny;
 
-    unsigned short vspawnmode;  //monmode
+    unsigned char vspawnmode;  //monmode
+    unsigned char cPad1;
     unsigned short vminion1;    //monstats
 
     unsigned short vminion2;    //monstats
@@ -1248,626 +1249,9 @@ static int MonStats_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate
     int id;
     int result = 0;
 
-    if ( !strcmp(acKey, "BaseId") )
-    {
-        pcResult = MonStats_GetStatsName(pstLineInfo->vBaseId);
-
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "NextInClass") )
-    {
-        pcResult = MonStats_GetStatsName(pstLineInfo->vNextInClass);
-
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "NameStr") )
+    if ( !strcmp(acKey, "NameStr") )
     {
         pcResult = String_FindString(pstLineInfo->vNameStr, NULL);
-
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "DescStr") )
-    {
-        pcResult = String_FindString(pstLineInfo->vDescStr, "dummy");
-
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "MonSound") )
-    {
-        pcResult = MonSounds_GetItemSoundsCode(pstLineInfo->vMonSound);
-
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "UMonSound") )
-    {
-        pcResult = MonSounds_GetItemSoundsCode(pstLineInfo->vUMonSound);
-
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "MonStatsEx") )
-    {
-        pcResult = MonStats2_GetStatsName(pstLineInfo->vMonStatsEx);
-
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "MonProp") )
-    {
-        pcResult = MonProp_GetPropId(pstLineInfo->vMonProp);
-
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "MonType") )
-    {
-        pcResult = MonType_GetType(pstLineInfo->vMonType);
-
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "AI") )
-    {
-        pcResult = MonAi_GetAiName(pstLineInfo->vAI);
-
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "spawn") )
-    {
-        pcResult = MonStats_GetStatsName(pstLineInfo->vspawn);
-
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "spawnmode") )
-    {
-        pcResult = MonMode_GetCode(pstLineInfo->vspawnmode);
-
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "minion1") )
-    {
-        pcResult = MonStats_GetStatsName(pstLineInfo->vminion1);
-
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "minion2") )
-    {
-        pcResult = MonStats_GetStatsName(pstLineInfo->vminion2);
-
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "MissA1") )
-    {
-        pcResult = Missiles_GetMissile(pstLineInfo->vMissA1);
-
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "MissA2") )
-    {
-        pcResult = Missiles_GetMissile(pstLineInfo->vMissA2);
-
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "MissS1") )
-    {
-        pcResult = Missiles_GetMissile(pstLineInfo->vMissS1);
-
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "MissS2") )
-    {
-        pcResult = Missiles_GetMissile(pstLineInfo->vMissS2);
-
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "MissS3") )
-    {
-        pcResult = Missiles_GetMissile(pstLineInfo->vMissS3);
-
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "MissS4") )
-    {
-        pcResult = Missiles_GetMissile(pstLineInfo->vMissS4);
-
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "MissC") )
-    {
-        pcResult = Missiles_GetMissile(pstLineInfo->vMissC);
-
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "MissSQ") )
-    {
-        pcResult = Missiles_GetMissile(pstLineInfo->vMissSQ);
-
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "TreasureClass1") )
-    {
-        pcResult = TreasureClassEx_GetItemTreasureClass(pstLineInfo->vTreasureClass1);
-
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "TreasureClass2") )
-    {
-        pcResult = TreasureClassEx_GetItemTreasureClass(pstLineInfo->vTreasureClass2);
-
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "TreasureClass3") )
-    {
-        pcResult = TreasureClassEx_GetItemTreasureClass(pstLineInfo->vTreasureClass3);
-
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "TreasureClass4") )
-    {
-        pcResult = TreasureClassEx_GetItemTreasureClass(pstLineInfo->vTreasureClass4);
-
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "TreasureClass1(N)") )
-    {
-        pcResult = TreasureClassEx_GetItemTreasureClass(pstLineInfo->vTreasureClass1mybr1Nmybr2);
-
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "TreasureClass2(N)") )
-    {
-        pcResult = TreasureClassEx_GetItemTreasureClass(pstLineInfo->vTreasureClass2mybr1Nmybr2);
-
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "TreasureClass3(N)") )
-    {
-        pcResult = TreasureClassEx_GetItemTreasureClass(pstLineInfo->vTreasureClass3mybr1Nmybr2);
-
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "TreasureClass4(N)") )
-    {
-        pcResult = TreasureClassEx_GetItemTreasureClass(pstLineInfo->vTreasureClass4mybr1Nmybr2);
-
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "TreasureClass1(H)") )
-    {
-        pcResult = TreasureClassEx_GetItemTreasureClass(pstLineInfo->vTreasureClass1mybr1Hmybr2);
-
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "TreasureClass2(H)") )
-    {
-        pcResult = TreasureClassEx_GetItemTreasureClass(pstLineInfo->vTreasureClass2mybr1Hmybr2);
-
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "TreasureClass3(H)") )
-    {
-        pcResult = TreasureClassEx_GetItemTreasureClass(pstLineInfo->vTreasureClass3mybr1Hmybr2);
-
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "TreasureClass4(H)") )
-    {
-        pcResult = TreasureClassEx_GetItemTreasureClass(pstLineInfo->vTreasureClass4mybr1Hmybr2);
-
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "SkillDamage") )
-    {
-        pcResult = Skills_GetSkillName(pstLineInfo->vSkillDamage);
-
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "El1Mode") )
-    {
-        pcResult = MonMode_GetCode(pstLineInfo->vEl1Mode);
-
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "El2Mode") )
-    {
-        pcResult = MonMode_GetCode(pstLineInfo->vEl2Mode);
-
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "El3Mode") )
-    {
-        pcResult = MonMode_GetCode(pstLineInfo->vEl3Mode);
-
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "El1Type") )
-    {
-        pcResult = ElemTypes_GetElemStr(pstLineInfo->vEl1Type);
-
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "El2Type") )
-    {
-        pcResult = ElemTypes_GetElemStr(pstLineInfo->vEl2Type);
-
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "El3Type") )
-    {
-        pcResult = ElemTypes_GetElemStr(pstLineInfo->vEl3Type);
-
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-
-        result = 1;
-    }
-    else if ( strlen("Skill1") == strlen(acKey) && 1 == sscanf(acKey, "Skill%d", &id) )
-    {
-        unsigned short *pwSkill = &pstLineInfo->vSkill1;
-
-        pcResult = Skills_GetSkillName(pwSkill[id - 1]);
 
         if ( pcResult )
         {
@@ -2076,12 +1460,12 @@ static void MonStats_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLi
     INIT_VALUE_BUFFER;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, hcIdx, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, BaseId, USHORT); //monstats
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, BaseId, USHORT_MONSTAT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, NextInClass, USHORT);    //monstats
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, NextInClass, USHORT_MONSTAT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, NameStr, USHORT);    //strings
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, DescStr, USHORT);    //strings
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, DescStr, USHORT_STRING);    //strings
 
     //0B
     VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, primeevil, BitCombined1, BIT);
@@ -2126,23 +1510,23 @@ static void MonStats_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLi
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Code, STRING);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MonSound, USHORT);   //monsounds
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, UMonSound, USHORT);  //monsounds
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MonSound, USHORT_MONSOUND);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, UMonSound, USHORT_MONSOUND);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MonStatsEx, USHORT); //monstats
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MonProp, USHORT);    //MonProp
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MonStatsEx, USHORT_MONSTAT2);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MonProp, USHORT_MONPROP);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MonType, USHORT);    //montype
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, AI, USHORT); //monai
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MonType, USHORT_MONTYPE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, AI, USHORT_MONAI);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, spawn, USHORT);  //monstats
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, spawn, USHORT_MONSTAT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, spawnx, CHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, spawny, CHAR);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, spawnmode, USHORT);  //monmode
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, minion1, USHORT);    //monstats
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, spawnmode, UCHAR_MONMODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, minion1, USHORT_MONSTAT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, minion2, USHORT);    //monstats
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, minion2, USHORT_MONSTAT);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PartyMin, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PartyMax, UCHAR);
@@ -2155,18 +1539,18 @@ static void MonStats_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLi
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Run, USHORT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MissA1, USHORT); //Missiles
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MissA1, USHORT_MISSILE);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MissA2, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MissS1, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MissA2, USHORT_MISSILE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MissS1, USHORT_MISSILE);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MissS2, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MissS3, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MissS2, USHORT_MISSILE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MissS3, USHORT_MISSILE);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MissS4, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MissC, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MissS4, USHORT_MISSILE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MissC, USHORT_MISSILE);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MissSQ, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MissSQ, USHORT_MISSILE);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Align, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TransLvl, UCHAR);
@@ -2215,24 +1599,24 @@ static void MonStats_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLi
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, aip8mybr1Nmybr2, USHORT);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, aip8mybr1Hmybr2, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TreasureClass1, USHORT); //treasureclassex
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TreasureClass1, USHORT_TREASURE);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TreasureClass2, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TreasureClass3, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TreasureClass2, USHORT_TREASURE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TreasureClass3, USHORT_TREASURE);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TreasureClass4, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TreasureClass1mybr1Nmybr2, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TreasureClass4, USHORT_TREASURE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TreasureClass1mybr1Nmybr2, USHORT_TREASURE);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TreasureClass2mybr1Nmybr2, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TreasureClass3mybr1Nmybr2, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TreasureClass2mybr1Nmybr2, USHORT_TREASURE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TreasureClass3mybr1Nmybr2, USHORT_TREASURE);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TreasureClass4mybr1Nmybr2, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TreasureClass1mybr1Hmybr2, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TreasureClass4mybr1Nmybr2, USHORT_TREASURE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TreasureClass1mybr1Hmybr2, USHORT_TREASURE);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TreasureClass2mybr1Hmybr2, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TreasureClass3mybr1Hmybr2, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TreasureClass2mybr1Hmybr2, USHORT_TREASURE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TreasureClass3mybr1Hmybr2, USHORT_TREASURE);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TreasureClass4mybr1Hmybr2, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TreasureClass4mybr1Hmybr2, USHORT_TREASURE);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TCQuestId, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TCQuestCP, UCHAR);
 
@@ -2245,7 +1629,7 @@ static void MonStats_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLi
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ToBlockmybr1Hmybr2, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Crit, USHORT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SkillDamage, USHORT);    //skills
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SkillDamage, USHORT_SKILL);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Level, USHORT);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Levelmybr1Nmybr2, USHORT);
@@ -2309,13 +1693,13 @@ static void MonStats_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLi
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, S1MaxDmybr1Nmybr2, USHORT);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, S1MaxDmybr1Hmybr2, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, El1Mode, UCHAR); //monmode
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, El2Mode, UCHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, El1Mode, UCHAR_MONMODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, El2Mode, UCHAR_MONMODE);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, El3Mode, UCHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, El1Type, UCHAR); //elemtypes
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, El2Type, UCHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, El3Type, UCHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, El3Mode, UCHAR_MONMODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, El1Type, UCHAR_ELEM);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, El2Type, UCHAR_ELEM);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, El3Type, UCHAR_ELEM);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, El1Pct, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, El1Pctmybr1Nmybr2, UCHAR);
@@ -2403,17 +1787,17 @@ static void MonStats_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLi
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SendSkills, UINT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skill1, USHORT); //skills
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skill2, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skill1, USHORT_SKILL);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skill2, USHORT_SKILL);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skill3, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skill4, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skill3, USHORT_SKILL);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skill4, USHORT_SKILL);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skill5, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skill6, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skill5, USHORT_SKILL);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skill6, USHORT_SKILL);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skill7, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skill8, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skill7, USHORT_SKILL);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skill8, USHORT_SKILL);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Sk1mode, USHORT);   //monseq
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Sk2mode, USHORT);

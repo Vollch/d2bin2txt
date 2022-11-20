@@ -36,7 +36,6 @@ char *SkillCalc_GetCalc(unsigned int id)
 static int SkillCalc_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
-    int result = 0;
 
     if ( !strcmp(acKey, "code") )
     {
@@ -45,7 +44,7 @@ static int SkillCalc_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplat
         m_uiSkillCalcCount++;
     }
 
-    return result;
+    return 0;
 }
 
 int process_skillcalc(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)

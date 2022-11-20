@@ -216,7 +216,7 @@ unsigned int my_printf( const char *pcFormat,... )
 }
 
 #define MODULE_NAME_TO_ID(name) \
-    else if ( !strcmp(#name, pcModuleName) )\
+    else if ( !stricmp(#name, pcModuleName) )\
     {\
         return MODULE_ID_DEFINE(name);\
     }

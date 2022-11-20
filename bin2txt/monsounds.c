@@ -66,15 +66,18 @@ typedef struct
 {
     unsigned int vId;
 
-    unsigned int vAttack1;    //sounds
+    unsigned short vAttack1;    //sounds
+    unsigned short sPad1;
 
     unsigned int vAtt1Del;
     unsigned int vAtt1Prb;
-    unsigned int vWeapon1;    //sounds
+    unsigned short vWeapon1;    //sounds
+    unsigned short sPad2;
     unsigned int vWea1Del;
     unsigned int vWea1Vol;
 
-    unsigned int vAttack2;    //sounds
+    unsigned short vAttack2;    //sounds
+    unsigned short sPad3;
 
     unsigned int vAtt2Del;
     unsigned int vAtt2Prb;
@@ -82,49 +85,65 @@ typedef struct
     unsigned int vWea2Del;
     unsigned int vWea2Vol;
 
-    unsigned int vHitSound; //sounds
+    unsigned short vHitSound; //sounds
+    unsigned short sPad4;
 
     unsigned int vHitDelay;
 
-    unsigned int vDeathSound;
-    unsigned int vDeaDelay;
+    unsigned short vDeathSound;
+    unsigned short sPad5;
+    unsigned short vDeaDelay;
+    unsigned short sPad6;
 
-    unsigned int vSkill1;   //sounds
-    unsigned int vSkill2;   //sounds
-    unsigned int vSkill3;   //sounds
-    unsigned int vSkill4;   //sounds
+    unsigned short vSkill1;   //sounds
+    unsigned short sPad7;
+    unsigned short vSkill2;   //sounds
+    unsigned short sPad8;
+    unsigned short vSkill3;   //sounds
+    unsigned short sPad9;
+    unsigned short vSkill4;   //sounds
+    unsigned short sPad10;
 
-    unsigned int vFootstep; //sounds
-    unsigned int vFootstepLayer;    //sounds
+    unsigned short vFootstep; //sounds
+    unsigned short sPad11;
+    unsigned short vFootstepLayer;    //sounds
+    unsigned short sPad12;
 
     unsigned int vFsCnt;
     unsigned int vFsOff;
     unsigned int vFsPrb;
-    unsigned int vNeutral;  //sounds
+    unsigned short vNeutral;  //sounds
+    unsigned short sPad13;
     unsigned int vNeuTime;
 
-    unsigned int vInit; //sounds
-    unsigned int vTaunt;    //sounds
+    unsigned short vInit; //sounds
+    unsigned short sPad14;
+    unsigned short vTaunt;    //sounds
+    unsigned short sPad15;
 
-    unsigned int vFlee; //sounds
+    unsigned short vFlee; //sounds
+    unsigned short sPad16;
 
     unsigned char vCvtMo1;  //monmode
     unsigned char vCvtTgt1;  //monmode
     unsigned char iPadding31[2];
 
-    unsigned int vCvtSk1;   //skills
+    unsigned short vCvtSk1;   //skills
+    unsigned short sPad17;
 
     unsigned char vCvtMo2;  //monmode
     unsigned char vCvtTgt2;  //monmode
     unsigned char iPadding33[2];
 
-    unsigned int vCvtSk2;   //skills
+    unsigned short vCvtSk2;   //skills
+    unsigned short sPad18;
 
     unsigned char vCvtMo3;  //monmode
     unsigned char vCvtTgt3;  //monmode
     unsigned char iPadding35[2];
 
-    unsigned int vCvtSk3;   //skills
+    unsigned short vCvtSk3;   //skills
+    unsigned short sPad19;
 } ST_LINE_INFO;
 
 typedef struct
@@ -219,402 +238,67 @@ static int MonSounds_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLine
     return 0;
 }
 
-static int MonSounds_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
-{
-    ST_LINE_INFO *pstLineInfo = pvLineInfo;
-    char *pcResult;
-    int result = 0;
-
-    if ( !strcmp(acKey, "Attack1") )
-    {
-        pcResult = Sounds_GetSoundName(pstLineInfo->vAttack1);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "Weapon1") )
-    {
-        pcResult = Sounds_GetSoundName(pstLineInfo->vWeapon1);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "Attack2") )
-    {
-        pcResult = Sounds_GetSoundName(pstLineInfo->vAttack2);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "Weapon2") )
-    {
-        pcResult = Sounds_GetSoundName(pstLineInfo->vWeapon2);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "HitSound") )
-    {
-        pcResult = Sounds_GetSoundName(pstLineInfo->vHitSound);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "DeathSound") )
-    {
-        pcResult = Sounds_GetSoundName(pstLineInfo->vDeathSound);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "Skill1") )
-    {
-        pcResult = Sounds_GetSoundName(pstLineInfo->vSkill1);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "Skill2") )
-    {
-        pcResult = Sounds_GetSoundName(pstLineInfo->vSkill2);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "Skill3") )
-    {
-        pcResult = Sounds_GetSoundName(pstLineInfo->vSkill3);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "Skill4") )
-    {
-        pcResult = Sounds_GetSoundName(pstLineInfo->vSkill4);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "Footstep") )
-    {
-        pcResult = Sounds_GetSoundName(pstLineInfo->vFootstep);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "FootstepLayer") )
-    {
-        pcResult = Sounds_GetSoundName(pstLineInfo->vFootstepLayer);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "Neutral") )
-    {
-        pcResult = Sounds_GetSoundName(pstLineInfo->vNeutral);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "Init") )
-    {
-        pcResult = Sounds_GetSoundName(pstLineInfo->vInit);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "Taunt") )
-    {
-        pcResult = Sounds_GetSoundName(pstLineInfo->vTaunt);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "Flee") )
-    {
-        pcResult = Sounds_GetSoundName(pstLineInfo->vFlee);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "CvtMo1") )
-    {
-        pcResult = MonMode_GetCode(pstLineInfo->vCvtMo1);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "CvtTgt1") )
-    {
-        pcResult = MonMode_GetCode(pstLineInfo->vCvtTgt1);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "CvtMo2") )
-    {
-        pcResult = MonMode_GetCode(pstLineInfo->vCvtMo2);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "CvtTgt2") )
-    {
-        pcResult = MonMode_GetCode(pstLineInfo->vCvtTgt2);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "CvtMo3") )
-    {
-        pcResult = MonMode_GetCode(pstLineInfo->vCvtMo3);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "CvtTgt3") )
-    {
-        pcResult = MonMode_GetCode(pstLineInfo->vCvtTgt3);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "CvtSk1") )
-    {
-        pcResult = Skills_GetSkillName(pstLineInfo->vCvtSk1);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "CvtSk2") )
-    {
-        pcResult = Skills_GetSkillName(pstLineInfo->vCvtSk2);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "CvtSk3") )
-    {
-        pcResult = Skills_GetSkillName(pstLineInfo->vCvtSk3);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-
-    return result;
-}
-
 
 static void MonSounds_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLineInfo)
 {
     INIT_VALUE_BUFFER;
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Attack1, USHORT);    //sounds
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Weapon1, USHORT);    //sounds
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Attack1, USHORT_SOUND);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Weapon1, USHORT_SOUND);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Att1Del, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Att1Prb, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Wea1Del, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Wea1Vol, UINT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Attack2, USHORT);    //sounds
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Weapon2, USHORT);    //sounds
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Attack2, USHORT_SOUND);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Weapon2, USHORT_SOUND);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Att2Del, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Att2Prb, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Wea2Del, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Wea2Vol, UINT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, HitSound, UINT); //sounds
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, HitSound, USHORT_SOUND);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, HitDelay, UINT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, DeathSound, UINT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, DeathSound, USHORT_SOUND);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, DeaDelay, UINT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skill1, UINT);   //sounds
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skill2, UINT);   //sounds
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skill3, UINT);   //sounds
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skill4, UINT);   //sounds
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skill1, USHORT_SOUND);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skill2, USHORT_SOUND);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skill3, USHORT_SOUND);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skill4, USHORT_SOUND);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Footstep, UINT);  //sounds
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FootstepLayer, UINT);    //sounds
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Footstep, USHORT_SOUND);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FootstepLayer, USHORT_SOUND);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FsCnt, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FsOff, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FsPrb, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Neutral, UINT);  //sounds
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Neutral, USHORT_SOUND);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, NeuTime, UINT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Init, UINT); //sounds
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Taunt, UINT);    //sounds
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Init, USHORT_SOUND);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Taunt, USHORT_SOUND);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Flee, UINT); //sounds
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Flee, USHORT_SOUND);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, CvtMo1, UCHAR);  //monmode
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, CvtTgt1, UCHAR);  //monmode
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, CvtMo1, UCHAR_MONMODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, CvtTgt1, UCHAR_MONMODE);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, CvtSk1, UINT);   //skills
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, CvtSk1, USHORT_SKILL);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, CvtMo2, UCHAR);  //monmode
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, CvtTgt2, UCHAR);  //monmode
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, CvtMo2, UCHAR_MONMODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, CvtTgt2, UCHAR_MONMODE);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, CvtSk2, UINT);   //skills
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, CvtSk2, USHORT_SKILL);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, CvtMo3, UCHAR);  //monmode
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, CvtTgt3, UCHAR);  //monmode
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, CvtMo3, UCHAR_MONMODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, CvtTgt3, UCHAR_MONMODE);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, CvtSk3, UINT);   //skills
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, CvtSk3, USHORT_SKILL);
 }
 
 int process_monsounds(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
@@ -635,10 +319,9 @@ int process_monsounds(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
             m_stCallback.pfnFieldProc = MonSounds_FieldProc_Pre;
             m_stCallback.pfnSetLines = SETLINES_FUNC_NAME(FILE_PREFIX);
             m_stCallback.pfnFinished = FINISHED_FUNC_NAME(FILE_PREFIX);
-            m_stCallback.pfnConvertValue = MonSounds_ConvertValue;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
-            return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
+            return process_file(acTemplatePath, acBinPath, NULL, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);
             break;
 
@@ -655,7 +338,6 @@ int process_monsounds(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
             MonSounds_InitValueMap(pstValueMap, pstLineInfo);
 
             m_stCallback.pfnFieldProc = MonSounds_FieldProc;
-            m_stCallback.pfnConvertValue = MonSounds_ConvertValue;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 

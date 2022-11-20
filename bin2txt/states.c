@@ -381,211 +381,6 @@ static int States_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo,
     return 0;
 }
 
-static int States_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
-{
-    ST_LINE_INFO *pstLineInfo = pvLineInfo;
-    char *pcResult;
-    int result = 0;
-
-    if ( !strcmp(acKey, "overlay1") )
-    {
-        pcResult = Overlay_GetOverlay(pstLineInfo->voverlay1);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "overlay2") )
-    {
-        pcResult = Overlay_GetOverlay(pstLineInfo->voverlay2);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "overlay3") )
-    {
-        pcResult = Overlay_GetOverlay(pstLineInfo->voverlay3);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "overlay4") )
-    {
-        pcResult = Overlay_GetOverlay(pstLineInfo->voverlay4);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "castoverlay") )
-    {
-        pcResult = Overlay_GetOverlay(pstLineInfo->vcastoverlay);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "removerlay") )
-    {
-        pcResult = Overlay_GetOverlay(pstLineInfo->vremoverlay);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "pgsvoverlay") )
-    {
-        pcResult = Overlay_GetOverlay(pstLineInfo->vpgsvoverlay);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "stat") )
-    {
-        pcResult = ItemStatCost_GetStateName(pstLineInfo->vstat);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "onsound") )
-    {
-        pcResult = Sounds_GetSoundName(pstLineInfo->vonsound);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "offsound") )
-    {
-        pcResult = Sounds_GetSoundName(pstLineInfo->voffsound);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "itemtype") )
-    {
-        pcResult = ItemTypes_GetItemCode(pstLineInfo->vitemtype);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "cltevent") )
-    {
-        pcResult = Events_GetEventName(pstLineInfo->vcltevent);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "skill") )
-    {
-        pcResult = Skills_GetSkillName(pstLineInfo->vskill);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "missile") )
-    {
-        pcResult = Missiles_GetMissile(pstLineInfo->vmissile);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "itemtrans") )
-    {
-        pcResult = Colors_GetColorCode(pstLineInfo->vitemtrans);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-
-    return result;
-}
-
 static int States_BitProc(void *pvLineInfo, char *acKey, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
@@ -800,16 +595,16 @@ static void States_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLine
     INIT_VALUE_BUFFER;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, id, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, overlay1, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, overlay1, USHORT_OVERLAY);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, overlay2, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, overlay3, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, overlay2, USHORT_OVERLAY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, overlay3, USHORT_OVERLAY);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, overlay4, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, castoverlay, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, overlay4, USHORT_OVERLAY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, castoverlay, USHORT_OVERLAY);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, removerlay, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, pgsvoverlay, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, removerlay, USHORT_OVERLAY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, pgsvoverlay, USHORT_OVERLAY);
 
     VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, damblue, CombinedBits1, BIT);
     VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, remhit, CombinedBits1, BIT);
@@ -861,7 +656,7 @@ static void States_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLine
     VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, udead, CombinedBits5, BIT);
     VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, life, CombinedBits5, BIT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat, USHORT_ITEMSTAT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, setfunc, USHORT);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, remfunc, USHORT);
@@ -873,22 +668,22 @@ static void States_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLine
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, lightmysubg, UCHAR);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, lightmysubb, UCHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, onsound, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, onsound, USHORT_SOUND);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, offsound, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itemtype, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, offsound, USHORT_SOUND);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itemtype, USHORT_ITEMTYPE);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itemtrans, UCHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itemtrans, UCHAR_COLOR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, gfxtype, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, gfxclass, USHORT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cltevent, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cltevent, USHORT_EVENT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, clteventfunc, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cltactivefunc, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, srvactivefunc, USHORT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, skill, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, missile, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, skill, USHORT_SKILL);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, missile, USHORT_MISSILE);
 }
 
 int process_states(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
@@ -934,7 +729,6 @@ int process_states(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_
             States_InitValueMap(pstValueMap, pstLineInfo);
 
             m_stCallback.pfnFieldProc = States_FieldProc;
-            m_stCallback.pfnConvertValue = States_ConvertValue;
             m_stCallback.pfnBitProc = States_BitProc;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;

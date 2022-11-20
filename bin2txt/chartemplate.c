@@ -155,29 +155,6 @@ static char *m_apcNotUsed[] =
     NULL,
 };
 
-static int CharTemplate_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
-{
-    ST_LINE_INFO *pstLineInfo = pvLineInfo;
-    char *pcResult;
-    int result = 0;
-
-    if ( !strcmp(acKey, "Class") )
-    {
-        pcResult = PlayerClass_GetClass(pstLineInfo->vClass);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-
-    return result;
-}
-
 static int CharTemplate_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
@@ -204,7 +181,7 @@ int process_chartemplate(char *acTemplatePath, char *acBinPath, char *acTxtPath,
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Name, STRING);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Class, UCHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Class, UCHAR_PLRCLASS);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Level, UCHAR);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Act, UCHAR);
@@ -333,7 +310,6 @@ int process_chartemplate(char *acTemplatePath, char *acBinPath, char *acTxtPath,
             break;
 
         case EN_MODULE_INIT:
-            m_stCallback.pfnConvertValue = CharTemplate_ConvertValue;
             m_stCallback.pfnFieldProc = CharTemplate_FieldProc;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;

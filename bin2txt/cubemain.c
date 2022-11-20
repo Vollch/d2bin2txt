@@ -373,17 +373,6 @@ typedef struct
     unsigned short vcmyspmodmysp5myspchance;
 } ST_LINE_INFO;
 
-typedef struct
-{
-    unsigned int vmodmysp1;   //properties
-
-    unsigned short vmodmysp1myspparam;
-    short vmodmysp1myspmin;
-
-    short vmodmysp1myspmax;
-    unsigned short vmodmysp1myspchance;
-} ST_CUBE_MOD;
-
 static char *m_apcInternalProcess[] =
 {
     "description",
@@ -703,62 +692,7 @@ struct D2CubeOutputItem
     int id;
     int result = 0;
 
-    if ( !strcmp(acKey, "class") )
-    {
-        pcResult = PlayerClass_GetClass(pstLineInfo->vclass);
-        if ( pcResult )
-        {
-            strcpy(pcOutput, pcResult);
-        }
-        else
-        {
-            pcOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( strlen("mod 1") == strlen(acKey) && 1 == sscanf(acKey, "mod %d", &id) )
-    {
-        ST_CUBE_MOD *psSkill = (ST_CUBE_MOD *)&pstLineInfo->vmodmysp1;
-        pcResult = Properties_GetProperty(psSkill[id-1].vmodmysp1);
-        if ( pcResult )
-        {
-            strcpy(pcOutput, pcResult);
-        }
-        else
-        {
-            pcOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( strlen("b mod 1") == strlen(acKey) && 1 == sscanf(acKey, "b mod %d", &id) )
-    {
-        ST_CUBE_MOD *psSkill = (ST_CUBE_MOD *)&pstLineInfo->vbmyspmodmysp1;
-        pcResult = Properties_GetProperty(psSkill[id-1].vmodmysp1);
-        if ( pcResult )
-        {
-            strcpy(pcOutput, pcResult);
-        }
-        else
-        {
-            pcOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( strlen("c mod 1") == strlen(acKey) && 1 == sscanf(acKey, "c mod %d", &id) )
-    {
-        ST_CUBE_MOD *psSkill = (ST_CUBE_MOD *)&pstLineInfo->vcmyspmodmysp1;
-        pcResult = Properties_GetProperty(psSkill[id-1].vmodmysp1);
-        if ( pcResult )
-        {
-            strcpy(pcOutput, pcResult);
-        }
-        else
-        {
-            pcOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( 1 == sscanf(acKey, "input %d", &id) )
+    if ( 1 == sscanf(acKey, "input %d", &id) )
     {
         unsigned char *pcInput = pstLineInfo->vinputmysp1 + (id - 1) * sizeof(pstLineInfo->vinputmysp1);
         unsigned char bType = pcInput[0];
@@ -1134,7 +1068,7 @@ int process_cubemain(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, enabled, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ladder, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, minmyspdiff, UCHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, class, UCHAR);   //playerclass
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, class, UCHAR_PLRCLASS);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, op, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, param, UINT);
@@ -1159,7 +1093,7 @@ int process_cubemain(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, output, STRING);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, modmysp1, UINT);   //properties
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, modmysp1, UINT_PROPERTY);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, modmysp1myspparam, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, modmysp1myspmin, SHORT);
@@ -1167,7 +1101,7 @@ int process_cubemain(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, modmysp1myspmax, SHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, modmysp1myspchance, USHORT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, modmysp2, UINT);   //properties
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, modmysp2, UINT_PROPERTY);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, modmysp2myspparam, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, modmysp2myspmin, SHORT);
@@ -1175,7 +1109,7 @@ int process_cubemain(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, modmysp2myspmax, SHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, modmysp2myspchance, USHORT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, modmysp3, UINT);   //properties
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, modmysp3, UINT_PROPERTY);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, modmysp3myspparam, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, modmysp3myspmin, SHORT);
@@ -1183,7 +1117,7 @@ int process_cubemain(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, modmysp3myspmax, SHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, modmysp3myspchance, USHORT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, modmysp4, UINT);   //properties
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, modmysp4, UINT_PROPERTY);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, modmysp4myspparam, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, modmysp4myspmin, SHORT);
@@ -1191,7 +1125,7 @@ int process_cubemain(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, modmysp4myspmax, SHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, modmysp4myspchance, USHORT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, modmysp5, UINT);   //properties
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, modmysp5, UINT_PROPERTY);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, modmysp5myspparam, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, modmysp5myspmin, SHORT);
@@ -1201,7 +1135,7 @@ int process_cubemain(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, outputmyspb, STRING);  //lvl、plvl、ilvl复用在这20个byte里
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, bmyspmodmysp1, UINT);   //properties
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, bmyspmodmysp1, UINT_PROPERTY);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, bmyspmodmysp1myspparam, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, bmyspmodmysp1myspmin, SHORT);
@@ -1209,7 +1143,7 @@ int process_cubemain(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, bmyspmodmysp1myspmax, SHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, bmyspmodmysp1myspchance, USHORT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, bmyspmodmysp2, UINT);   //properties
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, bmyspmodmysp2, UINT_PROPERTY);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, bmyspmodmysp2myspparam, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, bmyspmodmysp2myspmin, SHORT);
@@ -1217,7 +1151,7 @@ int process_cubemain(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, bmyspmodmysp2myspmax, SHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, bmyspmodmysp2myspchance, USHORT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, bmyspmodmysp3, UINT);   //properties
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, bmyspmodmysp3, UINT_PROPERTY);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, bmyspmodmysp3myspparam, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, bmyspmodmysp3myspmin, SHORT);
@@ -1225,7 +1159,7 @@ int process_cubemain(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, bmyspmodmysp3myspmax, SHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, bmyspmodmysp3myspchance, USHORT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, bmyspmodmysp4, UINT);   //properties
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, bmyspmodmysp4, UINT_PROPERTY);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, bmyspmodmysp4myspparam, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, bmyspmodmysp4myspmin, SHORT);
@@ -1233,7 +1167,7 @@ int process_cubemain(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, bmyspmodmysp4myspmax, SHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, bmyspmodmysp4myspchance, USHORT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, bmyspmodmysp5, UINT);   //properties
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, bmyspmodmysp5, UINT_PROPERTY);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, bmyspmodmysp5myspparam, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, bmyspmodmysp5myspmin, SHORT);
@@ -1243,7 +1177,7 @@ int process_cubemain(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, outputmyspc, STRING);  //lvl、plvl、ilvl复用在这20个byte里
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cmyspmodmysp1, UINT);   //properties
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cmyspmodmysp1, UINT_PROPERTY);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cmyspmodmysp1myspparam, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cmyspmodmysp1myspmin, SHORT);
@@ -1251,7 +1185,7 @@ int process_cubemain(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cmyspmodmysp1myspmax, SHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cmyspmodmysp1myspchance, USHORT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cmyspmodmysp2, UINT);   //properties
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cmyspmodmysp2, UINT_PROPERTY);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cmyspmodmysp2myspparam, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cmyspmodmysp2myspmin, SHORT);
@@ -1259,7 +1193,7 @@ int process_cubemain(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cmyspmodmysp2myspmax, SHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cmyspmodmysp2myspchance, USHORT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cmyspmodmysp3, UINT);   //properties
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cmyspmodmysp3, UINT_PROPERTY);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cmyspmodmysp3myspparam, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cmyspmodmysp3myspmin, SHORT);
@@ -1267,7 +1201,7 @@ int process_cubemain(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cmyspmodmysp3myspmax, SHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cmyspmodmysp3myspchance, USHORT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cmyspmodmysp4, UINT);   //properties
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cmyspmodmysp4, UINT_PROPERTY);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cmyspmodmysp4myspparam, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cmyspmodmysp4myspmin, SHORT);
@@ -1275,7 +1209,7 @@ int process_cubemain(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cmyspmodmysp4myspmax, SHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cmyspmodmysp4myspchance, USHORT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cmyspmodmysp5, UINT);   //properties
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cmyspmodmysp5, UINT_PROPERTY);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cmyspmodmysp5myspparam, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cmyspmodmysp5myspmin, SHORT);

@@ -672,13 +672,12 @@ typedef struct
     unsigned char vflippyfile[32];  //物品外观所使用的图标指针。
     unsigned char vinvfile[32];     //物品在物品栏中所使用的图标指针。
     unsigned char vuniqueinvfile[32];   //此装备底材对应的唯一物品（暗金）所使用的图标指针。
-
-    unsigned char acPadding[32];
+    unsigned char vsetinvfile[32];
 
     unsigned char vcode[4]; //32 物品代码。
-
-    unsigned char acPad2[12];
-
+    unsigned char vnormcode[4];
+    unsigned char vubercode[4];
+    unsigned char vultracode[4];
     unsigned char valternategfx[4]; //当角色使用此物品时所采用的动作。
 
     unsigned int vpSpell;  //使用此道具时采用什么样的效果。
@@ -705,68 +704,75 @@ typedef struct
     unsigned int vcalc1;    //41 ItemsCode
     unsigned int vcalc2;
     unsigned int vcalc3;
-
     unsigned int vlen;  //44 ItemsCode
 
     unsigned short vspelldesc;   //是否有额外的效果。0代表没有，1代表用SpellDescStr描述额外效果，2代表用SpellDescStr和
     unsigned short vspelldescstr;   //strings
-
     unsigned int vspelldesccalc;    //46 ItemsCode
 
     unsigned char vBetterGem[4];    //高一级宝石的指针，如无瑕疵的钻石此列的值为完美钻石的代码。非宝石类此列填non。
-
-    unsigned char acPad6[8];
-
+    unsigned char vwclass[4];
+    unsigned char v2handedwclass[4];
     unsigned char vTMogType[4]; //当物品被右键点击时变成的物品代码。若不可变或不变可填xxx。
 
-    unsigned char acPad7[8];
-
+    unsigned int vminac;
+    unsigned int vmaxac;
     unsigned int vgamblemyspcost;   //53 看名字应该是别人在你这赌博时出的价格，但实际上没有这个功能，所以此列应该没有作用。可以肯定的是此列不影响赌博时的价格。
+    unsigned int vspeed;   //此防具对速度的降低程度。0代表不降低，数字越大速度越慢。
 
-    unsigned char vspeed;   //此防具对速度的降低程度。0代表不降低，数字越大速度越慢。
-    unsigned char acPad9[3];
-
-    unsigned char vbitfield1;   //装备的内部定义类型。说明：1为布类物品；3为铁类物品。
-    unsigned char acPad10[3];
-
+    unsigned int vbitfield1;  //装备的内部定义类型。说明：1为布类物品；3为铁类物品。
     unsigned int vcost;   //物品卖出时的基础价格。
 
     unsigned int vminstack; //可叠加物品生成时的最小数量。
     unsigned int vmaxstack; //可叠加物品一摞的的最大数量。
     unsigned int vspawnstack;   //物品生成时的最大数目，一般与maxStack一致。
-
-    unsigned short vgemoffset;  //不知道什么意思的参数，但都填0。
-    unsigned char acPad12[2];
+    unsigned int vgemoffset;  //不知道什么意思的参数，但都填0。
 
     unsigned short vnamestr;    //名字索引，即tbl中的键名，实际上与Code总是保持一致，不理解为什么要单做此列。
-    unsigned char vversion; //物品所适用版本。按轻寒的说法是0代表1.07之前的版本，1代表1.07之后的非资料片版本，100代表资料片。虽然本人没有那么些版本可供实验，但本人相信轻寒的话。
-    unsigned char acPad13[1];
-
+    unsigned short vversion; //物品所适用版本。按轻寒的说法是0代表1.07之前的版本，1代表1.07之后的非资料片版本，100代表资料片。虽然本人没有那么些版本可供实验，但本人相信轻寒的话。
     unsigned short vautomyspprefix;//62 自动附带属性。如法球的加血加蓝，圣骑专用盾的加伤害和准确率。与AutoMagic.txt关联。
-    unsigned char vmissiletype; //投掷物品专用。投掷出的物品的类型，同missiles.txt文件关联。
-    unsigned char bPad;
+    unsigned short vmissiletype; //投掷物品专用。投掷出的物品的类型，同missiles.txt文件关联。
 
     unsigned char vrarity;  //稀有度。在同一TC中出现的概率，值越大掉落的概率越大。请参考物品掉落原理。
     unsigned char vlevel;   //物品等级。含义请参考轻寒的物品掉落原理。
     unsigned char vmindam;  //最小伤害值。防具中只有盾牌（盾击）可鞋子（踢击）使用此属性。
     unsigned char vmaxdam;  //最大伤害值。防具中只有盾牌（盾击）可鞋子（踢击）使用此属性。
 
-    unsigned char acPad14[15];
+    unsigned char vminmisdam;
+    unsigned char vmaxmisdam;
+    unsigned char v2handmindam;
+    unsigned char v2handmaxdam;
+
+    unsigned short vrangeadder;
+    unsigned short vStrBonus;
+    unsigned short vDexBonus;
+    unsigned short vreqstr;
+    unsigned short vreqdex;
+
+    unsigned char vabsorbs;
     unsigned char vinvwidth;    //物品在物品栏中的宽度。
 
     unsigned char vinvheight;   //68 物品在物品栏中的高度。
-    unsigned char acPad15[2];
+    unsigned char vblock;
+    unsigned char vdurability;
     unsigned char vnodurability;    //没有耐久度，即天生无法破坏。如幻化之刃，但防具中暂时没有。
 
-    unsigned char bPad2;
+    unsigned char bPad1;
     unsigned char vcomponent;   //角色使用此物品时，采用哪一层（Layer）；同文件关联。这是我抄来的，我也没理解。
-    unsigned char acPad16[7];
+    unsigned char vrArm;
+    unsigned char vlArm;
+
+    unsigned char vTorso;
+    unsigned char vLegs;
+    unsigned char vrSPad;
+    unsigned char vlSPad;
+
+    unsigned char v2handed;
     unsigned char vuseable; //能否用右键使用。0表示不可以，1表示可以。
     unsigned short vtype;    //基本类型。同itemtypes.txt关联。
-
     unsigned short vtype2;   //次要类型；同itemtypes.txt关联。
-    unsigned char acPad17[2];
 
+    unsigned char acPad1[2];
     unsigned short vdropsound;  //物品掉落时的声音；同sounds.txt关联。
     unsigned short vusesound;   //物品使用时的声音；同sounds.txt关联。
 
@@ -777,7 +783,7 @@ typedef struct
 
     unsigned char vtransparent; //不知道什么意思的参数，但都填0。
     unsigned char vtranstbl;    //不知道什么意思的参数，但都填5。
-    unsigned char bPad4;
+    unsigned char bPad2;
     unsigned char vlightradius; //不知道什么意思的参数。
 
     unsigned char vbelt;    //腰带专用，表示在belts.txt中的位置。
@@ -795,11 +801,12 @@ typedef struct
     unsigned char vTMogMin; //所变成物品的最小数量。
     unsigned char vTMogMax; //所变成物品的最大数量。
 
-    unsigned char acPad18[2];
+    unsigned char vhitmyspclass;
+    unsigned char v1or2handed;
     unsigned char vgemapplytype;    //此物品在镶嵌上宝石类物品后使用宝石的那种效果：0=武器；1=装备/头盔；2=防具。
     unsigned char vlevelreq;    //装备的等级需求。
 
-    unsigned char bPad5;
+    unsigned char vmagicmysplvl;
     unsigned char vTransform;   //动作索引。
     unsigned char vInvTrans;    //动作索引。以上两列据说要协同使用。
     unsigned char vcompactsave; //此物品是否被压缩存储。0代表不压缩，1代表压缩。往往只有**、钥匙这样的没有本身属性的将此列置为1，以节省存储空间。
@@ -912,7 +919,7 @@ typedef struct
     unsigned char vMalahMagicLvl;
     unsigned char vLarzukMagicLvl;
     unsigned char vDrehyaMagicLvl;
-    unsigned char bPad6;
+    unsigned char bPad3;
 
     unsigned char vNightmareUpgrade[4]; //在“恶梦”难度下，会卖这种物品的NPC改卖什么物品（xxx表示还卖这个）。如轻微治疗药剂hp1在此列的值为hp4，表示在普通难度卖轻微治疗药剂的NPC在恶梦难度改卖强力药剂了。
     unsigned char vHellUpgrade[4];  //在“地狱”难度下，会卖此种物品的NPC改卖什么物品（xxx表示还卖这个）。如轻微治疗药剂hp1在此列的值为hp5，表示在普通难度卖轻微治疗药剂的NPC在恶梦难度改卖超级治疗药剂了。
@@ -1094,137 +1101,7 @@ static int Misc_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, ch
     char *pcResult;
     int result = 0;
 
-    if ( !strcmp(acKey, "type") )
-    {
-        pcResult = ItemTypes_GetItemCode(pstLineInfo->vtype);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "type2") )
-    {
-        pcResult = ItemTypes_GetItemCode(pstLineInfo->vtype2);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "dropsound") )
-    {
-        pcResult = Sounds_GetSoundName(pstLineInfo->vdropsound);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "usesound") )
-    {
-        pcResult = Sounds_GetSoundName(pstLineInfo->vusesound);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "state") )
-    {
-        pcResult = States_GetStateName(pstLineInfo->vstate);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "cstate1") )
-    {
-        pcResult = States_GetStateName(pstLineInfo->vcstate1);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "cstate2") )
-    {
-        pcResult = States_GetStateName(pstLineInfo->vcstate2);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "stat1") )
-    {
-        pcResult = ItemStatCost_GetStateName(pstLineInfo->vstat1);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "stat2") )
-    {
-        pcResult = ItemStatCost_GetStateName(pstLineInfo->vstat2);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "stat3") )
-    {
-        pcResult = ItemStatCost_GetStateName(pstLineInfo->vstat3);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "namestr") )
+    if ( !strcmp(acKey, "namestr") )
     {
         pcResult = String_FindString(pstLineInfo->vnamestr, "dummy");
         if ( pcResult )
@@ -1237,19 +1114,6 @@ static int Misc_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, ch
         }
         result = 1;
     }
-    else if ( !strcmp(acKey, "spelldescstr") )
-    {
-        pcResult = String_FindString(pstLineInfo->vspelldescstr, "dummy");
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
     else if ( !strcmp(acKey, "rarity") )
     {
         if ( (999 % 256) == pstLineInfo->vrarity )
@@ -1257,71 +1121,6 @@ static int Misc_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, ch
             strcpy(acOutput, "999");
             result = 1;
         }
-    }
-    else if ( !strcmp(acKey, "calc1") )
-    {
-        pcResult = ItemsCode_GetExpression(pstLineInfo->vcalc1);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "calc2") )
-    {
-        pcResult = ItemsCode_GetExpression(pstLineInfo->vcalc2);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "calc3") )
-    {
-        pcResult = ItemsCode_GetExpression(pstLineInfo->vcalc3);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "len") )
-    {
-        pcResult = ItemsCode_GetExpression(pstLineInfo->vlen);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "spelldesccalc") )
-    {
-        pcResult = ItemsCode_GetExpression(pstLineInfo->vspelldesccalc);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
     }
 
     return result;
@@ -1334,57 +1133,101 @@ static void Misc_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLineIn
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, flippyfile, STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, invfile, STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, uniqueinvfile, STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, setinvfile, STRING);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, code, STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, normcode, STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ubercode, STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ultracode, STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, alternategfx, STRING);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, pSpell, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, state, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cstate1, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cstate2, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat1, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat2, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat3, USHORT);
+
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, state, USHORT_STATE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cstate1, USHORT_STATE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cstate2, USHORT_STATE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat1, USHORT_ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat2, USHORT_ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat3, USHORT_ITEMSTAT);
+
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, calc1, UINT_ITEMCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, calc2, UINT_ITEMCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, calc3, UINT_ITEMCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, len, UINT_ITEMCODE);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, spelldesc, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, spelldescstr, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, spelldescstr, USHORT_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, spelldesccalc, UINT_ITEMCODE);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, BetterGem, STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, wclass, STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, 2handedwclass, STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TMogType, STRING);
+
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, minac, UINT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, maxac, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, gamblemyspcost, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, speed, UCHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, speed, UINT);
+
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, bitfield1, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cost, UINT);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, minstack, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, maxstack, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, spawnstack, UINT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, gemoffset, UINT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, gemoffset, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, namestr, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, version, UCHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, missiletype, UCHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, version, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, automyspprefix, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, missiletype, USHORT);
+
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, rarity, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, level, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mindam, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, maxdam, UCHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, automyspprefix, USHORT);
+
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, minmisdam, UCHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, maxmisdam, UCHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, 2handmindam, UCHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, 2handmaxdam, UCHAR);
+
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, rangeadder, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, StrBonus, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, DexBonus, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, reqstr, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, reqdex, USHORT);
+
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, absorbs, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, invwidth, UCHAR);
+
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, invheight, UCHAR);
-
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, block, UCHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, durability, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, nodurability, UCHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, component, UCHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, useable, UCHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, type, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, type2, USHORT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dropsound, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, usesound, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, component, UCHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, rArm, UCHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, lArm, UCHAR);
+
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Torso, UCHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Legs, UCHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, rSPad, UCHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, lSPad, UCHAR);
+
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, 2handed, UCHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, useable, UCHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, type, USHORT_ITEMTYPE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, type2, USHORT_ITEMTYPE);
+
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dropsound, USHORT_SOUND);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, usesound, USHORT_SOUND);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dropsfxframe, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, unique, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, quest, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, questdiffcheck, UCHAR);
+
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, transparent, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, transtbl, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, lightradius, UCHAR);
@@ -1393,6 +1236,7 @@ static void Misc_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLineIn
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, autobelt, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stackable, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, spawnable, UCHAR);
+
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, spellicon, CHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, durwarning, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, qntwarning, UCHAR);
@@ -1402,11 +1246,17 @@ static void Misc_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLineIn
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Transmogrify, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TMogMin, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TMogMax, UCHAR);
+
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, hitmyspclass, UCHAR_HITCLASS); 
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, 1or2handed, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, gemapplytype, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, levelreq, UCHAR);
+
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, magicmysplvl, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Transform, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, InvTrans, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, compactsave, UCHAR);
+
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SkipName, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Nameable, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, AkaraMin, UCHAR);
@@ -1521,12 +1371,6 @@ static void Misc_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLineIn
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PermStoreItem, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, multibuy, UCHAR);
-
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, calc1, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, calc2, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, calc3, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, len, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, spelldesccalc, UINT);
 }
 
 int process_misc(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)

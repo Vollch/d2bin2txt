@@ -191,70 +191,17 @@ static int MonEquip_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineN
 static int MonEquip_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
-    char *pcResult;
-    int result = 0;
 
     if ( !strcmp(acKey, "monster") )
     {
         if ( 0xFFFF == pstLineInfo->vmonster )
         {
             strcpy(acOutput, "*end*  do not remove");
+            return 1;
         }
-        else
-        {
-            pcResult = MonStats_GetStatsName(pstLineInfo->vmonster);
-            if ( pcResult )
-            {
-                strcpy(acOutput, pcResult);
-            }
-            else
-            {
-                acOutput[0] = 0;
-            }
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "loc1") )
-    {
-        pcResult = BodyLocs_GetLocStr(pstLineInfo->vloc1);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "loc2") )
-    {
-        pcResult = BodyLocs_GetLocStr(pstLineInfo->vloc2);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "loc3") )
-    {
-        pcResult = BodyLocs_GetLocStr(pstLineInfo->vloc3);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
     }
 
-    return result;
+    return 0;
 }
 
 int process_monequip(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
@@ -263,7 +210,7 @@ int process_monequip(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
 
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, monster, USHORT);   //MonStats
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, monster, USHORT_MONSTAT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, level, USHORT);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, oninit, UINT);
@@ -272,9 +219,9 @@ int process_monequip(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, item2, STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, item3, STRING);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, loc1, UCHAR); //bodylocs
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, loc2, UCHAR); //bodylocs
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, loc3, UCHAR); //bodylocs
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, loc1, UCHAR_BODYLOC);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, loc2, UCHAR_BODYLOC);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, loc3, UCHAR_BODYLOC);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod1, UCHAR);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod2, UCHAR);

@@ -379,7 +379,8 @@ EOL：行尾标志，必须为0。
 
 typedef struct
 {
-    unsigned int vId;
+    unsigned short vId;
+    unsigned short sPad1;
 
 #if 1
     unsigned char vBitCombined1;
@@ -649,7 +650,6 @@ static int MonStats2_ConvertValue_Pre(void *pvLineInfo, char *acKey, char *pcTem
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
     char *pcResult;
-    int result = 0;
 
     if ( !strcmp(acKey, "Id") )
     {
@@ -661,7 +661,6 @@ static int MonStats2_ConvertValue_Pre(void *pvLineInfo, char *acKey, char *pcTem
         }
         else
         {
-            //sprintf(acOutput, "%s%u", NAME_PREFIX, m_iMonStatsCount);
             acOutput[0] = 0;
         }
 
@@ -669,10 +668,10 @@ static int MonStats2_ConvertValue_Pre(void *pvLineInfo, char *acKey, char *pcTem
         String_Trim(m_astMonStats[pstLineInfo->vId].vId);
         m_iMonStatsCount++;
 
-        result = 1;
+        return 1;
     }
 
-    return result;
+    return 0;
 }
 
 static char *MonStats2_GenerateList(ST_LINE_INFO *pstLineInfo, unsigned int count, unsigned char *pbList, unsigned int uiListNum, char *acOutput)
@@ -718,7 +717,6 @@ static char *MonStats2_GenerateList(ST_LINE_INFO *pstLineInfo, unsigned int coun
 static int MonStats2_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
-    char *pcResult;
     int result = 0;
 
     if ( !strcmp(acKey, "HDv") )
@@ -814,52 +812,6 @@ static int MonStats2_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplat
     else if ( !strcmp(acKey, "S8v") )
     {
         MonStats2_GenerateList(pstLineInfo, pstLineInfo->vS8vNum, pstLineInfo->vS8v, sizeof(pstLineInfo->vS8v), acOutput);
-
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "ResurrectMode") )
-    {
-        pcResult = MonMode_GetCode(pstLineInfo->vResurrectMode);
-
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "ResurrectSkill") )
-    {
-        pcResult = Skills_GetSkillName(pstLineInfo->vResurrectSkill);
-
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-
-        result = 1;
-    }
-    else if ( !strcmp(acKey, "Id") )
-    {
-        pcResult = MonStats_GetStatsName(pstLineInfo->vId);
-
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            //sprintf(acOutput, "%s%u", NAME_PREFIX, m_iMonStatsCount);
-            acOutput[0] = 0;
-        }
 
         result = 1;
     }
@@ -1190,7 +1142,7 @@ static void MonStats2_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstL
 {
     INIT_VALUE_BUFFER;
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Id, UINT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Id, USHORT_MONSTAT);
 
     VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, corpseSel, BitCombined1, BIT);
     VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, shiftSel, BitCombined1, BIT);
@@ -1338,9 +1290,9 @@ static void MonStats2_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstL
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, InfernoLen, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, InfernoAnim, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, InfernoRollback, UCHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ResurrectMode, UCHAR);   //monmode
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ResurrectMode, UCHAR_MONMODE);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ResurrectSkill, USHORT); //skills
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ResurrectSkill, USHORT_SKILL);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, htTop, SHORT);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, htLeft, SHORT);

@@ -13,7 +13,6 @@ static int MonPreset_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplat
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
     char *pcResult = NULL;
-    int result = 0;
 
     if ( !strcmp(acKey, "Place") )
     {
@@ -37,10 +36,10 @@ static int MonPreset_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplat
         {
             acOutput[0] = 0;
         }
-        result = 1;
+        return 1;
     }
 
-    return result;
+    return 0;
 }
 
 int process_monpreset(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)

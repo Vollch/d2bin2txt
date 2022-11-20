@@ -226,7 +226,8 @@ max buy (H)：地狱难度下在此NPC处出售物品时的最高价格。
 
 typedef struct
 {
-    unsigned int vnpc;  //monstats
+    unsigned short vnpc;  //monstats
+    unsigned short sPad1;
 
     unsigned int vsellmyspmult;
     unsigned int vbuymyspmult;
@@ -253,36 +254,13 @@ typedef struct
     unsigned int vmaxmyspbuymyspmybr1Hmybr2;
 } ST_LINE_INFO;
 
-static int NPC_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
-{
-    ST_LINE_INFO *pstLineInfo = pvLineInfo;
-    char *pcResult;
-    int result = 0;
-
-    if ( !strcmp(acKey, "npc") )
-    {
-        pcResult = MonStats_GetStatsName(pstLineInfo->vnpc);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-
-    return result;
-}
-
 int process_npc(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
     ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
 
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, npc, UINT);  //monstats
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, npc, USHORT_MONSTAT);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, buymyspmult, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sellmyspmult, UINT);
@@ -322,8 +300,6 @@ int process_npc(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MOD
             break;
 
         case EN_MODULE_INIT:
-            m_stCallback.pfnConvertValue = NPC_ConvertValue;
-
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);
             break;

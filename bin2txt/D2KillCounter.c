@@ -43,36 +43,13 @@ static int D2KillCounter_FieldProc(void *pvLineInfo, char *acKey, unsigned int i
     return 0;
 }
 
-static int D2KillCounter_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
-{
-    ST_LINE_INFO *pstLineInfo = pvLineInfo;
-    char *pcResult;
-    int result = 0;
-
-    if ( !strcmp(acKey, "Stat") )
-    {
-        pcResult = ItemStatCost_GetStateName(pstLineInfo->vStat);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        result = 1;
-    }
-
-    return result;
-}
-
 int process_D2KillCounter(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
     ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
 
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat, USHORT_ITEMSTAT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Value, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, LevelsUnderYou, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, LevelsAboveYou, USHORT);
@@ -92,7 +69,6 @@ int process_D2KillCounter(char *acTemplatePath, char *acBinPath, char *acTxtPath
 
         case EN_MODULE_INIT:
             m_stCallback.iOptional = 1;
-            m_stCallback.pfnConvertValue = D2KillCounter_ConvertValue;
             m_stCallback.pfnFieldProc = D2KillCounter_FieldProc;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
