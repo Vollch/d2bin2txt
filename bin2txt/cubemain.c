@@ -552,6 +552,12 @@ static char *Cubemain_GenerateOutputProp(char *acOutput, unsigned char bType, un
         acOutput += strlen(acOutput);
     }
 
+    if ( 0 != (0x40 & bPrefix1 ) )
+    {
+        strcpy(acOutput, ",reg");
+        acOutput += strlen(acOutput);
+    }
+
     if ( 0 != (0x01 & bPrefix2 ) )
     {
         strcpy(acOutput, ",eli");
@@ -690,7 +696,6 @@ struct D2CubeOutputItem
     char *pcResult;
     char *pcOutput = acOutput;
     int id;
-    int result = 0;
 
     if ( 1 == sscanf(acKey, "input %d", &id) )
     {
@@ -698,305 +703,143 @@ struct D2CubeOutputItem
         unsigned char bType = pcInput[0];
         unsigned char bPrefix = pcInput[1];
         unsigned short wIndex = *(unsigned short *)(&pcInput[2]);
+        unsigned short wItemID = *(unsigned short *)(&pcInput[4]);
         unsigned char bPostFix = pcInput[6];
         unsigned char bQty = pcInput[7];
 
-        if ( 0 != (1 & bType) )
+        unsigned char bPostFixReal = bPostFix;
+        if ( (bType & 0x40) && (bPostFix == 7 || bPostFix == 5) )
         {
-            //weapon、armor、misc
-#if 0
-            if ( 0x41 == bType && (pcResult = Misc_GetItemUniqueCode(wIndex)) && !strcmp("rin", pcResult)
-                && 7 == bPostFix && 0x7B == pcInput[4] )
-            {
-                strcpy(pcOutput, "The Stone of Jordan");
-                result = 1;
-            }
-#else
-            if ( 0 != (0x40 & bType) )
-            {
-                if ( 7 == bPostFix )
-                {
-                    pcResult = UniqueItems_GetItemUniqueCode(*(unsigned short *)(&pcInput[4]));
-                }
-                else if ( 5 == bPostFix )
-                {
-                    pcResult = SetItems_GetItemUniqueCode(*(unsigned short *)(&pcInput[4]));
-                }
-                if ( pcResult )
-                {
-                    strcpy(pcOutput, pcResult);
-                }
-                result = 1;
-            }
-#endif
-            else if ( 1 == bType && 0 == bPrefix && 0 == bPostFix && 0== bQty )
-            {
-                if ( 0xFFFF == wIndex )
-                {
-                    strcpy(pcOutput, "any");
-                }
-                else
-                {
-                    pcResult = Misc_GetItemUniqueCode(wIndex);
-                    if ( pcResult )
-                    {
-                        strcpy(pcOutput, pcResult);
-                    }
-                }
-                result = 1;
-            }
-            else
-            {
-                pcOutput[0] = '"';
-                pcOutput++;
-
-                if ( 0xFFFF == wIndex )
-                {
-                    strcpy(pcOutput, "any");
-                    pcOutput += strlen(pcOutput);
-                    pcOutput = Cubemain_GenerateInputProp(pcOutput, bType, bPrefix, wIndex, bPostFix, bQty);
-                }
-                else
-                {
-                    pcResult = Misc_GetItemUniqueCode(wIndex);
-                    if ( pcResult )
-                    {
-                        strcpy(pcOutput, pcResult);
-                        pcOutput += strlen(pcOutput);
-                        pcOutput = Cubemain_GenerateInputProp(pcOutput, bType, bPrefix, wIndex, bPostFix, bQty);
-                    }
-                }
-
-                pcOutput[0] = '"';
-                pcOutput++;
-
-                result = 1;
-            }
-        }
-        else if ( 0 != (2 & bType) )
-        {
-            //itemtypes
-            if ( 2 == bType && 0 == bPrefix && 0 == bPostFix && 0== bQty )
-            {
-                if ( 0xFFFF == wIndex )
-                {
-                    strcpy(pcOutput, "any");
-                }
-                else
-                {
-                    pcResult = ItemTypes_GetItemCode(wIndex);
-                    if ( pcResult )
-                    {
-                        strcpy(pcOutput, pcResult);
-                    }
-                }
-                result = 1;
-            }
-            else
-            {
-                pcOutput[0] = '"';
-                pcOutput++;
-
-                if ( 0xFFFF == wIndex )
-                {
-                    strcpy(pcOutput, "any");
-                    pcOutput += strlen(pcOutput);
-                    pcOutput = Cubemain_GenerateInputProp(pcOutput, bType, bPrefix, wIndex, bPostFix, bQty);
-                }
-                else
-                {
-                    pcResult = ItemTypes_GetItemCode(wIndex);
-                    if ( pcResult )
-                    {
-                        strcpy(pcOutput, pcResult);
-                        pcOutput += strlen(pcOutput);
-                        pcOutput = Cubemain_GenerateInputProp(pcOutput, bType, bPrefix, wIndex, bPostFix, bQty);
-                    }
-                }
-
-                pcOutput[0] = '"';
-                pcOutput++;
-
-                result = 1;
-            }
+            // No need to write ",uni" and ",set" after explicitly defined sets and uniques, it's just a clutter
+            bPostFix = 0;
         }
 
-        if ( 0 == result )
+        if ( bType & 0x03 )
         {
-            result = 1;
-        }
+            if ( (bType & 0xBC) || bPrefix || bPostFix || bQty )
+            {
+                // Add quotes if there's any qualifiers after ID
+                pcOutput[0] = '"';
+                pcOutput++;
+            }
+
+            if ( (bType & 0x41) && bPostFixReal == 7 && (pcResult = UniqueItems_GetItemUniqueCode(wItemID)) )
+            {
+                strcpy(pcOutput, pcResult);
+            }
+            else if ( (bType & 0x41) && bPostFixReal == 5 && (pcResult = SetItems_GetItemUniqueCode(wItemID)) )
+            {
+                strcpy(pcOutput, pcResult);
+            }
+            else if ( (bType & 0x01) && (pcResult = Misc_GetItemUniqueCode(wIndex)) )
+            {
+                strcpy(pcOutput, pcResult);
+            }
+            else if ( (bType & 0x02) && (pcResult = ItemTypes_GetItemCode(wIndex)) )
+            {
+                strcpy(pcOutput, pcResult);
+            }
+            else if ( (bType & 0x03) && wIndex == 0xFFFF )
+            {
+                strcpy(pcOutput, "any");
+            }
+
+            if ( (bType & 0xBC) || bPrefix || bPostFix || bQty )
+            {
+                pcOutput += strlen(pcOutput);
+                pcOutput = Cubemain_GenerateInputProp(pcOutput, bType, bPrefix, wIndex, bPostFix, bQty);
+                pcOutput[0] = '"';
+                pcOutput++;
+            }
+       }
+
+       return 1;
     }
     else if ( !strncmp(acKey, "output", strlen("output")) )
     {
-        unsigned char *pcInput;
-        unsigned char bPrefix1;
-        unsigned char bPrefix2;
-        unsigned short wIndex;
-        unsigned char bPostFix;
-        unsigned char bQty;
-        unsigned char bType; 
-        unsigned short wPre ;
-        unsigned short wSur ;
+        unsigned char *pcInput = !strcmp("output b", acKey) ? pstLineInfo->voutputmyspb :
+                                 !strcmp("output c", acKey) ? pstLineInfo->voutputmyspc :
+                                                              pstLineInfo->voutput;
+        unsigned char bPrefix1 = pcInput[0];
+        unsigned char bPrefix2 = pcInput[1];
+        unsigned short wIndex = *(unsigned short *)(&pcInput[2]);
+        unsigned short wItemID = *(unsigned short *)(&pcInput[4]);
+        unsigned char bPostFix = pcInput[6];
+        unsigned char bQty = pcInput[7];
+        unsigned char bType = pcInput[8];
+        unsigned short wPre = *(unsigned short *)(&pcInput[12]);
+        unsigned short wSur = *(unsigned short *)(&pcInput[18]);
 
-        if ( !strcmp("output b", acKey) )
+        unsigned char bPostFixReal = bPostFix;
+        if ( (bPrefix1 & 0x8) && (bPostFix == 7 || bPostFix == 5) )
         {
-            pcInput = pstLineInfo->voutputmyspb;
+            // No need to write ",uni" and ",set" after explicitly defined sets and uniques, it's just a clutter
+            bPostFix = 0;
         }
-        else if ( !strcmp("output c", acKey) )
-        {
-            pcInput = pstLineInfo->voutputmyspc;
-        }
-        else
-        {
-            pcInput = pstLineInfo->voutput;
-        }
-
-        bPrefix1 = pcInput[0];
-        bPrefix2 = pcInput[1];
-        wIndex = *(unsigned short *)(&pcInput[2]);
-        bPostFix = pcInput[6];
-        bQty = pcInput[7];
-        bType = pcInput[8];
-        wPre = *(unsigned short *)(&pcInput[12]);
-        wSur = *(unsigned short *)(&pcInput[18]);
 
         m_iCubeLvl = pcInput[9];
         m_iCubepLvl = pcInput[10];
         m_iCubeiLvl = pcInput[11];
 
-#if 0
-        if ( 0x08 == bPrefix1 && 0 == bPrefix2 && (pcResult = Misc_GetItemUniqueCode(wIndex)) && !strcmp("rin", pcResult)
-            && 7 == bPostFix && 0x7B == pcInput[4] )
+        if ( (bPrefix1 & 0x8) || bType )
         {
-            strcpy(pcOutput, "The Stone of Jordan");
-            result = 1;
-        }
-#else
-        if ( 0x08 == bPrefix1 && 0 == bPrefix2 )
-        {
-            if ( 7 == bPostFix )
+            if ( (bPrefix1 & 0xF7) || bPrefix2 || bPostFix || bQty || wPre || wSur )
             {
-                pcResult = UniqueItems_GetItemUniqueCode(*(unsigned short *)(&pcInput[4]));
+                // Add quotes if there's any qualifiers after ID
+                pcOutput[0] = '"';
+                pcOutput++;
             }
-            else if ( 5 == bPostFix )
-            {
-                pcResult = SetItems_GetItemUniqueCode(*(unsigned short *)(&pcInput[4]));
-            }
-            if ( pcResult )
+
+            if ( (bPrefix1 & 0x08) && bPostFixReal == 7 && (pcResult = UniqueItems_GetItemUniqueCode(wItemID)) )
             {
                 strcpy(pcOutput, pcResult);
             }
-            result = 1;
-        }
-#endif
-        else if ( 0 == bPrefix1 && 0 == bPrefix2 && 0 == bPostFix && 0== bQty && 0 == wPre && 0 == wSur )
-        {
-            if ( 0xFF == bType )
+            else if ( (bPrefix1 & 0x08) && bPostFixReal == 5 && (pcResult = SetItems_GetItemUniqueCode(wItemID)) )
+            {
+                strcpy(pcOutput, pcResult);
+            }
+            else if ( bType == 0xFC && (pcResult = Misc_GetItemUniqueCode(wIndex)) )
+            {
+                strcpy(pcOutput, pcResult);
+            }
+            else if ( bType == 0xFD && (pcResult = ItemTypes_GetItemCode(wIndex)) )
+            {
+                strcpy(pcOutput, pcResult);
+            }
+            else if ( bType == 0xFE)
+            {
+                strcpy(pcOutput, "useitem");
+            }
+            else if ( bType == 0xFF )
             {
                 strcpy(pcOutput, "usetype");
             }
-            else if ( 0xFE == bType )
-            {
-                strcpy(pcOutput, "useitem");
-            }
-            else if ( 1 == bType )
+            else if ( bType == 0x01 )
             {
                 strcpy(pcOutput, "Cow Portal");
             }
-            else if ( 2 == bType )
+            else if ( bType == 0x02 )
             {
                 strcpy(pcOutput, "Pandemonium Portal");
             }
-            else if ( 3 == bType )
+            else if ( bType == 0x03 )
             {
                 strcpy(pcOutput, "Pandemonium Finale Portal");
             }
-            else if ( 0xFD == bType )
+
+            if ( (bPrefix1 & 0xF7) || bPrefix2 || bPostFix || bQty || wPre || wSur )
             {
-                pcResult = ItemTypes_GetItemCode(wIndex);
-                if ( pcResult )
-                {
-                    strcpy(pcOutput, pcResult);
-                }
-            }
-            else if ( 0xFC == bType )
-            {
-                pcResult = Misc_GetItemUniqueCode(wIndex);
-                if ( pcResult )
-                {
-                    strcpy(pcOutput, pcResult);
-                }
-            }
-            result = 1;
-        }
-        else
-        {
-            pcOutput[0] = '"';
-            pcOutput++;
-        
-            if ( 0xFF == bType )
-            {
-                strcpy(pcOutput, "usetype");
                 pcOutput += strlen(pcOutput);
                 pcOutput = Cubemain_GenerateOutputProp(pcOutput, bType, bPrefix1, bPrefix2, wIndex, bPostFix, bQty, wPre, wSur);
+                pcOutput[0] = '"';
+                pcOutput++;
             }
-            else if ( 0xFE == bType )
-            {
-                strcpy(pcOutput, "useitem");
-                pcOutput += strlen(pcOutput);
-                pcOutput = Cubemain_GenerateOutputProp(pcOutput, bType, bPrefix1, bPrefix2, wIndex, bPostFix, bQty, wPre, wSur);
-            }
-            else if ( 1 == bType )
-            {
-                strcpy(pcOutput, "Cow Portal");
-            }
-            else if ( 2 == bType )
-            {
-                strcpy(pcOutput, "Pandemonium Portal");
-            }
-            else if ( 3 == bType )
-            {
-                strcpy(pcOutput, "Pandemonium Finale Portal");
-            }
-            else if ( 0xFD == bType )
-            {
-                pcResult = ItemTypes_GetItemCode(wIndex);
-                if ( pcResult )
-                {
-                    strcpy(pcOutput, pcResult);
-                    pcOutput += strlen(pcOutput);
-                    pcOutput = Cubemain_GenerateOutputProp(pcOutput, bType, bPrefix1, bPrefix2, wIndex, bPostFix, bQty, wPre, wSur);
-                }
-            }
-            else if ( 0xFC == bType )
-            {
-                pcResult = Misc_GetItemUniqueCode(wIndex);
-                if ( pcResult )
-                {
-                    strcpy(pcOutput, pcResult);
-                    pcOutput += strlen(pcOutput);
-                    pcOutput = Cubemain_GenerateOutputProp(pcOutput, bType, bPrefix1, bPrefix2, wIndex, bPostFix, bQty, wPre, wSur);
-                }
-            }
-
-            pcOutput[0] = '"';
-            pcOutput++;
-
-            result = 1;
         }
 
-        if ( !strcmp(acKey, "output") && (0 == strlen(acOutput) || !strcmp(acOutput, "\"\"")) )
-        {
-            //strcpy(acOutput, "void");
-        }
-
-        if ( 0 == result )
-        {
-            result = 1;
-        }
+        return 1;
     }
 
-    return result;
+    return 0;
 }
 
 static int Cubemain_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
