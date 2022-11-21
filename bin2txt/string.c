@@ -21,7 +21,7 @@ static ST_STRING m_astCustom2[10000];
 static unsigned int m_iCustom3Count;
 static ST_STRING m_astCustom3[10000];
 
-static int load_strings(char *acTemplatePath, char *acTxtPath, char *pcTxtFile, ST_STRING *aStringList, int iListSize)
+static int load_strings(char *acBinPath, char *pcTxtFile, ST_STRING *aStringList, int iListSize)
 {
     char acTxtFile[256] = {0};
     FILE *pfTxtHandle = NULL;
@@ -31,7 +31,7 @@ static int load_strings(char *acTemplatePath, char *acTxtPath, char *pcTxtFile, 
 
     memset(aStringList, 0, iListSize * sizeof(aStringList[0]));
 
-    sprintf(acTxtFile, "%s\\%s.txt", acTemplatePath, pcTxtFile);
+    sprintf(acTxtFile, "%s\\%s.txt", acBinPath, pcTxtFile);
     pfTxtHandle = fopen(acTxtFile, "rb");
     if ( pfTxtHandle )
     {
@@ -54,8 +54,6 @@ static int load_strings(char *acTemplatePath, char *acTxtPath, char *pcTxtFile, 
         fclose(pfTxtHandle);
 
         my_printf("%d %s\r\n", iStringCount, pcTxtFile);
-
-        File_CopyFile(acTemplatePath, acTxtPath, pcTxtFile, ".txt");
     }
     else
     {
@@ -67,21 +65,21 @@ static int load_strings(char *acTemplatePath, char *acTxtPath, char *pcTxtFile, 
 
 static int process_string_x(char *acTemplatePath, char *acBinPath, char *acTxtPath)
 {
-    m_iStringCount = load_strings(acTemplatePath, acTxtPath, "string", m_astString, 10000);
-    m_iPatchStringCount = load_strings(acTemplatePath, acTxtPath, "patchstring", m_astPatchString, 10000);
-    m_iExpansionsStringCount = load_strings(acTemplatePath, acTxtPath, "expansionstring", m_astExpansionsString, 30000);
+    m_iStringCount = load_strings(acBinPath, "string", m_astString, 10000);
+    m_iPatchStringCount = load_strings(acBinPath, "patchstring", m_astPatchString, 10000);
+    m_iExpansionsStringCount = load_strings(acBinPath, "expansionstring", m_astExpansionsString, 30000);
 
     if ( g_pcCustomTable1 )
     {
-        m_iCustom1Count = load_strings(acTemplatePath, acTxtPath, g_pcCustomTable1, m_astCustom1, 10000);
+        m_iCustom1Count = load_strings(acBinPath, g_pcCustomTable1, m_astCustom1, 10000);
     }
     if ( g_pcCustomTable2 )
     {
-        m_iCustom2Count = load_strings(acTemplatePath, acTxtPath, g_pcCustomTable2, m_astCustom2, 10000);
+        m_iCustom2Count = load_strings(acBinPath, g_pcCustomTable2, m_astCustom2, 10000);
     }
     if ( g_pcCustomTable3 )
     {
-        m_iCustom3Count = load_strings(acTemplatePath, acTxtPath, g_pcCustomTable3, m_astCustom3, 10000);
+        m_iCustom3Count = load_strings(acBinPath, g_pcCustomTable3, m_astCustom3, 10000);
     }
 
     return (m_iStringCount && m_iPatchStringCount && m_iExpansionsStringCount &&

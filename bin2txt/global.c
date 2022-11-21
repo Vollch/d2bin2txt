@@ -1054,7 +1054,7 @@ static int process_file_x(char *acTemplatePath, char *acBinPath, char *acTxtPath
         char *pcEol = NULL;
         char *pcColumn = acTplBuf;
 
-        my_printf("%s template found, auto generated will be used\r\n", pcFilename);
+        my_printf("%s template not found, auto generated will be used\r\n", pcFilename);
 
         if ( pstCallback->ppcKeyInternalProcess )
         {
