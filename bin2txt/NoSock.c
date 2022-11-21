@@ -40,7 +40,6 @@ int process_NoSock(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mainmysptype, USHORT_ITEMTYPE);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, socketmysptype, USHORT_ITEMTYPE);
 
-
     switch ( enPhase )
     {
         case EN_MODULE_SELF_DEPEND:
