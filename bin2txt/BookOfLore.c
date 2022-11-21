@@ -17,7 +17,6 @@ typedef struct
     unsigned char vTown;
     unsigned char vAllSame;
     unsigned char acPad[2];
-
 } ST_LINE_INFO;
 #pragma pack(pop)
 

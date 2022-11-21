@@ -34,6 +34,7 @@ void Init_Module()
     MODULE_MAP_DEFINE(D2KillCounter);
     MODULE_MAP_DEFINE(BookOfLore);
     MODULE_MAP_DEFINE(LevelFX);
+    MODULE_MAP_DEFINE(NoSock);
     MODULE_MAP_DEFINE(bufficons);
     MODULE_MAP_DEFINE(arena);
     MODULE_MAP_DEFINE(armor);
@@ -233,6 +234,7 @@ static ENUM_MODULE_ID Get_ModuleId(char *pcModuleName)
     MODULE_NAME_TO_ID(D2KillCounter)
     MODULE_NAME_TO_ID(BookOfLore)
     MODULE_NAME_TO_ID(LevelFX)
+    MODULE_NAME_TO_ID(NoSock)
     MODULE_NAME_TO_ID(bufficons)
     MODULE_NAME_TO_ID(arena)
     MODULE_NAME_TO_ID(armor)
