@@ -16,7 +16,7 @@ typedef struct
     unsigned short vLevelMax;
     unsigned char vTown;
     unsigned char vAllSame;
-    unsigned short vEnd;
+    unsigned char acPad[2];
 
 } ST_LINE_INFO;
 #pragma pack(pop)
@@ -68,7 +68,6 @@ int process_BookOfLore(char *acTemplatePath, char *acBinPath, char *acTxtPath, E
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, LevelMax, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Town, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, AllSame, UCHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, End, USHORT);
 
     switch ( enPhase )
     {

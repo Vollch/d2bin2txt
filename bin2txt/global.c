@@ -1062,7 +1062,8 @@ static int process_file_x(char *acTemplatePath, char *acBinPath, char *acTxtPath
             while ( pstCallback->ppcKeyInternalProcess[i] != NULL )
             {
                 if ( !stricmp(pstCallback->ppcKeyInternalProcess[i], "eol") ||
-                     !stricmp(pstCallback->ppcKeyInternalProcess[i], "*eol"))
+                     !stricmp(pstCallback->ppcKeyInternalProcess[i], "*eol") ||
+                     !stricmp(pstCallback->ppcKeyInternalProcess[i], "end"))
                 {
                     pcEol = pstCallback->ppcKeyInternalProcess[i];
                 }

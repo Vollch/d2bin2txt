@@ -246,7 +246,7 @@ int String_BuildName(char *pcNameFormat, int iNameSize, unsigned int iStingId, c
                     {
                         *pcOutPos = *pcTemp;
                         pcOutPos++;
-                        if ( (pcOutPos - acOutput) >= 32 )
+                        if ( (pcOutPos - acOutput) >= iNameSize )
                             break;
                     }
                     pcTemp++;

@@ -26,6 +26,7 @@ typedef enum
     MODULE_ID_DEFINE(D2NewStats),
     MODULE_ID_DEFINE(D2KillCounter),
     MODULE_ID_DEFINE(BookOfLore),
+    MODULE_ID_DEFINE(LevelFX),
     MODULE_ID_DEFINE(bufficons),
     MODULE_ID_DEFINE(arena),
     MODULE_ID_DEFINE(armor),
@@ -426,6 +427,8 @@ extern int process_D2NewStats(char *acTemplatePath, char *acBinPath, char *acTxt
 extern int process_D2KillCounter(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
 
 extern int process_BookOfLore(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
+
+extern int process_LevelFX(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
 
 extern int process_bufficons(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
 
