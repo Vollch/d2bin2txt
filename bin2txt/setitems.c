@@ -453,7 +453,7 @@ static int SetItems_ConvertValue_Pre(void *pvLineInfo, char *acKey, char *pcTemp
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "index") )
+    if ( !stricmp(acKey, "index") )
     {
         strncpy(m_astSetItems[m_uiSetItemCount].vindex, pstLineInfo->vindex, sizeof(m_astSetItems[m_uiSetItemCount].vindex));
         String_Trim(m_astSetItems[m_uiSetItemCount].vindex);
@@ -465,7 +465,7 @@ static int SetItems_ConvertValue_Pre(void *pvLineInfo, char *acKey, char *pcTemp
 
 static int SetItems_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
-    if ( !strcmp(acKey, "*eol") )
+    if ( !stricmp(acKey, "*eol") )
     {
         acOutput[0] = '0';
         acOutput[1] = 0;

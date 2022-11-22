@@ -171,7 +171,7 @@ static int OverLay_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "overlay") )
+    if ( !stricmp(acKey, "overlay") )
     {
         char acFile[33] = {0};
         String_StripFileName(pstLineInfo->vFilename, acFile, 32);

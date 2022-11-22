@@ -14,7 +14,7 @@ static int LowQualityItems_ConvertValue(void *pvLineInfo, char *acKey, char *pcT
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "Name") )
+    if ( !stricmp(acKey, "Name") )
     {
         if ( 0 == pstLineInfo->vName[0] )
         {

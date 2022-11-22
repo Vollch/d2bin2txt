@@ -38,7 +38,7 @@ static int D2NewStats_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLin
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "*Name") )
+    if ( !stricmp(acKey, "*Name") )
     {
         unsigned int iString = pstLineInfo->vtblIDx;
         if ( !String_FindString(iString, "dummy") )
@@ -52,7 +52,7 @@ static int D2NewStats_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLin
 
         return 1;
     }
-    else if ( !strcmp(acKey, "*eol") )
+    else if ( !stricmp(acKey, "*eol") )
     {
         acOutput[0] = '0';
         acOutput[1] = 0;

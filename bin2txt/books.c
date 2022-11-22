@@ -59,7 +59,7 @@ static int Books_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, 
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "Namco") )
+    if ( !stricmp(acKey, "Namco") )
     {
         if ( !String_BuildName(FORMAT(books), pstLineInfo->vName, pcTemplate, Skills_GetSkillName(pstLineInfo->vBookSkill), iLineNo, NULL, acOutput) )
         {
@@ -68,7 +68,7 @@ static int Books_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, 
 
         return 1;
     }
-    else if ( !strcmp(acKey, "Completed") )
+    else if ( !stricmp(acKey, "Completed") )
     {
         acOutput[0] = '1';
         acOutput[1] = 0;

@@ -264,7 +264,7 @@ static int SuperUniques_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned in
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
     char *pcResult = NULL;
 
-    if ( !strcmp(acKey, "Superunique") )
+    if ( !stricmp(acKey, "Superunique") )
     {
         if ( !String_BuildName(FORMAT(superuniques), pstLineInfo->vName, pcTemplate, NAME_PREFIX, pstLineInfo->wHcIdx, HAVENAME, acOutput) )
         {
@@ -292,13 +292,13 @@ static int SuperUniques_FieldProc(void *pvLineInfo, char *acKey, unsigned int iL
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp("Superunique", acKey) )
+    if ( !stricmp(acKey, "Superunique") )
     {
         strncpy(acOutput, m_astSuperUniques[pstLineInfo->wHcIdx].vSuperunique, sizeof(m_astSuperUniques[pstLineInfo->wHcIdx].vSuperunique));
 
         return 1;
     }
-    else if ( !strcmp(acKey, "*eol") )
+    else if ( !stricmp(acKey, "*eol") )
     {
         acOutput[0] = '0';
         acOutput[1] = 0;

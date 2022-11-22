@@ -29,7 +29,7 @@ static int MonPlace_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineN
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "code") )
+    if ( !stricmp(acKey, "code") )
     {
         if ( !String_BuildName(FORMAT(monplace), 0xFFFF, pcTemplate, NAME_PREFIX, pstLineInfo->vId, HAVENAME, acOutput) )
         {

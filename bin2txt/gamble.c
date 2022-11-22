@@ -17,7 +17,7 @@ static int Gamble_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo,
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "name") )
+    if ( !stricmp(acKey, "name") )
     {
         char acName[13];
         strncpy(acName, pstLineInfo->vcode, sizeof(pstLineInfo->vcode));

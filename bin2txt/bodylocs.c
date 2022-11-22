@@ -28,7 +28,7 @@ static int BodyLocs_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineN
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "Body Location") )
+    if ( !stricmp(acKey, "Body Location") )
     {
         strncpy(m_astBodyLocs[m_iBodyLocs].vCode, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
 
@@ -41,7 +41,7 @@ static int BodyLocs_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineN
         m_iBodyLocs++;
         return 1;
     }
-    else if ( !strcmp(acKey, "*EOL") )
+    else if ( !stricmp(acKey, "*EOL") )
     {
         acOutput[0] = '0';
         acOutput[1] = 0;

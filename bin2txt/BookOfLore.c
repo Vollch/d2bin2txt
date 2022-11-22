@@ -31,7 +31,7 @@ static int BookOfLore_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLin
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "*desc") )
+    if ( !stricmp(acKey, "*desc") )
     {
         if ( !String_BuildName(FORMAT(BookOfLore), pstLineInfo->vNameStr, pcTemplate, NAME_PREFIX, iLineNo, NULL, acOutput) )
         {
@@ -40,7 +40,7 @@ static int BookOfLore_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLin
 
         return 1;
     }
-    else if ( !strcmp(acKey, "*eol") )
+    else if ( !stricmp(acKey, "*eol") )
     {
         acOutput[0] = '0';
         acOutput[1] = 0;

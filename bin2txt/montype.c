@@ -68,7 +68,7 @@ static int MonType_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLi
 {
      ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "type") )
+    if ( !stricmp(acKey, "type") )
     {
         char *pcName = String_FindString(pstLineInfo->vstrplur, "dummy");
         if ( !String_BuildName(FORMAT(montype), pstLineInfo->vstrsing, pcTemplate, pcName, pstLineInfo->vId, HAVENAME, acOutput) )
@@ -82,7 +82,7 @@ static int MonType_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLi
 
         return 1;
     }
-    else if ( !strcmp(acKey, "*eol") )
+    else if ( !stricmp(acKey, "*eol") )
     {
         acOutput[0] = '0';
         acOutput[1] = 0;
@@ -95,13 +95,13 @@ static int MonType_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLi
 
 static int MonType_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
-    if ( !strcmp(acKey, "type") )
+    if ( !stricmp(acKey, "type") )
     {
         strncpy(acOutput, m_astMonType[iLineNo].vtype, sizeof(m_astMonType[iLineNo].vtype));
 
         return 1;
     }
-    else if ( !strcmp(acKey, "*eol") )
+    else if ( !stricmp(acKey, "*eol") )
     {
         acOutput[0] = '0';
         acOutput[1] = 0;

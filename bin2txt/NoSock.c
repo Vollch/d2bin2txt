@@ -20,7 +20,7 @@ static int NoSock_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo,
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "eol") )
+    if ( !stricmp(acKey, "eol") )
     {
         acOutput[0] = '0';
         acOutput[1] = 0;

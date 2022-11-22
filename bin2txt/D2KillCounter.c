@@ -22,7 +22,7 @@ static int D2KillCounter_FieldProc(void *pvLineInfo, char *acKey, unsigned int i
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "*desc") )
+    if ( !stricmp(acKey, "*desc") )
     {
         char *pcName = ItemStatCost_GetStateName(pstLineInfo->vStat);
         if ( !String_BuildName(FORMAT(D2KillCounter), ItemStatCost_GetString(pstLineInfo->vStat), pcTemplate, pcName, iLineNo, NULL, acOutput) )
@@ -32,7 +32,7 @@ static int D2KillCounter_FieldProc(void *pvLineInfo, char *acKey, unsigned int i
 
         return 1;
     }
-    else if ( !strcmp(acKey, "*eol") )
+    else if ( !stricmp(acKey, "*eol") )
     {
         acOutput[0] = '0';
         acOutput[1] = 0;

@@ -31,7 +31,7 @@ static int PlrMode_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp("Code", acKey) )
+    if ( !stricmp("Code", acKey) )
     {
         char acName[21];
         strncpy(acName, pstLineInfo->vToken, sizeof(pstLineInfo->vToken));

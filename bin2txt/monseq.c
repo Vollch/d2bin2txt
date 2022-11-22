@@ -72,7 +72,7 @@ static int MonSeq_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLin
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "sequence") )
+    if ( !stricmp(acKey, "sequence") )
     {
         if ( m_iMonSeqCount > pstLineInfo->vId )
         {
@@ -89,7 +89,7 @@ static int MonSeq_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLin
         m_iMonSeqCount++;
         return 1;
     }
-    else if ( !strcmp(acKey, "eol") )
+    else if ( !stricmp(acKey, "eol") )
     {
         acOutput[0] = '0';
         acOutput[1] = 0;
@@ -104,13 +104,13 @@ static int MonSeq_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo,
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "sequence") )
+    if ( !stricmp(acKey, "sequence") )
     {
         strncpy(acOutput, m_astMonSeq[pstLineInfo->vId].vsequence, sizeof(m_astMonSeq[pstLineInfo->vId].vsequence));
 
         return 1;
     }
-    else if ( !strcmp(acKey, "eol") )
+    else if ( !stricmp(acKey, "eol") )
     {
         acOutput[0] = '0';
         acOutput[1] = 0;

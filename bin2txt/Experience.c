@@ -72,7 +72,7 @@ static char *m_apcInternalProcess[] =
 
 static int Experience_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
-    if ( !strcmp(acKey, "Level") )
+    if ( !stricmp(acKey, "Level") )
     {
         char acName[16] = {0};
         sprintf(acName, "%d", iLineNo - 1);

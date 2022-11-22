@@ -37,7 +37,7 @@ static int SkillCalc_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplat
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "code") )
+    if ( !stricmp(acKey, "code") )
     {
         strncpy(m_astSkillCalc[m_uiSkillCalcCount].vcode, pstLineInfo->vcode, sizeof(pstLineInfo->vcode));
         String_Trim(m_astSkillCalc[m_uiSkillCalcCount].vcode);

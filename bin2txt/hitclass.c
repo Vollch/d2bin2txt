@@ -28,7 +28,7 @@ static int HitClass_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineN
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "Hit Class") )
+    if ( !stricmp(acKey, "Hit Class") )
     {
         strncpy(m_astHitClass[m_iHitClassCount].vCode, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
 
@@ -41,7 +41,7 @@ static int HitClass_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineN
         m_iHitClassCount++;
         return 1;
     }
-    else if ( !strcmp(acKey, "*EOL") )
+    else if ( !stricmp(acKey, "*EOL") )
     {
         acOutput[0] = '0';
         acOutput[1] = 0;

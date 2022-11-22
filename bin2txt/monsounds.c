@@ -178,7 +178,7 @@ static int MonSounds_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int i
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "Id") )
+    if ( !stricmp(acKey, "Id") )
     {
         char *pcName;
         ( (pcName = Sounds_GetSoundName2(pstLineInfo->vAttack1)) ||
@@ -208,7 +208,7 @@ static int MonSounds_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int i
         m_iMonSoundsCount++;
         return 1;
     }
-    else if ( !strcmp(acKey, "EOL") )
+    else if ( !stricmp(acKey, "EOL") )
     {
         acOutput[0] = '0';
         acOutput[1] = 0;
@@ -221,13 +221,13 @@ static int MonSounds_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int i
 
 static int MonSounds_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
-    if ( !strcmp(acKey, "Id") )
+    if ( !stricmp(acKey, "Id") )
     {
         strncpy(acOutput, m_astMonSounds[iLineNo].vId, sizeof(m_astMonSounds[iLineNo].vId));
 
         return 1;
     }
-    else if ( !strcmp(acKey, "EOL") )
+    else if ( !stricmp(acKey, "EOL") )
     {
         acOutput[0] = '0';
         acOutput[1] = 0;

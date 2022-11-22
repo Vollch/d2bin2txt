@@ -227,7 +227,7 @@ unsigned int my_printf( const char *pcFormat,... )
 
 static ENUM_MODULE_ID Get_ModuleId(char *pcModuleName)
 {
-    if ( !strcmp("all", pcModuleName) )
+    if ( !stricmp("all", pcModuleName) )
     {
         return EN_MID_MAX;
     }

@@ -171,7 +171,7 @@ static int ItemTypes_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int i
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "ItemType") )
+    if ( !stricmp(acKey, "ItemType") )
     {
         strncpy(acOutput, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
 
@@ -180,7 +180,7 @@ static int ItemTypes_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int i
         m_iItemTypesCount++;
         return 1;
     }
-    else if ( !strcmp(acKey, "*eol") )
+    else if ( !stricmp(acKey, "*eol") )
     {
         acOutput[0] = '0';
         acOutput[1] = 0;
@@ -195,7 +195,7 @@ static int ItemTypes_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLine
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "ItemType") )
+    if ( !stricmp(acKey, "ItemType") )
     {
         char acName[5];
         strncpy(acName, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
@@ -207,7 +207,7 @@ static int ItemTypes_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLine
 
         return 1;
     }
-    else if ( !strcmp(acKey, "*eol") )
+    else if ( !stricmp(acKey, "*eol") )
     {
         acOutput[0] = '0';
         acOutput[1] = 0;
@@ -234,9 +234,12 @@ static int ItemTypes_CalcTc(void *pvLineInfo, char *acKey, char *pcTemplate, cha
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "TreasureClass") && 0 != pstLineInfo->vTreasureClass )
+    if ( !stricmp(acKey, "TreasureClass") )
     {
-        m_uiTcOffset += 32;
+        if ( 0 != pstLineInfo->vTreasureClass )
+        {
+            m_uiTcOffset += 32;
+        }
     }
 
     return 0;

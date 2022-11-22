@@ -27,7 +27,7 @@ static int PlayerClass_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLi
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "Player Class") )
+    if ( !stricmp(acKey, "Player Class") )
     {
         strncpy(m_astPlayerClass[m_iPlayerClass].vCode, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
 

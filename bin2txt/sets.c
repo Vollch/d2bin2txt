@@ -296,7 +296,7 @@ static int Sets_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLineN
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
     char *pcResult;
 
-    if ( !strcmp(acKey, "index") )
+    if ( !stricmp(acKey, "index") )
     {
         if ( !String_BuildName(FORMAT(sets), pstLineInfo->vname, pcTemplate, NAME_PREFIX, pstLineInfo->wSetId, HAVENAME, acOutput) )
         {
@@ -317,7 +317,7 @@ static int Sets_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLineN
 
         return 1;
     }
-    else if ( !strcmp(acKey, "*eol") )
+    else if ( !stricmp(acKey, "*eol") )
     {
         acOutput[0] = '0';
         acOutput[1] = 0;
@@ -332,13 +332,13 @@ static int Sets_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, c
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "index") )
+    if ( !stricmp(acKey, "index") )
     {
         strncpy(acOutput, m_astSets[pstLineInfo->wSetId].vindex, sizeof(m_astSets[pstLineInfo->wSetId].vindex));
 
         return 1;
     }
-    else if ( !strcmp(acKey, "*eol") )
+    else if ( !stricmp(acKey, "*eol") )
     {
         acOutput[0] = '0';
         acOutput[1] = 0;

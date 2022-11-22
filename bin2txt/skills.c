@@ -2043,7 +2043,7 @@ static int Skills_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLin
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "skill") )
+    if ( !stricmp(acKey, "skill") )
     {
         if ( !String_BuildName(FORMAT(skills), SkillDesc_GetString(pstLineInfo->vskilldesc), pcTemplate, NAME_PREFIX, pstLineInfo->vId, HAVENAME, acOutput) )
         {
@@ -2063,7 +2063,7 @@ static int Skills_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo,
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "skill") )
+    if ( !stricmp(acKey, "skill") )
     {
         strncpy(acOutput, m_astSkills[pstLineInfo->vId].vskill, sizeof(m_astSkills[pstLineInfo->vId].vskill));
 
@@ -2077,7 +2077,7 @@ static int Skills_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, 
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "range") )
+    if ( !stricmp(acKey, "range") )
     {
         if ( 3 == pstLineInfo->vrange )
         {
@@ -2110,197 +2110,197 @@ static int Skills_BitProc(void *pvLineInfo, char *acKey, char *acOutput)
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
     int result = 0;
 
-    if ( !strcmp(acKey, "interrupt") )
+    if ( !stricmp(acKey, "interrupt") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 31)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "leftskill") )
+    else if ( !stricmp(acKey, "leftskill") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 30)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "ItemTgtDo") )
+    else if ( !stricmp(acKey, "ItemTgtDo") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 29)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "AttackNoMana") )
+    else if ( !stricmp(acKey, "AttackNoMana") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 28)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "TargetItem") )
+    else if ( !stricmp(acKey, "TargetItem") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 27)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "TargetAlly") )
+    else if ( !stricmp(acKey, "TargetAlly") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 26)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "TargetPet") )
+    else if ( !stricmp(acKey, "TargetPet") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 25)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "TargetCorpse") )
+    else if ( !stricmp(acKey, "TargetCorpse") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 24)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "SearchOpenXY") )
+    else if ( !stricmp(acKey, "SearchOpenXY") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 23)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "SearchEnemyNear") )
+    else if ( !stricmp(acKey, "SearchEnemyNear") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 22)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "SearchEnemyXY") )
+    else if ( !stricmp(acKey, "SearchEnemyXY") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 21)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "TargetableOnly") )
+    else if ( !stricmp(acKey, "TargetableOnly") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 20)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "UseAttackRate") )
+    else if ( !stricmp(acKey, "UseAttackRate") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 19)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "durability") )
+    else if ( !stricmp(acKey, "durability") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 18)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "enhanceable") )
+    else if ( !stricmp(acKey, "enhanceable") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 17)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "noammo") )
+    else if ( !stricmp(acKey, "noammo") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 16)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "immediate") )
+    else if ( !stricmp(acKey, "immediate") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 15)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "weaponsnd") )
+    else if ( !stricmp(acKey, "weaponsnd") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 14)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "stsounddelay") )
+    else if ( !stricmp(acKey, "stsounddelay") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 13)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "stsuccessonly") )
+    else if ( !stricmp(acKey, "stsuccessonly") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 12)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "repeat") )
+    else if ( !stricmp(acKey, "repeat") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 11)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "InGame") )
+    else if ( !stricmp(acKey, "InGame") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 10)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "Kick") )
+    else if ( !stricmp(acKey, "Kick") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 9)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "InTown") )
+    else if ( !stricmp(acKey, "InTown") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 8)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "prgstack") )
+    else if ( !stricmp(acKey, "prgstack") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 7)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "periodic") )
+    else if ( !stricmp(acKey, "periodic") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 6)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "aura") )
+    else if ( !stricmp(acKey, "aura") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 5)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "passive") )
+    else if ( !stricmp(acKey, "passive") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 4)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "finishing") )
+    else if ( !stricmp(acKey, "finishing") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 3)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "progressive") )
+    else if ( !stricmp(acKey, "progressive") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 2)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "lob") )
+    else if ( !stricmp(acKey, "lob") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 1)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "decquant") )
+    else if ( !stricmp(acKey, "decquant") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & 1) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "warp") )
+    else if ( !stricmp(acKey, "warp") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vBitCombined2 & (1 << 6)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "usemanaondo") )
+    else if ( !stricmp(acKey, "usemanaondo") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vBitCombined2 & (1 << 5)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "scroll") )
+    else if ( !stricmp(acKey, "scroll") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vBitCombined2 & (1 << 4)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "general") )
+    else if ( !stricmp(acKey, "general") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vBitCombined2 & (1 << 3)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "ItemCltCheckStart") )
+    else if ( !stricmp(acKey, "ItemCltCheckStart") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vBitCombined2 & (1 << 2)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "ItemCheckStart") )
+    else if ( !stricmp(acKey, "ItemCheckStart") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vBitCombined2 & (1 << 1)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "TgtPlaceCheck") )
+    else if ( !stricmp(acKey, "TgtPlaceCheck") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vBitCombined2 & 1) != 0);
         result = 1;

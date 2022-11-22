@@ -28,7 +28,7 @@ static int ElemTypes_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLine
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "Elemental Type") )
+    if ( !stricmp(acKey, "Elemental Type") )
     {
         strncpy(m_astElemTypes[m_iElemTypes].vCode, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
 
@@ -41,7 +41,7 @@ static int ElemTypes_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLine
         m_iElemTypes++;
         return 1;
     }
-    else if ( !strcmp(acKey, "*EOL") )
+    else if ( !stricmp(acKey, "*EOL") )
     {
         acOutput[0] = '0';
         acOutput[1] = 0;

@@ -183,7 +183,7 @@ static char *m_apcNotUsed[] =
 
 static int Runes_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
-    if ( !strcmp(acKey, "eol") )
+    if ( !stricmp(acKey, "eol") )
     {
         acOutput[0] = '0';
         acOutput[1] = 0;

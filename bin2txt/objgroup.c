@@ -75,14 +75,14 @@ static int ObjGroup_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineN
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp("Offset", acKey) )
+    if ( !stricmp(acKey, "Offset") )
     {
         sprintf(acOutput, "%u", m_iObjGroupCount);
 
         m_iObjGroupCount++;
         return 1;
     }
-    else if ( !strcmp("GroupName", acKey) )
+    else if ( !stricmp(acKey, "GroupName") )
     {
         char acObjects[513] = {0};
         unsigned int* piObjects[] = { &pstLineInfo->vID0, &pstLineInfo->vID1, &pstLineInfo->vID2, &pstLineInfo->vID3,

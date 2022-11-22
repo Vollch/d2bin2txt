@@ -33,7 +33,7 @@ static char *m_apcNotUsed[] =
 
 static int LvlWarp_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
-    if ( !strcmp(acKey, "Name") )
+    if ( !stricmp(acKey, "Name") )
     {
         if ( !String_BuildName(FORMAT(lvlwarp), 0xFFFF, pcTemplate, NAME_PREFIX, iLineNo, NULL, acOutput) )
         {

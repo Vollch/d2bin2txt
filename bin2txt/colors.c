@@ -27,7 +27,7 @@ static int Colors_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo,
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "Transform Color") )
+    if ( !stricmp(acKey, "Transform Color") )
     {
         strncpy(m_astColors[m_iColorCount].vCode, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
 

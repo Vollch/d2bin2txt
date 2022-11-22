@@ -132,7 +132,7 @@ static int Events_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, 
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "event") )
+    if ( !stricmp(acKey, "event") )
     {
         if ( !String_BuildName(FORMAT(events), 0xFFFF, pcTemplate, NAME_PREFIX, m_iEventsCount, HAVENAME, acOutput) )
         {

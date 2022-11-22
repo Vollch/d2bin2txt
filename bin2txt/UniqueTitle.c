@@ -20,7 +20,7 @@ static int UniqueTitle_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLi
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp("Namco", acKey) )
+    if ( !stricmp(acKey, "Namco") )
     {
         if ( !String_BuildName(FORMAT(uniquetitle), pstLineInfo->vName, pcTemplate, NAME_PREFIX, m_iUniqueTitle, NULL, acOutput) )
         {

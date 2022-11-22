@@ -852,7 +852,7 @@ static int Levels_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLin
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "Name") )
+    if ( !stricmp(acKey, "Name") )
     {
         char acName[41];
         strncpy(acName, pstLineInfo->vLevelName, sizeof(pstLineInfo->vLevelName));
@@ -875,7 +875,7 @@ static int Levels_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo,
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "Name") )
+    if ( !stricmp(acKey, "Name") )
     {
         strncpy(acOutput, m_astLevels[pstLineInfo->vId].vname, sizeof(m_astLevels[pstLineInfo->vId].vname));
 

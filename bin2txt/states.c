@@ -326,7 +326,7 @@ static int States_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLin
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "state") )
+    if ( !stricmp(acKey, "state") )
     {
         char *pcName;
         ( (pcName = Overlay_GetOverlay(pstLineInfo->voverlay1)) ||
@@ -349,7 +349,7 @@ static int States_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLin
         m_iItemStatesCount++;
         return 1;
     }
-    else if ( !strcmp(acKey, "eol") )
+    else if ( !stricmp(acKey, "eol") )
     {
         acOutput[0] = '0';
         acOutput[1] = 0;
@@ -364,13 +364,13 @@ static int States_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo,
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "state") )
+    if ( !stricmp(acKey, "state") )
     {
         strncpy(acOutput, m_astItemStates[pstLineInfo->vid].vstate, sizeof(m_astItemStates[pstLineInfo->vid].vstate));
 
         return 1;
     }
-    else if ( !strcmp(acKey, "eol") )
+    else if ( !stricmp(acKey, "eol") )
     {
         acOutput[0] = '0';
         acOutput[1] = 0;
@@ -386,202 +386,202 @@ static int States_BitProc(void *pvLineInfo, char *acKey, char *acOutput)
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
     int result = 0;
 
-    if ( !strcmp(acKey, "damblue") )
+    if ( !stricmp(acKey, "damblue") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits1 & (1 << 7)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "remhit") )
+    else if ( !stricmp(acKey, "remhit") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits1 & (1 << 6)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "active") )
+    else if ( !stricmp(acKey, "active") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits1 & (1 << 5)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "pgsv") )
+    else if ( !stricmp(acKey, "pgsv") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits1 & (1 << 4)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "transform") )
+    else if ( !stricmp(acKey, "transform") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits1 & (1 << 3)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "hide") )
+    else if ( !stricmp(acKey, "hide") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits1 & (1 << 2)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "aura") )
+    else if ( !stricmp(acKey, "aura") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits1 & (1 << 1)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "nosend") )
+    else if ( !stricmp(acKey, "nosend") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits1 & 1) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "bossstaydeath") )
+    else if ( !stricmp(acKey, "bossstaydeath") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits2 & (1 << 7)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "monstaydeath") )
+    else if ( !stricmp(acKey, "monstaydeath") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits2 & (1 << 6)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "plrstaydeath") )
+    else if ( !stricmp(acKey, "plrstaydeath") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits2 & (1 << 5)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "curable") )
+    else if ( !stricmp(acKey, "curable") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits2 & (1 << 4)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "curse") )
+    else if ( !stricmp(acKey, "curse") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits2 & (1 << 3)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "attred") )
+    else if ( !stricmp(acKey, "attred") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits2 & (1 << 2)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "attblue") )
+    else if ( !stricmp(acKey, "attblue") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits2 & (1 << 1)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "damred") )
+    else if ( !stricmp(acKey, "damred") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits2 & 1) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "rpblue") )
+    else if ( !stricmp(acKey, "rpblue") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits3 & (1 << 7)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "rlblue") )
+    else if ( !stricmp(acKey, "rlblue") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits3 & (1 << 6)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "rcblue") )
+    else if ( !stricmp(acKey, "rcblue") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits3 & (1 << 5)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "rfblue") )
+    else if ( !stricmp(acKey, "rfblue") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits3 & (1 << 4)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "armblue") )
+    else if ( !stricmp(acKey, "armblue") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits3 & (1 << 3)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "blue") )
+    else if ( !stricmp(acKey, "blue") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits3 & (1 << 2)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "restrict") )
+    else if ( !stricmp(acKey, "restrict") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits3 & (1 << 1)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "disguise") )
+    else if ( !stricmp(acKey, "disguise") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits3 & 1) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "shatter") )
+    else if ( !stricmp(acKey, "shatter") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits4 & (1 << 7)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "exp") )
+    else if ( !stricmp(acKey, "exp") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits4 & (1 << 6)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "rpred") )
+    else if ( !stricmp(acKey, "rpred") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits4 & (1 << 5)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "rlred") )
+    else if ( !stricmp(acKey, "rlred") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits4 & (1 << 4)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "rcred") )
+    else if ( !stricmp(acKey, "rcred") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits4 & (1 << 3)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "rfred") )
+    else if ( !stricmp(acKey, "rfred") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits4 & (1 << 2)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "armred") )
+    else if ( !stricmp(acKey, "armred") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits4 & (1 << 1)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "stambarblue") )
+    else if ( !stricmp(acKey, "stambarblue") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits4 & 1) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "notondead") )
+    else if ( !stricmp(acKey, "notondead") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits5 & (1 << 7)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "meleeonly") )
+    else if ( !stricmp(acKey, "meleeonly") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits5 & (1 << 6)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "bossinv") )
+    else if ( !stricmp(acKey, "bossinv") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits5 & (1 << 5)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "noclear") )
+    else if ( !stricmp(acKey, "noclear") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits5 & (1 << 4)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "nooverlays") )
+    else if ( !stricmp(acKey, "nooverlays") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits5 & (1 << 3)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "green") )
+    else if ( !stricmp(acKey, "green") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits5 & (1 << 2)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "udead") )
+    else if ( !stricmp(acKey, "udead") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits5 & (1 << 1)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "life") )
+    else if ( !stricmp(acKey, "life") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits5 & 1) != 0);
         result = 1;

@@ -110,7 +110,7 @@ static int Belts_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, 
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "name") )
+    if ( !stricmp(acKey, "name") )
     {
         char acName[16] = {0};
         sprintf(acName, "%d", pstLineInfo->vnumboxes);
@@ -122,7 +122,7 @@ static int Belts_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, 
         m_uiBeltsCount++;
         return 1;
     }
-    else if ( !strcmp(acKey, "*EOL") )
+    else if ( !stricmp(acKey, "*EOL") )
     {
         acOutput[0] = '0';
         acOutput[1] = 0;

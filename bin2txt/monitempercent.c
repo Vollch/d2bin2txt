@@ -19,7 +19,7 @@ static char *m_apcInternalProcess[] =
 
 static int MonItemPercent_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
-    if ( !strcmp(acKey, "Name") )
+    if ( !stricmp(acKey, "Name") )
     {
         if ( !String_BuildName(FORMAT(monitempercent), 0xFFFF, pcTemplate, NAME_PREFIX, iLineNo, NULL, acOutput) )
         {

@@ -144,7 +144,7 @@ static int PetType_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLi
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "pet type") )
+    if ( !stricmp(acKey, "pet type") )
     {
         char acName[33];
         strncpy(acName, pstLineInfo->vbaseicon, sizeof(pstLineInfo->vbaseicon));
@@ -158,7 +158,7 @@ static int PetType_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLi
         m_iPetTypeCount++;
         return 1;
     }
-    else if ( !strcmp(acKey, "eol") )
+    else if ( !stricmp(acKey, "eol") )
     {
         acOutput[0] = '0';
         acOutput[1] = 0;
@@ -173,7 +173,7 @@ static int PetType_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "pet type") )
+    if ( !stricmp(acKey, "pet type") )
     {
         strncpy(acOutput, m_astPetTypes[pstLineInfo->vidx].vpetmysptype, sizeof(m_astPetTypes[pstLineInfo->vidx].vpetmysptype));
 
@@ -198,32 +198,32 @@ static int PetType_BitProc(void *pvLineInfo, char *acKey, char *acOutput)
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
     int result = 0;
 
-    if ( !strcmp(acKey, "drawhp") )
+    if ( !stricmp(acKey, "drawhp") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vCombinedBit & (1 << 5)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "automap") )
+    else if ( !stricmp(acKey, "automap") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vCombinedBit & (1 << 4)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "unsummon") )
+    else if ( !stricmp(acKey, "unsummon") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vCombinedBit & (1 << 3)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "partysend") )
+    else if ( !stricmp(acKey, "partysend") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vCombinedBit & (1 << 2)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "range") )
+    else if ( !stricmp(acKey, "range") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vCombinedBit & (1 << 1)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "warp") )
+    else if ( !stricmp(acKey, "warp") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vCombinedBit & 1) != 0);
         result = 1;

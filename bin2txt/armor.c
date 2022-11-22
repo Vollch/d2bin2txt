@@ -972,7 +972,7 @@ static int Armor_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, c
     char *pcResult;
     int result = 0;
 
-    if ( !strcmp(acKey, "namestr") )
+    if ( !stricmp(acKey, "namestr") )
     {
         pcResult = String_FindString(pstLineInfo->vnamestr, "dummy");
         if ( pcResult )
@@ -985,7 +985,7 @@ static int Armor_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, c
         }
         result = 1;
     }
-    else if ( !strcmp(acKey, "rarity") )
+    else if ( !stricmp(acKey, "rarity") )
     {
         if ( (999 % 256) == pstLineInfo->vrarity )
         {
@@ -993,7 +993,7 @@ static int Armor_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, c
             result = 1;
         }
     }
-    else if ( !strcmp(acKey, "mindam") )
+    else if ( !stricmp(acKey, "mindam") )
     {
         //第二组mindam无用，统一填0
         if ( 0 == m_iMinDamFlag )
@@ -1007,7 +1007,7 @@ static int Armor_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, c
             result = 1;
         }
     }
-    else if ( !strcmp(acKey, "maxdam") )
+    else if ( !stricmp(acKey, "maxdam") )
     {
         //第二组maxdam无用，统一填0
         if ( 0 == m_iMaxDamFlag )
@@ -1029,7 +1029,7 @@ static int Armor_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLine
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "name") )
+    if ( !stricmp(acKey, "name") )
     {
         strncpy(acOutput, pstLineInfo->vcode, sizeof(pstLineInfo->vcode));
 
@@ -1047,7 +1047,7 @@ static int Armor_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, 
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "name") )
+    if ( !stricmp(acKey, "name") )
     {
         if ( !String_BuildName(FORMAT(armor), pstLineInfo->vnamestr, pcTemplate, m_astArmor[iLineNo].vcode, iLineNo, NULL, acOutput) )
         {

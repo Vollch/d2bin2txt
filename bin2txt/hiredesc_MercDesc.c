@@ -39,7 +39,7 @@ static int HireDesc_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineN
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "Hireling Description") )
+    if ( !stricmp(acKey, "Hireling Description") )
     {
         strncpy(m_astHireDesc[m_iHireDesc].vCode, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
 

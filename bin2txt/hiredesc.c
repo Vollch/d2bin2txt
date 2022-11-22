@@ -43,7 +43,7 @@ static int HireDesc_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineN
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "Hireling Description") )
+    if ( !stricmp(acKey, "Hireling Description") )
     {
         strncpy(m_astHireDesc[m_iHireDesc].vCode, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
 
@@ -56,7 +56,7 @@ static int HireDesc_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineN
         m_iHireDesc++;
         return 1;
     }
-    else if ( !strcmp(acKey, "*EOL") )
+    else if ( !stricmp(acKey, "*EOL") )
     {
         acOutput[0] = '0';
         acOutput[1] = 0;

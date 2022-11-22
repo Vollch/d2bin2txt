@@ -720,7 +720,7 @@ static int Objects_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp("Id", acKey) )
+    if ( !stricmp("Id", acKey) )
     {
         sprintf(acOutput, "%u", m_iObjectsCount);
 

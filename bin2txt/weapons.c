@@ -764,7 +764,7 @@ static int Weapons_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLi
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "name") )
+    if ( !stricmp(acKey, "name") )
     {
         strncpy(acOutput, pstLineInfo->vcode, sizeof(pstLineInfo->vcode));
 
@@ -782,7 +782,7 @@ static int Weapons_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "name") )
+    if ( !stricmp(acKey, "name") )
     {
         if ( !String_BuildName(FORMAT(weapons), pstLineInfo->vnamestr, pcTemplate, m_astWeapon[iLineNo].vcode, iLineNo, NULL, acOutput) )
         {
@@ -801,7 +801,7 @@ static int Weapons_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate,
     char *pcResult;
     int result = 0;
 
-    if ( !strcmp(acKey, "namestr") )
+    if ( !stricmp(acKey, "namestr") )
     {
         pcResult = String_FindString(pstLineInfo->vnamestr, "dummy");
         if ( pcResult )
@@ -814,7 +814,7 @@ static int Weapons_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate,
         }
         result = 1;
     }
-    else if ( !strcmp(acKey, "rarity") )
+    else if ( !stricmp(acKey, "rarity") )
     {
         if ( (999 % 256) == pstLineInfo->vrarity )
         {

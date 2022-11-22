@@ -214,7 +214,7 @@ static int LvlPrest_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineN
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "Name") )
+    if ( !stricmp(acKey, "Name") )
     {
         char acName[33] = {0};
         ( String_StripFileName(pstLineInfo->vFile1, acName, 32) ||

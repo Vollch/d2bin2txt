@@ -391,7 +391,7 @@ static int MonUMOD_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "uniquemod") )
+    if ( !stricmp(acKey, "uniquemod") )
     {
         if ( !String_BuildName(FORMAT(monumod), 0xFFFF, pcTemplate, NAME_PREFIX, pstLineInfo->vid, NULL, acOutput) )
         {
@@ -400,7 +400,7 @@ static int MonUMOD_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo
 
         return 1;
     }
-    else if ( !strcmp(acKey, "*eol") )
+    else if ( !stricmp(acKey, "*eol") )
     {
         acOutput[0] = '0';
         acOutput[1] = 0;

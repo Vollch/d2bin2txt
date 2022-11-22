@@ -29,7 +29,7 @@ static int MonAI_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, 
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "AI") )
+    if ( !stricmp(acKey, "AI") )
     {
         if ( !String_BuildName(FORMAT(monai), 0xFFFF, pcTemplate, NAME_PREFIX, pstLineInfo->vIndex, HAVENAME, acOutput) )
         {

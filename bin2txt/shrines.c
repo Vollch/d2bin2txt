@@ -66,7 +66,7 @@ static char *m_apcNotUsed[] =
 
 static int Shrines_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
-    if ( !strcmp(acKey, "Shrine name") )
+    if ( !stricmp(acKey, "Shrine name") )
     {
         if ( !String_BuildName(FORMAT(shrines), 0xFFFF, pcTemplate, NAME_PREFIX, iLineNo, NULL, acOutput) )
         {

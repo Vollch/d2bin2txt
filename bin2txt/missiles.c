@@ -960,7 +960,7 @@ static int Missiles_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iL
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "Missile") )
+    if ( !stricmp(acKey, "Missile") )
     {
         char acName[33] = {0};
         String_StripFileName(pstLineInfo->vCelFile, acName, 32);
@@ -974,7 +974,7 @@ static int Missiles_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iL
         m_iMisslesCount++;
         return 1;
     }
-    else if ( !strcmp(acKey, "EOL") )
+    else if ( !stricmp(acKey, "EOL") )
     {
         acOutput[0] = '0';
         acOutput[1] = 0;
@@ -989,13 +989,13 @@ static int Missiles_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineN
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "Missile") )
+    if ( !stricmp(acKey, "Missile") )
     {
         strncpy(acOutput, m_astMissiles[pstLineInfo->vId].vMissile, sizeof(m_astMissiles[pstLineInfo->vId].vMissile));
 
         return 1;
     }
-    else if ( !strcmp(acKey, "EOL") )
+    else if ( !stricmp(acKey, "EOL") )
     {
         acOutput[0] = '0';
         acOutput[1] = 0;
@@ -1021,82 +1021,82 @@ static int Missiles_BitProc(void *pvLineInfo, char *acKey, char *acOutput)
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
     int result = 0;
 
-    if ( !strcmp(acKey, "MissileSkill") )
+    if ( !stricmp(acKey, "MissileSkill") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 15)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "Half2HSrc") )
+    else if ( !stricmp(acKey, "Half2HSrc") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 14)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "NoUniqueMod") )
+    else if ( !stricmp(acKey, "NoUniqueMod") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 13)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "NoMultiShot") )
+    else if ( !stricmp(acKey, "NoMultiShot") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 12)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "SrcTown") )
+    else if ( !stricmp(acKey, "SrcTown") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 11)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "Town") )
+    else if ( !stricmp(acKey, "Town") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 10)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "ReturnFire") )
+    else if ( !stricmp(acKey, "ReturnFire") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 9)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "ApplyMastery") )
+    else if ( !stricmp(acKey, "ApplyMastery") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 8)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "SoftHit") )
+    else if ( !stricmp(acKey, "SoftHit") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 7)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "GetHit") )
+    else if ( !stricmp(acKey, "GetHit") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 6)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "ClientSend") )
+    else if ( !stricmp(acKey, "ClientSend") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 5)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "CanDestroy") )
+    else if ( !stricmp(acKey, "CanDestroy") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 4)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "CanSlow") )
+    else if ( !stricmp(acKey, "CanSlow") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 3)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "Pierce") )
+    else if ( !stricmp(acKey, "Pierce") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 2)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "Explosion") )
+    else if ( !stricmp(acKey, "Explosion") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 1)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "LastCollide") )
+    else if ( !stricmp(acKey, "LastCollide") )
     {
         sprintf(acOutput, "%d", ((pstLineInfo->vBitCombined & 1)) != 0);
         result = 1;
@@ -1109,7 +1109,7 @@ static int Missiles_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "SrcDamage") )
+    if ( !stricmp(acKey, "SrcDamage") )
     {
         if ( 0xFF == pstLineInfo->vSrcDamage )
         {

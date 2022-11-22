@@ -61,7 +61,7 @@ static int LvlTypes_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineN
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "Name") )
+    if ( !stricmp(acKey, "Name") )
     {
         char acName[33] = {0};
         String_StripFileName(pstLineInfo->vFilemysp1, acName, 32);
@@ -72,7 +72,7 @@ static int LvlTypes_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineN
 
         return 1;
     }
-    else if ( !strcmp("Id", acKey) )
+    else if ( !stricmp("Id", acKey) )
     {
         sprintf(acOutput, "%d", m_iLvlTypesCount);
 

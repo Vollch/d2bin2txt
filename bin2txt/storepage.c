@@ -27,7 +27,7 @@ static int StorePage_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLine
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "Store Page") )
+    if ( !stricmp(acKey, "Store Page") )
     {
         strncpy(m_astStorePage[m_iStorePage].vCode, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
 

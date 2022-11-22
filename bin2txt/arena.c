@@ -22,7 +22,7 @@ static char *m_apcInternalProcess[] =
 
 static int Arena_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
-    if ( !strcmp(acKey, "Arena") )
+    if ( !stricmp(acKey, "Arena") )
     {
         if ( !String_BuildName(FORMAT(arena), 0xFFFF, pcTemplate, NAME_PREFIX, iLineNo, NULL, acOutput) )
         {

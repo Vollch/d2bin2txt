@@ -76,7 +76,7 @@ static int LvlMaze_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "Name") )
+    if ( !stricmp(acKey, "Name") )
     {
         if ( !String_BuildName(FORMAT(lvlmaze), 0xFFFF, pcTemplate, Levels_GetLevelName(pstLineInfo->vLevel), iLineNo, NULL, acOutput) )
         {

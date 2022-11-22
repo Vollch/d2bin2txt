@@ -292,7 +292,7 @@ static int TreasureClassEx_FieldProc(void *pvLineInfo, char *acKey, unsigned int
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "Term") )
+    if ( !stricmp(acKey, "Term") )
     {
         acOutput[0] = '0';
         acOutput[1] = 0;

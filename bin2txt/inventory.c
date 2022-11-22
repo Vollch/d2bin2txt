@@ -613,7 +613,7 @@ static int Inventory_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLine
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "class") )
+    if ( !stricmp(acKey, "class") )
     {
         char acSize[16] = {0};
         sprintf(acSize, "%dx%d", pstLineInfo->vgridX, pstLineInfo->vgridY);

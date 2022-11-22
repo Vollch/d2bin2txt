@@ -27,7 +27,7 @@ static int Compcode_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineN
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "component") )
+    if ( !stricmp(acKey, "component") )
     {
         strncpy(m_astCompcode[m_iCompcodeCount].vcomponent, pstLineInfo->vcode, sizeof(pstLineInfo->vcode));
 

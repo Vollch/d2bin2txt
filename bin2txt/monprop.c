@@ -346,7 +346,7 @@ char *MonProp_GetPropId(unsigned int id)
 
 static int MonProp_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
-    if ( !strcmp(acKey, "*eol") )
+    if ( !stricmp(acKey, "*eol") )
     {
         acOutput[0] = '0';
         acOutput[1] = 0;
@@ -361,7 +361,7 @@ static int MonProp_ConvertValue_Pre(void *pvLineInfo, char *acKey, char *pcTempl
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "Id") )
+    if ( !stricmp(acKey, "Id") )
     {
         if ( !String_BuildName(FORMAT(monprop), MonStats_GetPropString(pstLineInfo->vId), pcTemplate, NULL, m_iMonPropCount, HAVENAME, acOutput) )
         {
@@ -381,7 +381,7 @@ static int MonProp_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate,
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "Id") )
+    if ( !stricmp(acKey, "Id") )
     {
         strncpy(acOutput, m_astMonProp[pstLineInfo->vId].vId, sizeof(m_astMonProp[pstLineInfo->vId].vId));
 

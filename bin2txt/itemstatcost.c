@@ -821,7 +821,7 @@ static int ItemStatCost_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned in
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "Stat") )
+    if ( !stricmp(acKey, "Stat") )
     {
         unsigned int iString = pstLineInfo->vdescstrpos;
         if ( !String_FindString(iString, "dummy") )
@@ -839,7 +839,7 @@ static int ItemStatCost_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned in
         m_iItemStatesCount++;
         return 1;
     }
-    else if ( !strcmp(acKey, "*eol") )
+    else if ( !stricmp(acKey, "*eol") )
     {
         acOutput[0] = '0';
         acOutput[1] = 0;
@@ -854,13 +854,13 @@ static int ItemStatCost_FieldProc(void *pvLineInfo, char *acKey, unsigned int iL
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "Stat") )
+    if ( !stricmp(acKey, "Stat") )
     {
         strncpy(acOutput, m_astItemStates[pstLineInfo->vID].vStat, sizeof(m_astItemStates[pstLineInfo->vID].vStat));
 
         return 1;
     }
-    else if ( !strcmp(acKey, "*eol") )
+    else if ( !stricmp(acKey, "*eol") )
     {
         acOutput[0] = '0';
         acOutput[1] = 0;
@@ -876,52 +876,52 @@ static int ItemStatCost_BitProc(void *pvLineInfo, char *acKey, char *acOutput)
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
     int result = 0;
 
-    if ( !strcmp(acKey, "CSvSigned") )
+    if ( !stricmp(acKey, "CSvSigned") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits2 & (1 << 5)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "Saved") )
+    else if ( !stricmp(acKey, "Saved") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits2 & (1 << 4)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "fCallback") )
+    else if ( !stricmp(acKey, "fCallback") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits2 & (1 << 3)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "fMin") )
+    else if ( !stricmp(acKey, "fMin") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits2 & (1 << 2)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "UpdateAnimRate") )
+    else if ( !stricmp(acKey, "UpdateAnimRate") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits2 & (1 << 1)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "direct") )
+    else if ( !stricmp(acKey, "direct") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits1 & (1 << 4)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "itemspecific") )
+    else if ( !stricmp(acKey, "itemspecific") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits1 & (1 << 3)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "damagerelated") )
+    else if ( !stricmp(acKey, "damagerelated") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits1 & (1 << 2)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "Signed") )
+    else if ( !stricmp(acKey, "Signed") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits1 & (1 << 1)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "Send Other") )
+    else if ( !stricmp(acKey, "Send Other") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits1 & 1) != 0);
         result = 1;

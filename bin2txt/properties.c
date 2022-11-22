@@ -373,7 +373,7 @@ HAVENAME_FUNC(m_astProperty, vcode, m_iPropertyCount);
 
 static int Properties_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
-    if ( !strcmp(acKey, "*eol") )
+    if ( !stricmp(acKey, "*eol") )
     {
         acOutput[0] = '0';
         acOutput[1] = 0;
@@ -398,7 +398,7 @@ static int Properties_ConvertValue_Pre(void *pvLineInfo, char *acKey, char *pcTe
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp("code", acKey) )
+    if ( !stricmp(acKey, "code") )
     {
         if ( !String_BuildName(FORMAT(properties), ItemStatCost_GetString(pstLineInfo->vstat1), pcTemplate, ItemStatCost_GetStateName(pstLineInfo->vstat1), pstLineInfo->vcode, HAVENAME, acOutput) )
         {
@@ -418,7 +418,7 @@ static int Properties_ConvertValue(void *pvLineInfo, char *acKey, char *pcTempla
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp("code", acKey) )
+    if ( !stricmp(acKey, "code") )
     {
         strncpy(acOutput, m_astProperty[pstLineInfo->vcode].vcode, sizeof(m_astProperty[pstLineInfo->vcode].vcode));
 

@@ -1056,7 +1056,7 @@ unsigned int Misc_GetItemString2(char *pcVcode)
 static int Misc_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
-    if ( !strcmp(acKey, "name") )
+    if ( !stricmp(acKey, "name") )
     {
         if ( !String_BuildName(FORMAT(misc), pstLineInfo->vnamestr, pcTemplate, m_astMisc[iLineNo].vcode, iLineNo, NULL, acOutput) )
         {
@@ -1065,7 +1065,7 @@ static int Misc_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, c
 
         return 1;
     }
-    else if ( !strcmp(acKey, "*eol") )
+    else if ( !stricmp(acKey, "*eol") )
     {
         acOutput[0] = '0';
         acOutput[1] = 0;
@@ -1080,7 +1080,7 @@ static int Misc_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLineN
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "name") )
+    if ( !stricmp(acKey, "name") )
     {
         strncpy(acOutput, pstLineInfo->vcode, sizeof(pstLineInfo->vcode));
 
@@ -1101,7 +1101,7 @@ static int Misc_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, ch
     char *pcResult;
     int result = 0;
 
-    if ( !strcmp(acKey, "namestr") )
+    if ( !stricmp(acKey, "namestr") )
     {
         pcResult = String_FindString(pstLineInfo->vnamestr, "dummy");
         if ( pcResult )
@@ -1114,7 +1114,7 @@ static int Misc_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, ch
         }
         result = 1;
     }
-    else if ( !strcmp(acKey, "rarity") )
+    else if ( !stricmp(acKey, "rarity") )
     {
         if ( (999 % 256) == pstLineInfo->vrarity )
         {

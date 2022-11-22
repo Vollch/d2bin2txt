@@ -755,11 +755,11 @@ struct D2CubeOutputItem
 
        return 1;
     }
-    else if ( !strncmp(acKey, "output", strlen("output")) )
+    else if ( !strnicmp(acKey, "output", strlen("output")) )
     {
-        unsigned char *pcInput = !strcmp("output b", acKey) ? pstLineInfo->voutputmyspb :
-                                 !strcmp("output c", acKey) ? pstLineInfo->voutputmyspc :
-                                                              pstLineInfo->voutput;
+        unsigned char *pcInput = !stricmp("output b", acKey) ? pstLineInfo->voutputmyspb :
+                                 !stricmp("output c", acKey) ? pstLineInfo->voutputmyspc :
+                                                               pstLineInfo->voutput;
         unsigned char bPrefix1 = pcInput[0];
         unsigned char bPrefix2 = pcInput[1];
         unsigned short wIndex = *(unsigned short *)(&pcInput[2]);
@@ -846,7 +846,7 @@ static int Cubemain_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineN
 {
     int result = 0;
 
-    if ( !strcmp("description", acKey) )
+    if ( !stricmp("description", acKey) )
     {
         if ( !String_BuildName(FORMAT(cubemain), 0xFFFF, pcTemplate, NAME_PREFIX, iLineNo, NULL, acOutput) )
         {
@@ -855,7 +855,7 @@ static int Cubemain_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineN
 
         result = 1;
     }
-    else if ( !strcmp("lvl", acKey) || !strcmp("b lvl", acKey) || !strcmp("c lvl", acKey) )
+    else if ( !stricmp("lvl", acKey) || !stricmp("b lvl", acKey) || !stricmp("c lvl", acKey) )
     {
         if ( 0 == m_iCubeLvl )
         {
@@ -867,7 +867,7 @@ static int Cubemain_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineN
         }
         result = 1;
     }
-    else if ( !strcmp("plvl", acKey) || !strcmp("b plvl", acKey) || !strcmp("c plvl", acKey) )
+    else if ( !stricmp("plvl", acKey) || !stricmp("b plvl", acKey) || !stricmp("c plvl", acKey) )
     {
         if ( 0 == m_iCubepLvl )
         {
@@ -879,7 +879,7 @@ static int Cubemain_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineN
         }
         result = 1;
     }
-    else if ( !strcmp("ilvl", acKey) || !strcmp("b ilvl", acKey) || !strcmp("c ilvl", acKey) )
+    else if ( !stricmp("ilvl", acKey) || !stricmp("b ilvl", acKey) || !stricmp("c ilvl", acKey) )
     {
         if ( 0 == m_iCubeiLvl )
         {
@@ -891,7 +891,7 @@ static int Cubemain_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineN
         }
         result = 1;
     }
-    else if ( !strcmp(acKey, "*eol") )
+    else if ( !stricmp(acKey, "*eol") )
     {
         acOutput[0] = '0';
         acOutput[1] = 0;

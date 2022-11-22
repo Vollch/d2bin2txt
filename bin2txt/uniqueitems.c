@@ -411,7 +411,7 @@ static int UniqueItems_ConvertValue_Pre(void *pvLineInfo, char *acKey, char *pcT
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "index") )
+    if ( !stricmp(acKey, "index") )
     {
         strncpy(m_astUniqueItems[m_uiUniqueItemCount].vindex, pstLineInfo->vindex, sizeof(m_astUniqueItems[m_uiUniqueItemCount].vindex));
         String_Trim(m_astUniqueItems[m_uiUniqueItemCount].vindex);
@@ -425,7 +425,7 @@ static int UniqueItems_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLi
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "*eol") )
+    if ( !stricmp(acKey, "*eol") )
     {
         acOutput[0] = '0';
         acOutput[1] = 0;
@@ -441,22 +441,22 @@ static int UniqueItems_BitProc(void *pvLineInfo, char *acKey, char *acOutput)
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
     int result = 0;
 
-    if ( !strcmp(acKey, "ladder") )
+    if ( !stricmp(acKey, "ladder") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 3)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "carry1") )
+    else if ( !stricmp(acKey, "carry1") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 2)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "nolimit") )
+    else if ( !stricmp(acKey, "nolimit") )
     {
         sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 1)) != 0);
         result = 1;
     }
-    else if ( !strcmp(acKey, "enabled") )
+    else if ( !stricmp(acKey, "enabled") )
     {
         sprintf(acOutput, "%d", ((pstLineInfo->vBitCombined & 1)) != 0);
         result = 1;

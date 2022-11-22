@@ -298,7 +298,7 @@ static char *m_apcInternalProcess[] =
 
 static int ItemRatio_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
-    if ( !strcmp(acKey, "Function") )
+    if ( !stricmp(acKey, "Function") )
     {
         if ( !String_BuildName(FORMAT(itemratio), 0xFFFF, pcTemplate, NAME_PREFIX, iLineNo, NULL, acOutput) )
         {

@@ -26,13 +26,13 @@ static int BuffIcons_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLine
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
     char *pcResult;
 
-    if ( !strcmp(acKey, "*IconCel") )
+    if ( !stricmp(acKey, "*IconCel") )
     {
         sprintf(acOutput, "%u", iLineNo);
 
         return 1;
     }
-    if ( !strcmp(acKey, "*State") )
+    if ( !stricmp(acKey, "*State") )
     {
         pcResult = States_GetStateName(pstLineInfo->vStateId);
         if ( pcResult )
@@ -45,7 +45,7 @@ static int BuffIcons_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLine
         }
         return 1;
     }
-    else if ( !strcmp(acKey, "*eol") )
+    else if ( !stricmp(acKey, "*eol") )
     {
         acOutput[0] = '0';
         acOutput[1] = 0;

@@ -627,7 +627,7 @@ static int SkillDesc_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int i
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "skilldesc") )
+    if ( !stricmp(acKey, "skilldesc") )
     {
         if ( !String_BuildName(FORMAT(skilldesc), pstLineInfo->vstrmyspname, pcTemplate, NAME_PREFIX, pstLineInfo->wSkillDesc, HAVENAME, acOutput) )
         {
@@ -640,7 +640,7 @@ static int SkillDesc_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int i
         m_iSkillDescCount++;
         return 1;
     }
-    else if ( !strcmp(acKey, "eol") )
+    else if ( !stricmp(acKey, "eol") )
     {
         acOutput[0] = '0';
         acOutput[1] = 0;
@@ -655,13 +655,13 @@ static int SkillDesc_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLine
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "skilldesc") )
+    if ( !stricmp(acKey, "skilldesc") )
     {
         strncpy(acOutput, m_astSkillDesc[pstLineInfo->wSkillDesc].vskilldesc, sizeof(m_astSkillDesc[pstLineInfo->wSkillDesc].vskilldesc));
 
         return 1;
     }
-    else if ( !strcmp(acKey, "eol") )
+    else if ( !stricmp(acKey, "eol") )
     {
         acOutput[0] = '0';
         acOutput[1] = 0;
@@ -696,7 +696,7 @@ static int SkillDesc_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplat
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "ListRow") )
+    if ( !stricmp(acKey, "ListRow") )
     {
         if ( 255 == pstLineInfo->vListRow )
         {

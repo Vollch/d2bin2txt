@@ -61,7 +61,7 @@ static char *m_apcInternalProcess[] =
 
 static int QDrop_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
-    if ( !strcmp(acKey, "eol") )
+    if ( !stricmp(acKey, "eol") )
     {
         acOutput[0] = '0';
         acOutput[1] = 0;
@@ -76,7 +76,7 @@ static int QDrop_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, c
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "Difficulty") )
+    if ( !stricmp(acKey, "Difficulty") )
     {
         if ( pstLineInfo->vDifficulty == 0 )
         {

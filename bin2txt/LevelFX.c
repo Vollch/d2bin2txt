@@ -26,7 +26,7 @@ static int LevelFX_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "*Level Name") )
+    if ( !stricmp(acKey, "*Level Name") )
     {
         if ( !String_BuildName(FORMAT(LevelFX), 0xFFFF, pcTemplate, Levels_GetLevelName(pstLineInfo->vID), iLineNo, NULL, acOutput) )
         {
@@ -35,7 +35,7 @@ static int LevelFX_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo
 
         return 1;
     }
-    else if ( !strcmp(acKey, "end") )
+    else if ( !stricmp(acKey, "end") )
     {
         acOutput[0] = '0';
         acOutput[1] = 0;

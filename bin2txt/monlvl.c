@@ -315,7 +315,7 @@ static unsigned int m_iMonLvlCount = 0;
 
 static int MonLvl_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
-    if ( !strcmp(acKey, "Level") )
+    if ( !stricmp(acKey, "Level") )
     {
         if ( !String_BuildName(FORMAT(monlvl), 0xFFFF, pcTemplate, NAME_PREFIX, m_iMonLvlCount, NULL, acOutput) )
         {

@@ -14,7 +14,7 @@ static int MonPreset_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplat
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
     char *pcResult = NULL;
 
-    if ( !strcmp(acKey, "Place") )
+    if ( !stricmp(acKey, "Place") )
     {
         if ( 1 == pstLineInfo->iPadding0 )
         {

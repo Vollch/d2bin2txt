@@ -84,7 +84,7 @@ static int Sounds_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo,
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "Sound") )
+    if ( !stricmp(acKey, "Sound") )
     {
         if ( !String_BuildName(FORMAT(sounds), 0xFFFF, pcTemplate, (pstLineInfo->vIndex ? NULL : "none"), pstLineInfo->vIndex, HAVENAME, acOutput) )
         {

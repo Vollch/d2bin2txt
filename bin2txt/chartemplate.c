@@ -159,7 +159,7 @@ static int CharTemplate_FieldProc(void *pvLineInfo, char *acKey, unsigned int iL
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !strcmp(acKey, "Template") )
+    if ( !stricmp(acKey, "Template") )
     {
         char acName[31];
         strncpy(acName, pstLineInfo->vName, sizeof(pstLineInfo->vName));

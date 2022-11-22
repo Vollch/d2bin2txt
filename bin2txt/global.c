@@ -682,12 +682,12 @@ static int Is_StringInList(char **ppcList, char *pcLookup)
 
     while ( NULL != ppcList[i] )
     {
-        if ( !strcmp("all over in", ppcList[i]) )
+        if ( !stricmp("all over in", ppcList[i]) )
         {
             return 1;
         }
 
-        if ( !strcmp(pcLookup, ppcList[i]) )
+        if ( !stricmp(pcLookup, ppcList[i]) )
         {
             return 1;
         }
