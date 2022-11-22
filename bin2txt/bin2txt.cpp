@@ -34,6 +34,7 @@ void Init_Module()
     MODULE_MAP_DEFINE(D2KillCounter);
     MODULE_MAP_DEFINE(BookOfLore);
     MODULE_MAP_DEFINE(LevelFX);
+    MODULE_MAP_DEFINE(ItemDesc);
     MODULE_MAP_DEFINE(NoSock);
     MODULE_MAP_DEFINE(QDrop);
     MODULE_MAP_DEFINE(bufficons);
@@ -219,111 +220,22 @@ unsigned int my_printf( const char *pcFormat,... )
     return dwStringLength;
 }
 
-#define MODULE_NAME_TO_ID(name) \
-    else if ( !stricmp(#name, pcModuleName) )\
-    {\
-        return MODULE_ID_DEFINE(name);\
-    }
-
 static ENUM_MODULE_ID Get_ModuleId(char *pcModuleName)
 {
+    unsigned int i = 0;
+
     if ( !stricmp("all", pcModuleName) )
     {
         return EN_MID_MAX;
     }
-    MODULE_NAME_TO_ID(D2NewStats)
-    MODULE_NAME_TO_ID(D2KillCounter)
-    MODULE_NAME_TO_ID(BookOfLore)
-    MODULE_NAME_TO_ID(LevelFX)
-    MODULE_NAME_TO_ID(NoSock)
-    MODULE_NAME_TO_ID(QDrop)
-    MODULE_NAME_TO_ID(bufficons)
-    MODULE_NAME_TO_ID(arena)
-    MODULE_NAME_TO_ID(armor)
-    MODULE_NAME_TO_ID(armtype)
-    MODULE_NAME_TO_ID(automagic)
-    MODULE_NAME_TO_ID(automap)
-    MODULE_NAME_TO_ID(belts)
-    MODULE_NAME_TO_ID(bodylocs)
-    MODULE_NAME_TO_ID(books)
-    MODULE_NAME_TO_ID(charstats)
-    MODULE_NAME_TO_ID(chartemplate)
-    MODULE_NAME_TO_ID(colors)
-    MODULE_NAME_TO_ID(compcode)
-    MODULE_NAME_TO_ID(composit)
-    MODULE_NAME_TO_ID(cubemain)
-    MODULE_NAME_TO_ID(difficultylevels)
-    MODULE_NAME_TO_ID(elemtypes)
-    MODULE_NAME_TO_ID(events)
-    MODULE_NAME_TO_ID(experience)
-    MODULE_NAME_TO_ID(gamble)
-    MODULE_NAME_TO_ID(gems)
-    MODULE_NAME_TO_ID(hiredesc)
-    MODULE_NAME_TO_ID(hireling)
-    MODULE_NAME_TO_ID(hitclass)
-    MODULE_NAME_TO_ID(inventory)
-    MODULE_NAME_TO_ID(itemratio)
-    MODULE_NAME_TO_ID(itemstatcost)
-    MODULE_NAME_TO_ID(itemtypes)
-    MODULE_NAME_TO_ID(levels)
-    MODULE_NAME_TO_ID(lowqualityitems)
-    MODULE_NAME_TO_ID(lvlmaze)
-    MODULE_NAME_TO_ID(lvlprest)
-    MODULE_NAME_TO_ID(lvlsub)
-    MODULE_NAME_TO_ID(lvltypes)
-    MODULE_NAME_TO_ID(lvlwarp)
-    MODULE_NAME_TO_ID(magicprefix)
-    MODULE_NAME_TO_ID(magicsuffix)
-    MODULE_NAME_TO_ID(misc)
-    MODULE_NAME_TO_ID(misscalc)
-    MODULE_NAME_TO_ID(missiles)
-    MODULE_NAME_TO_ID(monai)
-    MODULE_NAME_TO_ID(monequip)
-    MODULE_NAME_TO_ID(monitempercent)
-    MODULE_NAME_TO_ID(monlvl)
-    MODULE_NAME_TO_ID(monmode)
-    MODULE_NAME_TO_ID(monplace)
-    MODULE_NAME_TO_ID(monpreset)
-    MODULE_NAME_TO_ID(monprop)
-    MODULE_NAME_TO_ID(monseq)
-    MODULE_NAME_TO_ID(monsounds)
-    MODULE_NAME_TO_ID(monstats)
-    MODULE_NAME_TO_ID(monstats2)
-    MODULE_NAME_TO_ID(montype)
-    MODULE_NAME_TO_ID(monumod)
-    MODULE_NAME_TO_ID(npc)
-    MODULE_NAME_TO_ID(objects)
-    MODULE_NAME_TO_ID(objgroup)
-    MODULE_NAME_TO_ID(objmode)
-    MODULE_NAME_TO_ID(objtype)
-    MODULE_NAME_TO_ID(overlay)
-    MODULE_NAME_TO_ID(pettype)
-    MODULE_NAME_TO_ID(playerclass)
-    MODULE_NAME_TO_ID(plrmode)
-    MODULE_NAME_TO_ID(plrtype)
-    MODULE_NAME_TO_ID(properties)
-    MODULE_NAME_TO_ID(qualityitems)
-    MODULE_NAME_TO_ID(rareprefix)
-    MODULE_NAME_TO_ID(raresuffix)
-    MODULE_NAME_TO_ID(runes)
-    MODULE_NAME_TO_ID(setitems)
-    MODULE_NAME_TO_ID(sets)
-    MODULE_NAME_TO_ID(shrines)
-    MODULE_NAME_TO_ID(skillcalc)
-    MODULE_NAME_TO_ID(skilldesc)
-    MODULE_NAME_TO_ID(skills)
-    MODULE_NAME_TO_ID(sounds)
-    MODULE_NAME_TO_ID(states)
-    MODULE_NAME_TO_ID(storepage)
-    MODULE_NAME_TO_ID(string)
-    MODULE_NAME_TO_ID(superuniques)
-    MODULE_NAME_TO_ID(treasureclassex)
-    MODULE_NAME_TO_ID(uniqueappellation)
-    MODULE_NAME_TO_ID(uniqueitems)
-    MODULE_NAME_TO_ID(uniqueprefix)
-    MODULE_NAME_TO_ID(uniquesuffix)
-    MODULE_NAME_TO_ID(uniquetitle)
-    MODULE_NAME_TO_ID(weapons)
+
+    for ( i = 0; i < EN_MID_MAX; i++ )
+    {
+        if ( !stricmp(pcModuleName, m_astProcessModule[i].pcFileName) )
+        {
+            return (ENUM_MODULE_ID)i;
+        }
+    }
 
     return EN_MID_MAX;
 }
