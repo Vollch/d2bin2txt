@@ -825,6 +825,7 @@ typedef struct
 typedef struct
 {
     char vname[64];
+    unsigned char vAct;
 } ST_LEVEL_DESC;
 
 static char *m_apcNotUsed[] =
@@ -862,6 +863,7 @@ static int Levels_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLin
             strncpy(acOutput, pstLineInfo->vLevelName, sizeof(pstLineInfo->vLevelName));
         }
 
+        m_astLevels[pstLineInfo->vId].vAct = pstLineInfo->vAct;
         strncpy(m_astLevels[pstLineInfo->vId].vname, acOutput, sizeof(m_astLevels[pstLineInfo->vId].vname));
         String_Trim(m_astLevels[pstLineInfo->vId].vname);
         m_iLevelsCount++;
@@ -1288,4 +1290,14 @@ char *Levels_GetLevelName(unsigned int id)
     }
 
     return m_astLevels[id].vname;
+}
+
+unsigned char Levels_GetAct(unsigned int id)
+{
+    if ( id >= m_iLevelsCount )
+    {
+        return 0;
+    }
+
+    return m_astLevels[id].vAct;
 }

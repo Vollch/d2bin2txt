@@ -35,6 +35,7 @@ void Init_Module()
     MODULE_MAP_DEFINE(BookOfLore);
     MODULE_MAP_DEFINE(LevelFX);
     MODULE_MAP_DEFINE(ItemDesc);
+    MODULE_MAP_DEFINE(Waypoints);
     MODULE_MAP_DEFINE(NoSock);
     MODULE_MAP_DEFINE(QDrop);
     MODULE_MAP_DEFINE(bufficons);

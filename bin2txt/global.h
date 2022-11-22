@@ -28,6 +28,7 @@ typedef enum
     MODULE_ID_DEFINE(BookOfLore),
     MODULE_ID_DEFINE(LevelFX),
     MODULE_ID_DEFINE(ItemDesc),
+    MODULE_ID_DEFINE(Waypoints),
     MODULE_ID_DEFINE(NoSock),
     MODULE_ID_DEFINE(QDrop),
     MODULE_ID_DEFINE(bufficons),
@@ -128,14 +129,14 @@ typedef struct
 
 typedef enum
 {
-    EN_VALUE_INT,
+    EN_VALUE_INT, // 0x02
     EN_VALUE_UINT,
     EN_VALUE_SHORT,
-    EN_VALUE_USHORT,
-    EN_VALUE_CHAR,
-    EN_VALUE_UCHAR,
+    EN_VALUE_USHORT, // 0x03
+    EN_VALUE_CHAR, // 0x04
+    EN_VALUE_UCHAR, // 0x06
     EN_VALUE_BIT,
-    EN_VALUE_STRING,
+    EN_VALUE_STRING, // 0x09
     EN_VALUE_UINT_ITEM,
     EN_VALUE_UINT_ITEMCODE,
     EN_VALUE_UINT_MISSCODE,
@@ -144,7 +145,7 @@ typedef enum
     EN_VALUE_UINT_PROPERTY,
     EN_VALUE_USHORT_EVENT,
     EN_VALUE_USHORT_ITEMTYPE,
-    EN_VALUE_USHORT_ITEMSTAT,
+    EN_VALUE_USHORT_ITEMSTAT, // 0x14
     EN_VALUE_USHORT_MISSILE,
     EN_VALUE_USHORT_MONAI,
     EN_VALUE_USHORT_MONPROP,
@@ -156,7 +157,7 @@ typedef enum
     EN_VALUE_USHORT_SET,
     EN_VALUE_USHORT_SKILLDESC,
     EN_VALUE_USHORT_SKILL,
-    EN_VALUE_USHORT_STRING,
+    EN_VALUE_USHORT_STRING, // 0x16
     EN_VALUE_USHORT_STRING2,
     EN_VALUE_USHORT_TREASURE,
     EN_VALUE_USHORT_SOUND,
@@ -166,12 +167,12 @@ typedef enum
     EN_VALUE_UCHAR_ELEM,
     EN_VALUE_UCHAR_HIREDESC,
     EN_VALUE_UCHAR_HITCLASS,
-    EN_VALUE_UCHAR_PLRCLASS,
+    EN_VALUE_UCHAR_PLRCLASS, // 0x0D
     EN_VALUE_UCHAR_MONMODE,
     EN_VALUE_UCHAR_PLRMODE,
     EN_VALUE_UCHAR_PET,
     EN_VALUE_UCHAR_STORE
-} ENUM_VALUE_TYPE;
+} ENUM_VALUE_TYPE; // 0x00 - EOL
 
 typedef enum
 {
@@ -435,6 +436,8 @@ extern int process_LevelFX(char *acTemplatePath, char *acBinPath, char *acTxtPat
 
 extern int process_ItemDesc(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
 
+extern int process_Waypoints(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
+
 extern int process_NoSock(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
 
 extern int process_QDrop(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
@@ -579,6 +582,7 @@ extern int process_itemratio(char *acTemplatePath, char *acBinPath, char *acTxtP
 
 extern int process_levels(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
 extern char *Levels_GetLevelName(unsigned int id);
+extern unsigned char Levels_GetAct(unsigned int id);
 
 extern int process_lowqualityitems(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
 
