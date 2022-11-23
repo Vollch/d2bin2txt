@@ -16,7 +16,9 @@ typedef struct
 static void *m_pvStack = NULL;
 static unsigned int m_uiExpressionIndex = 0;
 static unsigned int m_uiMissCodeCount = 0;
-static ST_MISSCODE m_astMissCode[5000];
+
+static unsigned int m_uiMissCodeBuffSize = 0;
+static ST_MISSCODE *m_astMissCode = NULL;
 
 typedef int (*fnProcFuncArg)(unsigned char *pcBinBuf, unsigned char *pcTxtBuf);
 
@@ -518,19 +520,31 @@ static int MissCode_SkLvlArg3Proc(unsigned char *pcBinBuf, unsigned char *pcTxtB
 
 static int MissCode_OutputExpression(unsigned char *pcTempBuf)
 {
-    int result = 1;
+    if ( m_uiMissCodeCount >= m_uiMissCodeBuffSize )
+    {
+        ST_MISSCODE *astNewArray = MemMgr_Realloc(m_astMissCode, (sizeof(ST_MISSCODE) * (m_uiMissCodeBuffSize + 5000)));
 
-    result = MissCode_ConverterBin2Txt(pcTempBuf, m_astMissCode[m_uiMissCodeCount].acExpressionTxt);
+        if ( !astNewArray )
+        {
+            return 0;
+        }
 
-    if ( 0 != result )
+        m_astMissCode = astNewArray;
+        memset(&m_astMissCode[m_uiMissCodeBuffSize], 0, sizeof(ST_MISSCODE) * 5000);
+        m_uiMissCodeBuffSize += 5000;
+    }
+
+    if ( MissCode_ConverterBin2Txt(pcTempBuf, m_astMissCode[m_uiMissCodeCount].acExpressionTxt) )
     {
         memcpy(m_astMissCode[m_uiMissCodeCount].acExpressionBin, m_acGlobalBuffer, m_uiExpressionIndex);
         m_astMissCode[m_uiMissCodeCount].uiBinLen = m_uiExpressionIndex;
         m_uiExpressionIndex = 0;
         m_uiMissCodeCount++;
+
+        return 1;
     }
 
-    return result;
+    return 0;
 }
 
 static int MissCode_ReadFile(unsigned char *pcBuffer, int iElemSize, int iElemCount, FILE *pfHandle)
@@ -555,6 +569,11 @@ static int MissCode_OneOprandProc(unsigned char *pbOperater, unsigned int uiOpLe
     unsigned char *pcOperand1 = NULL;
 
     Stack_Pop(m_pvStack, &pcOperand1);
+
+    if ( !pcOperand1 )
+    {
+        return 0;
+    }
 
     acExpressionBuf[0] = FINISH_CODE_TAG;
     acExpressionBuf[1] = (unsigned char)uiOpLevel;
@@ -606,6 +625,11 @@ static int MissCode_TwoOprandProc(unsigned char *pbOperater, unsigned int uiOpLe
 
     Stack_Pop(m_pvStack, &pcOperand2);
     Stack_Pop(m_pvStack, &pcOperand1);
+
+    if ( !pcOperand1 || !pcOperand2 )
+    {
+        return 0;
+    }
 
     acExpressionBuf[0] = FINISH_CODE_TAG;
     acExpressionBuf[1] = (unsigned char)uiOpLevel;
@@ -687,6 +711,11 @@ static int MissCode_ThreeOprandProc(unsigned char *pbOperater1, unsigned char *p
     Stack_Pop(m_pvStack, &pcOperand3);
     Stack_Pop(m_pvStack, &pcOperand2);
     Stack_Pop(m_pvStack, &pcOperand1);
+
+    if ( !pcOperand1 || !pcOperand2 || !pcOperand3 )
+    {
+        return 0;
+    }
 
     acExpressionBuf[0] = FINISH_CODE_TAG;
     acExpressionBuf[1] = (unsigned char)uiOpLevel;
@@ -802,6 +831,11 @@ static int MissCode_TwoArgFuncProc(unsigned char *pbFunction, unsigned char *pbO
     Stack_Pop(m_pvStack, &pcOperand2);
     Stack_Pop(m_pvStack, &pcOperand1);
 
+    if ( !pcOperand1 || !pcOperand2 )
+    {
+        return 0;
+    }
+
     acExpressionBuf[0] = FINISH_CODE_TAG;
     acExpressionBuf[1] = FUNCTION_OPERATER_LEVEL;
     acExpressionBuf[2] = FINISH_CODE_TAG;
@@ -846,6 +880,11 @@ static int MissCode_ThreeArgFuncProc(unsigned char *pbFunction, unsigned char *p
     Stack_Pop(m_pvStack, &pcOperand3);
     Stack_Pop(m_pvStack, &pcOperand2);
     Stack_Pop(m_pvStack, &pcOperand1);
+
+    if ( !pcOperand1 || !pcOperand2 || !pcOperand3 )
+    {
+        return 0;
+    }
 
     acExpressionBuf[0] = FINISH_CODE_TAG;
     acExpressionBuf[1] = FUNCTION_OPERATER_LEVEL;
@@ -963,7 +1002,10 @@ int MissCode_ParseBin(char *acTemplatePath, char *acBinPath, char*acTxtPath)
 
     m_uiExpressionIndex = 0;
     m_uiMissCodeCount = 0;
-    memset(m_astMissCode, 0, sizeof(m_astMissCode));
+
+    m_astMissCode = MemMgr_Malloc(sizeof(ST_MISSCODE) * 5000);
+    memset(m_astMissCode, 0, sizeof(ST_MISSCODE) * 5000);
+    m_uiMissCodeBuffSize = 5000;
 
     memset(m_acGlobalBuffer, 0, m_iGlobaBufLength);
     sprintf(m_acGlobalBuffer, "%s\\%s.bin", acBinPath, FILE_PREFIX);
@@ -1109,7 +1151,7 @@ int MissCode_ParseBin(char *acTemplatePath, char *acBinPath, char*acTxtPath)
                 if ( 0 == MissCode_OperaterProc(acTempBuf[0]) )
                 {
                     my_error("proc operater %x fail\r\n", acTempBuf[0]);
-                    goto error;
+                    //goto error;
                 }
                 break;
         }

@@ -31,6 +31,32 @@ static void MemMgr_LogMem(void *pvAddr)
     }
 }
 
+
+void *MemMgr_Realloc(void *pvAddr, unsigned int size)
+{
+    unsigned int i;
+    void *pvResult = realloc(pvAddr, size);
+
+    if ( !pvResult )
+    {
+        return NULL;
+    }
+
+    if ( pvResult != pvAddr )
+    {
+        for ( i = 0; i < sizeof(m_apvLogMem) / sizeof(m_apvLogMem[0]); i++ )
+        {
+            if ( pvAddr == m_apvLogMem[i] )
+            {
+                m_apvLogMem[i] = pvResult;
+                break;
+            }
+        }
+    }
+
+    return pvResult;
+}
+
 void *MemMgr_Malloc(unsigned int size)
 {
     void *pvResult = malloc(size);

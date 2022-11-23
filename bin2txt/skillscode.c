@@ -83,7 +83,9 @@ typedef struct
 static void *m_pvStack = NULL;
 static unsigned int m_uiExpressionIndex = 0;
 static unsigned int m_uiSkillCodeCount = 0;
-static ST_SKILLCODE m_astSkillCode[5000];
+
+static unsigned int m_uiSkillCodeBuffSize = 0;
+static ST_SKILLCODE *m_astSkillCode = NULL;
 
 typedef int (*fnProcFuncArg)(unsigned char *pcBinBuf, unsigned char *pcTxtBuf);
 
@@ -585,19 +587,31 @@ static int SkillsCode_SkLvlArg3Proc(unsigned char *pcBinBuf, unsigned char *pcTx
 
 static int SkillsCode_OutputExpression(unsigned char *pcTempBuf)
 {
-    int result = 1;
+    if ( m_uiSkillCodeCount >= m_uiSkillCodeBuffSize )
+    {
+        ST_SKILLCODE *astNewArray = MemMgr_Realloc(m_astSkillCode, (sizeof(ST_SKILLCODE) * (m_uiSkillCodeBuffSize + 5000)));
 
-    result = SkillsCode_ConverterBin2Txt(pcTempBuf, m_astSkillCode[m_uiSkillCodeCount].acExpressionTxt);
+        if ( !astNewArray )
+        {
+            return 0;
+        }
 
-    if ( 0 != result )
+        m_astSkillCode = astNewArray;
+        memset(&m_astSkillCode[m_uiSkillCodeBuffSize], 0, sizeof(ST_SKILLCODE) * 5000);
+        m_uiSkillCodeBuffSize += 5000;
+    }
+
+    if ( SkillsCode_ConverterBin2Txt(pcTempBuf, m_astSkillCode[m_uiSkillCodeCount].acExpressionTxt) )
     {
         memcpy(m_astSkillCode[m_uiSkillCodeCount].acExpressionBin, m_acGlobalBuffer, m_uiExpressionIndex);
         m_astSkillCode[m_uiSkillCodeCount].uiBinLen = m_uiExpressionIndex;
         m_uiExpressionIndex = 0;
         m_uiSkillCodeCount++;
+
+        return 1;
     }
 
-    return result;
+    return 0;
 }
 
 static int SkillsCode_ReadFile(unsigned char *pcBuffer, int iElemSize, int iElemCount, FILE *pfHandle)
@@ -622,6 +636,11 @@ static int SkillsCode_OneOprandProc(unsigned char *pbOperater, unsigned int uiOp
     unsigned char *pcOperand1 = NULL;
 
     Stack_Pop(m_pvStack, &pcOperand1);
+
+    if ( !pcOperand1 )
+    {
+        return 0;
+    }
 
     acExpressionBuf[0] = FINISH_CODE_TAG;
     acExpressionBuf[1] = (unsigned char)uiOpLevel;
@@ -673,6 +692,11 @@ static int SkillsCode_TwoOprandProc(unsigned char *pbOperater, unsigned int uiOp
 
     Stack_Pop(m_pvStack, &pcOperand2);
     Stack_Pop(m_pvStack, &pcOperand1);
+
+    if ( !pcOperand1 || !pcOperand2 )
+    {
+        return 0;
+    }
 
     acExpressionBuf[0] = FINISH_CODE_TAG;
     acExpressionBuf[1] = (unsigned char)uiOpLevel;
@@ -754,6 +778,11 @@ static int SkillsCode_ThreeOprandProc(unsigned char *pbOperater1, unsigned char 
     Stack_Pop(m_pvStack, &pcOperand3);
     Stack_Pop(m_pvStack, &pcOperand2);
     Stack_Pop(m_pvStack, &pcOperand1);
+
+    if ( !pcOperand1 || !pcOperand2 || !pcOperand3 )
+    {
+        return 0;
+    }
 
     acExpressionBuf[0] = FINISH_CODE_TAG;
     acExpressionBuf[1] = (unsigned char)uiOpLevel;
@@ -869,6 +898,11 @@ static int SkillsCode_TwoArgFuncProc(unsigned char *pbFunction, unsigned char *p
     Stack_Pop(m_pvStack, &pcOperand2);
     Stack_Pop(m_pvStack, &pcOperand1);
 
+    if ( !pcOperand1 || !pcOperand2 )
+    {
+        return 0;
+    }
+
     acExpressionBuf[0] = FINISH_CODE_TAG;
     acExpressionBuf[1] = FUNCTION_OPERATER_LEVEL;
     acExpressionBuf[2] = FINISH_CODE_TAG;
@@ -913,6 +947,11 @@ static int SkillsCode_ThreeArgFuncProc(unsigned char *pbFunction, unsigned char 
     Stack_Pop(m_pvStack, &pcOperand3);
     Stack_Pop(m_pvStack, &pcOperand2);
     Stack_Pop(m_pvStack, &pcOperand1);
+
+    if ( !pcOperand1 || !pcOperand2 || !pcOperand3 )
+    {
+        return 0;
+    }
 
     acExpressionBuf[0] = FINISH_CODE_TAG;
     acExpressionBuf[1] = FUNCTION_OPERATER_LEVEL;
@@ -1030,7 +1069,10 @@ int SkillsCode_ParseBin(char *acTemplatePath, char *acBinPath, char*acTxtPath)
 
     m_uiExpressionIndex = 0;
     m_uiSkillCodeCount = 0;
-    memset(m_astSkillCode, 0, sizeof(m_astSkillCode));
+
+    m_astSkillCode = MemMgr_Malloc(sizeof(ST_SKILLCODE) * 5000);
+    memset(m_astSkillCode, 0, sizeof(ST_SKILLCODE) * 5000);
+    m_uiSkillCodeBuffSize = 5000;
 
     memset(m_acGlobalBuffer, 0, m_iGlobaBufLength);
     sprintf(m_acGlobalBuffer, "%s\\%s.bin", acBinPath, FILE_PREFIX);
@@ -1176,7 +1218,7 @@ int SkillsCode_ParseBin(char *acTemplatePath, char *acBinPath, char*acTxtPath)
                 if ( 0 == SkillsCode_OperaterProc(acTempBuf[0]) )
                 {
                     my_error("proc operater %x fail\r\n", acTempBuf[0]);
-                    goto error;
+                    //goto error;
                 }
                 break;
         }

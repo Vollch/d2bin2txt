@@ -302,6 +302,7 @@ typedef struct
     }
 
 extern void MemMgr_Init();
+extern void *MemMgr_Realloc(void *pvAddr, unsigned int size);
 extern void *MemMgr_Malloc(unsigned int size);
 extern void MemMgr_Free(void *pvAddr);
 extern void MemMgr_FreeAll();

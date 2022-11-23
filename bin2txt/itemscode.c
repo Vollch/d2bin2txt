@@ -16,7 +16,9 @@ typedef struct
 static void *m_pvStack = NULL;
 static unsigned int m_uiExpressionIndex = 0;
 static unsigned int m_uiItemCodeCount = 0;
-static ST_ITEMSCODE m_astItemsCode[5000];
+
+static unsigned int m_uiItemCodeBuffSize = 0;
+static ST_ITEMSCODE *m_astItemsCode = NULL;
 
 typedef int (*fnProcFuncArg)(unsigned char *pcBinBuf, unsigned char *pcTxtBuf);
 
@@ -518,19 +520,31 @@ static int ItemsCode_SkLvlArg3Proc(unsigned char *pcBinBuf, unsigned char *pcTxt
 
 static int ItemsCode_OutputExpression(unsigned char *pcTempBuf)
 {
-    int result = 1;
+    if ( m_uiItemCodeCount >= m_uiItemCodeBuffSize )
+    {
+        ST_ITEMSCODE *astNewArray = MemMgr_Realloc(m_astItemsCode, (sizeof(ST_ITEMSCODE) * (m_uiItemCodeBuffSize + 5000)));
 
-    result = ItemsCode_ConverterBin2Txt(pcTempBuf, m_astItemsCode[m_uiItemCodeCount].acExpressionTxt);
+        if ( !astNewArray )
+        {
+            return 0;
+        }
 
-    if ( 0 != result )
+        m_astItemsCode = astNewArray;
+        memset(&m_astItemsCode[m_uiItemCodeBuffSize], 0, sizeof(ST_ITEMSCODE) * 5000);
+        m_uiItemCodeBuffSize += 5000;
+    }
+
+    if ( ItemsCode_ConverterBin2Txt(pcTempBuf, m_astItemsCode[m_uiItemCodeCount].acExpressionTxt) )
     {
         memcpy(m_astItemsCode[m_uiItemCodeCount].acExpressionBin, m_acGlobalBuffer, m_uiExpressionIndex);
         m_astItemsCode[m_uiItemCodeCount].uiBinLen = m_uiExpressionIndex;
         m_uiExpressionIndex = 0;
         m_uiItemCodeCount++;
+
+        return 1;
     }
 
-    return result;
+    return 0;
 }
 
 static int ItemsCode_ReadFile(unsigned char *pcBuffer, int iElemSize, int iElemCount, FILE *pfHandle)
@@ -555,6 +569,11 @@ static int ItemsCode_OneOprandProc(unsigned char *pbOperater, unsigned int uiOpL
     unsigned char *pcOperand1 = NULL;
 
     Stack_Pop(m_pvStack, &pcOperand1);
+
+    if ( !pcOperand1 )
+    {
+        return 0;
+    }
 
     acExpressionBuf[0] = FINISH_CODE_TAG;
     acExpressionBuf[1] = (unsigned char)uiOpLevel;
@@ -606,6 +625,11 @@ static int ItemsCode_TwoOprandProc(unsigned char *pbOperater, unsigned int uiOpL
 
     Stack_Pop(m_pvStack, &pcOperand2);
     Stack_Pop(m_pvStack, &pcOperand1);
+
+    if ( !pcOperand1 || !pcOperand2 )
+    {
+        return 0;
+    }
 
     acExpressionBuf[0] = FINISH_CODE_TAG;
     acExpressionBuf[1] = (unsigned char)uiOpLevel;
@@ -687,6 +711,11 @@ static int ItemsCode_ThreeOprandProc(unsigned char *pbOperater1, unsigned char *
     Stack_Pop(m_pvStack, &pcOperand3);
     Stack_Pop(m_pvStack, &pcOperand2);
     Stack_Pop(m_pvStack, &pcOperand1);
+
+    if ( !pcOperand1 || !pcOperand2 || !pcOperand3 )
+    {
+        return 0;
+    }
 
     acExpressionBuf[0] = FINISH_CODE_TAG;
     acExpressionBuf[1] = (unsigned char)uiOpLevel;
@@ -802,6 +831,11 @@ static int ItemsCode_TwoArgFuncProc(unsigned char *pbFunction, unsigned char *pb
     Stack_Pop(m_pvStack, &pcOperand2);
     Stack_Pop(m_pvStack, &pcOperand1);
 
+    if ( !pcOperand1 || !pcOperand2 )
+    {
+        return 0;
+    }
+
     acExpressionBuf[0] = FINISH_CODE_TAG;
     acExpressionBuf[1] = FUNCTION_OPERATER_LEVEL;
     acExpressionBuf[2] = FINISH_CODE_TAG;
@@ -846,6 +880,11 @@ static int ItemsCode_ThreeArgFuncProc(unsigned char *pbFunction, unsigned char *
     Stack_Pop(m_pvStack, &pcOperand3);
     Stack_Pop(m_pvStack, &pcOperand2);
     Stack_Pop(m_pvStack, &pcOperand1);
+
+    if ( !pcOperand1 || !pcOperand2 || !pcOperand3 )
+    {
+        return 0;
+    }
 
     acExpressionBuf[0] = FINISH_CODE_TAG;
     acExpressionBuf[1] = FUNCTION_OPERATER_LEVEL;
@@ -963,7 +1002,10 @@ int ItemsCode_ParseBin(char *acTemplatePath, char *acBinPath, char*acTxtPath)
 
     m_uiExpressionIndex = 0;
     m_uiItemCodeCount = 0;
-    memset(m_astItemsCode, 0, sizeof(m_astItemsCode));
+
+    m_astItemsCode = MemMgr_Malloc(sizeof(ST_ITEMSCODE) * 5000);
+    memset(m_astItemsCode, 0, sizeof(ST_ITEMSCODE) * 5000);
+    m_uiItemCodeBuffSize = 5000;
 
     memset(m_acGlobalBuffer, 0, m_iGlobaBufLength);
     sprintf(m_acGlobalBuffer, "%s\\%s.bin", acBinPath, FILE_PREFIX);
@@ -1091,7 +1133,7 @@ int ItemsCode_ParseBin(char *acTemplatePath, char *acBinPath, char*acTxtPath)
                 if ( 0 == ItemsCode_OperaterProc(acTempBuf[0]) )
                 {
                     my_error("proc operater %x fail\r\n", acTempBuf[0]);
-                    goto error;
+                    //goto error;
                 }
                 break;
         }

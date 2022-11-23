@@ -157,6 +157,7 @@ int process_QDrop(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_M
             break;
 
         case EN_MODULE_SELF_DEPEND:
+            m_stCallback.iOptional = 1;
             m_stCallback.pfnConvertValue = QDrop_ConvertValue;
             m_stCallback.pfnFieldProc = QDrop_FieldProc;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
