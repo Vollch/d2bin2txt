@@ -1227,12 +1227,11 @@ int process_levels(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_
 
     switch ( enPhase )
     {
-        case EN_MODULE_SELF_DEPEND:
-            if ( 1 != Levels_CombineBin(acBinPath) )
-            {
-                return 0;
-            }
+        case EN_MODULE_PREPARE:
+            return Levels_CombineBin(acBinPath);
+            break;
 
+        case EN_MODULE_SELF_DEPEND:
             Levels_InitValueMap(pstValueMap, pstLineInfo);
 
             m_iLevelsCount = 0;
@@ -1253,16 +1252,7 @@ int process_levels(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_
             MODULE_DEPEND_CALL(monstats, acTemplatePath, acBinPath, acTxtPath);
             break;
 
-        case EN_MODULE_RESERVED_1:
-        case EN_MODULE_RESERVED_2:
-            break;
-
         case EN_MODULE_INIT:
-            if ( 1 != Levels_CombineBin(acBinPath) )
-            {
-                return 0;
-            }
-
             Levels_InitValueMap(pstValueMap, pstLineInfo);
 
             m_stCallback.pfnFieldProc = Levels_FieldProc;

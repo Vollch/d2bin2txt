@@ -229,16 +229,13 @@ int process_monequip(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
 
     switch ( enPhase )
     {
+        case EN_MODULE_PREPARE:
         case EN_MODULE_SELF_DEPEND:
             break;
 
         case EN_MODULE_OTHER_DEPEND:
             MODULE_DEPEND_CALL(bodylocs, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(monstats, acTemplatePath, acBinPath, acTxtPath);
-            break;
-
-        case EN_MODULE_RESERVED_1:
-        case EN_MODULE_RESERVED_2:
             break;
 
         case EN_MODULE_INIT:

@@ -1076,6 +1076,9 @@ int process_weapons(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
 
     switch ( enPhase )
     {
+        case EN_MODULE_PREPARE:
+            break;
+
         case EN_MODULE_SELF_DEPEND:
             m_iWeaponCount = 0;
 
@@ -1095,14 +1098,7 @@ int process_weapons(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
             MODULE_DEPEND_CALL(itemtypes, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(hitclass, acTemplatePath, acBinPath, acTxtPath);
 
-            if ( 0 == ItemsCode_ParseBin(acTemplatePath, acBinPath, acTxtPath) )
-            {
-                return 0;
-            }
-            break;
-
-        case EN_MODULE_RESERVED_1:
-        case EN_MODULE_RESERVED_2:
+            return ItemsCode_ParseBin(acTemplatePath, acBinPath, acTxtPath);
             break;
 
         case EN_MODULE_INIT:

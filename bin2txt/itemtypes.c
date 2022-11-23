@@ -299,6 +299,9 @@ int process_itemtypes(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
 
     switch ( enPhase )
     {
+        case EN_MODULE_PREPARE:
+            break;
+
         case EN_MODULE_SELF_DEPEND:
             m_iItemTypesCount = 0;
 
@@ -324,11 +327,6 @@ int process_itemtypes(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
             MODULE_DEPEND_CALL(bodylocs, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(playerclass, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(storepage, acTemplatePath, acBinPath, acTxtPath);
-            MODULE_DEPEND_CALL(itemtypes, acTemplatePath, acBinPath, acTxtPath);
-            break;
-
-        case EN_MODULE_RESERVED_1:
-        case EN_MODULE_RESERVED_2:
             break;
 
         case EN_MODULE_INIT:

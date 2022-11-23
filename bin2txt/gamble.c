@@ -53,6 +53,7 @@ int process_gamble(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_
 
     switch ( enPhase )
     {
+        case EN_MODULE_PREPARE:
         case EN_MODULE_SELF_DEPEND:
             break;
 
@@ -61,10 +62,6 @@ int process_gamble(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_
             MODULE_DEPEND_CALL(armor, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(weapons, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(misc, acTemplatePath, acBinPath, acTxtPath);
-            break;
-
-        case EN_MODULE_RESERVED_1:
-        case EN_MODULE_RESERVED_2:
             break;
 
         case EN_MODULE_INIT:

@@ -1062,6 +1062,7 @@ int process_cubemain(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
 
     switch ( enPhase )
     {
+        case EN_MODULE_PREPARE:
         case EN_MODULE_SELF_DEPEND:
             break;
 
@@ -1072,10 +1073,6 @@ int process_cubemain(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
             MODULE_DEPEND_CALL(itemtypes, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(uniqueitems, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(setitems, acTemplatePath, acBinPath, acTxtPath);
-            break;
-
-        case EN_MODULE_RESERVED_1:
-        case EN_MODULE_RESERVED_2:
             break;
 
         case EN_MODULE_INIT:

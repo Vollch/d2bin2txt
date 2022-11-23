@@ -845,9 +845,11 @@ int process_skilldesc(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
 
     switch ( enPhase )
     {
-        case EN_MODULE_SELF_DEPEND:
+        case EN_MODULE_PREPARE:
             MODULE_DEPEND_CALL(string, acTemplatePath, acBinPath, acTxtPath);
+            break;
 
+        case EN_MODULE_SELF_DEPEND:
             SkillDesc_InitValueMap(pstValueMap, pstLineInfo);
 
             m_iSkillDescCount = 0;
@@ -867,14 +869,7 @@ int process_skilldesc(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
             MODULE_DEPEND_CALL(elemtypes, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(missiles, acTemplatePath, acBinPath, acTxtPath);
 
-            if ( 0 == SkillDescCode_ParseBin(acTemplatePath, acBinPath, acTxtPath) )
-            {
-                return 0;
-            }
-            break;
-
-        case EN_MODULE_RESERVED_1:
-        case EN_MODULE_RESERVED_2:
+            return SkillDescCode_ParseBin(acTemplatePath, acBinPath, acTxtPath);
             break;
 
         case EN_MODULE_INIT:

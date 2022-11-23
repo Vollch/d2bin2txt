@@ -1381,11 +1381,13 @@ int process_misc(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MO
 
     switch ( enPhase )
     {
-        case EN_MODULE_SELF_DEPEND:
+        case EN_MODULE_PREPARE:
             MODULE_DEPEND_CALL(string, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(armor, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(weapons, acTemplatePath, acBinPath, acTxtPath);
+            break;
 
+        case EN_MODULE_SELF_DEPEND:
             Misc_InitValueMap(pstValueMap, pstLineInfo);
 
             m_iMiscCount = 0;
@@ -1406,14 +1408,7 @@ int process_misc(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MO
             MODULE_DEPEND_CALL(states, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(itemstatcost, acTemplatePath, acBinPath, acTxtPath);
 
-            if ( 0 == ItemsCode_ParseBin(acTemplatePath, acBinPath, acTxtPath) )
-            {
-                return 0;
-            }
-            break;
-
-        case EN_MODULE_RESERVED_1:
-        case EN_MODULE_RESERVED_2:
+            return ItemsCode_ParseBin(acTemplatePath, acBinPath, acTxtPath);
             break;
 
         case EN_MODULE_INIT:

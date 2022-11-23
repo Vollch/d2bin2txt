@@ -948,6 +948,9 @@ int process_objects(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
 
     switch ( enPhase )
     {
+        case EN_MODULE_PREPARE:
+            break;
+
         case EN_MODULE_SELF_DEPEND:
             m_stCallback.pfnFieldProc = Objects_FieldProc;
             m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
@@ -960,15 +963,7 @@ int process_objects(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
             break;
 
         case EN_MODULE_OTHER_DEPEND:
-            break;
-
-        case EN_MODULE_RESERVED_1:
-        case EN_MODULE_RESERVED_2:
-            break;
-
         case EN_MODULE_INIT:
-            break;
-
         default:
             break;
     }

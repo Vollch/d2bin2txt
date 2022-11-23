@@ -1320,6 +1320,9 @@ int process_missiles(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
 
     switch ( enPhase )
     {
+        case EN_MODULE_PREPARE:
+            break;
+
         case EN_MODULE_SELF_DEPEND:
             m_stCallback.pfnFieldProc = Missiles_FieldProc_Pre;
             m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
@@ -1339,14 +1342,7 @@ int process_missiles(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
             MODULE_DEPEND_CALL(sounds, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(skills, acTemplatePath, acBinPath, acTxtPath);
 
-            if ( 0 == MissCode_ParseBin(acTemplatePath, acBinPath, acTxtPath) )
-            {
-                return 0;
-            }
-            break;
-
-        case EN_MODULE_RESERVED_1:
-        case EN_MODULE_RESERVED_2:
+            return MissCode_ParseBin(acTemplatePath, acBinPath, acTxtPath);
             break;
 
         case EN_MODULE_INIT:

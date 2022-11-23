@@ -416,6 +416,7 @@ int process_charstats(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
 
     switch ( enPhase )
     {
+        case EN_MODULE_PREPARE:
         case EN_MODULE_SELF_DEPEND:
             break;
 
@@ -423,10 +424,6 @@ int process_charstats(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
             MODULE_DEPEND_CALL(bodylocs, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(string, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(skills, acTemplatePath, acBinPath, acTxtPath);
-            break;
-
-        case EN_MODULE_RESERVED_1:
-        case EN_MODULE_RESERVED_2:
             break;
 
         case EN_MODULE_INIT:

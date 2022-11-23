@@ -1839,9 +1839,11 @@ int process_monstats(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
 
     switch ( enPhase )
     {
-        case EN_MODULE_SELF_DEPEND:
-            MODULE_DEPEND_CALL(string, acTemplatePath, acBinPath, acTxtPath);
+        case EN_MODULE_PREPARE:
+             MODULE_DEPEND_CALL(string, acTemplatePath, acBinPath, acTxtPath);
+             break;
 
+        case EN_MODULE_SELF_DEPEND:
             MonStats_InitValueMap(pstValueMap, pstLineInfo);
 
             m_stCallback.pfnFieldProc = MonStats_FieldProc_Pre;
@@ -1868,10 +1870,6 @@ int process_monstats(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
             MODULE_DEPEND_CALL(treasureclassex, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(elemtypes, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(skills, acTemplatePath, acBinPath, acTxtPath);
-            break;
-
-        case EN_MODULE_RESERVED_1:
-        case EN_MODULE_RESERVED_2:
             break;
 
         case EN_MODULE_INIT:

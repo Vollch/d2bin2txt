@@ -258,10 +258,12 @@ int process_difficultylevels(char *acTemplatePath, char *acBinPath, char *acTxtP
 
     switch ( enPhase )
     {
-        case EN_MODULE_SELF_DEPEND:
+        case EN_MODULE_PREPARE:
             File_CopyFile(acTemplatePath, acTxtPath, "cubemod", ".txt");
             File_CopyFile(acTemplatePath, acTxtPath, "cubetype", ".txt");
+            break;
 
+        case EN_MODULE_SELF_DEPEND:
             m_stCallback.pfnFieldProc = DifficultyLevels_FieldProc;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
@@ -270,15 +272,7 @@ int process_difficultylevels(char *acTemplatePath, char *acBinPath, char *acTxtP
             break;
 
         case EN_MODULE_OTHER_DEPEND:
-            break;
-
-        case EN_MODULE_RESERVED_1:
-        case EN_MODULE_RESERVED_2:
-            break;
-
         case EN_MODULE_INIT:
-            break;
-
         default:
             break;
     }

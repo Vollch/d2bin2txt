@@ -309,9 +309,11 @@ int process_monsounds(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
 
     switch ( enPhase )
     {
-        case EN_MODULE_SELF_DEPEND:
+        case EN_MODULE_PREPARE:
             MODULE_DEPEND_CALL(sounds, acTemplatePath, acBinPath, acTxtPath);
+            break;
 
+        case EN_MODULE_SELF_DEPEND:
             MonSounds_InitValueMap(pstValueMap, pstLineInfo);
 
             m_iMonSoundsCount = 0;
@@ -328,10 +330,6 @@ int process_monsounds(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
         case EN_MODULE_OTHER_DEPEND:
             MODULE_DEPEND_CALL(monmode, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(skills, acTemplatePath, acBinPath, acTxtPath);
-            break;
-
-        case EN_MODULE_RESERVED_1:
-        case EN_MODULE_RESERVED_2:
             break;
 
         case EN_MODULE_INIT:

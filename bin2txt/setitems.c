@@ -698,6 +698,9 @@ int process_setitems(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
 
     switch ( enPhase )
     {
+        case EN_MODULE_PREPARE:
+            break;
+
         case EN_MODULE_SELF_DEPEND:
             m_uiSetItemCount = 0;
 
@@ -717,10 +720,6 @@ int process_setitems(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
             MODULE_DEPEND_CALL(sounds, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(properties, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(skills, acTemplatePath, acBinPath, acTxtPath);
-            break;
-
-        case EN_MODULE_RESERVED_1:
-        case EN_MODULE_RESERVED_2:
             break;
 
         case EN_MODULE_INIT:

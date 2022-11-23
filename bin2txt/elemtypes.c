@@ -72,6 +72,9 @@ int process_elemtypes(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
 
     switch ( enPhase )
     {
+        case EN_MODULE_PREPARE:
+            break;
+
         case EN_MODULE_SELF_DEPEND:
             m_iElemTypes = 0;
 
@@ -86,8 +89,6 @@ int process_elemtypes(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
             break;
 
         case EN_MODULE_OTHER_DEPEND:
-        case EN_MODULE_RESERVED_1:
-        case EN_MODULE_RESERVED_2:
         case EN_MODULE_INIT:
         default:
             break;

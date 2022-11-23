@@ -952,6 +952,11 @@ static int check_active(void *pvLineInfo, int iLineLength, ST_VALUE_MAP *pstValu
 {
     unsigned int i, j;
 
+    if ( stFileHeader.iLines < 2 )
+    {
+        return 1;
+    }
+
     memset(m_acTempBuffer, 0, iLineLength * 3);
 
     if ( iLineLength != fread((m_acTempBuffer+iLineLength), 1, iLineLength, pfBinHandle) )
@@ -991,6 +996,29 @@ static int check_active(void *pvLineInfo, int iLineLength, ST_VALUE_MAP *pstValu
     }
 
     return 1;
+}
+
+int getBinStructSize(char *acBinPath, char *pcFilename)
+{
+    char acBinFile[256] = {0};
+    unsigned int iBinLineSize;
+
+    FILE *pfBinHandle = NULL;
+    ST_FILE_HEADER stFileHeader;
+
+    sprintf(acBinFile, "%s\\%s.bin", acBinPath, pcFilename);
+    pfBinHandle = fopen(acBinFile, "rb");
+
+    if ( !pfBinHandle || (sizeof(stFileHeader) != fread(&stFileHeader, 1, sizeof(stFileHeader), pfBinHandle)) )
+    {
+        return 0;
+    }
+
+    fseek(pfBinHandle, 0, SEEK_END);
+    iBinLineSize = (ftell(pfBinHandle) - sizeof(stFileHeader)) / stFileHeader.iLines;
+    fclose(pfBinHandle);
+
+    return iBinLineSize;
 }
 
 static int process_file_x(char *acTemplatePath, char *acBinPath, char *acTxtPath, char *pcFilename,

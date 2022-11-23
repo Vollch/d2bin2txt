@@ -1328,9 +1328,11 @@ int process_monstats2(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
 
     switch ( enPhase )
     {
-        case EN_MODULE_SELF_DEPEND:
+        case EN_MODULE_PREPARE:
             MODULE_DEPEND_CALL(monstats, acTemplatePath, acBinPath, acTxtPath);
+            break;
 
+        case EN_MODULE_SELF_DEPEND:
             MonStats2_InitValueMap(pstValueMap, pstLineInfo);
 
             m_stCallback.pfnConvertValue = MonStats2_ConvertValue_Pre;
@@ -1349,10 +1351,6 @@ int process_monstats2(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
             MODULE_DEPEND_CALL(compcode, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(monmode, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(skills, acTemplatePath, acBinPath, acTxtPath);
-            break;
-
-        case EN_MODULE_RESERVED_1:
-        case EN_MODULE_RESERVED_2:
             break;
 
         case EN_MODULE_INIT:

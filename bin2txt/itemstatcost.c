@@ -1027,9 +1027,11 @@ int process_itemstatcost(char *acTemplatePath, char *acBinPath, char *acTxtPath,
 
     switch ( enPhase )
     {
-        case EN_MODULE_SELF_DEPEND:
+        case EN_MODULE_PREPARE:
             MODULE_DEPEND_CALL(string, acTemplatePath, acBinPath, acTxtPath);
+            break;
 
+        case EN_MODULE_SELF_DEPEND:
             ItemStatCost_InitValueMap(pstValueMap, pstLineInfo);
 
             m_iItemStatesCount = 0;
@@ -1046,10 +1048,6 @@ int process_itemstatcost(char *acTemplatePath, char *acBinPath, char *acTxtPath,
 
         case EN_MODULE_OTHER_DEPEND:
             MODULE_DEPEND_CALL(events, acTemplatePath, acBinPath, acTxtPath);
-            break;
-
-        case EN_MODULE_RESERVED_1:
-        case EN_MODULE_RESERVED_2:
             break;
 
         case EN_MODULE_INIT:

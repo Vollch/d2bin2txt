@@ -2636,10 +2636,12 @@ int process_skills(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_
 
     switch ( enPhase )
     {
-        case EN_MODULE_SELF_DEPEND:
+        case EN_MODULE_PREPARE:
             MODULE_DEPEND_CALL(string, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(skilldesc, acTemplatePath, acBinPath, acTxtPath);
+            break;
 
+        case EN_MODULE_SELF_DEPEND:
             Skills_InitValueMap(pstValueMap, pstLineInfo);
 
             m_iSkillsCount = 0;
@@ -2670,14 +2672,7 @@ int process_skills(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_
             MODULE_DEPEND_CALL(sounds, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(elemtypes, acTemplatePath, acBinPath, acTxtPath);
 
-            if ( 0 == SkillsCode_ParseBin(acTemplatePath, acBinPath, acTxtPath) )
-            {
-                return 0;
-            }
-            break;
-
-        case EN_MODULE_RESERVED_1:
-        case EN_MODULE_RESERVED_2:
+            return SkillsCode_ParseBin(acTemplatePath, acBinPath, acTxtPath);
             break;
 
         case EN_MODULE_INIT:

@@ -56,9 +56,9 @@ typedef struct
     unsigned char vDestroyKeyItemmybr1Nmybr2;
     unsigned char vDestroyKeyItemmybr1Hmybr2;
 
-    unsigned short vPenaltyStat; // itemstat
-    unsigned short vPenaltyStatmybr1Nmybr2; // itemstat
-    unsigned short vPenaltyStatmybr1Hmybr2; // itemstat
+    unsigned short vPenaltyStat;
+    unsigned short vPenaltyStatmybr1Nmybr2;
+    unsigned short vPenaltyStatmybr1Hmybr2;
     int vPenaltyVal;
     int vPenaltyValmybr1Nmybr2;
     int vPenaltyValmybr1Hmybr2;
@@ -240,6 +240,7 @@ int process_Waypoints(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
 
     switch ( enPhase )
     {
+        case EN_MODULE_PREPARE:
         case EN_MODULE_SELF_DEPEND:
             break;
 
@@ -247,10 +248,6 @@ int process_Waypoints(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
             MODULE_DEPEND_CALL(string, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(itemstatcost, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(levels, acTemplatePath, acBinPath, acTxtPath);
-            break;
-
-        case EN_MODULE_RESERVED_1:
-        case EN_MODULE_RESERVED_2:
             break;
 
         case EN_MODULE_INIT:

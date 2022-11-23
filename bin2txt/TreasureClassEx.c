@@ -369,9 +369,12 @@ int process_treasureclassex(char *acTemplatePath, char *acBinPath, char *acTxtPa
 
     switch ( enPhase )
     {
-        case EN_MODULE_SELF_DEPEND:
+        case EN_MODULE_PREPARE:
+            MODULE_DEPEND_CALL(itemtypes, acTemplatePath, acBinPath, acTxtPath);
             File_CopyFile(acTemplatePath, acTxtPath, "treasureclass", ".txt");
+            break;
 
+        case EN_MODULE_SELF_DEPEND:
             m_iTreasureClassEx = 0;
 
             //m_stCallback.pfnGetKey = TreasureClassEx_GetKey;
@@ -386,15 +389,7 @@ int process_treasureclassex(char *acTemplatePath, char *acBinPath, char *acTxtPa
             break;
 
         case EN_MODULE_OTHER_DEPEND:
-            break;
-
-        case EN_MODULE_RESERVED_1:
-        case EN_MODULE_RESERVED_2:
-            break;
-
         case EN_MODULE_INIT:
-            break;
-
         default:
             break;
     }

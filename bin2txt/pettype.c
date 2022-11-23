@@ -272,9 +272,11 @@ int process_pettype(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
 
     switch ( enPhase )
     {
-        case EN_MODULE_SELF_DEPEND:
+        case EN_MODULE_PREPARE:
             MODULE_DEPEND_CALL(string, acTemplatePath, acBinPath, acTxtPath);
+            break;
 
+        case EN_MODULE_SELF_DEPEND:
             PetType_InitValueMap(pstValueMap, pstLineInfo);
 
             m_iPetTypeCount = 0;
@@ -291,10 +293,6 @@ int process_pettype(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
 
         case EN_MODULE_OTHER_DEPEND:
             MODULE_DEPEND_CALL(string, acTemplatePath, acBinPath, acTxtPath);
-            break;
-
-        case EN_MODULE_RESERVED_1:
-        case EN_MODULE_RESERVED_2:
             break;
 
         case EN_MODULE_INIT:

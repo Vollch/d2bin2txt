@@ -177,7 +177,6 @@ static void usage(int argc, char* argv[])
 char *g_pcCustomTable1 = NULL;
 char *g_pcCustomTable2 = NULL;
 char *g_pcCustomTable3 = NULL;
-int g_iMercDesc = 0;
 int g_iTrimSpace = 0;
 
 void Init_Settings(char* acTemplatePath, char* acBinPath, char* acTxtPath)
@@ -198,9 +197,6 @@ void Init_Settings(char* acTemplatePath, char* acBinPath, char* acTxtPath)
     {
         m_pfLogHandle = fopen("output.txt", "wt");
     }
-
-    GetPrivateProfileString("GENERAL", "MercDesc", "0", acIniBuff, sizeof(acIniBuff), pcIniFile);
-    g_iMercDesc = atoi(acIniBuff);
 
     GetPrivateProfileString("GENERAL", "TrimSpace", "0", acIniBuff, sizeof(acIniBuff), pcIniFile);
     g_iTrimSpace = atoi(acIniBuff);

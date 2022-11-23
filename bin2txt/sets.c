@@ -583,9 +583,11 @@ int process_sets(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MO
 
     switch ( enPhase )
     {
-        case EN_MODULE_SELF_DEPEND:
+        case EN_MODULE_PREPARE:
             MODULE_DEPEND_CALL(string, acTemplatePath, acBinPath, acTxtPath);
+            break;
 
+        case EN_MODULE_SELF_DEPEND:
             Sets_InitValueMap(pstValueMap, pstLineInfo);
 
             m_iSetCount = 0;
@@ -605,10 +607,6 @@ int process_sets(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MO
             MODULE_DEPEND_CALL(properties, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(skills, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(states, acTemplatePath, acBinPath, acTxtPath);
-            break;
-
-        case EN_MODULE_RESERVED_1:
-        case EN_MODULE_RESERVED_2:
             break;
 
         case EN_MODULE_INIT:

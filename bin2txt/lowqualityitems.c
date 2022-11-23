@@ -39,6 +39,9 @@ int process_lowqualityitems(char *acTemplatePath, char *acBinPath, char *acTxtPa
 
     switch ( enPhase )
     {
+        case EN_MODULE_PREPARE:
+            break;
+
         case EN_MODULE_SELF_DEPEND:
             m_stCallback.pfnConvertValue = LowQualityItems_ConvertValue;
 
@@ -47,8 +50,6 @@ int process_lowqualityitems(char *acTemplatePath, char *acBinPath, char *acTxtPa
             break;
 
         case EN_MODULE_OTHER_DEPEND:
-        case EN_MODULE_RESERVED_1:
-        case EN_MODULE_RESERVED_2:
         case EN_MODULE_INIT:
         default:
             break;

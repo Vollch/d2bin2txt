@@ -351,9 +351,11 @@ int process_superuniques(char *acTemplatePath, char *acBinPath, char *acTxtPath,
 
     switch ( enPhase )
     {
-        case EN_MODULE_SELF_DEPEND:
+        case EN_MODULE_PREPARE:
             MODULE_DEPEND_CALL(string, acTemplatePath, acBinPath, acTxtPath);
+            break;
 
+        case EN_MODULE_SELF_DEPEND:
             SuperUniques_InitValueMap(pstValueMap, pstLineInfo);
 
             m_iSuperUniquesCount = 0;
@@ -372,10 +374,6 @@ int process_superuniques(char *acTemplatePath, char *acBinPath, char *acTxtPath,
             MODULE_DEPEND_CALL(monstats, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(monsounds, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(treasureclassex, acTemplatePath, acBinPath, acTxtPath);
-            break;
-
-        case EN_MODULE_RESERVED_1:
-        case EN_MODULE_RESERVED_2:
             break;
 
         case EN_MODULE_INIT:

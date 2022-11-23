@@ -112,9 +112,11 @@ static int MonType_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo
     return 0;
 }
 
-static void MonType_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLineInfo)
+int process_montype(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
-    INIT_VALUE_BUFFER;
+    ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
+
+    ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, equiv1, USHORT_MONTYPE);
 
@@ -123,21 +125,14 @@ static void MonType_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLin
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, strsing, USHORT_STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, strplur, USHORT_STRING);
-}
-
-int process_montype(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
-{
-    ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
-
-    ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
     switch ( enPhase )
     {
-        case EN_MODULE_SELF_DEPEND:
+        case EN_MODULE_PREPARE:
             MODULE_DEPEND_CALL(string, acTemplatePath, acBinPath, acTxtPath);
+            break;
 
-            MonType_InitValueMap(pstValueMap, pstLineInfo);
-
+        case EN_MODULE_SELF_DEPEND:
             m_iMonTypeCount = 0;
 
             m_stCallback.pfnFieldProc = MonType_FieldProc_Pre;
@@ -150,14 +145,10 @@ int process_montype(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
             break;
 
         case EN_MODULE_OTHER_DEPEND:
-        case EN_MODULE_RESERVED_1:
-        case EN_MODULE_RESERVED_2:
+            File_CopyFile(acTemplatePath, acTxtPath, "monname", ".txt");
             break;
 
         case EN_MODULE_INIT:
-            MonType_InitValueMap(pstValueMap, pstLineInfo);
-            File_CopyFile(acTemplatePath, acTxtPath, "monname", ".txt");
-
             m_stCallback.pfnFieldProc = MonType_FieldProc;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 

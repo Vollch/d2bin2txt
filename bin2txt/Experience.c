@@ -105,6 +105,9 @@ int process_experience(char *acTemplatePath, char *acBinPath, char *acTxtPath, E
 
     switch ( enPhase )
     {
+        case EN_MODULE_PREPARE:
+            break;
+
         case EN_MODULE_SELF_DEPEND:
             m_stCallback.pfnFieldProc = Experience_FieldProc;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
@@ -114,15 +117,7 @@ int process_experience(char *acTemplatePath, char *acBinPath, char *acTxtPath, E
             break;
 
         case EN_MODULE_OTHER_DEPEND:
-            break;
-
-        case EN_MODULE_RESERVED_1:
-        case EN_MODULE_RESERVED_2:
-            break;
-
         case EN_MODULE_INIT:
-            break;
-
         default:
             break;
     }

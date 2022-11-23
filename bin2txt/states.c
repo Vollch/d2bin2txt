@@ -694,10 +694,12 @@ int process_states(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_
 
     switch ( enPhase )
     {
-        case EN_MODULE_SELF_DEPEND:
+        case EN_MODULE_PREPARE:
             MODULE_DEPEND_CALL(overlay, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(sounds, acTemplatePath, acBinPath, acTxtPath);
+            break;
 
+        case EN_MODULE_SELF_DEPEND:
             States_InitValueMap(pstValueMap, pstLineInfo);
 
             m_stCallback.pfnFieldProc = States_FieldProc_Pre;
@@ -719,10 +721,6 @@ int process_states(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_
             MODULE_DEPEND_CALL(skills, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(missiles, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(colors, acTemplatePath, acBinPath, acTxtPath);
-            break;
-
-        case EN_MODULE_RESERVED_1:
-        case EN_MODULE_RESERVED_2:
             break;
 
         case EN_MODULE_INIT:

@@ -148,7 +148,7 @@ static int Events_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, 
     return 0;
 }
 
-static int process_events_x(char *acTemplatePath, char *acBinPath, char *acTxtPath)
+int process_events(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
     ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
 
@@ -156,28 +156,24 @@ static int process_events_x(char *acTemplatePath, char *acBinPath, char *acTxtPa
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, event, USHORT);
 
-    m_iEventsCount = 0;
-
-    m_stCallback.pfnConvertValue = Events_ConvertValue;
-    m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
-    m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
-    m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
-
-    return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
-        pstValueMap, Global_GetValueMapCount(), &m_stCallback);
-}
-
-int process_events(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
-{
     switch ( enPhase )
     {
+        case EN_MODULE_PREPARE:
+            break;
+
         case EN_MODULE_SELF_DEPEND:
-            return process_events_x(acTemplatePath, acBinPath, acTxtPath);
+            m_iEventsCount = 0;
+
+            m_stCallback.pfnConvertValue = Events_ConvertValue;
+            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
+            m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
+            m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
+
+            return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
+                pstValueMap, Global_GetValueMapCount(), &m_stCallback);
             break;
 
         case EN_MODULE_OTHER_DEPEND:
-        case EN_MODULE_RESERVED_1:
-        case EN_MODULE_RESERVED_2:
         case EN_MODULE_INIT:
         default:
             break;

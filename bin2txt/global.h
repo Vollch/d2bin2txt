@@ -21,6 +21,7 @@ extern "C" {
 #define ALL_MODULES(X) \
     X(D2NewStats) \
     X(D2KillCounter) \
+    X(KillCounter) \
     X(BookOfLore) \
     X(LevelFX) \
     X(ItemDesc) \
@@ -183,10 +184,9 @@ typedef enum
 {
     EN_MODULE_PHASE_START,
 
+    EN_MODULE_PREPARE,
     EN_MODULE_SELF_DEPEND,
     EN_MODULE_OTHER_DEPEND,
-    EN_MODULE_RESERVED_1,
-    EN_MODULE_RESERVED_2,
     EN_MODULE_INIT,
 
     EN_MODULE_PHASE_MAX,
@@ -355,7 +355,6 @@ extern unsigned int Global_GetValueMapCount();
 extern char *g_pcCustomTable1;
 extern char *g_pcCustomTable2;
 extern char *g_pcCustomTable3;
-extern int g_iMercDesc;
 extern int g_iTrimSpace;
 
 extern int File_GetFileSize(char *pcFileName);
@@ -418,6 +417,7 @@ extern int process_file(char *acTemplatePath, char *acBinPath, char *acTxtPath, 
 extern int process_file_special_bin(char *acTemplatePath, char *acBinPath, char *acTxtPath, char *pcFilename,
     void *pvLineInfo, int iLineLength, ST_VALUE_MAP *pstValueMap, int iValueCount,
     ST_CALLBACK *pstCallback);
+extern int getBinStructSize(char *acBinPath, char *pcFilename);
 
 extern unsigned int my_printf( const char *pcFormat,... );
 extern unsigned int bg_printf( const char *pcBG, const char *pcFormat,... );
@@ -435,8 +435,6 @@ extern int Stack_IsEmpty(void *pvStack);
 
 ALL_MODULES(MODULE_DECALRE_FUNC)
 
-extern int process_hiredesc_MercDesc(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
-
 extern int String_StripFileName(char *pcInput, char *pcOutput, unsigned int iSize);
 extern int String_BuildName(char *pcNameFormat, int iNameSize, unsigned int iStingId, char *pcTemplate, char *pcName, unsigned int iLine, fnHaveName pfnHaveName, char* acOutput);
 extern char *String_FindString(unsigned int id, char* pcFilter);
@@ -446,7 +444,6 @@ extern char *Armor_GetArmorCode(unsigned int id);
 extern unsigned int Armor_GetArmorString(unsigned int id);
 extern unsigned int Armor_GetArmorString2(char *pcVcode);
 extern unsigned int Armor_GetArmorCount();
-
 
 extern char *Weapons_GetWeaponCode(unsigned int id);
 extern unsigned int Weapons_GetWeaponString(unsigned int id);
@@ -511,7 +508,6 @@ extern unsigned int MonStats_GetPropString(unsigned int id);
 extern char *Pettype_GetPetType(unsigned int id);
 
 extern char *HireDesc_GetDesc(unsigned int id);
-extern char *HireDesc_MercDesc_GetDesc(unsigned int id);
 
 extern char *Levels_GetLevelName(unsigned int id);
 extern unsigned char Levels_GetAct(unsigned int id);

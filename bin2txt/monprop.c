@@ -519,9 +519,11 @@ int process_monprop(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
 
     switch ( enPhase )
     {
-        case EN_MODULE_SELF_DEPEND:
+        case EN_MODULE_PREPARE:
             MODULE_DEPEND_CALL(monstats, acTemplatePath, acBinPath, acTxtPath);
+            break;
 
+        case EN_MODULE_SELF_DEPEND:
             MonProp_InitValueMap(pstValueMap, pstLineInfo);
 
             m_iMonPropCount = 0;
@@ -537,10 +539,6 @@ int process_monprop(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
 
         case EN_MODULE_OTHER_DEPEND:
             MODULE_DEPEND_CALL(properties, acTemplatePath, acBinPath, acTxtPath);
-            break;
-
-        case EN_MODULE_RESERVED_1:
-        case EN_MODULE_RESERVED_2:
             break;
 
         case EN_MODULE_INIT:
