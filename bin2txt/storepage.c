@@ -21,7 +21,7 @@ static char *m_apcInternalProcess[] =
     NULL,
 };
 
-MODULE_SETLINES_FUNC(FILE_PREFIX, m_astStorePage, ST_STORE_PAGE);
+MODULE_SETLINES_FUNC(m_astStorePage, ST_STORE_PAGE);
 
 static int StorePage_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
@@ -65,8 +65,8 @@ static int process_storepage_x(char *acTemplatePath, char *acBinPath, char *acTx
 
     //m_stCallback.pfnGetKey = StorePage_GetKey;
     m_stCallback.pfnFieldProc = StorePage_FieldProc;
-    m_stCallback.pfnSetLines = SETLINES_FUNC_NAME(FILE_PREFIX);
-    m_stCallback.pfnFinished = FINISHED_FUNC_NAME(FILE_PREFIX);
+    m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
+    m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
     m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
     return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 

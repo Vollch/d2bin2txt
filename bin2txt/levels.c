@@ -846,8 +846,8 @@ static char *m_apcInternalProcess[] =
 static unsigned int m_iLevelsCount = 0;
 static ST_LEVEL_DESC *m_astLevels = NULL;
 
-MODULE_SETLINES_FUNC(FILE_PREFIX, m_astLevels, ST_LEVEL_DESC);
-HAVENAME_FUNC(m_astLevels, vname, m_iLevelsCount);
+MODULE_SETLINES_FUNC(m_astLevels, ST_LEVEL_DESC);
+MODULE_HAVENAME_FUNC(m_astLevels, vname, m_iLevelsCount);
 
 static int Levels_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
@@ -858,7 +858,7 @@ static int Levels_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLin
         char acName[41];
         strncpy(acName, pstLineInfo->vLevelName, sizeof(pstLineInfo->vLevelName));
 
-        if ( !String_BuildName(FORMAT(levels), 0xFFFF, pcTemplate, acName, pstLineInfo->vId, HAVENAME, acOutput) )
+        if ( !String_BuildName(FORMAT(levels), 0xFFFF, pcTemplate, acName, pstLineInfo->vId, MODULE_HAVENAME, acOutput) )
         {
             strncpy(acOutput, pstLineInfo->vLevelName, sizeof(pstLineInfo->vLevelName));
         }
@@ -1238,8 +1238,8 @@ int process_levels(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_
             m_iLevelsCount = 0;
 
             m_stCallback.pfnFieldProc = Levels_FieldProc_Pre;
-            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME(FILE_PREFIX);
-            m_stCallback.pfnFinished = FINISHED_FUNC_NAME(FILE_PREFIX);
+            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
+            m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 

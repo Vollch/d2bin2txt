@@ -319,8 +319,8 @@ static char *m_apcInternalProcess[] =
 static unsigned int m_iItemStatesCount = 0;
 static ST_ITEM_STATES *m_astItemStates = NULL;
 
-MODULE_SETLINES_FUNC(FILE_PREFIX, m_astItemStates, ST_ITEM_STATES);
-HAVENAME_FUNC(m_astItemStates, vstate, m_iItemStatesCount);
+MODULE_SETLINES_FUNC(m_astItemStates, ST_ITEM_STATES);
+MODULE_HAVENAME_FUNC(m_astItemStates, vstate, m_iItemStatesCount);
 
 static int States_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
@@ -339,7 +339,7 @@ static int States_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLin
           (pcName = Sounds_GetSoundName2(pstLineInfo->vonsound)) ||
           (pcName = Sounds_GetSoundName2(pstLineInfo->voffsound)) );
 
-        if ( !String_BuildName(FORMAT(states), 0xFFFF, pcTemplate, pcName, pstLineInfo->vid, HAVENAME, acOutput) )
+        if ( !String_BuildName(FORMAT(states), 0xFFFF, pcTemplate, pcName, pstLineInfo->vid, MODULE_HAVENAME, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vid);
         }
@@ -701,8 +701,8 @@ int process_states(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_
             States_InitValueMap(pstValueMap, pstLineInfo);
 
             m_stCallback.pfnFieldProc = States_FieldProc_Pre;
-            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME(FILE_PREFIX);
-            m_stCallback.pfnFinished = FINISHED_FUNC_NAME(FILE_PREFIX);
+            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
+            m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 

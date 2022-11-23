@@ -22,7 +22,7 @@ static char *m_apcInternalProcess[] =
 static unsigned int m_iElemTypes = 0;
 static ST_ELEM_TYPES *m_astElemTypes = NULL;
 
-MODULE_SETLINES_FUNC(FILE_PREFIX, m_astElemTypes, ST_ELEM_TYPES);
+MODULE_SETLINES_FUNC(m_astElemTypes, ST_ELEM_TYPES);
 
 static int ElemTypes_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
@@ -77,8 +77,8 @@ int process_elemtypes(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
 
             //m_stCallback.pfnGetKey = ElemTypes_GetKey;
             m_stCallback.pfnFieldProc = ElemTypes_FieldProc;
-            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME(FILE_PREFIX);
-            m_stCallback.pfnFinished = FINISHED_FUNC_NAME(FILE_PREFIX);
+            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
+            m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 

@@ -77,8 +77,8 @@ typedef struct
 static unsigned int m_iItemSoundsCount = 0;
 static ST_ITEM_SOUNDS *m_astItemSounds = NULL;
 
-MODULE_SETLINES_FUNC(FILE_PREFIX, m_astItemSounds, ST_ITEM_SOUNDS);
-HAVENAME_FUNC(m_astItemSounds, vSound, m_iItemSoundsCount);
+MODULE_SETLINES_FUNC(m_astItemSounds, ST_ITEM_SOUNDS);
+MODULE_HAVENAME_FUNC(m_astItemSounds, vSound, m_iItemSoundsCount);
 
 static int Sounds_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
@@ -86,7 +86,7 @@ static int Sounds_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo,
 
     if ( !stricmp(acKey, "Sound") )
     {
-        if ( !String_BuildName(FORMAT(sounds), 0xFFFF, pcTemplate, (pstLineInfo->vIndex ? NULL : "none"), pstLineInfo->vIndex, HAVENAME, acOutput) )
+        if ( !String_BuildName(FORMAT(sounds), 0xFFFF, pcTemplate, (pstLineInfo->vIndex ? NULL : "none"), pstLineInfo->vIndex, MODULE_HAVENAME, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vIndex);
         }
@@ -122,8 +122,8 @@ static int process_sounds_x(char *acTemplatePath, char *acBinPath, char *acTxtPa
 
     //m_stCallback.pfnGetKey = Sounds_GetKey;
     m_stCallback.pfnFieldProc = Sounds_FieldProc;
-    m_stCallback.pfnSetLines = SETLINES_FUNC_NAME(FILE_PREFIX);
-    m_stCallback.pfnFinished = FINISHED_FUNC_NAME(FILE_PREFIX);
+    m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
+    m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
     m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
     m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
 

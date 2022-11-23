@@ -278,8 +278,8 @@ typedef struct
 static unsigned int m_iSetCount = 0;
 static ST_SET_INDEX *m_astSets = NULL;
 
-MODULE_SETLINES_FUNC(FILE_PREFIX, m_astSets, ST_SET_INDEX);
-HAVENAME_FUNC(m_astSets, vindex, m_iSetCount);
+MODULE_SETLINES_FUNC(m_astSets, ST_SET_INDEX);
+MODULE_HAVENAME_FUNC(m_astSets, vindex, m_iSetCount);
 
 char *Sets_GetSetName(unsigned int id)
 {
@@ -298,7 +298,7 @@ static int Sets_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLineN
 
     if ( !stricmp(acKey, "index") )
     {
-        if ( !String_BuildName(FORMAT(sets), pstLineInfo->vname, pcTemplate, NAME_PREFIX, pstLineInfo->wSetId, HAVENAME, acOutput) )
+        if ( !String_BuildName(FORMAT(sets), pstLineInfo->vname, pcTemplate, NAME_PREFIX, pstLineInfo->wSetId, MODULE_HAVENAME, acOutput) )
         {
             pcResult = String_FindString(pstLineInfo->vname, "dummy");
             if ( pcResult )
@@ -591,8 +591,8 @@ int process_sets(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MO
             m_iSetCount = 0;
 
             m_stCallback.pfnFieldProc = Sets_FieldProc_Pre;
-            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME(FILE_PREFIX);
-            m_stCallback.pfnFinished = FINISHED_FUNC_NAME(FILE_PREFIX);
+            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
+            m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
 

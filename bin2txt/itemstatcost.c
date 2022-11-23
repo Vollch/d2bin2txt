@@ -814,8 +814,8 @@ static char *m_apcInternalProcess[] =
 static unsigned int m_iItemStatesCount = 0;
 static ST_ITEM_STATES *m_astItemStates = NULL;
 
-MODULE_SETLINES_FUNC(FILE_PREFIX, m_astItemStates, ST_ITEM_STATES);
-HAVENAME_FUNC(m_astItemStates, vStat, m_iItemStatesCount);
+MODULE_SETLINES_FUNC(m_astItemStates, ST_ITEM_STATES);
+MODULE_HAVENAME_FUNC(m_astItemStates, vStat, m_iItemStatesCount);
 
 static int ItemStatCost_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
@@ -828,7 +828,7 @@ static int ItemStatCost_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned in
         {
             iString = pstLineInfo->vdescstrneg;
         }
-        if ( !String_BuildName(FORMAT(itemstatcost), iString, pcTemplate, NAME_PREFIX, pstLineInfo->vID, HAVENAME, acOutput) )
+        if ( !String_BuildName(FORMAT(itemstatcost), iString, pcTemplate, NAME_PREFIX, pstLineInfo->vID, MODULE_HAVENAME, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vID);
         }
@@ -1036,8 +1036,8 @@ int process_itemstatcost(char *acTemplatePath, char *acBinPath, char *acTxtPath,
 
             //m_stCallback.pfnGetKey = ItemStatCost_GetKey;
             m_stCallback.pfnFieldProc = ItemStatCost_FieldProc_Pre;
-            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME(FILE_PREFIX);
-            m_stCallback.pfnFinished = FINISHED_FUNC_NAME(FILE_PREFIX);
+            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
+            m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
             return process_file(acTemplatePath, acBinPath, NULL, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo),

@@ -953,8 +953,8 @@ static char *m_apcInternalProcess[] =
 static unsigned int m_iMisslesCount = 0;
 static ST_MISSILES *m_astMissiles = NULL;
 
-MODULE_SETLINES_FUNC(FILE_PREFIX, m_astMissiles, ST_MISSILES);
-HAVENAME_FUNC(m_astMissiles, vMissile, m_iMisslesCount);
+MODULE_SETLINES_FUNC(m_astMissiles, ST_MISSILES);
+MODULE_HAVENAME_FUNC(m_astMissiles, vMissile, m_iMisslesCount);
 
 static int Missiles_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
@@ -964,7 +964,7 @@ static int Missiles_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iL
     {
         char acName[33] = {0};
         String_StripFileName(pstLineInfo->vCelFile, acName, 32);
-        if ( !String_BuildName(FORMAT(missiles), 0xFFFF, pcTemplate, acName, pstLineInfo->vId, HAVENAME, acOutput) )
+        if ( !String_BuildName(FORMAT(missiles), 0xFFFF, pcTemplate, acName, pstLineInfo->vId, MODULE_HAVENAME, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vId);
         }
@@ -1322,8 +1322,8 @@ int process_missiles(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
     {
         case EN_MODULE_SELF_DEPEND:
             m_stCallback.pfnFieldProc = Missiles_FieldProc_Pre;
-            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME(FILE_PREFIX);
-            m_stCallback.pfnFinished = FINISHED_FUNC_NAME(FILE_PREFIX);
+            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
+            m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 

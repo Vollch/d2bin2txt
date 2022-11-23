@@ -2035,8 +2035,8 @@ static char *m_apcInternalProcess[] =
 static unsigned int m_iSkillsCount = 0;
 static ST_SKILLS *m_astSkills = NULL;
 
-MODULE_SETLINES_FUNC(FILE_PREFIX, m_astSkills, ST_SKILLS);
-HAVENAME_FUNC(m_astSkills, vskill, m_iSkillsCount);
+MODULE_SETLINES_FUNC(m_astSkills, ST_SKILLS);
+MODULE_HAVENAME_FUNC(m_astSkills, vskill, m_iSkillsCount);
 
 
 static int Skills_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
@@ -2045,7 +2045,7 @@ static int Skills_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLin
 
     if ( !stricmp(acKey, "skill") )
     {
-        if ( !String_BuildName(FORMAT(skills), SkillDesc_GetString(pstLineInfo->vskilldesc), pcTemplate, NAME_PREFIX, pstLineInfo->vId, HAVENAME, acOutput) )
+        if ( !String_BuildName(FORMAT(skills), SkillDesc_GetString(pstLineInfo->vskilldesc), pcTemplate, NAME_PREFIX, pstLineInfo->vId, MODULE_HAVENAME, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vId);
         }
@@ -2645,8 +2645,8 @@ int process_skills(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_
             m_iSkillsCount = 0;
 
             m_stCallback.pfnFieldProc = Skills_FieldProc_Pre;
-            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME(FILE_PREFIX);
-            m_stCallback.pfnFinished = FINISHED_FUNC_NAME(FILE_PREFIX);
+            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
+            m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 

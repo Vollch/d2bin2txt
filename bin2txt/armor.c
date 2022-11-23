@@ -925,7 +925,7 @@ static ST_ARMOR *m_astArmor = NULL;
 static unsigned int m_iMinDamFlag = 0;
 static unsigned int m_iMaxDamFlag = 0;
 
-MODULE_SETLINES_FUNC(FILE_PREFIX, m_astArmor, ST_ARMOR);
+MODULE_SETLINES_FUNC(m_astArmor, ST_ARMOR);
 
 char *Armor_GetArmorCode(unsigned int id)
 {
@@ -1328,8 +1328,8 @@ int process_armor(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_M
 
             //m_stCallback.pfnGetKey = Armor_GetKey;
             m_stCallback.pfnFieldProc = Armor_FieldProc_Pre;
-            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME(FILE_PREFIX);
-            m_stCallback.pfnFinished = FINISHED_FUNC_NAME(FILE_PREFIX);
+            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
+            m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 

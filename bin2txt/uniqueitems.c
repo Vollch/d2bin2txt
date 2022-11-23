@@ -395,7 +395,7 @@ static char *m_apcInternalProcess[] =
 static unsigned int m_uiUniqueItemCount = 0;
 static ST_SEARCHITEMS *m_astUniqueItems = NULL;
 
-MODULE_SETLINES_FUNC(FILE_PREFIX, m_astUniqueItems, ST_SEARCHITEMS);
+MODULE_SETLINES_FUNC(m_astUniqueItems, ST_SEARCHITEMS);
 
 char *UniqueItems_GetItemUniqueCode(unsigned int id)
 {
@@ -568,8 +568,8 @@ int process_uniqueitems(char *acTemplatePath, char *acBinPath, char *acTxtPath, 
             m_uiUniqueItemCount = 0;
 
             m_stCallback.pfnConvertValue = UniqueItems_ConvertValue_Pre;
-            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME(FILE_PREFIX);
-            m_stCallback.pfnFinished = FINISHED_FUNC_NAME(FILE_PREFIX);
+            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
+            m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 

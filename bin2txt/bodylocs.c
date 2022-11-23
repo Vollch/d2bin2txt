@@ -22,7 +22,7 @@ static char *m_apcInternalProcess[] =
 static unsigned int m_iBodyLocs = 0;
 static ST_BODY_LOCS *m_astBodyLocs = NULL;
 
-MODULE_SETLINES_FUNC(FILE_PREFIX, m_astBodyLocs, ST_BODY_LOCS);
+MODULE_SETLINES_FUNC(m_astBodyLocs, ST_BODY_LOCS);
 
 static int BodyLocs_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
@@ -74,8 +74,8 @@ static int process_bodylocs_x(char *acTemplatePath, char *acBinPath, char *acTxt
 
     //m_stCallback.pfnGetKey = BodyLocs_GetKey;
     m_stCallback.pfnFieldProc = BodyLocs_FieldProc;
-    m_stCallback.pfnSetLines = SETLINES_FUNC_NAME(FILE_PREFIX);
-    m_stCallback.pfnFinished = FINISHED_FUNC_NAME(FILE_PREFIX);   
+    m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
+    m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
     m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
     return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 

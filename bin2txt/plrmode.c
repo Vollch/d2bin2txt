@@ -24,8 +24,8 @@ static char *m_apcInternalProcess[] =
 static unsigned int m_iPlrModeCount = 0;
 static ST_PLRMODE *m_astPlrMode = NULL;
 
-MODULE_SETLINES_FUNC(FILE_PREFIX, m_astPlrMode, ST_PLRMODE);
-HAVENAME_FUNC(m_astPlrMode, vName, m_iPlrModeCount);
+MODULE_SETLINES_FUNC(m_astPlrMode, ST_PLRMODE);
+MODULE_HAVENAME_FUNC(m_astPlrMode, vName, m_iPlrModeCount);
 
 static int PlrMode_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
@@ -35,7 +35,7 @@ static int PlrMode_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo
     {
         char acName[21];
         strncpy(acName, pstLineInfo->vToken, sizeof(pstLineInfo->vToken));
-        if ( !String_BuildName(FORMAT(plrmode), 0xFFFF, pcTemplate, acName, iLineNo, HAVENAME, acOutput) )
+        if ( !String_BuildName(FORMAT(plrmode), 0xFFFF, pcTemplate, acName, iLineNo, MODULE_HAVENAME, acOutput) )
         {
             strcpy(acOutput, pstLineInfo->vToken);
         }
@@ -74,8 +74,8 @@ int process_plrmode(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
             m_iPlrModeCount = 0;
 
             m_stCallback.pfnFieldProc = PlrMode_FieldProc;
-            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME(FILE_PREFIX);
-            m_stCallback.pfnFinished = FINISHED_FUNC_NAME(FILE_PREFIX);
+            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
+            m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
             //m_stCallback.pfnGetKey = PlrMode_GetKey;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 

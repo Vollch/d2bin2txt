@@ -127,8 +127,8 @@ static char *m_apcInternalProcess[] =
 static unsigned int m_iPetTypeCount = 0;
 static ST_PETTYPE *m_astPetTypes = NULL;
 
-MODULE_SETLINES_FUNC(FILE_PREFIX, m_astPetTypes, ST_PETTYPE);
-HAVENAME_FUNC(m_astPetTypes, vpetmysptype, m_iPetTypeCount);
+MODULE_SETLINES_FUNC(m_astPetTypes, ST_PETTYPE);
+MODULE_HAVENAME_FUNC(m_astPetTypes, vpetmysptype, m_iPetTypeCount);
 
 char *Pettype_GetPetType(unsigned int id)
 {
@@ -148,7 +148,7 @@ static int PetType_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLi
     {
         char acName[33];
         strncpy(acName, pstLineInfo->vbaseicon, sizeof(pstLineInfo->vbaseicon));
-        if ( !String_BuildName(FORMAT(pettype), pstLineInfo->vname, pcTemplate, acName, pstLineInfo->vidx, HAVENAME, acOutput) )
+        if ( !String_BuildName(FORMAT(pettype), pstLineInfo->vname, pcTemplate, acName, pstLineInfo->vidx, MODULE_HAVENAME, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vidx);
         }
@@ -280,8 +280,8 @@ int process_pettype(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
             m_iPetTypeCount = 0;
 
             m_stCallback.pfnFieldProc = PetType_FieldProc_Pre;
-            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME(FILE_PREFIX);
-            m_stCallback.pfnFinished = FINISHED_FUNC_NAME(FILE_PREFIX);
+            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
+            m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
             //m_stCallback.pfnGetKey = PetType_GetKey;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 

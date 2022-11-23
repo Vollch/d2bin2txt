@@ -23,7 +23,7 @@ static char *m_apcInternalProcess[] =
     NULL,
 };
 
-MODULE_SETLINES_FUNC(FILE_PREFIX, m_astHireDesc, ST_HIRE_DESC);
+MODULE_SETLINES_FUNC(m_astHireDesc, ST_HIRE_DESC);
 
 char *HireDesc_MercDesc_GetDesc(unsigned int id)
 {
@@ -92,8 +92,8 @@ int process_hiredesc_MercDesc(char *acTemplatePath, char *acBinPath, char *acTxt
 
             //m_stCallback.pfnGetKey = HireDesc_GetKey;
             m_stCallback.pfnFieldProc = HireDesc_FieldProc;
-            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME(FILE_PREFIX);
-            m_stCallback.pfnFinished = FINISHED_FUNC_NAME(FILE_PREFIX);
+            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
+            m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 

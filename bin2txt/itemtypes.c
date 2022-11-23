@@ -155,7 +155,7 @@ static char *m_apcInternalProcess[] =
 static unsigned int m_iItemTypesCount = 0;
 static ST_ITEM_TYPES *m_astItemTypes = NULL;
 
-MODULE_SETLINES_FUNC(FILE_PREFIX, m_astItemTypes, ST_ITEM_TYPES);
+MODULE_SETLINES_FUNC(m_astItemTypes, ST_ITEM_TYPES);
 
 char *ItemTypes_GetItemCode(unsigned int id)
 {
@@ -304,8 +304,8 @@ int process_itemtypes(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
 
             //m_stCallback.pfnGetKey = ItemTypes_GetKey;
             m_stCallback.pfnFieldProc = ItemTypes_FieldProc_Pre;
-            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME(FILE_PREFIX);
-            m_stCallback.pfnFinished = FINISHED_FUNC_NAME(FILE_PREFIX);
+            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
+            m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
             m_stCallback.pfnConvertValue = ItemTypes_CalcTc;
 

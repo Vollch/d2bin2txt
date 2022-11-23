@@ -22,7 +22,7 @@ static char *m_apcInternalProcess[] =
 static unsigned int m_iHitClassCount = 0;
 static ST_HIT_CLASS *m_astHitClass = NULL;
 
-MODULE_SETLINES_FUNC(FILE_PREFIX, m_astHitClass, ST_HIT_CLASS);
+MODULE_SETLINES_FUNC(m_astHitClass, ST_HIT_CLASS);
 
 static int HitClass_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
@@ -77,8 +77,8 @@ int process_hitclass(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
 
             //m_stCallback.pfnGetKey = HitClass_GetKey;
             m_stCallback.pfnFieldProc = HitClass_FieldProc;
-            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME(FILE_PREFIX);
-            m_stCallback.pfnFinished = FINISHED_FUNC_NAME(FILE_PREFIX);
+            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
+            m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 

@@ -22,8 +22,8 @@ typedef struct
 static unsigned int m_iMonAiCount = 0;
 static ST_MON_AI *m_astMonAi = NULL;
 
-MODULE_SETLINES_FUNC(FILE_PREFIX, m_astMonAi, ST_MON_AI);
-HAVENAME_FUNC(m_astMonAi, vAI, m_iMonAiCount);
+MODULE_SETLINES_FUNC(m_astMonAi, ST_MON_AI);
+MODULE_HAVENAME_FUNC(m_astMonAi, vAI, m_iMonAiCount);
 
 static int MonAI_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
@@ -31,7 +31,7 @@ static int MonAI_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, 
 
     if ( !stricmp(acKey, "AI") )
     {
-        if ( !String_BuildName(FORMAT(monai), 0xFFFF, pcTemplate, NAME_PREFIX, pstLineInfo->vIndex, HAVENAME, acOutput) )
+        if ( !String_BuildName(FORMAT(monai), 0xFFFF, pcTemplate, NAME_PREFIX, pstLineInfo->vIndex, MODULE_HAVENAME, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vIndex);
         }
@@ -67,8 +67,8 @@ static int process_monai_x(char *acTemplatePath, char *acBinPath, char *acTxtPat
 
     //m_stCallback.pfnGetKey = MonAI_GetKey;
     m_stCallback.pfnFieldProc = MonAI_FieldProc;
-    m_stCallback.pfnSetLines = SETLINES_FUNC_NAME(FILE_PREFIX);
-    m_stCallback.pfnFinished = FINISHED_FUNC_NAME(FILE_PREFIX);
+    m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
+    m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
     m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
     return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 

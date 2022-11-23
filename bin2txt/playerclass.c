@@ -21,7 +21,7 @@ static char *m_apcInternalProcess[] =
 static unsigned int m_iPlayerClass = 0;
 static ST_PLAYER_CLASS *m_astPlayerClass = NULL;
 
-MODULE_SETLINES_FUNC(FILE_PREFIX, m_astPlayerClass, ST_PLAYER_CLASS);
+MODULE_SETLINES_FUNC(m_astPlayerClass, ST_PLAYER_CLASS);
 
 static int PlayerClass_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
@@ -66,8 +66,8 @@ static int process_playerclass_x(char *acTemplatePath, char *acBinPath, char *ac
 
     //m_stCallback.pfnGetKey = PlayerClass_GetKey;
     m_stCallback.pfnFieldProc = PlayerClass_FieldProc;
-    m_stCallback.pfnSetLines = SETLINES_FUNC_NAME(FILE_PREFIX);
-    m_stCallback.pfnFinished = FINISHED_FUNC_NAME(FILE_PREFIX);
+    m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
+    m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
     m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
     return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 

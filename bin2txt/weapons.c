@@ -709,7 +709,7 @@ static char *m_apcNotUsed[] =
 static unsigned int m_iWeaponCount = 0;
 static ST_WEAPON *m_astWeapon = NULL;
 
-MODULE_SETLINES_FUNC(FILE_PREFIX, m_astWeapon, ST_WEAPON);
+MODULE_SETLINES_FUNC(m_astWeapon, ST_WEAPON);
 
 char *Weapons_GetWeaponCode(unsigned int id)
 {
@@ -1080,8 +1080,8 @@ int process_weapons(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
             m_iWeaponCount = 0;
 
             m_stCallback.pfnFieldProc = Weapons_FieldProc_Pre;
-            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME(FILE_PREFIX);
-            m_stCallback.pfnFinished = FINISHED_FUNC_NAME(FILE_PREFIX);
+            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
+            m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 

@@ -21,7 +21,7 @@ static char *m_apcNotUsed[] =
 static unsigned int m_uiSkillCalcCount = 0;
 static ST_SKILL_CALC *m_astSkillCalc = NULL;
 
-MODULE_SETLINES_FUNC(FILE_PREFIX, m_astSkillCalc, ST_SKILL_CALC);
+MODULE_SETLINES_FUNC(m_astSkillCalc, ST_SKILL_CALC);
 
 char *SkillCalc_GetCalc(unsigned int id)
 {
@@ -61,8 +61,8 @@ int process_skillcalc(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
             m_uiSkillCalcCount = 0;
 
             m_stCallback.pfnConvertValue = SkillCalc_ConvertValue;
-            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME(FILE_PREFIX);
-            m_stCallback.pfnFinished = FINISHED_FUNC_NAME(FILE_PREFIX);
+            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
+            m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
 
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 

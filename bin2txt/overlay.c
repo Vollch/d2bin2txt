@@ -164,8 +164,8 @@ static char *m_apcInternalProcess[] =
 static unsigned int m_iOverlayCount = 0;
 static ST_OVERLAY *m_astOverlay = NULL;
 
-MODULE_SETLINES_FUNC(FILE_PREFIX, m_astOverlay, ST_OVERLAY);
-HAVENAME_FUNC(m_astOverlay, voverlay, m_iOverlayCount);
+MODULE_SETLINES_FUNC(m_astOverlay, ST_OVERLAY);
+MODULE_HAVENAME_FUNC(m_astOverlay, voverlay, m_iOverlayCount);
 
 static int OverLay_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
@@ -175,7 +175,7 @@ static int OverLay_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo
     {
         char acFile[33] = {0};
         String_StripFileName(pstLineInfo->vFilename, acFile, 32);
-        if ( !String_BuildName(FORMAT(overlay), 0xFFFF, pcTemplate, acFile, pstLineInfo->vId, HAVENAME, acOutput) )
+        if ( !String_BuildName(FORMAT(overlay), 0xFFFF, pcTemplate, acFile, pstLineInfo->vId, MODULE_HAVENAME, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vId);
         }
@@ -236,8 +236,8 @@ int process_overlay(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
             m_iOverlayCount = 0;
 
             m_stCallback.pfnFieldProc = OverLay_FieldProc;
-            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME(FILE_PREFIX);
-            m_stCallback.pfnFinished = FINISHED_FUNC_NAME(FILE_PREFIX);
+            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
+            m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 

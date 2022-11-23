@@ -125,8 +125,8 @@ typedef struct
 static unsigned int m_iEventsCount = 0;
 static ST_EVENTS *m_astEvents = NULL;
 
-MODULE_SETLINES_FUNC(FILE_PREFIX, m_astEvents, ST_EVENTS);
-HAVENAME_FUNC(m_astEvents, vevent, m_iEventsCount);
+MODULE_SETLINES_FUNC(m_astEvents, ST_EVENTS);
+MODULE_HAVENAME_FUNC(m_astEvents, vevent, m_iEventsCount);
 
 static int Events_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
 {
@@ -134,7 +134,7 @@ static int Events_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, 
 
     if ( !stricmp(acKey, "event") )
     {
-        if ( !String_BuildName(FORMAT(events), 0xFFFF, pcTemplate, NAME_PREFIX, m_iEventsCount, HAVENAME, acOutput) )
+        if ( !String_BuildName(FORMAT(events), 0xFFFF, pcTemplate, NAME_PREFIX, m_iEventsCount, MODULE_HAVENAME, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vevent);
         }
@@ -159,8 +159,8 @@ static int process_events_x(char *acTemplatePath, char *acBinPath, char *acTxtPa
     m_iEventsCount = 0;
 
     m_stCallback.pfnConvertValue = Events_ConvertValue;
-    m_stCallback.pfnSetLines = SETLINES_FUNC_NAME(FILE_PREFIX);
-    m_stCallback.pfnFinished = FINISHED_FUNC_NAME(FILE_PREFIX);
+    m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
+    m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
     m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
 
     return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 

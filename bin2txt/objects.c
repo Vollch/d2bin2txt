@@ -714,7 +714,7 @@ static char *m_apcInternalProcess[] =
 static unsigned int m_iObjectsCount = 0;
 static ST_OBJECTS *m_astObjects = NULL;
 
-MODULE_SETLINES_FUNC(FILE_PREFIX, m_astObjects, ST_OBJECTS);
+MODULE_SETLINES_FUNC(m_astObjects, ST_OBJECTS);
 
 static int Objects_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
@@ -950,8 +950,8 @@ int process_objects(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
     {
         case EN_MODULE_SELF_DEPEND:
             m_stCallback.pfnFieldProc = Objects_FieldProc;
-            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME(FILE_PREFIX);
-            m_stCallback.pfnFinished = FINISHED_FUNC_NAME(FILE_PREFIX);
+            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
+            m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 

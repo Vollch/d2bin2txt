@@ -21,7 +21,7 @@ static char *m_apcInternalProcess[] =
 static unsigned int m_iCompcodeCount = 0;
 static ST_COMPCODE *m_astCompcode = NULL;
 
-MODULE_SETLINES_FUNC(FILE_PREFIX, m_astCompcode, ST_COMPCODE);
+MODULE_SETLINES_FUNC(m_astCompcode, ST_COMPCODE);
 
 static int Compcode_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
@@ -67,8 +67,8 @@ int process_compcode(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
             m_iCompcodeCount = 0;
 
             m_stCallback.pfnFieldProc = Compcode_FieldProc;
-            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME(FILE_PREFIX);
-            m_stCallback.pfnFinished = FINISHED_FUNC_NAME(FILE_PREFIX);
+            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
+            m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
             //m_stCallback.pfnGetKey = Compcode_GetKey;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 

@@ -24,8 +24,8 @@ static char *m_apcInternalProcess[] =
 static unsigned int m_iMonModeCount = 0;
 static ST_MONMODE *m_astMonMode = NULL;
 
-MODULE_SETLINES_FUNC(FILE_PREFIX, m_astMonMode, ST_MONMODE);
-HAVENAME_FUNC(m_astMonMode, vname, m_iMonModeCount);
+MODULE_SETLINES_FUNC(m_astMonMode, ST_MONMODE);
+MODULE_HAVENAME_FUNC(m_astMonMode, vname, m_iMonModeCount);
 
 static int MonMode_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
@@ -35,7 +35,7 @@ static int MonMode_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo
     {
         char acName[21];
         strncpy(acName, pstLineInfo->vtoken, sizeof(pstLineInfo->vtoken));
-        if ( !String_BuildName(FORMAT(monmode), 0xFFFF, pcTemplate, acName, m_iMonModeCount, HAVENAME, acOutput) )
+        if ( !String_BuildName(FORMAT(monmode), 0xFFFF, pcTemplate, acName, m_iMonModeCount, MODULE_HAVENAME, acOutput) )
         {
             strncpy(acOutput, pstLineInfo->vtoken, sizeof(pstLineInfo->vtoken));
         }
@@ -74,8 +74,8 @@ int process_monmode(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
             m_iMonModeCount = 0;
 
             m_stCallback.pfnFieldProc = MonMode_FieldProc;
-            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME(FILE_PREFIX);
-            m_stCallback.pfnFinished = FINISHED_FUNC_NAME(FILE_PREFIX);
+            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
+            m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
             //m_stCallback.pfnGetKey = MonMode_GetKey;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 

@@ -331,8 +331,8 @@ static char *m_apcInternalProcess[] =
 static unsigned int m_iMonPropCount = 0;
 static ST_MON_PROP *m_astMonProp = NULL;
 
-MODULE_SETLINES_FUNC(FILE_PREFIX, m_astMonProp, ST_MON_PROP);
-HAVENAME_FUNC(m_astMonProp, vId, m_iMonPropCount);
+MODULE_SETLINES_FUNC(m_astMonProp, ST_MON_PROP);
+MODULE_HAVENAME_FUNC(m_astMonProp, vId, m_iMonPropCount);
 
 char *MonProp_GetPropId(unsigned int id)
 {
@@ -363,7 +363,7 @@ static int MonProp_ConvertValue_Pre(void *pvLineInfo, char *acKey, char *pcTempl
 
     if ( !stricmp(acKey, "Id") )
     {
-        if ( !String_BuildName(FORMAT(monprop), MonStats_GetPropString(pstLineInfo->vId), pcTemplate, NULL, m_iMonPropCount, HAVENAME, acOutput) )
+        if ( !String_BuildName(FORMAT(monprop), MonStats_GetPropString(pstLineInfo->vId), pcTemplate, NULL, m_iMonPropCount, MODULE_HAVENAME, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vId);
         }
@@ -527,8 +527,8 @@ int process_monprop(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
             m_iMonPropCount = 0;
 
             m_stCallback.pfnConvertValue = MonProp_ConvertValue_Pre;
-            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME(FILE_PREFIX);
-            m_stCallback.pfnFinished = FINISHED_FUNC_NAME(FILE_PREFIX);
+            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
+            m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
             return process_file(acTemplatePath, acBinPath, NULL, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 

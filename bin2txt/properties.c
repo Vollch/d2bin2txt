@@ -368,8 +368,8 @@ static char *m_apcNotUsed[] =
 static unsigned int m_iPropertyCount = 0;
 static ST_PROPERTY *m_astProperty = NULL;
 
-MODULE_SETLINES_FUNC(FILE_PREFIX, m_astProperty, ST_PROPERTY);
-HAVENAME_FUNC(m_astProperty, vcode, m_iPropertyCount);
+MODULE_SETLINES_FUNC(m_astProperty, ST_PROPERTY);
+MODULE_HAVENAME_FUNC(m_astProperty, vcode, m_iPropertyCount);
 
 static int Properties_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
@@ -400,7 +400,7 @@ static int Properties_ConvertValue_Pre(void *pvLineInfo, char *acKey, char *pcTe
 
     if ( !stricmp(acKey, "code") )
     {
-        if ( !String_BuildName(FORMAT(properties), ItemStatCost_GetString(pstLineInfo->vstat1), pcTemplate, ItemStatCost_GetStateName(pstLineInfo->vstat1), pstLineInfo->vcode, HAVENAME, acOutput) )
+        if ( !String_BuildName(FORMAT(properties), ItemStatCost_GetString(pstLineInfo->vstat1), pcTemplate, ItemStatCost_GetStateName(pstLineInfo->vstat1), pstLineInfo->vcode, MODULE_HAVENAME, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vcode);
         }
@@ -490,8 +490,8 @@ int process_properties(char *acTemplatePath, char *acBinPath, char *acTxtPath, E
             m_iPropertyCount = 0;
 
             m_stCallback.pfnConvertValue = Properties_ConvertValue_Pre;
-            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME(FILE_PREFIX);
-            m_stCallback.pfnFinished = FINISHED_FUNC_NAME(FILE_PREFIX);
+            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
+            m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 

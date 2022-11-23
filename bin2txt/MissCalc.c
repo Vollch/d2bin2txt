@@ -21,7 +21,7 @@ static char *m_apcNotUsed[] =
 static unsigned int m_iMissCalc = 0;
 static ST_MISS_CALC *m_astMissCalc = NULL;
 
-MODULE_SETLINES_FUNC(FILE_PREFIX, m_astMissCalc, ST_MISS_CALC);
+MODULE_SETLINES_FUNC(m_astMissCalc, ST_MISS_CALC);
 
 static int MissCalc_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
 {
@@ -61,8 +61,8 @@ int process_misscalc(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
             m_iMissCalc = 0;
 
             m_stCallback.pfnConvertValue = MissCalc_ConvertValue;
-            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME(FILE_PREFIX);
-            m_stCallback.pfnFinished = FINISHED_FUNC_NAME(FILE_PREFIX);
+            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
+            m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
             //m_stCallback.pfnGetKey = MissCalc_GetKey;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
 

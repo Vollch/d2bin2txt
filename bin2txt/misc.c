@@ -956,7 +956,7 @@ static char *m_apcNotUsed[] =
 static unsigned int m_iMiscCount = 0;
 static ST_MISC *m_astMisc = NULL;
 
-MODULE_SETLINES_FUNC(FILE_PREFIX, m_astMisc, ST_MISC);
+MODULE_SETLINES_FUNC(m_astMisc, ST_MISC);
 
 char *Misc_GetItemUniqueCode(unsigned int id)
 {
@@ -1391,8 +1391,8 @@ int process_misc(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MO
             m_iMiscCount = 0;
 
             m_stCallback.pfnFieldProc = Misc_FieldProc_Pre;
-            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME(FILE_PREFIX);
-            m_stCallback.pfnFinished = FINISHED_FUNC_NAME(FILE_PREFIX);
+            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
+            m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
 

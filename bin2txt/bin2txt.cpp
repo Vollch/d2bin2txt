@@ -16,115 +16,22 @@ typedef struct
     ENUM_MODULE_PHASE enPhase;
 } ST_MODULE;
 
+static ST_MODULE m_astProcessModule[EN_MID_MAX];
+
 #define MODULE_MAP_DEFINE(key) \
     do\
     {\
-        m_astProcessModule[MODULE_ID_DEFINE(key)].pcFileName = #key;\
-        m_astProcessModule[MODULE_ID_DEFINE(key)].pcNameFormat = NULL;\
-        m_astProcessModule[MODULE_ID_DEFINE(key)].iNameSize = 24;\
-        m_astProcessModule[MODULE_ID_DEFINE(key)].pfnProcessModule = process_##key;\
-        m_astProcessModule[MODULE_ID_DEFINE(key)].enPhase = EN_MODULE_PHASE_START;\
-    } while (0)
+        m_astProcessModule[MODULE_ID(key)].pcFileName = #key;\
+        m_astProcessModule[MODULE_ID(key)].pcNameFormat = NULL;\
+        m_astProcessModule[MODULE_ID(key)].iNameSize = 24;\
+        m_astProcessModule[MODULE_ID(key)].pfnProcessModule = process_##key;\
+        m_astProcessModule[MODULE_ID(key)].enPhase = EN_MODULE_PHASE_START;\
+    } while (0);
 
-static ST_MODULE m_astProcessModule[EN_MID_MAX];
 
 void Init_Module()
 {
-    MODULE_MAP_DEFINE(D2NewStats);
-    MODULE_MAP_DEFINE(D2KillCounter);
-    MODULE_MAP_DEFINE(BookOfLore);
-    MODULE_MAP_DEFINE(LevelFX);
-    MODULE_MAP_DEFINE(ItemDesc);
-    MODULE_MAP_DEFINE(Waypoints);
-    MODULE_MAP_DEFINE(NoSock);
-    MODULE_MAP_DEFINE(QDrop);
-    MODULE_MAP_DEFINE(bufficons);
-    MODULE_MAP_DEFINE(arena);
-    MODULE_MAP_DEFINE(armor);
-    MODULE_MAP_DEFINE(armtype);
-    MODULE_MAP_DEFINE(automagic);
-    MODULE_MAP_DEFINE(automap);
-    MODULE_MAP_DEFINE(belts);
-    MODULE_MAP_DEFINE(bodylocs);
-    MODULE_MAP_DEFINE(books);
-    MODULE_MAP_DEFINE(charstats);
-    MODULE_MAP_DEFINE(chartemplate);
-    MODULE_MAP_DEFINE(colors);
-    MODULE_MAP_DEFINE(compcode);
-    MODULE_MAP_DEFINE(composit);
-    MODULE_MAP_DEFINE(cubemain);
-    MODULE_MAP_DEFINE(difficultylevels);
-    MODULE_MAP_DEFINE(elemtypes);
-    MODULE_MAP_DEFINE(events);
-    MODULE_MAP_DEFINE(experience);
-    MODULE_MAP_DEFINE(gamble);
-    MODULE_MAP_DEFINE(gems);
-    MODULE_MAP_DEFINE(hiredesc);
-    MODULE_MAP_DEFINE(hireling);
-    MODULE_MAP_DEFINE(hitclass);
-    MODULE_MAP_DEFINE(inventory);
-    MODULE_MAP_DEFINE(itemratio);
-    MODULE_MAP_DEFINE(itemstatcost);
-    MODULE_MAP_DEFINE(itemtypes);
-    MODULE_MAP_DEFINE(levels);
-    MODULE_MAP_DEFINE(lowqualityitems);
-    MODULE_MAP_DEFINE(lvlmaze);
-    MODULE_MAP_DEFINE(lvlprest);
-    MODULE_MAP_DEFINE(lvlsub);
-    MODULE_MAP_DEFINE(lvltypes);
-    MODULE_MAP_DEFINE(lvlwarp);
-    MODULE_MAP_DEFINE(magicprefix);
-    MODULE_MAP_DEFINE(magicsuffix);
-    MODULE_MAP_DEFINE(misc);
-    MODULE_MAP_DEFINE(misscalc);
-    MODULE_MAP_DEFINE(missiles);
-    MODULE_MAP_DEFINE(monai);
-    MODULE_MAP_DEFINE(monequip);
-    MODULE_MAP_DEFINE(monitempercent);
-    MODULE_MAP_DEFINE(monlvl);
-    MODULE_MAP_DEFINE(monmode);
-    MODULE_MAP_DEFINE(monplace);
-    MODULE_MAP_DEFINE(monpreset);
-    MODULE_MAP_DEFINE(monprop);
-    MODULE_MAP_DEFINE(monseq);
-    MODULE_MAP_DEFINE(monsounds);
-    MODULE_MAP_DEFINE(monstats);
-    MODULE_MAP_DEFINE(monstats2);
-    MODULE_MAP_DEFINE(montype);
-    MODULE_MAP_DEFINE(monumod);
-    MODULE_MAP_DEFINE(npc);
-    MODULE_MAP_DEFINE(objects);
-    MODULE_MAP_DEFINE(objgroup);
-    MODULE_MAP_DEFINE(objmode);
-    MODULE_MAP_DEFINE(objtype);
-    MODULE_MAP_DEFINE(overlay);
-    MODULE_MAP_DEFINE(pettype);
-    MODULE_MAP_DEFINE(playerclass);
-    MODULE_MAP_DEFINE(plrmode);
-    MODULE_MAP_DEFINE(plrtype);
-    MODULE_MAP_DEFINE(properties);
-    MODULE_MAP_DEFINE(qualityitems);
-    MODULE_MAP_DEFINE(rareprefix);
-    MODULE_MAP_DEFINE(raresuffix);
-    MODULE_MAP_DEFINE(runes);
-    MODULE_MAP_DEFINE(setitems);
-    MODULE_MAP_DEFINE(sets);
-    MODULE_MAP_DEFINE(shrines);
-    MODULE_MAP_DEFINE(skillcalc);
-    MODULE_MAP_DEFINE(skilldesc);
-    MODULE_MAP_DEFINE(skills);
-    MODULE_MAP_DEFINE(sounds);
-    MODULE_MAP_DEFINE(states);
-    MODULE_MAP_DEFINE(storepage);
-    MODULE_MAP_DEFINE(string);
-    MODULE_MAP_DEFINE(superuniques);
-    MODULE_MAP_DEFINE(treasureclassex);
-    MODULE_MAP_DEFINE(uniqueappellation);
-    MODULE_MAP_DEFINE(uniqueitems);
-    MODULE_MAP_DEFINE(uniqueprefix);
-    MODULE_MAP_DEFINE(uniquesuffix);
-    MODULE_MAP_DEFINE(uniquetitle);
-    MODULE_MAP_DEFINE(weapons);
+    ALL_MODULES(MODULE_MAP_DEFINE)
 }
 
 void Set_ModulePhase(ENUM_MODULE_ID enMid, ENUM_MODULE_PHASE enPhase)

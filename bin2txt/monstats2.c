@@ -629,7 +629,7 @@ static char *m_apcInternalProcess[] =
 static unsigned int m_iMonStatsCount = 0;
 static ST_MONSTAT *m_astMonStats = NULL;
 
-MODULE_SETLINES_FUNC(FILE_PREFIX, m_astMonStats, ST_MONSTAT);
+MODULE_SETLINES_FUNC(m_astMonStats, ST_MONSTAT);
 
 static int MonStats2_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
@@ -1334,8 +1334,8 @@ int process_monstats2(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
             MonStats2_InitValueMap(pstValueMap, pstLineInfo);
 
             m_stCallback.pfnConvertValue = MonStats2_ConvertValue_Pre;
-            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME(FILE_PREFIX);
-            m_stCallback.pfnFinished = FINISHED_FUNC_NAME(FILE_PREFIX);
+            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
+            m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
             m_iMonStatsCount = 0;

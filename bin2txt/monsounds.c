@@ -161,8 +161,8 @@ static char *m_apcInternalProcess[] =
 static unsigned int m_iMonSoundsCount = 0;
 static ST_MONSOUND *m_astMonSounds = NULL;
 
-MODULE_SETLINES_FUNC(FILE_PREFIX, m_astMonSounds, ST_MONSOUND);
-HAVENAME_FUNC(m_astMonSounds, vId, m_iMonSoundsCount);
+MODULE_SETLINES_FUNC(m_astMonSounds, ST_MONSOUND);
+MODULE_HAVENAME_FUNC(m_astMonSounds, vId, m_iMonSoundsCount);
 
 char *MonSounds_GetItemSoundsCode(unsigned int id)
 {
@@ -198,7 +198,7 @@ static int MonSounds_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int i
           (pcName = Sounds_GetSoundName2(pstLineInfo->vFootstep)) ||
           (pcName = Sounds_GetSoundName2(pstLineInfo->vFootstepLayer)) );
 
-        if ( !String_BuildName(FORMAT(monsounds), 0xFFFF, pcTemplate, pcName, pstLineInfo->vId, HAVENAME, acOutput) )
+        if ( !String_BuildName(FORMAT(monsounds), 0xFFFF, pcTemplate, pcName, pstLineInfo->vId, MODULE_HAVENAME, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vId);
         }
@@ -317,8 +317,8 @@ int process_monsounds(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
             m_iMonSoundsCount = 0;
 
             m_stCallback.pfnFieldProc = MonSounds_FieldProc_Pre;
-            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME(FILE_PREFIX);
-            m_stCallback.pfnFinished = FINISHED_FUNC_NAME(FILE_PREFIX);
+            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
+            m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
             return process_file(acTemplatePath, acBinPath, NULL, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 

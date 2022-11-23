@@ -620,8 +620,8 @@ static char *m_apcInternalProcess[] =
 static unsigned int m_iSkillDescCount = 0;
 static ST_SKILL_DESC *m_astSkillDesc = NULL;
 
-MODULE_SETLINES_FUNC(FILE_PREFIX, m_astSkillDesc, ST_SKILL_DESC);
-HAVENAME_FUNC(m_astSkillDesc, vskilldesc, m_iSkillDescCount);
+MODULE_SETLINES_FUNC(m_astSkillDesc, ST_SKILL_DESC);
+MODULE_HAVENAME_FUNC(m_astSkillDesc, vskilldesc, m_iSkillDescCount);
 
 static int SkillDesc_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
@@ -629,7 +629,7 @@ static int SkillDesc_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int i
 
     if ( !stricmp(acKey, "skilldesc") )
     {
-        if ( !String_BuildName(FORMAT(skilldesc), pstLineInfo->vstrmyspname, pcTemplate, NAME_PREFIX, pstLineInfo->wSkillDesc, HAVENAME, acOutput) )
+        if ( !String_BuildName(FORMAT(skilldesc), pstLineInfo->vstrmyspname, pcTemplate, NAME_PREFIX, pstLineInfo->wSkillDesc, MODULE_HAVENAME, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->wSkillDesc);
         }
@@ -853,8 +853,8 @@ int process_skilldesc(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
             m_iSkillDescCount = 0;
 
             m_stCallback.pfnFieldProc = SkillDesc_FieldProc_Pre;
-            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME(FILE_PREFIX);
-            m_stCallback.pfnFinished = FINISHED_FUNC_NAME(FILE_PREFIX);
+            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
+            m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
             return process_file(acTemplatePath, acBinPath, NULL, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo),

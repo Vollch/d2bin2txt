@@ -51,8 +51,8 @@ static char *m_apcInternalProcess[] =
 static unsigned int m_iMonTypeCount = 0;
 static ST_MONTYPE *m_astMonType = NULL;
 
-MODULE_SETLINES_FUNC(FILE_PREFIX, m_astMonType, ST_MONTYPE);
-HAVENAME_FUNC(m_astMonType, vtype, m_iMonTypeCount);
+MODULE_SETLINES_FUNC(m_astMonType, ST_MONTYPE);
+MODULE_HAVENAME_FUNC(m_astMonType, vtype, m_iMonTypeCount);
 
 char *MonType_GetType(unsigned int id)
 {
@@ -71,7 +71,7 @@ static int MonType_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLi
     if ( !stricmp(acKey, "type") )
     {
         char *pcName = String_FindString(pstLineInfo->vstrplur, "dummy");
-        if ( !String_BuildName(FORMAT(montype), pstLineInfo->vstrsing, pcTemplate, pcName, pstLineInfo->vId, HAVENAME, acOutput) )
+        if ( !String_BuildName(FORMAT(montype), pstLineInfo->vstrsing, pcTemplate, pcName, pstLineInfo->vId, MODULE_HAVENAME, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vId);
         }
@@ -141,8 +141,8 @@ int process_montype(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
             m_iMonTypeCount = 0;
 
             m_stCallback.pfnFieldProc = MonType_FieldProc_Pre;
-            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME(FILE_PREFIX);
-            m_stCallback.pfnFinished = FINISHED_FUNC_NAME(FILE_PREFIX);
+            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
+            m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
             return process_file(acTemplatePath, acBinPath, NULL, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 

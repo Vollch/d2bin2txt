@@ -65,8 +65,8 @@ static char *m_apcInternalProcess[] =
 static unsigned int m_iMonSeqCount = 0;
 static ST_MONSEQ *m_astMonSeq = NULL;
 
-MODULE_SETLINES_FUNC(FILE_PREFIX, m_astMonSeq, ST_MONSEQ);
-HAVENAME_FUNC(m_astMonSeq, vsequence, m_iMonSeqCount);
+MODULE_SETLINES_FUNC(m_astMonSeq, ST_MONSEQ);
+MODULE_HAVENAME_FUNC(m_astMonSeq, vsequence, m_iMonSeqCount);
 
 static int MonSeq_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
@@ -80,7 +80,7 @@ static int MonSeq_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLin
             return 1;
         }
 
-        if ( !String_BuildName(FORMAT(monseq), 0xFFFF, pcTemplate, NAME_PREFIX, pstLineInfo->vId, HAVENAME, acOutput) )
+        if ( !String_BuildName(FORMAT(monseq), 0xFFFF, pcTemplate, NAME_PREFIX, pstLineInfo->vId, MODULE_HAVENAME, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vId);
         }
@@ -149,8 +149,8 @@ int process_monseq(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_
             m_iMonSeqCount = 0;
 
             m_stCallback.pfnFieldProc = MonSeq_FieldProc_Pre;
-            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME(FILE_PREFIX);
-            m_stCallback.pfnFinished = FINISHED_FUNC_NAME(FILE_PREFIX);
+            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
+            m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
             return process_file(acTemplatePath, acBinPath, NULL, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 

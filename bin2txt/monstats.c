@@ -1163,8 +1163,8 @@ static char *m_apcInternalProcess[] =
 static unsigned int m_iMonStatsCount = 0;
 static ST_MONSTAT *m_astMonStats = NULL;
 
-MODULE_SETLINES_FUNC(FILE_PREFIX, m_astMonStats, ST_MONSTAT);
-HAVENAME_FUNC(m_astMonStats, vId, m_iMonStatsCount);
+MODULE_SETLINES_FUNC(m_astMonStats, ST_MONSTAT);
+MODULE_HAVENAME_FUNC(m_astMonStats, vId, m_iMonStatsCount);
 
 static int MonStats_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
@@ -1174,7 +1174,7 @@ static int MonStats_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iL
     {
         char acName[5];
         strncpy(acName, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
-        if ( !String_BuildName(FORMAT(monstats), pstLineInfo->vNameStr, pcTemplate, acName, pstLineInfo->vhcIdx, HAVENAME, acOutput) )
+        if ( !String_BuildName(FORMAT(monstats), pstLineInfo->vNameStr, pcTemplate, acName, pstLineInfo->vhcIdx, MODULE_HAVENAME, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vhcIdx);
         }
@@ -1845,8 +1845,8 @@ int process_monstats(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
             MonStats_InitValueMap(pstValueMap, pstLineInfo);
 
             m_stCallback.pfnFieldProc = MonStats_FieldProc_Pre;
-            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME(FILE_PREFIX);
-            m_stCallback.pfnFinished = FINISHED_FUNC_NAME(FILE_PREFIX);
+            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
+            m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
             m_iMonStatsCount = 0;

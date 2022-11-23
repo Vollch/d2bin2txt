@@ -246,8 +246,8 @@ static char *m_apcInternalProcess[] =
 static unsigned int m_iSuperUniquesCount = 0;
 static ST_SUPER_UNIQUES *m_astSuperUniques = NULL;
 
-MODULE_SETLINES_FUNC(FILE_PREFIX, m_astSuperUniques, ST_SUPER_UNIQUES);
-HAVENAME_FUNC(m_astSuperUniques, vSuperunique, m_iSuperUniquesCount);
+MODULE_SETLINES_FUNC(m_astSuperUniques, ST_SUPER_UNIQUES);
+MODULE_HAVENAME_FUNC(m_astSuperUniques, vSuperunique, m_iSuperUniquesCount);
 
 char *SuperUniques_GetItemUniqueCode(unsigned int id)
 {
@@ -266,7 +266,7 @@ static int SuperUniques_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned in
 
     if ( !stricmp(acKey, "Superunique") )
     {
-        if ( !String_BuildName(FORMAT(superuniques), pstLineInfo->vName, pcTemplate, NAME_PREFIX, pstLineInfo->wHcIdx, HAVENAME, acOutput) )
+        if ( !String_BuildName(FORMAT(superuniques), pstLineInfo->vName, pcTemplate, NAME_PREFIX, pstLineInfo->wHcIdx, MODULE_HAVENAME, acOutput) )
         {
             pcResult = String_FindString(pstLineInfo->vName, "dummy");
             if ( pcResult )
@@ -359,8 +359,8 @@ int process_superuniques(char *acTemplatePath, char *acBinPath, char *acTxtPath,
             m_iSuperUniquesCount = 0;
 
             m_stCallback.pfnFieldProc = SuperUniques_FieldProc_Pre;
-            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME(FILE_PREFIX);
-            m_stCallback.pfnFinished = FINISHED_FUNC_NAME(FILE_PREFIX);
+            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
+            m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
             return process_file(acTemplatePath, acBinPath, NULL, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 

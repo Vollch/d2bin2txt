@@ -255,7 +255,7 @@ static unsigned int m_uiTcOffset = 0;
 static unsigned int m_iTreasureClassEx = 0;
 static ST_TREASURECLASSEX *m_astTreasureClassEx = NULL;
 
-MODULE_SETLINES_FUNC(FILE_PREFIX, m_astTreasureClassEx, ST_TREASURECLASSEX);
+MODULE_SETLINES_FUNC(m_astTreasureClassEx, ST_TREASURECLASSEX);
 
 void TreasureClassEx_SetOffset(unsigned int uiOffset)
 {
@@ -376,8 +376,8 @@ int process_treasureclassex(char *acTemplatePath, char *acBinPath, char *acTxtPa
 
             //m_stCallback.pfnGetKey = TreasureClassEx_GetKey;
             m_stCallback.pfnFieldProc = TreasureClassEx_FieldProc;
-            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME(FILE_PREFIX);
-            m_stCallback.pfnFinished = FINISHED_FUNC_NAME(FILE_PREFIX);
+            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
+            m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 

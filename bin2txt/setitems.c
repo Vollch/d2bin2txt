@@ -437,7 +437,7 @@ static char *m_apcNotUsed[] =
 static unsigned int m_uiSetItemCount = 0;
 static ST_SETITEMS *m_astSetItems = NULL;
 
-MODULE_SETLINES_FUNC(FILE_PREFIX, m_astSetItems, ST_SETITEMS);
+MODULE_SETLINES_FUNC(m_astSetItems, ST_SETITEMS);
 
 char *SetItems_GetItemUniqueCode(unsigned int id)
 {
@@ -702,8 +702,8 @@ int process_setitems(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
             m_uiSetItemCount = 0;
 
             m_stCallback.pfnConvertValue = SetItems_ConvertValue_Pre;
-            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME(FILE_PREFIX);
-            m_stCallback.pfnFinished = FINISHED_FUNC_NAME(FILE_PREFIX);
+            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
+            m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
