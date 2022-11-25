@@ -99,10 +99,37 @@ typedef struct
     unsigned char vDestroyReqItem;
     unsigned char vDestroyReqItemmybr1Nmybr2;
     unsigned char vDestroyReqItemmybr1Hmybr2;
-} ST_LINE_INFO;
+} ST_LINE_INFO_131;
 #pragma pack(pop)
 
-static char *m_apcInternalProcess[] =
+#pragma pack(push, 1)
+typedef struct
+{
+    unsigned short vLevelID;
+    unsigned char vWayptID;
+    unsigned char vTab;
+    unsigned char vHidden;
+    unsigned char vNormal;
+    unsigned char vNightmare;
+    unsigned char vHell;
+
+    unsigned char vUnlockItem[4];
+    unsigned char vUnlockItemmybr1Nmybr2[4];
+    unsigned char vUnlockItemmybr1Hmybr2[4];
+    unsigned char vReqItem[4];
+    unsigned char vReqItemmybr1Nmybr2[4];
+    unsigned char vReqItemmybr1Hmybr2[4];
+    unsigned char vKeyItem[4];
+    unsigned char vKeyItemmybr1Nmybr2[4];
+    unsigned char vKeyItemmybr1Hmybr2[4];
+
+    unsigned char vKillKeyItem;
+    unsigned char vKillKeyItemmybr1Nmybr2;
+    unsigned char vKillKeyItemmybr1Hmybr2;
+} ST_LINE_INFO_010;
+#pragma pack(pop)
+
+static char *m_apcInternalProcess_131[] =
 {
     "*LevelName",
     "*Act",
@@ -110,9 +137,17 @@ static char *m_apcInternalProcess[] =
     NULL,
 };
 
-static int Waypoints_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
+static char *m_apcInternalProcess_010[] =
 {
-    ST_LINE_INFO *pstLineInfo = pvLineInfo;
+    "*eol",
+    NULL,
+};
+
+static unsigned int m_iBinStructSize = 0;
+
+static int Waypoints_FieldProc_131(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
+{
+    ST_LINE_INFO_131 *pstLineInfo = pvLineInfo;
 
     if ( !stricmp(acKey, "*LevelName") )
     {
@@ -140,9 +175,22 @@ static int Waypoints_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLine
     return 0;
 }
 
-int process_Waypoints(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
+static int Waypoints_FieldProc_010(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
-    ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
+    if ( !stricmp(acKey, "*eol") )
+    {
+        acOutput[0] = '0';
+        acOutput[1] = 0;
+
+        return 1;
+    }
+
+    return 0;
+}
+
+int process_Waypoints_131(char *acTemplatePath, char *acBinPath, char *acTxtPath)
+{
+    ST_LINE_INFO_131 *pstLineInfo = (ST_LINE_INFO_131 *)m_acLineInfoBuf;
 
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
@@ -238,25 +286,77 @@ int process_Waypoints(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, DestroyReqItemmybr1Nmybr2, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, DestroyReqItemmybr1Hmybr2, UCHAR);
 
+    m_stCallback.iOptional = 1;
+    m_stCallback.pfnFieldProc = Waypoints_FieldProc_131;
+    m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess_131;
+
+    return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
+        pstValueMap, Global_GetValueMapCount(), &m_stCallback);
+}
+
+int process_Waypoints_010(char *acTemplatePath, char *acBinPath, char *acTxtPath)
+{
+    ST_LINE_INFO_010 *pstLineInfo = (ST_LINE_INFO_010 *)m_acLineInfoBuf;
+
+    ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
+
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, LevelID, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, WayptID, UCHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Tab, UCHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Hidden, UCHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Normal, UCHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Nightmare, UCHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Hell, UCHAR);
+
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, UnlockItem, STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, UnlockItemmybr1Nmybr2, STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, UnlockItemmybr1Hmybr2, STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ReqItem, STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ReqItemmybr1Nmybr2, STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ReqItemmybr1Hmybr2, STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, KeyItem, STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, KeyItemmybr1Nmybr2, STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, KeyItemmybr1Hmybr2, STRING);
+
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, KillKeyItem, UCHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, KillKeyItemmybr1Nmybr2, UCHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, KillKeyItemmybr1Hmybr2, UCHAR);
+
+    m_stCallback.iOptional = 1;
+    m_stCallback.pfnFieldProc = Waypoints_FieldProc_010;
+    m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess_010;
+
+    return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
+        pstValueMap, Global_GetValueMapCount(), &m_stCallback);
+}
+
+int process_Waypoints(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
+{
     switch ( enPhase )
     {
         case EN_MODULE_PREPARE:
+            m_iBinStructSize = getBinStructSize(acBinPath, FILE_PREFIX);
+            break;
+
         case EN_MODULE_SELF_DEPEND:
             break;
 
         case EN_MODULE_OTHER_DEPEND:
-            MODULE_DEPEND_CALL(string, acTemplatePath, acBinPath, acTxtPath);
-            MODULE_DEPEND_CALL(itemstatcost, acTemplatePath, acBinPath, acTxtPath);
-            MODULE_DEPEND_CALL(levels, acTemplatePath, acBinPath, acTxtPath);
+            if ( m_iBinStructSize != sizeof(ST_LINE_INFO_010) )
+            {
+                MODULE_DEPEND_CALL(string, acTemplatePath, acBinPath, acTxtPath);
+                MODULE_DEPEND_CALL(itemstatcost, acTemplatePath, acBinPath, acTxtPath);
+                MODULE_DEPEND_CALL(levels, acTemplatePath, acBinPath, acTxtPath);
+            }
             break;
 
         case EN_MODULE_INIT:
-            m_stCallback.iOptional = 1;
-            m_stCallback.pfnFieldProc = Waypoints_FieldProc;
-            m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
-
-            return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
-                pstValueMap, Global_GetValueMapCount(), &m_stCallback);
+            if ( m_iBinStructSize == sizeof(ST_LINE_INFO_010) )
+            {
+                my_printf("Waypoints 0.10 detected\n");
+                return process_Waypoints_010(acTemplatePath, acBinPath, acTxtPath);
+            }
+            return process_Waypoints_131(acTemplatePath, acBinPath, acTxtPath);
             break;
 
         default:
