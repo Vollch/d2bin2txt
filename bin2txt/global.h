@@ -22,6 +22,7 @@ extern "C" {
     X(CharStart) \
     X(D2NewStats) \
     X(D2KillCounter) \
+    X(D2Spawn) \
     X(KillCounter) \
     X(BookOfLore) \
     X(LevelFX) \
