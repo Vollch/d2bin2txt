@@ -443,6 +443,7 @@ extern int String_StripFileName(char *pcInput, char *pcOutput, unsigned int iSiz
 extern int String_BuildName(char *pcNameFormat, int iNameSize, unsigned int iStingId, char *pcTemplate, char *pcName, unsigned int iLine, fnHaveName pfnHaveName, char* acOutput);
 extern char *String_FindString(unsigned int id, char* pcFilter);
 extern char *String_FindString_2(unsigned int id, char* pcFilter, char* pcFilter2);
+extern char *String_GetString(unsigned int id, char* pcFilter, char* pcFilter2);
 
 extern char *Armor_GetArmorCode(unsigned int id);
 extern unsigned int Armor_GetArmorString(unsigned int id);

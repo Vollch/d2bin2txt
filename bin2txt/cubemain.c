@@ -210,6 +210,44 @@ param = Amplify Damage 或 66
 min = 5
 max = 5
 我应该在Properties.txt文件解析中提到过
+
+struct D2CubeInputItem
+{
+   BYTE nInputFlags;               //0x00
+   BYTE nItemType;                  //0x01
+   WORD wItem;                     //0x02
+   WORD wItemID;                  //0x04
+   BYTE nQuality;                  //0x06
+   BYTE nQuantity;                  //0x07
+};
+
+
+struct D2CubeOutputItem
+{
+   BYTE nItemFlags;               //0x00
+   BYTE nItemType;                  //0x01
+   WORD wItem;                     //0x02
+   WORD wItemID;                  //0x04
+   BYTE nQuality;                  //0x06
+   BYTE nQuantity;                  //0x07
+   BYTE nType;                     //0x08
+   BYTE nLvl;                     //0x09
+   BYTE nPLvl;                     //0x0A
+   BYTE nILvl;                     //0x0B
+   WORD wPrefixId;                  //0x0C
+   WORD unk0x0E;                  //0x0E
+   WORD unk0x10;                  //0x10
+   WORD wSuffixId;                  //0x12
+   DWORD unk0x14;                  //0x14
+   struct
+   {
+      DWORD   dwMod;         //0x00
+      WORD   wModParam;      //0x04
+      WORD   wModMin;      //0x06
+      WORD   wModMax;      //0x08
+      WORD   wModChance;      //0x0A
+   } sMods[5];                   //0x18
+};
 */
 
 typedef struct
@@ -373,6 +411,86 @@ typedef struct
     unsigned short vcmyspmodmysp5myspchance;
 } ST_LINE_INFO;
 
+typedef enum
+{
+    GRADE_LOW = 1,
+    GRADE_NORMAL,
+    GRADE_SUPERIOR,
+    GRADE_MAGIC,
+    GRADE_SET,
+    GRADE_RARE,
+    GRADE_UNIQ,
+    GRADE_CRAFT,
+    GRADE_TAMPERED,
+} EN_CUBE_GRADE;
+
+typedef struct
+{
+    union {
+        unsigned short sFlags;
+        struct {
+            unsigned short bItemCode: 1;
+            unsigned short bTypeCode: 1;
+            unsigned short bNoSock: 1;
+            unsigned short bSock: 1;
+            unsigned short bEthereal: 1;
+            unsigned short bNotEthereal: 1;
+            unsigned short bSpecific: 1;
+            unsigned short bUpgrade: 1;
+            unsigned short bBase: 1;
+            unsigned short bExceptional: 1;
+            unsigned short bElite: 1;
+            unsigned short bNotRuneword: 1;
+        };
+    };
+    unsigned short sGenericID;
+    unsigned short sSpecificID;
+    unsigned char cGrade;
+    unsigned char cQuantity;
+} ST_CUBE_INPUT;
+
+typedef struct
+{
+    union {
+        unsigned short sFlags;
+        struct {
+            unsigned short bKeepModifiers: 1;
+            unsigned short bSockets: 1;
+            unsigned short bEthereal: 1;
+            unsigned short bSpecific: 1;
+            unsigned short bDestroyFillers: 1;
+            unsigned short bRemoveFillers: 1;
+            unsigned short bRegenerate: 1;
+            unsigned short bExceptional: 1;
+            unsigned short bElite: 1;
+            unsigned short bRepair: 1;
+            unsigned short bRecharge: 1;
+        };
+    };
+    unsigned short sGenericID;
+    unsigned short sSpecificID;
+    unsigned char cGrade;
+    unsigned char cQuantity;
+    unsigned char cType;
+    unsigned char clvl;
+    unsigned char cplvl;
+    unsigned char cilvl;
+    unsigned short sPrefix;
+    unsigned short sPrefixMin;
+    unsigned short sPrefixMax;
+    unsigned short sSuffix;
+    unsigned short sSuffixMin;
+    unsigned short sSuffixMax;
+    struct
+    {
+      unsigned int iMod;
+      unsigned short sModParam;
+      unsigned short sModMin;
+      unsigned short sModMax;
+      unsigned short sModChance;
+    } sMods[5];
+} ST_CUBE_OUTPUT;
+
 static char *m_apcInternalProcess[] =
 {
     "description",
@@ -389,262 +507,255 @@ static char *m_apcInternalProcess[] =
     NULL,
 };
 
-static unsigned char m_iCubeLvl = 0;
-static unsigned char m_iCubepLvl = 0;
-static unsigned char m_iCubeiLvl = 0;
-
-static char *Cubemain_GenerateInputProp(char *acOutput, unsigned char bType, unsigned char bPrefix,
-    unsigned short wIndex, unsigned char bPostFix, unsigned char bQty)
+static char *Cubemain_GenerateInputProp(char *acOutput, ST_CUBE_INPUT *sInput, EN_CUBE_GRADE cOutGrade)
 {
-    if ( 0 != (1 & bPrefix ) )
-    {
-        strcpy(acOutput, ",bas");
-        acOutput += strlen(acOutput);
-    }
-
-    if ( 0 != (2 & bPrefix ) )
-    {
-        strcpy(acOutput, ",exc");
-        acOutput += strlen(acOutput);
-    }
-
-    if ( 0 != (4 & bPrefix ) )
-    {
-        strcpy(acOutput, ",eli");
-        acOutput += strlen(acOutput);
-    }
-
-    if ( 0 != (8 & bPrefix ) )
-    {
-        strcpy(acOutput, ",nru");
-        acOutput += strlen(acOutput);
-    }
-
-    if ( 1 == bPostFix )
-    {
-        strcpy(acOutput, ",low");
-        acOutput += strlen(acOutput);
-    }
-
-    if ( 2 == bPostFix )
-    {
-        strcpy(acOutput, ",nor");
-        acOutput += strlen(acOutput);
-    }
-
-    if ( 3 == bPostFix )
-    {
-        strcpy(acOutput, ",hiq");
-        acOutput += strlen(acOutput);
-    }
-
-    if ( 4 == bPostFix )
-    {
-        strcpy(acOutput, ",mag");
-        acOutput += strlen(acOutput);
-    }
-
-    if ( 5 == bPostFix )
-    {
-        strcpy(acOutput, ",set");
-        acOutput += strlen(acOutput);
-    }
-
-    if ( 6 == bPostFix )
-    {
-        strcpy(acOutput, ",rar");
-        acOutput += strlen(acOutput);
-    }
-
-    if ( 7 == bPostFix )
-    {
-        strcpy(acOutput, ",uni");
-        acOutput += strlen(acOutput);
-    }
-
-    if ( 8 == bPostFix )
-    {
-        strcpy(acOutput, ",crf");
-        acOutput += strlen(acOutput);
-    }
-
-    if ( 9 == bPostFix )
-    {
-        strcpy(acOutput, ",tmp");
-        acOutput += strlen(acOutput);
-    }
-
-    if ( 0 != (8 & bType) )
-    {
-        strcpy(acOutput, ",sock");
-        acOutput += strlen(acOutput);
-    }
-
-    if ( 0 != (4 & bType) )
+    if ( sInput->bNoSock )
     {
         strcpy(acOutput, ",nos");
         acOutput += strlen(acOutput);
     }
 
-    if ( 0 != (0x10 & bType) )
+    if ( sInput->bSock )
+    {
+        strcpy(acOutput, ",sock");
+        acOutput += strlen(acOutput);
+    }
+
+    if ( sInput->bEthereal )
     {
         strcpy(acOutput, ",eth");
         acOutput += strlen(acOutput);
     }
 
-    if ( 0 != (0x20 & bType) )
+    if ( sInput->bNotEthereal )
     {
         strcpy(acOutput, ",noe");
         acOutput += strlen(acOutput);
     }
 
-    if ( 0 != (0x80 & bType) )
+    if ( sInput->bUpgrade )
     {
         strcpy(acOutput, ",upg");
         acOutput += strlen(acOutput);
     }
 
-    if ( 0 < bQty )
+    if ( sInput->bBase )
     {
-        sprintf(acOutput, ",qty=%d", bQty);
+        strcpy(acOutput, ",bas");
+        acOutput += strlen(acOutput);
+    }
+
+    if ( sInput->bExceptional )
+    {
+        strcpy(acOutput, ",exc");
+        acOutput += strlen(acOutput);
+    }
+
+    if ( sInput->bElite )
+    {
+        strcpy(acOutput, ",eli");
+        acOutput += strlen(acOutput);
+    }
+
+    if ( sInput->bNotRuneword )
+    {
+        strcpy(acOutput, ",nru");
+        acOutput += strlen(acOutput);
+    }
+
+    if ( cOutGrade == GRADE_LOW )
+    {
+        strcpy(acOutput, ",low");
+        acOutput += strlen(acOutput);
+    }
+
+    if ( cOutGrade == GRADE_NORMAL )
+    {
+        strcpy(acOutput, ",nor");
+        acOutput += strlen(acOutput);
+    }
+
+    if ( cOutGrade == GRADE_SUPERIOR )
+    {
+        strcpy(acOutput, ",hiq");
+        acOutput += strlen(acOutput);
+    }
+
+    if ( cOutGrade == GRADE_MAGIC )
+    {
+        strcpy(acOutput, ",mag");
+        acOutput += strlen(acOutput);
+    }
+
+    if ( cOutGrade == GRADE_SET )
+    {
+        strcpy(acOutput, ",set");
+        acOutput += strlen(acOutput);
+    }
+
+    if ( cOutGrade == GRADE_RARE )
+    {
+        strcpy(acOutput, ",rar");
+        acOutput += strlen(acOutput);
+    }
+
+    if ( cOutGrade == GRADE_UNIQ )
+    {
+        strcpy(acOutput, ",uni");
+        acOutput += strlen(acOutput);
+    }
+
+    if ( cOutGrade == GRADE_CRAFT )
+    {
+        strcpy(acOutput, ",crf");
+        acOutput += strlen(acOutput);
+    }
+
+    if ( cOutGrade == GRADE_TAMPERED )
+    {
+        strcpy(acOutput, ",tmp");
+        acOutput += strlen(acOutput);
+    }
+
+    if ( sInput->cQuantity > 0 )
+    {
+        sprintf(acOutput, ",qty=%d", sInput->cQuantity);
         acOutput += strlen(acOutput);
     }
 
     return acOutput;
 }
 
-static char *Cubemain_GenerateOutputProp(char *acOutput, unsigned char bType, unsigned char bPrefix1, unsigned char bPrefix2,
-    unsigned short wIndex, unsigned char bPostFix, unsigned char bQty, unsigned short wPre, unsigned short wSur)
+static char *Cubemain_GenerateOutputProp(char *acOutput, ST_CUBE_OUTPUT *sOutput, EN_CUBE_GRADE cOutGrade)
 {
-    if ( 0 != (0x04 & bPrefix1 ) )
-    {
-        strcpy(acOutput, ",eth");
-        acOutput += strlen(acOutput);
-    }
-
-    if ( 0 != (0x02 & bPrefix1 ) )
-    {
-        sprintf(acOutput, ",sock=%d", bQty);
-        acOutput += strlen(acOutput);
-    }
-
-    if ( 0 != (0x01 & bPrefix1 ) )
+    if ( sOutput->bKeepModifiers )
     {
         strcpy(acOutput, ",mod");
         acOutput += strlen(acOutput);
     }
 
-    if ( 0 != (0x80 & bPrefix1 ) )
+    if ( sOutput->bSockets )
     {
-        strcpy(acOutput, ",exc");
+        sprintf(acOutput, ",sock=%d", sOutput->cQuantity);
+        acOutput += strlen(acOutput);
+    }
+    else if ( sOutput->cQuantity > 0 )
+    {
+        sprintf(acOutput, ",qty=%d", sOutput->cQuantity);
         acOutput += strlen(acOutput);
     }
 
-    if ( 0 != (0x10 & bPrefix1 ) )
+    if ( sOutput->bEthereal )
+    {
+        strcpy(acOutput, ",eth");
+        acOutput += strlen(acOutput);
+    }
+
+    if ( sOutput->bDestroyFillers )
     {
         strcpy(acOutput, ",uns");
         acOutput += strlen(acOutput);
     }
 
-    if ( 0 != (0x20 & bPrefix1 ) )
+    if ( sOutput->bRemoveFillers )
     {
         strcpy(acOutput, ",rem");
         acOutput += strlen(acOutput);
     }
 
-    if ( 0 != (0x40 & bPrefix1 ) )
+    if ( sOutput->bRegenerate )
     {
         strcpy(acOutput, ",reg");
         acOutput += strlen(acOutput);
     }
 
-    if ( 0 != (0x01 & bPrefix2 ) )
+    if ( sOutput->bExceptional )
+    {
+        strcpy(acOutput, ",exc");
+        acOutput += strlen(acOutput);
+    }
+
+    if ( sOutput->bElite )
     {
         strcpy(acOutput, ",eli");
         acOutput += strlen(acOutput);
     }
 
-    if ( 0 != (0x02 & bPrefix2 ) )
+    if ( sOutput->bRepair )
     {
         strcpy(acOutput, ",rep");
         acOutput += strlen(acOutput);
     }
 
-    if ( 0 != (0x04 & bPrefix2 ) )
+    if ( sOutput->bRecharge )
     {
         strcpy(acOutput, ",rch");
         acOutput += strlen(acOutput);
     }
 
-    if ( 1 == bPostFix )
+    if ( cOutGrade == GRADE_LOW )
     {
         strcpy(acOutput, ",low");
         acOutput += strlen(acOutput);
     }
 
-    if ( 2 == bPostFix )
+    if ( cOutGrade == GRADE_NORMAL )
     {
         strcpy(acOutput, ",nor");
         acOutput += strlen(acOutput);
     }
 
-    if ( 3 == bPostFix )
+    if ( cOutGrade == GRADE_SUPERIOR )
     {
         strcpy(acOutput, ",hiq");
         acOutput += strlen(acOutput);
     }
 
-    if ( 4 == bPostFix )
+    if ( cOutGrade == GRADE_MAGIC )
     {
         strcpy(acOutput, ",mag");
         acOutput += strlen(acOutput);
     }
 
-    if ( 5 == bPostFix )
+    if ( cOutGrade == GRADE_SET )
     {
         strcpy(acOutput, ",set");
         acOutput += strlen(acOutput);
     }
 
-    if ( 6 == bPostFix )
+    if ( cOutGrade == GRADE_RARE )
     {
         strcpy(acOutput, ",rar");
         acOutput += strlen(acOutput);
     }
 
-    if ( 7 == bPostFix )
+    if ( cOutGrade == GRADE_UNIQ )
     {
         strcpy(acOutput, ",uni");
         acOutput += strlen(acOutput);
     }
 
-    if ( 8 == bPostFix )
+    if ( cOutGrade == GRADE_CRAFT )
     {
         strcpy(acOutput, ",crf");
         acOutput += strlen(acOutput);
     }
 
-    if ( 9 == bPostFix )
+    if ( cOutGrade == GRADE_TAMPERED )
     {
         strcpy(acOutput, ",tmp");
         acOutput += strlen(acOutput);
     }
 
-    if ( 0 < wPre )
+    if ( sOutput->sPrefix > 0 )
     {
-        sprintf(acOutput, ",pre=%d", wPre);
+        sprintf(acOutput, ",pre=%d", sOutput->sPrefix);
         acOutput += strlen(acOutput);
     }
 
-    if ( 0 < wSur )
+    if ( sOutput->sSuffix > 0 )
     {
-        sprintf(acOutput, ",suf=%d", wSur);
-        acOutput += strlen(acOutput);
-    }
-
-    if ( 0 == (0x02 & bPrefix1 ) && 0 < bQty )
-    {
-        sprintf(acOutput, ",qty=%d", bQty);
+        sprintf(acOutput, ",suf=%d", sOutput->sSuffix);
         acOutput += strlen(acOutput);
     }
 
@@ -653,45 +764,6 @@ static char *Cubemain_GenerateOutputProp(char *acOutput, unsigned char bType, un
 
 static int Cubemain_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
 {
-/*
-struct D2CubeInputItem
-{
-   BYTE nInputFlags;               //0x00
-   BYTE nItemType;                  //0x01
-   WORD wItem;                     //0x02
-   WORD wItemID;                  //0x04
-   BYTE nQuality;                  //0x06
-   BYTE nQuantity;                  //0x07
-};
-
-
-struct D2CubeOutputItem
-{
-   BYTE nItemFlags;               //0x00
-   BYTE nItemType;                  //0x01
-   WORD wItem;                     //0x02
-   WORD wItemID;                  //0x04
-   BYTE nQuality;                  //0x06
-   BYTE nQuantity;                  //0x07
-   BYTE nType;                     //0x08
-   BYTE nLvl;                     //0x09
-   BYTE nPLvl;                     //0x0A
-   BYTE nILvl;                     //0x0B
-   WORD wPrefixId;                  //0x0C
-   WORD unk0x0E;                  //0x0E
-   WORD unk0x10;                  //0x10
-   WORD wSuffixId;                  //0x12
-   DWORD unk0x14;                  //0x14
-   struct 
-   {               
-      DWORD   dwMod;         //0x00
-      WORD   wModParam;      //0x04
-      WORD   wModMin;      //0x06
-      WORD   wModMax;      //0x08
-      WORD   wModChance;      //0x0A
-   } sMods[5];                   //0x18   
-};
-*/
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
     char *pcResult;
     char *pcOutput = acOutput;
@@ -699,55 +771,49 @@ struct D2CubeOutputItem
 
     if ( 1 == sscanf(acKey, "input %d", &id) )
     {
-        unsigned char *pcInput = pstLineInfo->vinputmysp1 + (id - 1) * sizeof(pstLineInfo->vinputmysp1);
-        unsigned char bType = pcInput[0];
-        unsigned char bPrefix = pcInput[1];
-        unsigned short wIndex = *(unsigned short *)(&pcInput[2]);
-        unsigned short wItemID = *(unsigned short *)(&pcInput[4]);
-        unsigned char bPostFix = pcInput[6];
-        unsigned char bQty = pcInput[7];
+        ST_CUBE_INPUT *sInput = (ST_CUBE_INPUT *)&pstLineInfo->vinputmysp1 + (id - 1);
 
-        unsigned char bPostFixReal = bPostFix;
-        if ( (bType & 0x40) && (bPostFix == 7 || bPostFix == 5) )
+        unsigned char cOutGrade = sInput->cGrade;
+        if ( sInput->bSpecific && ( sInput->cGrade == GRADE_SET || sInput->cGrade == GRADE_UNIQ ) )
         {
             // No need to write ",uni" and ",set" after explicitly defined sets and uniques, it's just a clutter
-            bPostFix = 0;
+            cOutGrade = 0;
         }
 
-        if ( bType & 0x03 )
-        {
-            if ( (bType & 0xBC) || bPrefix || bPostFix || bQty )
+        if ( sInput->bItemCode || sInput->bTypeCode )
+        { 
+            if ( (sInput->sFlags & 0xFFBC) || cOutGrade || sInput->cQuantity )
             {
                 // Add quotes if there's any qualifiers after ID
                 pcOutput[0] = '"';
                 pcOutput++;
             }
 
-            if ( (bType & 0x41) && bPostFixReal == 7 && (pcResult = UniqueItems_GetItemUniqueCode(wItemID)) )
+            if ( (sInput->bItemCode && sInput->bSpecific) && sInput->cGrade == GRADE_UNIQ && (pcResult = UniqueItems_GetItemUniqueCode(sInput->sSpecificID)) )
             {
                 strcpy(pcOutput, pcResult);
             }
-            else if ( (bType & 0x41) && bPostFixReal == 5 && (pcResult = SetItems_GetItemUniqueCode(wItemID)) )
+            else if ( (sInput->bItemCode && sInput->bSpecific) && sInput->cGrade == GRADE_SET && (pcResult = SetItems_GetItemUniqueCode(sInput->sSpecificID)) )
             {
                 strcpy(pcOutput, pcResult);
             }
-            else if ( (bType & 0x01) && (pcResult = Misc_GetItemUniqueCode(wIndex)) )
+            else if ( sInput->bItemCode && (pcResult = Misc_GetItemUniqueCode(sInput->sGenericID)) )
             {
                 strcpy(pcOutput, pcResult);
             }
-            else if ( (bType & 0x02) && (pcResult = ItemTypes_GetItemCode(wIndex)) )
+            else if ( sInput->bTypeCode && (pcResult = ItemTypes_GetItemCode(sInput->sGenericID)) )
             {
                 strcpy(pcOutput, pcResult);
             }
-            else if ( (bType & 0x03) && wIndex == 0xFFFF )
+            else if ( sInput->sGenericID == 0xFFFF )
             {
                 strcpy(pcOutput, "any");
             }
 
-            if ( (bType & 0xBC) || bPrefix || bPostFix || bQty )
+            if ( (sInput->sFlags & 0xFFBC) || cOutGrade || sInput->cQuantity )
             {
                 pcOutput += strlen(pcOutput);
-                pcOutput = Cubemain_GenerateInputProp(pcOutput, bType, bPrefix, wIndex, bPostFix, bQty);
+                pcOutput = Cubemain_GenerateInputProp(pcOutput, sInput, cOutGrade);
                 pcOutput[0] = '"';
                 pcOutput++;
             }
@@ -757,80 +823,67 @@ struct D2CubeOutputItem
     }
     else if ( !strnicmp(acKey, "output", strlen("output")) )
     {
-        unsigned char *pcInput = !stricmp("output b", acKey) ? pstLineInfo->voutputmyspb :
-                                 !stricmp("output c", acKey) ? pstLineInfo->voutputmyspc :
-                                                               pstLineInfo->voutput;
-        unsigned char bPrefix1 = pcInput[0];
-        unsigned char bPrefix2 = pcInput[1];
-        unsigned short wIndex = *(unsigned short *)(&pcInput[2]);
-        unsigned short wItemID = *(unsigned short *)(&pcInput[4]);
-        unsigned char bPostFix = pcInput[6];
-        unsigned char bQty = pcInput[7];
-        unsigned char bType = pcInput[8];
-        unsigned short wPre = *(unsigned short *)(&pcInput[12]);
-        unsigned short wSur = *(unsigned short *)(&pcInput[18]);
+        ST_CUBE_OUTPUT *sOutput = !stricmp("output b", acKey) ? (ST_CUBE_OUTPUT *)pstLineInfo->voutputmyspb :
+                                  !stricmp("output c", acKey) ? (ST_CUBE_OUTPUT *)pstLineInfo->voutputmyspc :
+                                                                (ST_CUBE_OUTPUT *)pstLineInfo->voutput;
 
-        unsigned char bPostFixReal = bPostFix;
-        if ( (bPrefix1 & 0x8) && (bPostFix == 7 || bPostFix == 5) )
+        unsigned char cOutGrade = sOutput->cGrade;
+        if ( sOutput->bSpecific && ( sOutput->cGrade == GRADE_SET || sOutput->cGrade == GRADE_UNIQ ) )
         {
             // No need to write ",uni" and ",set" after explicitly defined sets and uniques, it's just a clutter
-            bPostFix = 0;
+            cOutGrade = 0;
         }
 
-        m_iCubeLvl = pcInput[9];
-        m_iCubepLvl = pcInput[10];
-        m_iCubeiLvl = pcInput[11];
-
-        if ( (bPrefix1 & 0x8) || bType )
+        if ( sOutput->bSpecific || sOutput->cType )
         {
-            if ( (bPrefix1 & 0xF7) || bPrefix2 || bPostFix || bQty || wPre || wSur )
+            if ( (sOutput->sFlags & 0xFFF7) || cOutGrade || sOutput->cQuantity || sOutput->sPrefix || sOutput->sSuffix )
             {
                 // Add quotes if there's any qualifiers after ID
                 pcOutput[0] = '"';
                 pcOutput++;
             }
 
-            if ( (bPrefix1 & 0x08) && bPostFixReal == 7 && (pcResult = UniqueItems_GetItemUniqueCode(wItemID)) )
+            if ( sOutput->bSpecific && sOutput->cGrade == GRADE_UNIQ && (pcResult = UniqueItems_GetItemUniqueCode(sOutput->sSpecificID)) )
             {
                 strcpy(pcOutput, pcResult);
             }
-            else if ( (bPrefix1 & 0x08) && bPostFixReal == 5 && (pcResult = SetItems_GetItemUniqueCode(wItemID)) )
+            else if ( sOutput->bSpecific && sOutput->cGrade == GRADE_SET && (pcResult = SetItems_GetItemUniqueCode(sOutput->sSpecificID)) )
             {
                 strcpy(pcOutput, pcResult);
             }
-            else if ( bType == 0xFC && (pcResult = Misc_GetItemUniqueCode(wIndex)) )
+            else if ( sOutput->cType == 0xFC && (pcResult = Misc_GetItemUniqueCode(sOutput->sGenericID)) )
             {
                 strcpy(pcOutput, pcResult);
             }
-            else if ( bType == 0xFD && (pcResult = ItemTypes_GetItemCode(wIndex)) )
+            else if ( sOutput->cType == 0xFD && (pcResult = ItemTypes_GetItemCode(sOutput->sGenericID)) )
             {
                 strcpy(pcOutput, pcResult);
             }
-            else if ( bType == 0xFE)
+            else if ( sOutput->cType == 0xFE)
             {
                 strcpy(pcOutput, "useitem");
             }
-            else if ( bType == 0xFF )
+            else if ( sOutput->cType == 0xFF )
             {
                 strcpy(pcOutput, "usetype");
             }
-            else if ( bType == 0x01 )
+            else if ( sOutput->cType == 0x01 )
             {
                 strcpy(pcOutput, "Cow Portal");
             }
-            else if ( bType == 0x02 )
+            else if ( sOutput->cType == 0x02 )
             {
                 strcpy(pcOutput, "Pandemonium Portal");
             }
-            else if ( bType == 0x03 )
+            else if ( sOutput->cType == 0x03 )
             {
                 strcpy(pcOutput, "Pandemonium Finale Portal");
             }
 
-            if ( (bPrefix1 & 0xF7) || bPrefix2 || bPostFix || bQty || wPre || wSur )
+            if ( (sOutput->sFlags & 0xFFF7) || cOutGrade || sOutput->cQuantity || sOutput->sPrefix || sOutput->sSuffix )
             {
                 pcOutput += strlen(pcOutput);
-                pcOutput = Cubemain_GenerateOutputProp(pcOutput, bType, bPrefix1, bPrefix2, wIndex, bPostFix, bQty, wPre, wSur);
+                pcOutput = Cubemain_GenerateOutputProp(pcOutput, sOutput, cOutGrade);
                 pcOutput[0] = '"';
                 pcOutput++;
             }
@@ -842,54 +895,175 @@ struct D2CubeOutputItem
     return 0;
 }
 
+static int Cubemain_BuildDescription(void *pvLineInfo, char *acOutput, unsigned int iOutputSize)
+{
+    ST_LINE_INFO *pstLineInfo = pvLineInfo;
+    int i, j, iUse;
+    char *pcResult;
+
+    ST_CUBE_INPUT *sInput = (ST_CUBE_INPUT *)pstLineInfo->vinputmysp1;
+
+    ST_CUBE_OUTPUT *sOutputs[] =
+    {
+        (ST_CUBE_OUTPUT *)pstLineInfo->voutput,
+        (ST_CUBE_OUTPUT *)pstLineInfo->voutputmyspb,
+        (ST_CUBE_OUTPUT *)pstLineInfo->voutputmyspc
+    };
+
+    for ( i = 0; i < 3; i++ )
+    {
+        iUse = 0;
+        if ( sOutputs[i]->bSpecific && sOutputs[i]->cGrade == GRADE_UNIQ && (pcResult = UniqueItems_GetItemUniqueCode(sOutputs[i]->sSpecificID)) )
+        {
+            strncpy(&acOutput[strlen(acOutput)], pcResult, iOutputSize-strlen(acOutput));
+        }
+        else if ( sOutputs[i]->bSpecific && sOutputs[i]->cGrade == GRADE_SET && (pcResult = SetItems_GetItemUniqueCode(sOutputs[i]->sSpecificID)) )
+        {
+            strncpy(&acOutput[strlen(acOutput)], pcResult, iOutputSize-strlen(acOutput));
+        }
+        else if ( sOutputs[i]->cType == 0xFC && (pcResult = String_GetString(Misc_GetItemString(sOutputs[i]->sGenericID), NULL, NULL)) )
+        {
+            strncpy(&acOutput[strlen(acOutput)], pcResult, iOutputSize-strlen(acOutput));
+        }
+        else if ( sOutputs[i]->cType == 0xFD && (pcResult = ItemTypes_GetItemCode(sOutputs[i]->sGenericID)) )
+        {
+            strncpy(&acOutput[strlen(acOutput)], pcResult, iOutputSize-strlen(acOutput));
+        }
+        else if ( sOutputs[i]->cType == 0xFE)
+        {
+            iUse = 1; // useitem
+        }
+        else if ( sOutputs[i]->cType == 0xFF )
+        {
+            iUse = 2; // usetype
+        }
+        else if ( sOutputs[i]->cType == 0x01 )
+        {
+            strncpy(&acOutput[strlen(acOutput)], "Cow Portal", iOutputSize-strlen(acOutput));
+        }
+        else if ( sOutputs[i]->cType == 0x02 )
+        {
+            strncpy(&acOutput[strlen(acOutput)], "Pandemonium Portal", iOutputSize-strlen(acOutput));
+        }
+        else if ( sOutputs[i]->cType == 0x03 )
+        {
+            strncpy(&acOutput[strlen(acOutput)], "Pandemonium Finale Portal", iOutputSize-strlen(acOutput));
+        }
+
+        if ( iUse )
+        {
+            if ( (sInput->bItemCode && sInput->bSpecific) && sInput->cGrade == GRADE_UNIQ && (pcResult = UniqueItems_GetItemUniqueCode(sInput->sSpecificID)) )
+            {
+                strncpy(&acOutput[strlen(acOutput)], pcResult, iOutputSize-strlen(acOutput));
+            }
+            else if ( (sInput->bItemCode && sInput->bSpecific) && sInput->cGrade == GRADE_SET && (pcResult = SetItems_GetItemUniqueCode(sInput->sSpecificID)) )
+            {
+                strncpy(&acOutput[strlen(acOutput)], pcResult, iOutputSize-strlen(acOutput));
+            }
+            else if ( sInput->bItemCode && (pcResult = String_GetString(Misc_GetItemString(sInput->sGenericID), NULL, NULL)) )
+            {
+                strncpy(&acOutput[strlen(acOutput)], pcResult, iOutputSize-strlen(acOutput));
+            }
+            else if ( sInput->bTypeCode && (pcResult = ItemTypes_GetItemCode(sInput->sGenericID)) )
+            {
+                strncpy(&acOutput[strlen(acOutput)], pcResult, iOutputSize-strlen(acOutput));
+            }
+            else if ( sInput->sGenericID == 0xFFFF )
+            {
+                strncpy(&acOutput[strlen(acOutput)], pcResult, iOutputSize-strlen(acOutput));
+            }
+
+            for ( j = 0; j < 5; j++ )
+            {
+                if ( pcResult = Properties_GetProperty(sOutputs[i]->sMods[j].iMod) )
+                {
+                    strncpy(&acOutput[strlen(acOutput)], pcResult, iOutputSize-strlen(acOutput));
+                }
+            }
+        }
+    }
+
+    return 1;
+}
+
 static int Cubemain_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
-    int result = 0;
+    ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
     if ( !stricmp("description", acKey) )
     {
-        if ( !String_BuildName(FORMAT(cubemain), 0xFFFF, pcTemplate, NAME_PREFIX, iLineNo, NULL, acOutput) )
+        char acName[64] = {0};
+        Cubemain_BuildDescription(pvLineInfo, acName, 63);
+        if ( !String_BuildName(FORMAT(cubemain), 0xFFFF, pcTemplate, acName, iLineNo, NULL, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
         }
 
-        result = 1;
+        return 1;
     }
-    else if ( !stricmp("lvl", acKey) || !stricmp("b lvl", acKey) || !stricmp("c lvl", acKey) )
+    else if ( !stricmp("lvl", acKey) )
     {
-        if ( 0 == m_iCubeLvl )
-        {
-            acOutput[0] = 0;
-        }
-        else
-        {
-            sprintf(acOutput, "%d", m_iCubeLvl);
-        }
-        result = 1;
+        ST_CUBE_OUTPUT *sOutput = (ST_CUBE_OUTPUT *)pstLineInfo->voutput;
+        sprintf(acOutput, "%d", sOutput->clvl);
+
+        return 1;
     }
-    else if ( !stricmp("plvl", acKey) || !stricmp("b plvl", acKey) || !stricmp("c plvl", acKey) )
+    else if ( !stricmp("b lvl", acKey) )
     {
-        if ( 0 == m_iCubepLvl )
-        {
-            acOutput[0] = 0;
-        }
-        else
-        {
-            sprintf(acOutput, "%d", m_iCubepLvl);
-        }
-        result = 1;
+        ST_CUBE_OUTPUT *sOutput = (ST_CUBE_OUTPUT *)pstLineInfo->voutputmyspb;
+        sprintf(acOutput, "%d", sOutput->clvl);
+
+        return 1;
     }
-    else if ( !stricmp("ilvl", acKey) || !stricmp("b ilvl", acKey) || !stricmp("c ilvl", acKey) )
+    else if ( !stricmp("c lvl", acKey) )
     {
-        if ( 0 == m_iCubeiLvl )
-        {
-            acOutput[0] = 0;
-        }
-        else
-        {
-            sprintf(acOutput, "%d", m_iCubeiLvl);
-        }
-        result = 1;
+        ST_CUBE_OUTPUT *sOutput = (ST_CUBE_OUTPUT *)pstLineInfo->voutputmyspc;
+        sprintf(acOutput, "%d", sOutput->clvl);
+
+        return 1;
+    }
+    else if ( !stricmp("plvl", acKey) )
+    {
+        ST_CUBE_OUTPUT *sOutput = (ST_CUBE_OUTPUT *)pstLineInfo->voutput;
+        sprintf(acOutput, "%d", sOutput->cplvl);
+
+        return 1;
+    }
+    else if ( !stricmp("b plvl", acKey) )
+    {
+        ST_CUBE_OUTPUT *sOutput = (ST_CUBE_OUTPUT *)pstLineInfo->voutputmyspb;
+        sprintf(acOutput, "%d", sOutput->cplvl);
+
+        return 1;
+    }
+    else if ( !stricmp("c plvl", acKey) )
+    {
+        ST_CUBE_OUTPUT *sOutput = (ST_CUBE_OUTPUT *)pstLineInfo->voutputmyspc;
+        sprintf(acOutput, "%d", sOutput->cplvl);
+
+        return 1;
+    }
+
+    else if ( !stricmp("ilvl", acKey) )
+    {
+        ST_CUBE_OUTPUT *sOutput = (ST_CUBE_OUTPUT *)pstLineInfo->voutput;
+        sprintf(acOutput, "%d", sOutput->cilvl);
+
+        return 1;
+    }
+    else if ( !stricmp("b ilvl", acKey) )
+    {
+        ST_CUBE_OUTPUT *sOutput = (ST_CUBE_OUTPUT *)pstLineInfo->voutputmyspb;
+        sprintf(acOutput, "%d", sOutput->cilvl);
+
+        return 1;
+    }
+    else if ( !stricmp("c ilvl", acKey) )
+    {
+        ST_CUBE_OUTPUT *sOutput = (ST_CUBE_OUTPUT *)pstLineInfo->voutputmyspc;
+        sprintf(acOutput, "%d", sOutput->cilvl);
+
+        return 1;
     }
     else if ( !stricmp(acKey, "*eol") )
     {
@@ -899,7 +1073,7 @@ static int Cubemain_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineN
         return 1;
     }
 
-    return result;
+    return 0;
 }
 
 int process_cubemain(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
