@@ -938,13 +938,13 @@ typedef struct
 static char *m_apcInternalProcess[] =
 {
     "name",
+    "*name",
     "*eol",
     NULL,
 };
 
 static char *m_apcNotUsed[] = 
 {
-    "*name",
     "throwable",
     "szFlavorText",
     "Source Art",
@@ -1056,7 +1056,14 @@ unsigned int Misc_GetItemString2(char *pcVcode)
 static int Misc_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
-    if ( !stricmp(acKey, "name") )
+
+    if ( !stricmp(acKey, "*name") )
+    {
+        String_BuildName("%s", 64, pstLineInfo->vspelldescstr, pcTemplate, NULL, iLineNo, NULL, acOutput);
+
+        return 1;
+    }
+    else if ( !stricmp(acKey, "name") )
     {
         if ( !String_BuildName(FORMAT(misc), pstLineInfo->vnamestr, pcTemplate, m_astMisc[iLineNo].vcode, iLineNo, NULL, acOutput) )
         {

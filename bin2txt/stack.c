@@ -82,3 +82,7 @@ int Stack_IsEmpty(void *pvStack)
     return 0;
 }
 
+int Stack_GetIndex(void *pvStack)
+{
+    return m_uiStackIndex;
+}

@@ -1135,19 +1135,22 @@ int SkillsCode_ParseBin(char *acTemplatePath, char *acBinPath, char*acTxtPath)
 
             case 0x00:
                 //表达式结束
-                Stack_Pop(m_pvStack, &pcTemp);
 
-                if ( 0 == Stack_IsEmpty(m_pvStack) )
+                if ( Stack_GetIndex(m_pvStack) > 1 )
                 {
                     SkillsCode_PrintHex();
+                    my_error("invalid expression\r\n");
+                    //goto error;
+
+                    while ( Stack_GetIndex(m_pvStack) > 1 )
+                    {
+                        // Try to save as much data as posible, and also preserve size of original expression
+                        memset(acTempBuf, 0, sizeof(acTempBuf));
+                        SkillsCode_TwoOprandProc("  ", SINGLE_OPERATER_LEVEL, EN_OPERATER_ARG_2, EN_OPERATER_LEFT, acTempBuf, sizeof(acTempBuf));
+                    }
                 }
 
-                while ( 0 == Stack_IsEmpty(m_pvStack) )
-                {
-                    my_error("invalid expression\r\n");
-                    Stack_Pop(m_pvStack, &pcTemp);
-                    //goto error;
-                }
+                Stack_Pop(m_pvStack, &pcTemp);
 
                 if ( 0 == SkillsCode_OutputExpression(pcTemp) )
                 {

@@ -431,6 +431,7 @@ extern void Stack_Release(void *pvStack);
 extern int Stack_Push(void *pvStack, unsigned char *pcElement, unsigned int uiElemSize);
 extern int Stack_Pop(void *pvStack, unsigned char **ppcElement);
 extern int Stack_IsEmpty(void *pvStack);
+extern int Stack_GetIndex(void *pvStack);
 
 //以下是各个模块提供的外部接口
 
