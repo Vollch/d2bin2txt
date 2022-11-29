@@ -913,21 +913,23 @@ static int Cubemain_BuildDescription(void *pvLineInfo, char *acOutput, unsigned 
     for ( i = 0; i < 3; i++ )
     {
         iUse = 0;
-        if ( sOutputs[i]->bSpecific && sOutputs[i]->cGrade == GRADE_UNIQ && (pcResult = UniqueItems_GetItemUniqueCode(sOutputs[i]->sSpecificID)) )
+        pcResult = NULL;
+
+        if ( sOutputs[i]->bSpecific && sOutputs[i]->cGrade == GRADE_UNIQ )
         {
-            strncpy(&acOutput[strlen(acOutput)], pcResult, iOutputSize-strlen(acOutput));
+            pcResult = UniqueItems_GetItemUniqueCode(sOutputs[i]->sSpecificID);
         }
-        else if ( sOutputs[i]->bSpecific && sOutputs[i]->cGrade == GRADE_SET && (pcResult = SetItems_GetItemUniqueCode(sOutputs[i]->sSpecificID)) )
+        else if ( sOutputs[i]->bSpecific && sOutputs[i]->cGrade == GRADE_SET)
         {
-            strncpy(&acOutput[strlen(acOutput)], pcResult, iOutputSize-strlen(acOutput));
+            pcResult = SetItems_GetItemUniqueCode(sOutputs[i]->sSpecificID);
         }
-        else if ( sOutputs[i]->cType == 0xFC && (pcResult = String_GetString(Misc_GetItemString(sOutputs[i]->sGenericID), NULL, NULL)) )
+        else if ( sOutputs[i]->cType == 0xFC )
         {
-            strncpy(&acOutput[strlen(acOutput)], pcResult, iOutputSize-strlen(acOutput));
+            pcResult = String_GetString(Misc_GetItemString(sOutputs[i]->sGenericID), NULL, NULL);
         }
-        else if ( sOutputs[i]->cType == 0xFD && (pcResult = ItemTypes_GetItemCode(sOutputs[i]->sGenericID)) )
+        else if ( sOutputs[i]->cType == 0xFD )
         {
-            strncpy(&acOutput[strlen(acOutput)], pcResult, iOutputSize-strlen(acOutput));
+            pcResult = ItemTypes_GetItemCode(sOutputs[i]->sGenericID);
         }
         else if ( sOutputs[i]->cType == 0xFE)
         {
@@ -939,45 +941,71 @@ static int Cubemain_BuildDescription(void *pvLineInfo, char *acOutput, unsigned 
         }
         else if ( sOutputs[i]->cType == 0x01 )
         {
-            strncpy(&acOutput[strlen(acOutput)], "Cow Portal", iOutputSize-strlen(acOutput));
+            pcResult = "Cow Portal";
         }
         else if ( sOutputs[i]->cType == 0x02 )
         {
-            strncpy(&acOutput[strlen(acOutput)], "Pandemonium Portal", iOutputSize-strlen(acOutput));
+            pcResult = "Pandemonium Portal";
         }
         else if ( sOutputs[i]->cType == 0x03 )
         {
-            strncpy(&acOutput[strlen(acOutput)], "Pandemonium Finale Portal", iOutputSize-strlen(acOutput));
+            pcResult = "Pandemonium Finale Portal";
+        }
+
+        if ( pcResult )
+        {
+            strncpy(&acOutput[strlen(acOutput)], pcResult, iOutputSize-strlen(acOutput));
+            if ( strlen(acOutput) < iOutputSize)
+            {
+                acOutput[strlen(acOutput)] = ' ';
+            }
         }
 
         if ( iUse )
         {
-            if ( (sInput->bItemCode && sInput->bSpecific) && sInput->cGrade == GRADE_UNIQ && (pcResult = UniqueItems_GetItemUniqueCode(sInput->sSpecificID)) )
+            pcResult = NULL;
+
+            if ( (sInput->bItemCode && sInput->bSpecific) && sInput->cGrade == GRADE_UNIQ )
             {
-                strncpy(&acOutput[strlen(acOutput)], pcResult, iOutputSize-strlen(acOutput));
+                pcResult = UniqueItems_GetItemUniqueCode(sInput->sSpecificID);
             }
-            else if ( (sInput->bItemCode && sInput->bSpecific) && sInput->cGrade == GRADE_SET && (pcResult = SetItems_GetItemUniqueCode(sInput->sSpecificID)) )
+            else if ( (sInput->bItemCode && sInput->bSpecific) && sInput->cGrade == GRADE_SET )
             {
-                strncpy(&acOutput[strlen(acOutput)], pcResult, iOutputSize-strlen(acOutput));
+                pcResult = SetItems_GetItemUniqueCode(sInput->sSpecificID);
             }
-            else if ( sInput->bItemCode && (pcResult = String_GetString(Misc_GetItemString(sInput->sGenericID), NULL, NULL)) )
+            else if ( sInput->bItemCode )
             {
-                strncpy(&acOutput[strlen(acOutput)], pcResult, iOutputSize-strlen(acOutput));
+                pcResult = String_GetString(Misc_GetItemString(sInput->sGenericID), NULL, NULL);
             }
-            else if ( sInput->bTypeCode && (pcResult = ItemTypes_GetItemCode(sInput->sGenericID)) )
+            else if ( sInput->bTypeCode )
             {
-                strncpy(&acOutput[strlen(acOutput)], pcResult, iOutputSize-strlen(acOutput));
+                pcResult = ItemTypes_GetItemCode(sInput->sGenericID);
             }
             else if ( sInput->sGenericID == 0xFFFF )
             {
+                pcResult = "Any Item";
+            }
+
+            if ( pcResult )
+            {
                 strncpy(&acOutput[strlen(acOutput)], pcResult, iOutputSize-strlen(acOutput));
+                if ( strlen(acOutput) < iOutputSize)
+                {
+                    acOutput[strlen(acOutput)] = ' ';
+                }
             }
 
             for ( j = 0; j < 5; j++ )
             {
-                if ( pcResult = Properties_GetProperty(sOutputs[i]->sMods[j].iMod) )
+                pcResult = Properties_GetProperty(sOutputs[i]->sMods[j].iMod);
+
+                if ( pcResult )
                 {
                     strncpy(&acOutput[strlen(acOutput)], pcResult, iOutputSize-strlen(acOutput));
+                    if ( strlen(acOutput) < iOutputSize)
+                    {
+                        acOutput[strlen(acOutput)] = ' ';
+                    }
                 }
             }
         }

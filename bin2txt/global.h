@@ -16,8 +16,6 @@ extern "C" {
 #include <FCNTL.H>
 #include <assert.h>
 
-#define NO_VERBOSE
-
 #define ALL_MODULES(X) \
     X(CharStart) \
     X(D2NewStats) \
@@ -118,7 +116,7 @@ extern "C" {
     X(uniquetitle) \
     X(weapons) \
 
-#define FORMAT(module) Get_ModuleNameFormat( EN_MID_##module ), Get_ModuleNameSize( EN_MID_##module )
+#define FORMAT(module) Get_ModuleNameFormat( EN_MID_##module ), Get_ModuleNameSize( EN_MID_##module ), Get_ModuleNameSeparator( EN_MID_##module )
 
 #define MODULE_ID(key) EN_MID_##key
 #define MODULE_ID_DEFINE(key) MODULE_ID(key),
@@ -359,6 +357,7 @@ extern char *g_pcCustomTable1;
 extern char *g_pcCustomTable2;
 extern char *g_pcCustomTable3;
 extern int g_iTrimSpace;
+extern int g_iCompactOutput;
 
 extern int File_GetFileSize(char *pcFileName);
 extern int File_CopyFile(char *pcFromPath, char *pcToPath, char *pcFileName, char *pcSuffix);
@@ -367,6 +366,7 @@ extern void Set_ModulePhase(ENUM_MODULE_ID enMid, ENUM_MODULE_PHASE enPhase);
 extern ENUM_MODULE_PHASE Get_ModulePhase(ENUM_MODULE_ID enMid);
 extern char* Get_ModuleNameFormat(ENUM_MODULE_ID enMid);
 extern int Get_ModuleNameSize(ENUM_MODULE_ID enMid);
+extern char Get_ModuleNameSeparator(ENUM_MODULE_ID enMid);
 
 #define MAX_OPERATER_LEVEL  0xFF
 #define FUNCTION_OPERATER_LEVEL  1
@@ -440,7 +440,7 @@ extern int Stack_GetIndex(void *pvStack);
 ALL_MODULES(MODULE_DECALRE_FUNC)
 
 extern int String_StripFileName(char *pcInput, char *pcOutput, unsigned int iSize);
-extern int String_BuildName(char *pcNameFormat, int iNameSize, unsigned int iStingId, char *pcTemplate, char *pcName, unsigned int iLine, fnHaveName pfnHaveName, char* acOutput);
+extern int String_BuildName(char *pcNameFormat, int iNameSize, char cNameSeparator, unsigned int iStingId, char *pcTemplate, char *pcName, unsigned int iLine, fnHaveName pfnHaveName, char* acOutput);
 extern char *String_FindString(unsigned int id, char* pcFilter);
 extern char *String_FindString_2(unsigned int id, char* pcFilter, char* pcFilter2);
 extern char *String_GetString(unsigned int id, char* pcFilter, char* pcFilter2);

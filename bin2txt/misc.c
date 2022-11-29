@@ -1059,7 +1059,7 @@ static int Misc_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, c
 
     if ( !stricmp(acKey, "*name") )
     {
-        String_BuildName("%s", 64, pstLineInfo->vspelldescstr, pcTemplate, NULL, iLineNo, NULL, acOutput);
+        String_BuildName(FORMAT(misc), pstLineInfo->vspelldescstr, pcTemplate, m_astMisc[iLineNo].vcode, iLineNo, NULL, acOutput);
 
         return 1;
     }

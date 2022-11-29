@@ -1161,9 +1161,9 @@ int MissCode_ParseBin(char *acTemplatePath, char *acBinPath, char*acTxtPath)
     }
 
     //写回bin文件
+    memset(m_acGlobalBuffer, 0, m_iGlobaBufLength);
     for ( i = 0; i < m_uiMissCodeCount; i++ )
     {
-        memset(m_acGlobalBuffer, 0, m_iGlobaBufLength);
         sprintf(m_acGlobalBuffer, "%u\t%s\r\n\t", i, m_astMissCode[i].acExpressionTxt);
 
         for ( j = 0; j < m_astMissCode[i].uiBinLen; j++ )
@@ -1174,6 +1174,7 @@ int MissCode_ParseBin(char *acTemplatePath, char *acBinPath, char*acTxtPath)
         strcpy(&m_acGlobalBuffer[strlen(m_acGlobalBuffer)], "\r\n");
 
         fwrite(m_acGlobalBuffer, 1, strlen(m_acGlobalBuffer), pfOutputHandle);
+        memset(m_acGlobalBuffer, 0, strlen(m_acGlobalBuffer));
     }
 
     goto out;

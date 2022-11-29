@@ -51,7 +51,7 @@ unsigned char *String_Trim(unsigned char *pcValue)
 {
     int j;
 
-    if ( g_iTrimSpace == 0)
+    if ( g_iTrimSpace == 0 )
     {
         return pcValue;
     }
@@ -762,7 +762,10 @@ static int check_missing(char *pcHeader, char *pcLineEnd, ST_VALUE_MAP *astValue
             }
             else if ( pstCallback && Is_StringInList(pstCallback->ppcKeyNotUsed, pcHeader) )
             {
-                sprintf(&m_acTempBuffer[strlen(m_acTempBuffer)], "  Not Used Field: %s\r\n", pcHeader);
+                if ( !g_iCompactOutput )
+                {
+                    sprintf(&m_acTempBuffer[strlen(m_acTempBuffer)], "  Not Used Field: %s\r\n", pcHeader);
+                }
             }
             else if ( pstCallback && Is_StringInList(pstCallback->ppcKeyNotParsed, pcHeader) )
             {
@@ -1069,7 +1072,10 @@ static int process_file_x(char *acTemplatePath, char *acBinPath, char *acTxtPath
     {
         if ( pstCallback->iOptional )
         {
-            my_printf("%s bin not found, module will be skipped\r\n", pcFilename);
+            if ( !g_iCompactOutput )
+            {
+                my_printf("%s bin not found, module will be skipped\r\n", pcFilename);
+            }
             goto out;
         }
         my_error("open %s bin file fail\r\n", pcFilename);

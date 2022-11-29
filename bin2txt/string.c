@@ -165,9 +165,55 @@ char *String_GetString(unsigned int id, char* pcFilter, char* pcFilter2)
     return pcResult->vText;
 }
 
+int String_Sanitize(char *pcInput, char *acOutput, unsigned int iSize, char cSpace)
+{
+    int iCharFlag = 0;
+    char *pcOrigin = acOutput;
+
+    if ( !pcInput || !acOutput || !iSize )
+    {
+        return 0;
+    }
+
+    iSize--;
+    while ( iSize && *pcInput )
+    {
+        if ( *pcInput == (char)0xC3 ) { // Strip colors
+            pcInput += 4;
+            continue;
+        }
+        else if ( isalpha(*pcInput) || isdigit(*pcInput) ) // Output letters and numbers
+        {
+            *acOutput = *pcInput;
+            acOutput++;
+            iSize--;
+            iCharFlag = 1;
+        }
+        else if ( cSpace && iCharFlag && strncmp(pcInput, "'s ", 3) ) // Replace other symbols with spaces, ignoring
+        {
+            *acOutput = cSpace;
+            acOutput++;
+            iSize--;
+            iCharFlag = 0;
+        }
+        pcInput++;
+    }
+    *acOutput = 0;
+
+    if ( cSpace )
+    {
+        while ( --acOutput >= pcOrigin && *acOutput == cSpace )
+        {
+            *acOutput = 0;
+        }
+    }
+
+    return 1;
+}
+
 int String_StripFileName(char *pcInput, char *acOutput, unsigned int iSize)
 {
-    char *pcFrom, *pcTo, *pcAnchor;
+    char *pcFrom, *pcTo;
 
     if ( !pcInput || !iSize || !strcmp(pcInput, "0") || !stricmp(pcInput, "null") )
     {
@@ -175,30 +221,22 @@ int String_StripFileName(char *pcInput, char *acOutput, unsigned int iSize)
     }
 
     pcFrom = pcInput;
-    while ( (pcTo = strchr(pcFrom, '/')) || (pcTo = strchr(pcFrom, '\\')) )
+    while ( (pcTo = memchr(pcFrom, '/', iSize - ( pcFrom - pcInput ))) ||
+            (pcTo = memchr(pcFrom, '\\', iSize - ( pcFrom - pcInput ))) )
     {
         pcFrom = pcTo + 1;
     }
-    pcTo = strchr(pcFrom, '.');
-
-    pcAnchor = acOutput;
-    iSize--;
-    while ( iSize && *pcFrom && (!pcTo || pcFrom < pcTo)  )
+    pcTo = memchr(pcFrom, '.', iSize - ( pcFrom - pcInput ));
+    if ( !pcTo )
     {
-        if ( isalpha(*pcFrom) || isdigit(*pcFrom) )
-        {
-            *pcAnchor = *pcFrom;
-            pcAnchor++;
-            iSize--;
-        }
-        pcFrom++;
+        pcTo = pcInput + iSize;
     }
-    *pcAnchor = 0;
+    strncpy(acOutput, pcFrom, pcTo - pcFrom);
 
-    return pcAnchor - acOutput;
+    return 1;
 }
 
-int String_BuildName(char *pcNameFormat, int iNameSize, unsigned int iStingId, char *pcTemplate, char *pcName, unsigned int iLine, fnHaveName pfnHaveName, char* acOutput)
+int String_BuildName(char *pcNameFormat, int iNameSize, char cNameSeparator, unsigned int iStingId, char *pcTemplate, char *pcName, unsigned int iLine, fnHaveName pfnHaveName, char* acOutput)
 {
     char *pcOutPos = acOutput;
     char *pcFormatPos = pcNameFormat;
@@ -208,7 +246,7 @@ int String_BuildName(char *pcNameFormat, int iNameSize, unsigned int iStingId, c
     unsigned int iMaxLength = iNameSize;
     unsigned int iCutOff = 0;
 
-    if ( !pcNameFormat )
+    if ( !pcNameFormat || !iNameSize )
     {
         return 0;
     }
@@ -237,21 +275,7 @@ int String_BuildName(char *pcNameFormat, int iNameSize, unsigned int iStingId, c
         {
             if ( pcTemp && *pcTemp )
             {
-                while ( *pcTemp )
-                {
-                    if ( *pcTemp == (char)0xC3 ) { // Strip colors
-                        pcTemp += 4;
-                        continue;
-                    }
-                    if ( isalpha(*pcTemp) || isdigit(*pcTemp) )
-                    {
-                        *pcOutPos = *pcTemp;
-                        pcOutPos++;
-                        if ( (pcOutPos - acOutput) >= iNameSize )
-                            break;
-                    }
-                    pcTemp++;
-                }
+                String_Sanitize(pcTemp, pcOutPos, iNameSize - (pcOutPos - acOutput), cNameSeparator);
                 pcOutPos += strlen(pcOutPos);
                 pcFormatPos += 2;
                 iTemplateFlag = 0;

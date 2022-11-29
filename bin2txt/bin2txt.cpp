@@ -12,6 +12,7 @@ typedef struct
     char *pcFileName;
     char *pcNameFormat;
     int iNameSize;
+    char cNameSeparator;
     fn_process_module pfnProcessModule;
     ENUM_MODULE_PHASE enPhase;
 } ST_MODULE;
@@ -24,6 +25,7 @@ static ST_MODULE m_astProcessModule[EN_MID_MAX];
         m_astProcessModule[MODULE_ID(key)].pcFileName = #key;\
         m_astProcessModule[MODULE_ID(key)].pcNameFormat = NULL;\
         m_astProcessModule[MODULE_ID(key)].iNameSize = 24;\
+        m_astProcessModule[MODULE_ID(key)].cNameSeparator = 0;\
         m_astProcessModule[MODULE_ID(key)].pfnProcessModule = process_##key;\
         m_astProcessModule[MODULE_ID(key)].enPhase = EN_MODULE_PHASE_START;\
     } while (0);
@@ -54,6 +56,11 @@ int Get_ModuleNameSize(ENUM_MODULE_ID enMid)
     return m_astProcessModule[enMid].iNameSize;
 }
 
+char Get_ModuleNameSeparator(ENUM_MODULE_ID enMid)
+{
+    return m_astProcessModule[enMid].cNameSeparator;
+}
+
 static FILE *m_pfLogHandle = NULL;
 
 unsigned int bg_printf( const char *pcBG, const char *pcFormat,... )
@@ -63,11 +70,7 @@ unsigned int bg_printf( const char *pcBG, const char *pcFormat,... )
     static char m_acPrintTempBuf[2048];
     char acLine[40];
 
-#ifdef NO_VERBOSE
-    return 0;
-#endif
-
-    if ( !pcFormat )
+    if ( g_iCompactOutput || !pcFormat )
     {
         return 0;
     }
@@ -178,6 +181,7 @@ char *g_pcCustomTable1 = NULL;
 char *g_pcCustomTable2 = NULL;
 char *g_pcCustomTable3 = NULL;
 int g_iTrimSpace = 0;
+int g_iCompactOutput = 0;
 
 void Init_Settings(char* acTemplatePath, char* acBinPath, char* acTxtPath)
 {
@@ -200,6 +204,9 @@ void Init_Settings(char* acTemplatePath, char* acBinPath, char* acTxtPath)
 
     GetPrivateProfileString("GENERAL", "TrimSpace", "0", acIniBuff, sizeof(acIniBuff), pcIniFile);
     g_iTrimSpace = atoi(acIniBuff);
+
+    GetPrivateProfileString("GENERAL", "CompactOutput", "0", acIniBuff, sizeof(acIniBuff), pcIniFile);
+    g_iCompactOutput = atoi(acIniBuff);
 
     GetPrivateProfileString("GENERAL", "CustomTbl1", 0, acIniBuff, sizeof(acIniBuff), pcIniFile);
     if ( strlen(acIniBuff) > 0 )
@@ -274,6 +281,24 @@ void Init_Settings(char* acTemplatePath, char* acBinPath, char* acTxtPath)
             {
                 m_astProcessModule[eModule].iNameSize = 6;
             }
+        }
+        pcAnchor = pcAnchor2 + strlen(pcAnchor2) + 1;
+    }
+
+    GetPrivateProfileSection("NAME_SEPARATOR", acIniBuff, sizeof(acIniBuff), pcIniFile);
+
+    pcAnchor = acIniBuff;
+    while ( *pcAnchor )
+    {
+        ENUM_MODULE_ID eModule;
+
+        pcAnchor2 = strchr(pcAnchor, '=');
+        *pcAnchor2 = 0;
+        pcAnchor2++;
+
+        if ( (eModule = Get_ModuleId(pcAnchor)) != EN_MID_MAX )
+        {
+            m_astProcessModule[eModule].cNameSeparator = (char)atoi(pcAnchor2);
         }
         pcAnchor = pcAnchor2 + strlen(pcAnchor2) + 1;
     }
