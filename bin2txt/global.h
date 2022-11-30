@@ -9,6 +9,7 @@ extern "C" {
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stddef.h>
 #include <string.h>
 #include <sys/stat.h>
 #include <time.h>
@@ -508,7 +509,8 @@ extern unsigned int Misc_GetItemString2(char *pcVcode);
 extern unsigned int Misc_GetItemString(unsigned int id);
 
 extern char *MonStats_GetStatsName(unsigned int id);
-extern unsigned int MonStats_GetPropString(unsigned int id);
+extern int MonStats_LinkSkills(void *astSkills, unsigned int iSkillsCount, unsigned int iStructSize, unsigned int iMemberOffset);
+extern int MonStats_LinkMonProp(void *astMonProp, unsigned int iMonPropCount, unsigned int iStructSize, unsigned int iMemberOffset);
 
 extern char *Pettype_GetPetType(unsigned int id);
 

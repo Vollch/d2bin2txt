@@ -2002,6 +2002,7 @@ typedef struct
 typedef struct
 {
     char vskill[64];
+    char *pcOwner;
 } ST_SKILLS;
 
 static char *m_apcNotUsed[] = 
@@ -2038,6 +2039,11 @@ static ST_SKILLS *m_astSkills = NULL;
 MODULE_SETLINES_FUNC(m_astSkills, ST_SKILLS);
 MODULE_HAVENAME_FUNC(m_astSkills, vskill, m_iSkillsCount);
 
+static void module_SetLines_Pre(unsigned int uiLines)
+{
+    SETLINES_FUNC_NAME(uiLines);
+    MonStats_LinkSkills(m_astSkills, uiLines, sizeof(ST_SKILLS), offsetof(ST_SKILLS, pcOwner));
+}
 
 static int Skills_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
@@ -2045,7 +2051,7 @@ static int Skills_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLin
 
     if ( !stricmp(acKey, "skill") )
     {
-        if ( !String_BuildName(FORMAT(skills), SkillDesc_GetString(pstLineInfo->vskilldesc), pcTemplate, NAME_PREFIX, pstLineInfo->vId, MODULE_HAVENAME, acOutput) )
+        if ( !String_BuildName(FORMAT(skills), SkillDesc_GetString(pstLineInfo->vskilldesc), pcTemplate, m_astSkills[pstLineInfo->vId].pcOwner, pstLineInfo->vId, MODULE_HAVENAME, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vId);
         }
@@ -2639,6 +2645,7 @@ int process_skills(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_
         case EN_MODULE_PREPARE:
             MODULE_DEPEND_CALL(string, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(skilldesc, acTemplatePath, acBinPath, acTxtPath);
+            MODULE_DEPEND_CALL(monstats, acTemplatePath, acBinPath, acTxtPath);
             break;
 
         case EN_MODULE_SELF_DEPEND:
@@ -2647,7 +2654,7 @@ int process_skills(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_
             m_iSkillsCount = 0;
 
             m_stCallback.pfnFieldProc = Skills_FieldProc_Pre;
-            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
+            m_stCallback.pfnSetLines = module_SetLines_Pre;
             m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;

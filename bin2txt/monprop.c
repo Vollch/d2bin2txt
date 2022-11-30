@@ -320,6 +320,7 @@ typedef struct
 typedef struct
 {
     unsigned char vId[64];
+    unsigned short sString;
 } ST_MON_PROP;
 
 static char *m_apcInternalProcess[] =
@@ -333,6 +334,12 @@ static ST_MON_PROP *m_astMonProp = NULL;
 
 MODULE_SETLINES_FUNC(m_astMonProp, ST_MON_PROP);
 MODULE_HAVENAME_FUNC(m_astMonProp, vId, m_iMonPropCount);
+
+static void module_SetLines_Pre(unsigned int uiLines)
+{
+    SETLINES_FUNC_NAME(uiLines);
+    MonStats_LinkMonProp(m_astMonProp, uiLines, sizeof(ST_MON_PROP), offsetof(ST_MON_PROP, sString));
+}
 
 char *MonProp_GetPropId(unsigned int id)
 {
@@ -363,7 +370,7 @@ static int MonProp_ConvertValue_Pre(void *pvLineInfo, char *acKey, char *pcTempl
 
     if ( !stricmp(acKey, "Id") )
     {
-        if ( !String_BuildName(FORMAT(monprop), MonStats_GetPropString(pstLineInfo->vId), pcTemplate, NULL, m_iMonPropCount, MODULE_HAVENAME, acOutput) )
+        if ( !String_BuildName(FORMAT(monprop), m_astMonProp[pstLineInfo->vId].sString, pcTemplate, NAME_PREFIX, m_iMonPropCount, MODULE_HAVENAME, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vId);
         }
@@ -529,7 +536,7 @@ int process_monprop(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
             m_iMonPropCount = 0;
 
             m_stCallback.pfnConvertValue = MonProp_ConvertValue_Pre;
-            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
+            m_stCallback.pfnSetLines = module_SetLines_Pre;
             m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
@@ -558,4 +565,3 @@ int process_monprop(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
 
     return 1;
 }
-

@@ -1151,6 +1151,15 @@ typedef struct
     unsigned char vId[64];
     unsigned short vMonProp;
     unsigned short vNameStr;
+
+    unsigned short vSkill1;
+    unsigned short vSkill2;
+    unsigned short vSkill3;
+    unsigned short vSkill4;
+    unsigned short vSkill5;
+    unsigned short vSkill6;
+    unsigned short vSkill7;
+    unsigned short vSkill8;
 } ST_MONSTAT;
 
 static char *m_apcInternalProcess[] = 
@@ -1166,6 +1175,50 @@ static ST_MONSTAT *m_astMonStats = NULL;
 MODULE_SETLINES_FUNC(m_astMonStats, ST_MONSTAT);
 MODULE_HAVENAME_FUNC(m_astMonStats, vId, m_iMonStatsCount);
 
+int MonStats_LinkSkills(void *astSkills, unsigned int iSkillsCount, unsigned int iStructSize, unsigned int iMemberOffset)
+{
+    unsigned int i, j, iSkill;
+    void *pcOwner;
+
+    for ( i = 0; i < m_iMonStatsCount; i++ )
+    {
+        for ( j = 0; j < 8; j++ )
+        {
+            iSkill = *(&m_astMonStats[i].vSkill1 + j);
+            if ( iSkill < iSkillsCount )
+            {
+                pcOwner = (char *)astSkills + (iSkill * iStructSize) + iMemberOffset;
+                *(char **)pcOwner = &(m_astMonStats[i].vId[0]);
+            }
+        }
+    }
+
+    return 1;
+}
+
+int MonStats_LinkMonProp(void *astMonProp, unsigned int iMonPropCount, unsigned int iStructSize, unsigned int iMemberOffset)
+{
+    unsigned int i;
+    void *psString;
+
+    for ( i = 0; i < iMonPropCount; i++ )
+    {
+        psString = (char *)astMonProp + (i * iStructSize) + iMemberOffset;
+        *(unsigned short *)psString = 0xFFFF;
+    }
+
+    for ( i = 0; i < m_iMonStatsCount; i++ )
+    {
+        if ( m_astMonStats[i].vMonProp < iMonPropCount )
+        {
+            psString = (char *)astMonProp + (m_astMonStats[i].vMonProp * iStructSize) + iMemberOffset;
+            *(unsigned short *)psString = m_astMonStats[i].vNameStr;
+        }
+    }
+
+    return 1;
+}
+
 static int MonStats_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
@@ -1179,6 +1232,7 @@ static int MonStats_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iL
             sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vhcIdx);
         }
 
+        memcpy(&m_astMonStats[pstLineInfo->vhcIdx].vSkill1, &pstLineInfo->vSkill1, sizeof(pstLineInfo->vSkill1) * 8);
         m_astMonStats[pstLineInfo->vhcIdx].vNameStr = pstLineInfo->vNameStr;
         m_astMonStats[pstLineInfo->vhcIdx].vMonProp = pstLineInfo->vMonProp;
         strncpy(m_astMonStats[pstLineInfo->vhcIdx].vId, acOutput, sizeof(m_astMonStats[pstLineInfo->vhcIdx].vId));
@@ -1226,20 +1280,6 @@ char *MonStats_GetStatsName(unsigned int id)
     }
 
     return m_astMonStats[id].vId;
-}
-
-unsigned int MonStats_GetPropString(unsigned int id)
-{
-    unsigned int i;
-    for ( i = 0; i < m_iMonStatsCount; i++ )
-    {
-        if ( m_astMonStats[i].vMonProp == id )
-        {
-            return m_astMonStats[i].vNameStr;
-        }
-    }
-
-    return 0xFFFF;
 }
 
 static int MonStats_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
@@ -1858,7 +1898,6 @@ int process_monstats(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
             break;
 
         case EN_MODULE_OTHER_DEPEND:
-            MODULE_DEPEND_CALL(monstats, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(monstats2, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(monsounds, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(monprop, acTemplatePath, acBinPath, acTxtPath);

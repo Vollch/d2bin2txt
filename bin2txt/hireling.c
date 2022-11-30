@@ -227,18 +227,12 @@ typedef struct
     unsigned int vWeapon;
     unsigned int vShield;
 
-    unsigned short vSkill1;   //skills
-    unsigned short sPad1;
-    unsigned short vSkill2;
-    unsigned short sPad2;
-    unsigned short vSkill3;
-    unsigned short sPad3;
-    unsigned short vSkill4;
-    unsigned short sPad4;
-    unsigned short vSkill5;
-    unsigned short sPad5;
-    unsigned short vSkill6;
-    unsigned short sPad6;
+    unsigned int vSkill1;   //skills
+    unsigned int vSkill2;
+    unsigned int vSkill3;
+    unsigned int vSkill4;
+    unsigned int vSkill5;
+    unsigned int vSkill6;
 
     unsigned int vChance1;
     unsigned int vChance2;
@@ -277,9 +271,10 @@ typedef struct
     unsigned char vLvlPerLvl5;
     unsigned char vLvlPerLvl6;
     unsigned char vHireDesc; //hiredesc
-    unsigned char vNameFirst[32];
 
-    unsigned char vNameLast[37];
+    unsigned char vNameFirst[32];
+    unsigned char vNameLast[32];
+    unsigned char cPad[5];
 } ST_LINE_INFO;
 
 
