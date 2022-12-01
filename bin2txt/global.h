@@ -501,6 +501,7 @@ extern char *States_GetStateName(unsigned int id);
 
 extern char *ItemStatCost_GetStateName(unsigned int id);
 extern unsigned int ItemStatCost_GetString(unsigned int id);
+extern unsigned int ItemStatCost_GetPropertyString(unsigned short asStats[]);
 
 extern char *Properties_GetProperty(unsigned int id);
 

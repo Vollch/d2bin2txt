@@ -644,7 +644,8 @@ func = 28—— +[value] [技能名]
 
 typedef struct
 {//total 324 bytes
-    unsigned int vID;
+    unsigned short vID;
+    unsigned char pad0x02[2];
 
 #if 1
     unsigned char vCombinedBits1;
@@ -669,7 +670,7 @@ typedef struct
     unsigned char iPadding1_2 : 1;
 #endif
 
-    unsigned char iPadding1[2];
+    unsigned char pad0x06[2];
 
     unsigned char vSendmyspBits;
     unsigned char vSendmyspParammyspBits;
@@ -683,19 +684,17 @@ typedef struct
     unsigned char vValShift;
     unsigned char vSavemyspBits;
     unsigned char v1mypoint09mysubSavemyspBits;
-    unsigned char bUnKnown;
+    unsigned char pad0x1B;
 
     int vSavemyspAdd;
-
     int v1mypoint09mysubSavemyspAdd;
-
     unsigned int vSavemyspParammyspBits;
 
-    unsigned int iPadding10;
+    unsigned char pad0x28[4];
     unsigned int vMinAccr;
 
     unsigned char vEncode;
-    unsigned char bUnKnown2;
+    unsigned char pad0x31;
     unsigned short vmaxstat;  //引用自身
 
     unsigned short vdescpriority;
@@ -731,69 +730,8 @@ typedef struct
     unsigned short vopmyspstat2;  //引用自身
 
     unsigned short vopmyspstat3;  //引用自身
-    unsigned short iPadding23;
 
-    unsigned int iPadding24;
-    unsigned int iPadding25;
-    unsigned int iPadding26;
-    unsigned int iPadding27;
-    unsigned int iPadding28;
-    unsigned int iPadding29;
-
-    unsigned int iPadding30;
-    unsigned int iPadding31;
-    unsigned int iPadding32;
-    unsigned int iPadding33;
-    unsigned int iPadding34;
-    unsigned int iPadding35;
-    unsigned int iPadding36;
-    unsigned int iPadding37;
-    unsigned int iPadding38;
-    unsigned int iPadding39;
-
-    unsigned int iPadding40;
-    unsigned int iPadding41;
-    unsigned int iPadding42;
-    unsigned int iPadding43;
-    unsigned int iPadding44;
-    unsigned int iPadding45;
-    unsigned int iPadding46;
-    unsigned int iPadding47;
-    unsigned int iPadding48;
-    unsigned int iPadding49;
-
-    unsigned int iPadding50;
-    unsigned int iPadding51;
-    unsigned int iPadding52;
-    unsigned int iPadding53;
-    unsigned int iPadding54;
-    unsigned int iPadding55;
-    unsigned int iPadding56;
-    unsigned int iPadding57;
-    unsigned int iPadding58;
-    unsigned int iPadding59;
-
-    unsigned int iPadding60;
-    unsigned int iPadding61;
-    unsigned int iPadding62;
-    unsigned int iPadding63;
-    unsigned int iPadding64;
-    unsigned int iPadding65;
-    unsigned int iPadding66;
-    unsigned int iPadding67;
-    unsigned int iPadding68;
-    unsigned int iPadding69;
-
-    unsigned int iPadding70;
-    unsigned int iPadding71;
-    unsigned int iPadding72;
-    unsigned int iPadding73;
-    unsigned int iPadding74;
-    unsigned int iPadding75;
-    unsigned int iPadding76;
-    unsigned int iPadding77;
-    unsigned int iPadding78;
-    unsigned int iPadding79;
+    unsigned char pad0x5E[226];
 
     unsigned int vstuff;
 } ST_LINE_INFO;
@@ -801,7 +739,9 @@ typedef struct
 typedef struct
 {
     char vStat[64];
-    unsigned short vString;
+    unsigned short vdescstrpos;
+    unsigned short vdgrp;
+    unsigned short vdgrpstrpos;
 } ST_ITEM_STATES;
 
 static char *m_apcInternalProcess[] =
@@ -823,17 +763,14 @@ static int ItemStatCost_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned in
 
     if ( !stricmp(acKey, "Stat") )
     {
-        unsigned int iString = pstLineInfo->vdescstrpos;
-        if ( !String_FindString(iString, "dummy") )
-        {
-            iString = pstLineInfo->vdescstrneg;
-        }
-        if ( !String_BuildName(FORMAT(itemstatcost), iString, pcTemplate, NAME_PREFIX, pstLineInfo->vID, MODULE_HAVENAME, acOutput) )
+        if ( !String_BuildName(FORMAT(itemstatcost), pstLineInfo->vdescstrpos, pcTemplate, NAME_PREFIX, pstLineInfo->vID, MODULE_HAVENAME, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vID);
         }
 
-        m_astItemStates[pstLineInfo->vID].vString = iString;
+        m_astItemStates[pstLineInfo->vID].vdescstrpos = pstLineInfo->vdescstrpos;
+        m_astItemStates[pstLineInfo->vID].vdgrp = pstLineInfo->vdgrp;
+        m_astItemStates[pstLineInfo->vID].vdgrpstrpos = pstLineInfo->vdgrpstrpos;
         strncpy(m_astItemStates[pstLineInfo->vID].vStat, acOutput, sizeof(m_astItemStates[pstLineInfo->vID].vStat));
         String_Trim(m_astItemStates[pstLineInfo->vID].vStat);
         m_iItemStatesCount++;
@@ -944,7 +881,7 @@ static void ItemStatCost_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *p
 {
     INIT_VALUE_BUFFER;
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ID, UINT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ID, USHORT);
 
     VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, CSvSigned, CombinedBits2, BIT);
     VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, Saved, CombinedBits2, BIT);
@@ -1086,5 +1023,60 @@ unsigned int ItemStatCost_GetString(unsigned int id)
         return 0xFFFF;
     }
 
-    return m_astItemStates[id].vString;
+    return m_astItemStates[id].vdescstrpos;
+}
+
+unsigned int ItemStatCost_GetPropertyString(unsigned short asStats[])
+{
+    unsigned int i;
+    unsigned int iSkillGroup = 0;
+    unsigned int iPropGroup = 0;
+    unsigned int sGroupString = 0xFFFF;
+    unsigned int sStatString = 0xFFFF;
+
+    for ( i = 0; i < 7; i++ )
+    {
+        if ( asStats[i] < m_iItemStatesCount )
+        {
+            iSkillGroup = m_astItemStates[asStats[i]].vdgrp;
+
+            if ( sStatString == 0xFFFF )
+            {
+                sStatString = m_astItemStates[asStats[i]].vdescstrpos;
+            }
+
+            if ( !iSkillGroup )
+            {
+                iPropGroup = 0;
+                break;
+            }
+            else if ( !iPropGroup )
+            {
+                iPropGroup = iSkillGroup;
+                sGroupString = m_astItemStates[asStats[i]].vdgrpstrpos;
+            }
+            else if ( iPropGroup != iSkillGroup )
+            {
+                iPropGroup = 0;
+                break;
+            }
+        }
+    }
+
+    if ( !iPropGroup )
+    {
+        return sStatString;
+    }
+
+    for ( i = 0; i < m_iItemStatesCount; i++ )
+    {
+        if ( m_astItemStates[i].vdgrp == iPropGroup && asStats[0] != i
+              && asStats[1] != i && asStats[2] != i && asStats[3] != i
+              && asStats[4] != i && asStats[5] != i && asStats[6] != i  )
+        {
+            return sStatString;
+        }
+    }
+
+    return sGroupString;
 }

@@ -400,7 +400,7 @@ static int Properties_ConvertValue_Pre(void *pvLineInfo, char *acKey, char *pcTe
 
     if ( !stricmp(acKey, "code") )
     {
-        if ( !String_BuildName(FORMAT(properties), ItemStatCost_GetString(pstLineInfo->vstat1), pcTemplate, ItemStatCost_GetStateName(pstLineInfo->vstat1), pstLineInfo->vcode, MODULE_HAVENAME, acOutput) )
+        if ( !String_BuildName(FORMAT(properties), ItemStatCost_GetPropertyString(&pstLineInfo->vstat1), pcTemplate, ItemStatCost_GetStateName(pstLineInfo->vstat1), pstLineInfo->vcode, MODULE_HAVENAME, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vcode);
         }
