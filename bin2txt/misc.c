@@ -1024,27 +1024,25 @@ unsigned int Misc_GetItemString2(char *pcVcode)
 {
     unsigned int iWeaponCnt, iArmorCnt, iMiscCnt;
     unsigned int iString, i;
-    char acCode[4];
-    strncpy(acCode, pcVcode, 3);
 
     iWeaponCnt = Weapons_GetWeaponCount();
     iArmorCnt = Armor_GetArmorCount();
     iMiscCnt = m_iMiscCount;
 
     //weapon
-    if ( (iString = Weapons_GetWeaponString2(acCode)) != 0xFFFF )
+    if ( (iString = Weapons_GetWeaponString2(pcVcode)) != 0xFFFF )
     {
         return iString;
     }
 
-    if ( (iString = Armor_GetArmorString2(acCode)) != 0xFFFF )
+    if ( (iString = Armor_GetArmorString2(pcVcode)) != 0xFFFF )
     {
         return iString;
     }
 
     for ( i = 0; i < iMiscCnt; i++ )
     {
-        if ( !strcmp(m_astMisc[i].vcode, acCode) )
+        if ( !strcmp(m_astMisc[i].vcode, pcVcode) )
         {
             return m_astMisc[i].vString;
         }
