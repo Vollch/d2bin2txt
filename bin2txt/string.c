@@ -7,21 +7,115 @@ typedef struct
     char *vText;
 } ST_STRING;
 
+#pragma pack(push, 1)
+typedef struct
+{
+    unsigned short usCRC;
+    unsigned short usNumElements;
+    int iHashTableSize;
+    char cUnknown;
+    unsigned int dwIndexStart;
+    unsigned int uiMaxHashMiss;
+    unsigned int dwIndexEnd;
+} ST_TBL_HEADER;
+
+typedef struct
+{
+    unsigned char bUsed;
+    unsigned short usIndex;
+    unsigned int iHash;
+    unsigned int dwKeyOffset;
+    unsigned int dwStringOffset;
+    unsigned short usStringLen;
+} ST_TBL_HASH;
+#pragma pack(pop)
+
 static unsigned int m_iStringCount;
-static ST_STRING m_astString[10000];
+static ST_STRING *m_astString = NULL;
 static unsigned int m_iPatchStringCount;
-static ST_STRING m_astPatchString[10000];
+static ST_STRING *m_astPatchString = NULL;
 static unsigned int m_iExpansionsStringCount;
-static ST_STRING m_astExpansionsString[30000];
+static ST_STRING *m_astExpansionsString = NULL;
 
 static unsigned int m_iCustom1Count;
-static ST_STRING m_astCustom1[10000];
+static ST_STRING *m_astCustom1 = NULL;
 static unsigned int m_iCustom2Count;
-static ST_STRING m_astCustom2[10000];
+static ST_STRING *m_astCustom2 = NULL;
 static unsigned int m_iCustom3Count;
-static ST_STRING m_astCustom3[10000];
+static ST_STRING *m_astCustom3 = NULL;
 
-static int load_strings(char *acBinPath, char *pcTxtFile, ST_STRING *aStringList, int iListSize)
+char* read_bin_string(FILE *pfFile, unsigned int uiOffset)
+{
+    unsigned char cNext = 0;
+    unsigned int iLen = 0;
+
+    fseek(pfFile, uiOffset, SEEK_SET);
+    while ( cNext = fgetc(pfFile) )
+    {
+        if ( cNext == '\n' )
+        {
+            m_acGlobalBuffer[iLen++] = '}';
+        }
+        else if ( cNext == '\t' )
+        {
+            m_acGlobalBuffer[iLen++] = '\\';
+            m_acGlobalBuffer[iLen++] = 't';
+        }
+        else if ( cNext == '\r' )
+        {
+            continue;
+        }
+        else
+        {
+            m_acGlobalBuffer[iLen++] = cNext;
+        }
+    }
+    m_acGlobalBuffer[iLen] = 0;
+
+    return strdup(m_acGlobalBuffer);
+}
+
+static int load_strings_tbl(char *acBinPath, char *pcTblFile, ST_STRING **aStringList)
+{
+    static char acTblFile[256] = {0};
+    FILE *pfTblHandle = NULL;
+    ST_TBL_HEADER stTblHeader;
+    ST_TBL_HASH stTblHash;
+    unsigned int i;
+    unsigned int uiHashOffset = 0;
+
+    sprintf(acTblFile, "%s\\%s.tbl", acBinPath, pcTblFile);
+    pfTblHandle = fopen(acTblFile, "rb");
+
+    if ( !pfTblHandle || sizeof(stTblHeader) != fread(&stTblHeader, 1, sizeof(stTblHeader), pfTblHandle) )
+    {
+        return -1;
+    }
+
+    *aStringList = MemMgr_Malloc(sizeof(ST_STRING) * stTblHeader.usNumElements);
+    memset(*aStringList, 0, sizeof(ST_STRING) * stTblHeader.usNumElements);
+
+    uiHashOffset = sizeof(stTblHeader) + (stTblHeader.usNumElements * 2);
+
+    for ( i = 0; i < stTblHeader.usNumElements; i++ )
+    {
+        fseek(pfTblHandle, uiHashOffset + (i * sizeof(stTblHash)), SEEK_SET);
+
+        if ( sizeof(stTblHash) != fread(&stTblHash, 1, sizeof(stTblHash), pfTblHandle) )
+        {
+            return -1;
+        }
+
+        (*aStringList)[stTblHash.usIndex].vString = read_bin_string(pfTblHandle, stTblHash.dwKeyOffset);
+        (*aStringList)[stTblHash.usIndex].vText = read_bin_string(pfTblHandle, stTblHash.dwStringOffset);
+    }
+
+    fclose(pfTblHandle);
+
+    return stTblHeader.usNumElements;
+}
+
+static int load_strings_txt(char *acBinPath, char *pcTxtFile, ST_STRING **aStringList)
 {
     char acTxtFile[256] = {0};
     FILE *pfTxtHandle = NULL;
@@ -29,57 +123,81 @@ static int load_strings(char *acBinPath, char *pcTxtFile, ST_STRING *aStringList
     int iStringCount = 0;
     size_t iCurBufLength = 0;
 
-    memset(aStringList, 0, iListSize * sizeof(aStringList[0]));
-
     sprintf(acTxtFile, "%s\\%s.txt", acBinPath, pcTxtFile);
     pfTxtHandle = fopen(acTxtFile, "rb");
-    if ( pfTxtHandle )
+
+    if ( pfTxtHandle == NULL)
     {
-        memset(m_acGlobalBuffer, 0, m_iGlobaBufLength);
+        return -1;
+    }
 
-        while ( fgets(m_acGlobalBuffer, m_iGlobaBufLength, pfTxtHandle) )
-        {
-            iCurBufLength = strlen(m_acGlobalBuffer);
-            pcAnchor = strchr(m_acGlobalBuffer, '\t');
-            *pcAnchor = 0;
-            pcAnchor++;
+    while ( fgets(m_acGlobalBuffer, m_iGlobaBufLength, pfTxtHandle) )
+    {
+        iStringCount++;
+    }
 
-            aStringList[iStringCount].vString = strdup(m_acGlobalBuffer);
-            aStringList[iStringCount].vText = strdup(pcAnchor);
-            iStringCount++;
+    *aStringList = MemMgr_Malloc(sizeof(ST_STRING) * iStringCount);
+    memset(*aStringList, 0, sizeof(ST_STRING) * iStringCount);
 
-            memset(m_acGlobalBuffer, 0, iCurBufLength);
-        }
+    iStringCount = 0;
+    fseek(pfTxtHandle, 0, SEEK_SET);
+    memset(m_acGlobalBuffer, 0, m_iGlobaBufLength);
 
-        fclose(pfTxtHandle);
+    while ( fgets(m_acGlobalBuffer, m_iGlobaBufLength, pfTxtHandle) )
+    {
+        iCurBufLength = strlen(m_acGlobalBuffer);
+        pcAnchor = strchr(m_acGlobalBuffer, '\t');
+        *pcAnchor = 0;
+        pcAnchor++;
 
-        my_printf("%d %s\r\n", iStringCount, pcTxtFile);
+        (*aStringList)[iStringCount].vString = strdup(m_acGlobalBuffer);
+        (*aStringList)[iStringCount].vText = strdup(pcAnchor);
+        iStringCount++;
+
+        memset(m_acGlobalBuffer, 0, iCurBufLength);
+    }
+
+    fclose(pfTxtHandle);
+    return iStringCount;
+}
+
+static int load_strings(char *acBinPath, char *pcFile, ST_STRING **aStringList)
+{
+    int iStringCount;
+    if ( (iStringCount = load_strings_tbl(acBinPath, pcFile, aStringList)) >= 0 )
+    {
+        my_printf("%d %s (tbl)\r\n", iStringCount, pcFile);
+        return iStringCount;
+    }
+    else if ( (iStringCount = load_strings_txt(acBinPath, pcFile, aStringList)) >= 0 )
+    {
+        my_printf("%d %s (txt)\r\n", iStringCount, pcFile);
+        return iStringCount;
     }
     else
     {
-        my_printf("fail to open %s\r\n", acTxtFile);
+        my_printf("fail to read %s\r\n", pcFile);
+        return 0;
     }
-
-    return iStringCount;
 }
 
 static int process_string_x(char *acTemplatePath, char *acBinPath, char *acTxtPath)
 {
-    m_iStringCount = load_strings(acBinPath, "string", m_astString, 10000);
-    m_iPatchStringCount = load_strings(acBinPath, "patchstring", m_astPatchString, 10000);
-    m_iExpansionsStringCount = load_strings(acBinPath, "expansionstring", m_astExpansionsString, 30000);
+    m_iStringCount = load_strings(acBinPath, "string", &m_astString);
+    m_iPatchStringCount = load_strings(acBinPath, "patchstring", &m_astPatchString);
+    m_iExpansionsStringCount = load_strings(acBinPath, "expansionstring", &m_astExpansionsString);
 
     if ( g_pcCustomTable1 )
     {
-        m_iCustom1Count = load_strings(acBinPath, g_pcCustomTable1, m_astCustom1, 10000);
+        m_iCustom1Count = load_strings(acBinPath, g_pcCustomTable1, &m_astCustom1);
     }
     if ( g_pcCustomTable2 )
     {
-        m_iCustom2Count = load_strings(acBinPath, g_pcCustomTable2, m_astCustom2, 10000);
+        m_iCustom2Count = load_strings(acBinPath, g_pcCustomTable2, &m_astCustom2);
     }
     if ( g_pcCustomTable3 )
     {
-        m_iCustom3Count = load_strings(acBinPath, g_pcCustomTable3, m_astCustom3, 10000);
+        m_iCustom3Count = load_strings(acBinPath, g_pcCustomTable3, &m_astCustom3);
     }
 
     return (m_iStringCount && m_iPatchStringCount && m_iExpansionsStringCount &&

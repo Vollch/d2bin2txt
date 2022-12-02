@@ -2,13 +2,11 @@
 
 #define FILE_PREFIX "nosock"
 
-#pragma pack(push, 1)
 typedef struct
 {
     unsigned short vmainmysptype;
     unsigned short vsocketmysptype;
 } ST_LINE_INFO;
-#pragma pack(pop)
 
 static char *m_apcInternalProcess[] =
 {
