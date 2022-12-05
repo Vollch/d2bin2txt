@@ -42,9 +42,7 @@ int File_CopyFile(char *pcFromPath, char *pcToPath, char *pcFileName, char *pcSu
 {
     memset(m_acTempBuffer, 0, sizeof(m_acTempBuffer));
     sprintf(m_acTempBuffer, "copy /y %s\\%s%s %s\\%s%s >NUL", pcFromPath, pcFileName, pcSuffix, pcToPath, pcFileName, pcSuffix);
-    system(m_acTempBuffer);
-
-    return 1;
+    return system(m_acTempBuffer);
 }
 
 unsigned char *String_Trim(unsigned char *pcValue)
@@ -1092,8 +1090,7 @@ static int process_file_x(char *acTemplatePath, char *acBinPath, char *acTxtPath
 
         if ( pstCallback->ppcKeyInternalProcess )
         {
-            i = 0;
-            while ( pstCallback->ppcKeyInternalProcess[i] != NULL )
+            for ( i = 0; pstCallback->ppcKeyInternalProcess[i] != NULL; i++ )
             {
                 if ( !stricmp(pstCallback->ppcKeyInternalProcess[i], "eol") ||
                      !stricmp(pstCallback->ppcKeyInternalProcess[i], "*eol") ||
@@ -1106,7 +1103,6 @@ static int process_file_x(char *acTemplatePath, char *acBinPath, char *acTxtPath
                     String_RestoreSpecialChar(pstCallback->ppcKeyInternalProcess[i], m_acTempBuffer);
                     pcColumn += sprintf(pcColumn, "%s\t", m_acTempBuffer);
                 }
-                i++;
             }
         }
 
@@ -1264,11 +1260,7 @@ static int process_file_x(char *acTemplatePath, char *acBinPath, char *acTxtPath
 
         if ( 0 == (i % 10) || i == (stFileHeader.iLines - 1))
         {
-            if ( i > 0 )
-            {
-                my_printf("\33[2K\r");
-            }
-            my_printf("%sprocessed %d of %d entries of %s", (acTxtPath ? "" : "pre-"), i + 1, stFileHeader.iLines, pcFilename);
+            my_printf("\r%sprocessed %d of %d entries of %s", (acTxtPath ? "" : "pre-"), i + 1, stFileHeader.iLines, pcFilename);
         }
 
         //写回txt文件

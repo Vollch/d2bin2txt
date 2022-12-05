@@ -32,7 +32,7 @@ static int ItemDesc_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineN
 
         return 1;
     }
-    else if ( !stricmp(acKey, "end") )
+    else if ( !stricmp(acKey, "*eol") )
     {
         acOutput[0] = '0';
         acOutput[1] = 0;

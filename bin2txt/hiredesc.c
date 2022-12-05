@@ -143,7 +143,7 @@ int process_hiredesc(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
 
             if ( m_iBinStructSize == sizeof(ST_LINE_INFO_MD) )
             {
-                my_printf("  MercDesc detected, make sure you have \"NameStr\" in template\n");
+                my_printf("  MercDesc detected, make sure you have \"NameStr\" in hiredesc.txt template\n");
                 return process_hiredesc_MD(acTemplatePath, acBinPath, acTxtPath);
             }
             return process_hiredesc_D2(acTemplatePath, acBinPath, acTxtPath);

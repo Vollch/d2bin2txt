@@ -18,6 +18,7 @@ extern "C" {
 #include <assert.h>
 
 #define ALL_MODULES(X) \
+    X(RoS) \
     X(CharStart) \
     X(D2NewStats) \
     X(D2KillCounter) \
@@ -439,6 +440,8 @@ extern int Stack_GetIndex(void *pvStack);
 #define MODULE_DECALRE_FUNC(name) extern int process_##name(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
 
 ALL_MODULES(MODULE_DECALRE_FUNC)
+
+extern int isRoSActive();
 
 extern int String_StripFileName(char *pcInput, char *pcOutput, unsigned int iSize);
 extern int String_BuildName(char *pcNameFormat, int iNameSize, char cNameSeparator, unsigned int iStingId, char *pcTemplate, char *pcName, unsigned int iLine, fnHaveName pfnHaveName, char* acOutput);

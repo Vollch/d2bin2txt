@@ -121,7 +121,10 @@ int process_sounds(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_
     switch ( enPhase )
     {
         case EN_MODULE_PREPARE:
-            File_CopyFile(acTemplatePath, acTxtPath, "SoundEnviron", ".txt");
+            if ( File_CopyFile(acBinPath, acTxtPath, "SoundEnviron", ".txt") != 0 )
+            {
+                File_CopyFile(acTemplatePath, acTxtPath, "SoundEnviron", ".txt");
+            }
             break;
 
         case EN_MODULE_SELF_DEPEND:

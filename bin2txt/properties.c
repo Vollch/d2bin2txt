@@ -298,7 +298,7 @@ func1-7:通过以下方式使用param/min/max的值来计算属性的数值x：
 */
 
 typedef struct
-{
+{// total 46 bytes
     unsigned short vcode;
     unsigned char vset1;
     unsigned char vset2;
@@ -309,7 +309,7 @@ typedef struct
     unsigned char vset6;
 
     unsigned char vset7;
-    unsigned char iPadding2;
+    unsigned char vset8;
     unsigned short vval1;
 
     unsigned short vval2;
@@ -329,7 +329,7 @@ typedef struct
     unsigned char vfunc5;
     unsigned char vfunc6;
     unsigned char vfunc7;
-    unsigned char iPadding7;
+    unsigned char vfunc8;
 
     unsigned short vstat1;
     unsigned short vstat2;
@@ -442,6 +442,7 @@ static void Properties_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pst
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, set6, UCHAR);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, set7, UCHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, set8, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, val1, USHORT);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, val2, USHORT);
@@ -461,6 +462,12 @@ static void Properties_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pst
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, func5, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, func6, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, func7, UCHAR);
+
+    if ( isRoSActive() ) {
+        VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, ShowRange, func8, UCHAR);
+    } else {
+        VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, func8, UCHAR);
+    }
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat1, USHORT_ITEMSTAT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat2, USHORT_ITEMSTAT);
@@ -484,6 +491,7 @@ int process_properties(char *acTemplatePath, char *acBinPath, char *acTxtPath, E
     {
         case EN_MODULE_PREPARE:
             MODULE_DEPEND_CALL(itemstatcost, acTemplatePath, acBinPath, acTxtPath);
+            MODULE_DEPEND_CALL(RoS, acTemplatePath, acBinPath, acTxtPath);
             break;
 
         case EN_MODULE_SELF_DEPEND:

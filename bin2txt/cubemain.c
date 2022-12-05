@@ -693,6 +693,12 @@ static char *Cubemain_GenerateOutputProp(char *acOutput, ST_CUBE_OUTPUT *sOutput
         acOutput += strlen(acOutput);
     }
 
+    if ( isRoSActive() && sOutput->sFlags & 0x800 )
+    {
+        strcpy(acOutput, ",keep");
+        acOutput += strlen(acOutput);
+    }
+
     if ( cOutGrade == GRADE_LOW )
     {
         strcpy(acOutput, ",low");
@@ -747,7 +753,7 @@ static char *Cubemain_GenerateOutputProp(char *acOutput, ST_CUBE_OUTPUT *sOutput
         acOutput += strlen(acOutput);
     }
 
-    if ( sOutput->sPrefix > 0 )
+    if ( sOutput->sPrefix > 0 && !(isRoSActive() && sOutput->cType == 0x82))
     {
         sprintf(acOutput, ",pre=%d", sOutput->sPrefix);
         acOutput += strlen(acOutput);
@@ -879,6 +885,18 @@ static int Cubemain_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate
             {
                 strcpy(pcOutput, "Pandemonium Finale Portal");
             }
+            else if ( isRoSActive() && sOutput->cType == 0x80 )
+            {
+                strcpy(pcOutput, "red portal");
+            }
+            else if ( isRoSActive() && sOutput->cType == 0x81 )
+            {
+                strcpy(pcOutput, "addstat");
+            }
+            else if ( isRoSActive() && sOutput->cType == 0x82 && (pcResult = Sets_GetSetName(sOutput->sPrefix)) )
+            {
+                strcpy(pcOutput, pcResult);
+            }
 
             if ( (sOutput->sFlags & 0xFFF7) || cOutGrade || sOutput->cQuantity || sOutput->sPrefix || sOutput->sSuffix )
             {
@@ -950,6 +968,18 @@ static int Cubemain_BuildDescription(void *pvLineInfo, char *acOutput, unsigned 
         else if ( sOutputs[i]->cType == 0x03 )
         {
             pcResult = "Pandemonium Finale Portal";
+        }
+        else if ( isRoSActive() && sOutputs[i]->cType == 0x80 )
+        {
+            pcResult = "Red Portal";
+        }
+        else if ( isRoSActive() && sOutputs[i]->cType == 0x81 )
+        {
+            pcResult = "AddStat";
+        }
+        else if ( isRoSActive() && sOutputs[i]->cType == 0x82 )
+        {
+            pcResult = Sets_GetSetName(sOutputs[i]->sPrefix);
         }
 
         if ( pcResult )
@@ -1275,6 +1305,11 @@ int process_cubemain(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
             MODULE_DEPEND_CALL(itemtypes, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(uniqueitems, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(setitems, acTemplatePath, acBinPath, acTxtPath);
+            MODULE_DEPEND_CALL(RoS, acTemplatePath, acBinPath, acTxtPath);
+            if ( isRoSActive() )
+            {
+                MODULE_DEPEND_CALL(sets, acTemplatePath, acBinPath, acTxtPath);
+            }
             break;
 
         case EN_MODULE_INIT:
