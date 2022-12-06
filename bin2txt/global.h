@@ -23,6 +23,7 @@ extern "C" {
     X(D2NewStats) \
     X(D2KillCounter) \
     X(D2Spawn) \
+    X(D2RedPortal) \
     X(KillCounter) \
     X(BookOfLore) \
     X(LevelFX) \
@@ -146,7 +147,7 @@ typedef enum
     EN_VALUE_BIT,
     EN_VALUE_STRING, // 0x09, 0x01
     EN_VALUE_UINT_ITEM,
-    EN_VALUE_UINT_ITEMCODE,
+    EN_VALUE_UINT_ITEMCODE, // 0x19
     EN_VALUE_UINT_MISSCODE,
     EN_VALUE_UINT_SKILLCODE,
     EN_VALUE_UINT_DESCCODE,
