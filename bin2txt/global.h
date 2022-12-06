@@ -31,6 +31,7 @@ extern "C" {
     X(Waypoints) \
     X(NoSock) \
     X(QDrop) \
+    X(scrollspell) \
     X(bufficons) \
     X(arena) \
     X(armor) \
