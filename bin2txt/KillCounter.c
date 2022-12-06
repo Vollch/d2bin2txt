@@ -99,12 +99,6 @@ typedef struct
 } ST_LINE_INFO_12;
 #pragma pack(pop)
 
-static char *m_apcInternalProcess[] =
-{
-    "*eol",
-    NULL,
-};
-
 static char *m_apcNotUsed[] = 
 {
     "*remarks",
@@ -112,19 +106,6 @@ static char *m_apcNotUsed[] =
 };
 
 static unsigned int m_iBinStructSize = 0;
-
-static int KillCounter_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
-{
-    if ( !stricmp(acKey, "*eol") )
-    {
-        acOutput[0] = '0';
-        acOutput[1] = 0;
-
-        return 1;
-    }
-
-    return 0;
-}
 
 static int KillCounter_ConvertValue_12(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
 {
@@ -302,9 +283,9 @@ int process_KillCounter_10(char *acTemplatePath, char *acBinPath, char *acTxtPat
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat3, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Val3, INT);
 
+    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, myasteol, EOL);
+
     m_stCallback.iOptional = 1;
-    m_stCallback.pfnFieldProc = KillCounter_FieldProc;
-    m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
     m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
 
     return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
@@ -337,7 +318,6 @@ int process_KillCounter_12(char *acTemplatePath, char *acBinPath, char *acTxtPat
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TreasureClass, USHORT_TREASURE);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TreasureClassmybr1Nmybr2, USHORT_TREASURE);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TreasureClassmybr1Hmybr2, USHORT_TREASURE);
-
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat1, USHORT_ITEMSTAT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat2, USHORT_ITEMSTAT);
@@ -394,10 +374,10 @@ int process_KillCounter_12(char *acTemplatePath, char *acBinPath, char *acTxtPat
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MsgParam9mybr1Hmybr2, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MsgParam10mybr1Hmybr2, USHORT);
 
+    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, myasteol, EOL);
+
     m_stCallback.iOptional = 1;
-    m_stCallback.pfnFieldProc = KillCounter_FieldProc;
     m_stCallback.pfnConvertValue = KillCounter_ConvertValue_12;
-    m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
     m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
 
     return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 

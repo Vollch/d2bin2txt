@@ -148,7 +148,6 @@ typedef struct
 static char *m_apcInternalProcess[] =
 {
     "ItemType",
-    "*eol",
     NULL,
 };
 
@@ -180,13 +179,6 @@ static int ItemTypes_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int i
         m_iItemTypesCount++;
         return 1;
     }
-    else if ( !stricmp(acKey, "*eol") )
-    {
-        acOutput[0] = '0';
-        acOutput[1] = 0;
-
-        return 1;
-    }
 
     return 0;
 }
@@ -204,13 +196,6 @@ static int ItemTypes_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLine
         {
             strncpy(acOutput, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
         }
-
-        return 1;
-    }
-    else if ( !stricmp(acKey, "*eol") )
-    {
-        acOutput[0] = '0';
-        acOutput[1] = 0;
 
         return 1;
     }
@@ -296,6 +281,8 @@ int process_itemtypes(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, InvGfx4, STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, InvGfx5, STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, InvGfx6, STRING);
+
+    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, myasteol, EOL);
 
     switch ( enPhase )
     {

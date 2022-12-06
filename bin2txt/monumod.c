@@ -376,7 +376,6 @@ typedef struct
 static char *m_apcInternalProcess[] =
 {
     "uniquemod",
-    "*eol",
     NULL,
 };
 
@@ -397,13 +396,6 @@ static int MonUMOD_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vid);
         }
-
-        return 1;
-    }
-    else if ( !stricmp(acKey, "*eol") )
-    {
-        acOutput[0] = '0';
-        acOutput[1] = 0;
 
         return 1;
     }
@@ -439,6 +431,8 @@ int process_monumod(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, upickmyspmybr1Hmybr2, USHORT);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, constants, UINT);
+
+    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, myasteol, EOL);
 
     switch ( enPhase )
     {

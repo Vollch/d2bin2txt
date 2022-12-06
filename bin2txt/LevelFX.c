@@ -18,7 +18,6 @@ typedef struct
 static char *m_apcInternalProcess[] =
 {
     "*Level Name",
-    "end",
     NULL,
 };
 
@@ -32,13 +31,6 @@ static int LevelFX_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
         }
-
-        return 1;
-    }
-    else if ( !stricmp(acKey, "end") )
-    {
-        acOutput[0] = '0';
-        acOutput[1] = 0;
 
         return 1;
     }
@@ -58,6 +50,8 @@ int process_LevelFX(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Parralax, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Light, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, LightQuestID, UINT);
+
+    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, end, EOL);
 
     switch ( enPhase )
     {

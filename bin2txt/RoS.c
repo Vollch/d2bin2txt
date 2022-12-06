@@ -17,30 +17,11 @@ typedef struct
     int vDestinationOnly;
 } ST_LINE_INFO;
 
-static char *m_apcInternalProcess[] =
-{
-    "end",
-    NULL,
-};
-
 static int m_iModuleActive = 0;
 
 int isRoSActive()
 {
     return m_iModuleActive;
-}
-
-static int RoS_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
-{
-    if ( !stricmp(acKey, "end") )
-    {
-        acOutput[0] = '0';
-        acOutput[1] = 0;
-
-        return 1;
-    }
-
-    return 0;
 }
 
 int process_RoS(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
@@ -61,6 +42,8 @@ int process_RoS(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MOD
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, AllowReveal, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, DestinationOnly, INT);
 
+    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, end, EOL);
+
     switch ( enPhase )
     {
         case EN_MODULE_PREPARE:
@@ -68,8 +51,6 @@ int process_RoS(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MOD
 
         case EN_MODULE_SELF_DEPEND:
             m_stCallback.iOptional = 1;
-            m_stCallback.pfnFieldProc = RoS_FieldProc;
-            m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
             m_iModuleActive = process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);

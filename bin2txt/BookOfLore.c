@@ -3,27 +3,27 @@
 #define FILE_PREFIX "messages"
 #define NAME_PREFIX "bl"
 
-#pragma pack(push, 1)
 typedef struct
 {
     unsigned short vNameStr;
     unsigned char vDifficulty;
     unsigned char vAct;
+
     unsigned short vArea;
     unsigned char vQuest;
     unsigned char vClass;
+
     unsigned short vLevelMin;
     unsigned short vLevelMax;
+
     unsigned char vTown;
     unsigned char vAllSame;
     unsigned char acPad[2];
 } ST_LINE_INFO;
-#pragma pack(pop)
 
 static char *m_apcInternalProcess[] =
 {
     "*desc",
-    "*eol",
     NULL,
 };
 
@@ -37,13 +37,6 @@ static int BookOfLore_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLin
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
         }
-
-        return 1;
-    }
-    else if ( !stricmp(acKey, "*eol") )
-    {
-        acOutput[0] = '0';
-        acOutput[1] = 0;
 
         return 1;
     }
@@ -67,6 +60,8 @@ int process_BookOfLore(char *acTemplatePath, char *acBinPath, char *acTxtPath, E
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, LevelMax, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Town, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, AllSame, UCHAR);
+
+    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, myasteol, EOL);
 
     switch ( enPhase )
     {

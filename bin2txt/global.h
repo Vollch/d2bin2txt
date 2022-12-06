@@ -180,7 +180,9 @@ typedef enum
     EN_VALUE_UCHAR_MONMODE,
     EN_VALUE_UCHAR_PLRMODE,
     EN_VALUE_UCHAR_PET,
-    EN_VALUE_UCHAR_STORE
+    EN_VALUE_UCHAR_STORE,
+
+    EN_VALUE_EOL // 0x00
 } ENUM_VALUE_TYPE;
 
 typedef enum
@@ -257,6 +259,16 @@ typedef struct
         map[m_iValueMapIndex].enValueType = EN_VALUE_##type;\
         map[m_iValueMapIndex].iValueLen = sizeof(line->v##field);\
         map[m_iValueMapIndex].iActiveColumn = 0;\
+        m_iValueMapIndex++;\
+    } while (0)
+
+#define VALUE_MAP_DEFINE_3(map, line, key, type) \
+    do {\
+        map[m_iValueMapIndex].acKeyName = #key;\
+        map[m_iValueMapIndex].pvValue = line;\
+        map[m_iValueMapIndex].enValueType = EN_VALUE_##type;\
+        map[m_iValueMapIndex].iValueLen = sizeof(line);\
+        map[m_iValueMapIndex].iActiveColumn = 1;\
         m_iValueMapIndex++;\
     } while (0)
 

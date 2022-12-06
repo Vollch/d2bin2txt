@@ -239,7 +239,6 @@ typedef struct
 static char *m_apcInternalProcess[] =
 {
     "Superunique",
-    "*eol",
     NULL,
 };
 
@@ -298,13 +297,6 @@ static int SuperUniques_FieldProc(void *pvLineInfo, char *acKey, unsigned int iL
 
         return 1;
     }
-    else if ( !stricmp(acKey, "*eol") )
-    {
-        acOutput[0] = '0';
-        acOutput[1] = 0;
-
-        return 1;
-    }
 
     return 0;
 }
@@ -341,6 +333,8 @@ static void SuperUniques_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *p
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TCmybr1Nmybr2, USHORT_TREASURE);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TCmybr1Hmybr2, USHORT_TREASURE);
+
+    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, myasteol, EOL);
 }
 
 int process_superuniques(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)

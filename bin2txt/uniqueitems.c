@@ -386,12 +386,6 @@ static char *m_apcNotUsed[] =
     NULL,
 };
 
-static char *m_apcInternalProcess[] =
-{
-    "*eol",
-    NULL,
-};
-
 static unsigned int m_uiUniqueItemCount = 0;
 static ST_SEARCHITEMS *m_astUniqueItems = NULL;
 
@@ -416,21 +410,6 @@ static int UniqueItems_ConvertValue_Pre(void *pvLineInfo, char *acKey, char *pcT
         strncpy(m_astUniqueItems[m_uiUniqueItemCount].vindex, pstLineInfo->vindex, sizeof(m_astUniqueItems[m_uiUniqueItemCount].vindex));
         String_Trim(m_astUniqueItems[m_uiUniqueItemCount].vindex);
         m_uiUniqueItemCount++;
-    }
-
-    return 0;
-}
-
-static int UniqueItems_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
-{
-    ST_LINE_INFO *pstLineInfo = pvLineInfo;
-
-    if ( !stricmp(acKey, "*eol") )
-    {
-        acOutput[0] = '0';
-        acOutput[1] = 0;
-
-        return 1;
     }
 
     return 0;
@@ -562,6 +541,8 @@ int process_uniqueitems(char *acTemplatePath, char *acBinPath, char *acTxtPath, 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, min12, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, max12, INT);
 
+    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, myasteol, EOL);
+
     switch ( enPhase )
     {
         case EN_MODULE_PREPARE:
@@ -574,7 +555,6 @@ int process_uniqueitems(char *acTemplatePath, char *acBinPath, char *acTxtPath, 
             m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
             m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
-            m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
             return process_file(acTemplatePath, acBinPath, NULL, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);
@@ -588,9 +568,7 @@ int process_uniqueitems(char *acTemplatePath, char *acBinPath, char *acTxtPath, 
 
         case EN_MODULE_INIT:
             m_stCallback.pfnBitProc = UniqueItems_BitProc;
-            m_stCallback.pfnFieldProc = UniqueItems_FieldProc;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
-            m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo),
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);

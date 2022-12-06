@@ -8,27 +8,6 @@ typedef struct
     unsigned short vsocketmysptype;
 } ST_LINE_INFO;
 
-static char *m_apcInternalProcess[] =
-{
-    "eol",
-    NULL,
-};
-
-static int NoSock_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
-{
-    ST_LINE_INFO *pstLineInfo = pvLineInfo;
-
-    if ( !stricmp(acKey, "eol") )
-    {
-        acOutput[0] = '0';
-        acOutput[1] = 0;
-
-        return 1;
-    }
-
-    return 0;
-}
-
 int process_NoSock(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
     ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
@@ -37,6 +16,8 @@ int process_NoSock(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mainmysptype, USHORT_ITEMTYPE);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, socketmysptype, USHORT_ITEMTYPE);
+
+    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, eol, EOL);
 
     switch ( enPhase )
     {
@@ -50,8 +31,6 @@ int process_NoSock(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_
 
         case EN_MODULE_INIT:
             m_stCallback.iOptional = 1;
-            m_stCallback.pfnFieldProc = NoSock_FieldProc;
-            m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);

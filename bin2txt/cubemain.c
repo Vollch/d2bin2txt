@@ -503,7 +503,6 @@ static char *m_apcInternalProcess[] =
     "ilvl",
     "b ilvl",
     "c ilvl",
-    "*eol",
     NULL,
 };
 
@@ -1123,13 +1122,6 @@ static int Cubemain_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineN
 
         return 1;
     }
-    else if ( !stricmp(acKey, "*eol") )
-    {
-        acOutput[0] = '0';
-        acOutput[1] = 0;
-
-        return 1;
-    }
 
     return 0;
 }
@@ -1291,6 +1283,8 @@ int process_cubemain(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cmyspmodmysp5myspmax, SHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cmyspmodmysp5myspchance, USHORT);
+
+    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, myasteol, EOL);
 
     switch ( enPhase )
     {

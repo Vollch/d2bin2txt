@@ -15,7 +15,6 @@ typedef struct
 static char *m_apcInternalProcess[] =
 {
     "*Name",
-    "*eol",
     NULL,
 };
 
@@ -32,13 +31,6 @@ static int ItemDesc_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineN
 
         return 1;
     }
-    else if ( !stricmp(acKey, "*eol") )
-    {
-        acOutput[0] = '0';
-        acOutput[1] = 0;
-
-        return 1;
-    }
 
     return 0;
 }
@@ -52,6 +44,8 @@ int process_ItemDesc(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ItemType, USHORT_ITEMTYPE);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ItemDesc, USHORT_STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, WeaponLine, UCHAR);
+
+    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, myasteol, EOL);
 
     switch ( enPhase )
     {

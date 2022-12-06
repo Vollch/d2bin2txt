@@ -7,6 +7,7 @@ typedef struct
 {
     unsigned short vStat;
     unsigned short vValue;
+
     unsigned short vLevelsUnderYou;
     unsigned short vLevelsAboveYou;
 } ST_LINE_INFO;
@@ -14,7 +15,6 @@ typedef struct
 static char *m_apcInternalProcess[] =
 {
     "*desc",
-    "*eol",
     NULL,
 };
 
@@ -32,13 +32,6 @@ static int D2KillCounter_FieldProc(void *pvLineInfo, char *acKey, unsigned int i
 
         return 1;
     }
-    else if ( !stricmp(acKey, "*eol") )
-    {
-        acOutput[0] = '0';
-        acOutput[1] = 0;
-
-        return 1;
-    }
 
     return 0;
 }
@@ -53,6 +46,8 @@ int process_D2KillCounter(char *acTemplatePath, char *acBinPath, char *acTxtPath
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Value, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, LevelsUnderYou, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, LevelsAboveYou, USHORT);
+
+    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, myasteol, EOL);
 
     switch ( enPhase )
     {

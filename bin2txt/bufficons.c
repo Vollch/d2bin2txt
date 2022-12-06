@@ -17,7 +17,6 @@ static char *m_apcInternalProcess[] =
 {
     "*IconCel",
     "*State",
-    "*eol",
     NULL,
 };
 
@@ -45,13 +44,6 @@ static int BuffIcons_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLine
         }
         return 1;
     }
-    else if ( !stricmp(acKey, "*eol") )
-    {
-        acOutput[0] = '0';
-        acOutput[1] = 0;
-
-        return 1;
-    }
 
     return 0;
 }
@@ -67,6 +59,8 @@ int process_bufficons(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PalShift, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SkillId, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, HoverString, USHORT);
+
+    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, myasteol, EOL);
 
     switch ( enPhase )
     {

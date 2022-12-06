@@ -125,6 +125,13 @@ void String_RestoreSpecialChar( char *key, char *acOutput )
             acOutput++;
 
         }
+        else if ( !strncmp(key, "myast", strlen("myast")) )
+        {
+            key += strlen("myast");
+            *acOutput = '*';
+            acOutput++;
+
+        }
         else
         {
             *acOutput = *key;
@@ -169,6 +176,11 @@ static int String_ReplaceSpecialChar(char *key, char *acTempKey)
         else if ( ')' == key[i] )
         {
             strcpy(&acTempKey[j], "mybr2");
+            j += (int)strlen(&acTempKey[j]);
+        }
+        else if ( '*' == key[i] )
+        {
+            strcpy(&acTempKey[j], "myast");
             j += (int)strlen(&acTempKey[j]);
         }
         else
@@ -527,6 +539,11 @@ static char * TXTBUF_FILL(char *key, ST_VALUE_MAP *map, int count, char *start, 
                 {
                     strcpy(acTempValue, pcResult);
                 }
+            }
+            else if ( EN_VALUE_EOL == map[i].enValueType )
+            {
+                acTempValue[0] = '0';
+                acTempValue[1] = 0;
             }
 
 
@@ -1083,7 +1100,6 @@ static int process_file_x(char *acTemplatePath, char *acBinPath, char *acTxtPath
     pfTplHandle = fopen(acTemplateFile, "rb");
     if ( NULL == pfTplHandle )
     {
-        char *pcEol = NULL;
         char *pcColumn = acTplBuf;
 
         my_printf("%s template not found, auto generated will be used\r\n", pcFilename);
@@ -1092,17 +1108,8 @@ static int process_file_x(char *acTemplatePath, char *acBinPath, char *acTxtPath
         {
             for ( i = 0; pstCallback->ppcKeyInternalProcess[i] != NULL; i++ )
             {
-                if ( !stricmp(pstCallback->ppcKeyInternalProcess[i], "eol") ||
-                     !stricmp(pstCallback->ppcKeyInternalProcess[i], "*eol") ||
-                     !stricmp(pstCallback->ppcKeyInternalProcess[i], "end"))
-                {
-                    pcEol = pstCallback->ppcKeyInternalProcess[i];
-                }
-                else
-                {
-                    String_RestoreSpecialChar(pstCallback->ppcKeyInternalProcess[i], m_acTempBuffer);
-                    pcColumn += sprintf(pcColumn, "%s\t", m_acTempBuffer);
-                }
+                String_RestoreSpecialChar(pstCallback->ppcKeyInternalProcess[i], m_acTempBuffer);
+                pcColumn += sprintf(pcColumn, "%s\t", m_acTempBuffer);
             }
         }
 
@@ -1110,11 +1117,6 @@ static int process_file_x(char *acTemplatePath, char *acBinPath, char *acTxtPath
         {
             String_RestoreSpecialChar(pstValueMap[i].acKeyName, m_acTempBuffer);
             pcColumn += sprintf(pcColumn, "%s\t", m_acTempBuffer);
-        }
-
-        if ( pcEol )
-        {
-            pcColumn += sprintf(pcColumn, "%s\t", pcEol);
         }
 
         sprintf(pcColumn - 1, "\r\n");

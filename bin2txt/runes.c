@@ -169,30 +169,11 @@ typedef struct
     unsigned int vT1Max1;
 } ST_RUNE_CODE;
 
-static char *m_apcInternalProcess[] =
-{
-    "eol",
-    NULL,
-};
-
 static char *m_apcNotUsed[] =
 {
     "*runes",
     NULL,
 };
-
-static int Runes_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
-{
-    if ( !stricmp(acKey, "eol") )
-    {
-        acOutput[0] = '0';
-        acOutput[1] = 0;
-
-        return 1;
-    }
-
-    return 0;
-}
 
 static int Runes_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
 {
@@ -296,6 +277,8 @@ int process_runes(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_M
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Min7, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Max7, INT);
 
+    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, eol, EOL);
+
     switch ( enPhase )
     {
         case EN_MODULE_PREPARE:
@@ -313,9 +296,7 @@ int process_runes(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_M
 
         case EN_MODULE_INIT:
             m_stCallback.pfnConvertValue = Runes_ConvertValue;
-            m_stCallback.pfnFieldProc = Runes_FieldProc;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
-            m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);

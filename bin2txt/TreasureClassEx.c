@@ -237,12 +237,6 @@ typedef struct
     unsigned char vTreasuremyspClass[36];
 } ST_TREASURECLASSEX;
 
-static char *m_apcInternalProcess[] =
-{
-    "Term",
-    NULL,
-};
-
 static char *m_apcNotUsed[] =
 {
     "SumItems",
@@ -288,19 +282,16 @@ static char *TreasureClassEx_GetKey(void *pvLineInfo, char *pcKey, unsigned int 
     return pcKey;
 }
 
-static int TreasureClassEx_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
+static int TreasureClassEx_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !stricmp(acKey, "Term") )
+    if ( !stricmp(acKey, "Treasure Class") )
     {
-        acOutput[0] = '0';
-        acOutput[1] = 0;
-
         strncpy(m_astTreasureClassEx[m_iTreasureClassEx].vTreasuremyspClass, pstLineInfo->vTreasuremyspClass, sizeof(m_astTreasureClassEx[m_iTreasureClassEx].vTreasuremyspClass));
         String_Trim(m_astTreasureClassEx[m_iTreasureClassEx].vTreasuremyspClass);
         m_iTreasureClassEx++;
-        return 1;
+        return 0;
     }
 
     return 0;
@@ -367,6 +358,8 @@ int process_treasureclassex(char *acTemplatePath, char *acBinPath, char *acTxtPa
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Prob10, INT);
 
+    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, Term, EOL);
+
     switch ( enPhase )
     {
         case EN_MODULE_PREPARE:
@@ -378,11 +371,10 @@ int process_treasureclassex(char *acTemplatePath, char *acBinPath, char *acTxtPa
             m_iTreasureClassEx = 0;
 
             //m_stCallback.pfnGetKey = TreasureClassEx_GetKey;
-            m_stCallback.pfnFieldProc = TreasureClassEx_FieldProc;
+            m_stCallback.pfnConvertValue = TreasureClassEx_ConvertValue;
             m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
             m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
-            m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);

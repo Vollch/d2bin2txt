@@ -946,7 +946,6 @@ static char *m_apcNotUsed[] =
 static char *m_apcInternalProcess[] = 
 {
     "Missile",
-    "EOL",
     NULL,
 };
 
@@ -974,13 +973,6 @@ static int Missiles_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iL
         m_iMisslesCount++;
         return 1;
     }
-    else if ( !stricmp(acKey, "EOL") )
-    {
-        acOutput[0] = '0';
-        acOutput[1] = 0;
-
-        return 1;
-    }
 
     return 0;
 }
@@ -992,13 +984,6 @@ static int Missiles_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineN
     if ( !stricmp(acKey, "Missile") )
     {
         strncpy(acOutput, m_astMissiles[pstLineInfo->vId].vMissile, sizeof(m_astMissiles[pstLineInfo->vId].vMissile));
-
-        return 1;
-    }
-    else if ( !stricmp(acKey, "EOL") )
-    {
-        acOutput[0] = '0';
-        acOutput[1] = 0;
 
         return 1;
     }
@@ -1317,6 +1302,8 @@ int process_missiles(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, DmgCalc1, UINT_MISSCODE);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, DmgSymPerCalc, UINT_MISSCODE);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, EDmgSymPerCalc, UINT_MISSCODE);
+
+    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, EOL, EOL);
 
     switch ( enPhase )
     {

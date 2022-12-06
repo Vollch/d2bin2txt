@@ -120,7 +120,6 @@ typedef struct
 static char *m_apcInternalProcess[] =
 {
     "pet type",
-    "eol",
     NULL,
 };
 
@@ -156,13 +155,6 @@ static int PetType_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLi
         strncpy(m_astPetTypes[pstLineInfo->vidx].vpetmysptype, acOutput, sizeof(m_astPetTypes[pstLineInfo->vidx].vpetmysptype));
         String_Trim(m_astPetTypes[pstLineInfo->vidx].vpetmysptype);
         m_iPetTypeCount++;
-        return 1;
-    }
-    else if ( !stricmp(acKey, "eol") )
-    {
-        acOutput[0] = '0';
-        acOutput[1] = 0;
-
         return 1;
     }
 
@@ -262,6 +254,8 @@ static void PetType_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLin
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mclass3, USHORT);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mclass4, USHORT);
+
+    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, eol, EOL);
 }
 
 int process_pettype(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)

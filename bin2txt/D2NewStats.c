@@ -8,19 +8,21 @@ typedef struct
 {
     unsigned char vStatOnly;
     unsigned char vStrOnly;
-
     unsigned short vtblIDx;
-    unsigned short vStat;
 
+    unsigned short vStat;
     unsigned short vXleft;
+
     unsigned short vXright;
     unsigned short vY;
+
     unsigned short vXleft2;
     unsigned short vXright2;
-    unsigned short vY2;
 
+    unsigned short vY2;
     unsigned char vFont;
     unsigned char vColor;
+
     unsigned char vFont2;
     unsigned char vColor2;
     unsigned char vRiN;
@@ -30,7 +32,6 @@ typedef struct
 static char *m_apcInternalProcess[] =
 {
     "*Name",
-    "*eol",
     NULL,
 };
 
@@ -49,13 +50,6 @@ static int D2NewStats_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLin
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
         }
-
-        return 1;
-    }
-    else if ( !stricmp(acKey, "*eol") )
-    {
-        acOutput[0] = '0';
-        acOutput[1] = 0;
 
         return 1;
     }
@@ -84,6 +78,8 @@ int process_D2NewStats(char *acTemplatePath, char *acBinPath, char *acTxtPath, E
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Font2, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Color2, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, RiN, UCHAR);
+
+    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, myasteol, EOL);
 
     switch ( enPhase )
     {

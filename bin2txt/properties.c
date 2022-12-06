@@ -348,12 +348,6 @@ typedef struct
     unsigned char vcode[64];
 } ST_PROPERTY;
 
-static char *m_apcInternalProcess[] =
-{
-    "*eol",
-    NULL,
-};
-
 static char *m_apcNotUsed[] =
 {
     "*done",
@@ -370,19 +364,6 @@ static ST_PROPERTY *m_astProperty = NULL;
 
 MODULE_SETLINES_FUNC(m_astProperty, ST_PROPERTY);
 MODULE_HAVENAME_FUNC(m_astProperty, vcode, m_iPropertyCount);
-
-static int Properties_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
-{
-    if ( !stricmp(acKey, "*eol") )
-    {
-        acOutput[0] = '0';
-        acOutput[1] = 0;
-
-        return 1;
-    }
-
-    return 0;
-}
 
 char *Properties_GetProperty(unsigned int id)
 {
@@ -479,6 +460,8 @@ static void Properties_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pst
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat6, USHORT_ITEMSTAT);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat7, USHORT_ITEMSTAT);
+
+    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, myasteol, EOL);
 }
 
 int process_properties(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
@@ -503,7 +486,6 @@ int process_properties(char *acTemplatePath, char *acBinPath, char *acTxtPath, E
             m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
             m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
-            m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
             return process_file(acTemplatePath, acBinPath, NULL, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);
@@ -516,9 +498,7 @@ int process_properties(char *acTemplatePath, char *acBinPath, char *acTxtPath, E
             Properties_InitValueMap(pstValueMap, pstLineInfo);
 
             m_stCallback.pfnConvertValue = Properties_ConvertValue;
-            m_stCallback.pfnFieldProc = Properties_FieldProc;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
-            m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);

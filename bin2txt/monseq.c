@@ -58,7 +58,6 @@ typedef struct
 static char *m_apcInternalProcess[] =
 {
     "sequence",
-    "eol",
     NULL,
 };
 
@@ -89,13 +88,6 @@ static int MonSeq_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLin
         m_iMonSeqCount++;
         return 1;
     }
-    else if ( !stricmp(acKey, "eol") )
-    {
-        acOutput[0] = '0';
-        acOutput[1] = 0;
-
-        return 1;
-    }
 
     return 0;
 }
@@ -107,13 +99,6 @@ static int MonSeq_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo,
     if ( !stricmp(acKey, "sequence") )
     {
         strncpy(acOutput, m_astMonSeq[pstLineInfo->vId].vsequence, sizeof(m_astMonSeq[pstLineInfo->vId].vsequence));
-
-        return 1;
-    }
-    else if ( !stricmp(acKey, "eol") )
-    {
-        acOutput[0] = '0';
-        acOutput[1] = 0;
 
         return 1;
     }
@@ -142,6 +127,8 @@ int process_monseq(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dir, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, event, UCHAR);
+
+    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, eol, EOL);
 
     switch ( enPhase )
     {

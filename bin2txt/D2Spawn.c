@@ -7,12 +7,16 @@ typedef struct
 {
     unsigned short vIDx;
     unsigned short vhcIDxSU1;
+
     unsigned short vhcIDxSU2;
     unsigned short vamountSU;
+
     unsigned short vrandMobs;
     unsigned short vhcIDxMob1;
+
     unsigned short vhcIDxMob2;
     unsigned short vamountMob;
+
     unsigned short vlevelreq;
     unsigned short vReqLevelID;
 } ST_LINE_INFO;
@@ -20,7 +24,6 @@ typedef struct
 static char *m_apcInternalProcess[] =
 {
     "*desc",
-    "*eol",
     NULL,
 };
 
@@ -39,13 +42,6 @@ static int D2Spawn_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
         }
-
-        return 1;
-    }
-    else if ( !stricmp(acKey, "*eol") )
-    {
-        acOutput[0] = '0';
-        acOutput[1] = 0;
 
         return 1;
     }
@@ -70,6 +66,8 @@ int process_D2Spawn(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo,amountMob, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo,levelreq, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo,ReqLevelID, USHORT);
+
+    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, myasteol, EOL);
 
     switch ( enPhase )
     {

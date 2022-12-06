@@ -100,7 +100,6 @@ static char *m_apcNotUsed[] =
 static char *m_apcInternalProcess[] =
 {
     "name",
-    "*EOL",
     NULL,
 };
 
@@ -120,13 +119,6 @@ static int Belts_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, 
         }
 
         m_uiBeltsCount++;
-        return 1;
-    }
-    else if ( !stricmp(acKey, "*EOL") )
-    {
-        acOutput[0] = '0';
-        acOutput[1] = 0;
-
         return 1;
     }
 
@@ -220,6 +212,8 @@ int process_belts(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_M
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, box16right, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, box16top, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, box16bottom, UINT);
+
+    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, myastEOL, EOL);
 
     switch ( enPhase )
     {

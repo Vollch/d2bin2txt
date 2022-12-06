@@ -25,7 +25,6 @@ static ST_HIRE_DESC *m_astHireDesc = NULL;
 static char *m_apcInternalProcess[] =
 {
     "Hireling Description",
-    "*EOL",
     NULL,
 };
 
@@ -56,13 +55,6 @@ static int HireDesc_FieldProc_D2(void *pvLineInfo, char *acKey, unsigned int iLi
 
         String_Trim(m_astHireDesc[m_iHireDesc].vCode);
         m_iHireDesc++;
-        return 1;
-    }
-    else if ( !stricmp(acKey, "*EOL") )
-    {
-        acOutput[0] = '0';
-        acOutput[1] = 0;
-
         return 1;
     }
 
@@ -97,6 +89,7 @@ int process_hiredesc_D2(char *acTemplatePath, char *acBinPath, char *acTxtPath)
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Code, STRING);
+    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, myastEOL, EOL);
 
     m_stCallback.pfnFieldProc = HireDesc_FieldProc_D2;
     m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;

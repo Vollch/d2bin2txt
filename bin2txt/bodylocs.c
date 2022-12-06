@@ -15,7 +15,6 @@ typedef struct
 static char *m_apcInternalProcess[] =
 {
     "Body Location",
-    "*EOL",
     NULL,
 };
 
@@ -41,13 +40,6 @@ static int BodyLocs_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineN
         m_iBodyLocs++;
         return 1;
     }
-    else if ( !stricmp(acKey, "*EOL") )
-    {
-        acOutput[0] = '0';
-        acOutput[1] = 0;
-
-        return 1;
-    }
 
     return 0;
 }
@@ -69,6 +61,8 @@ int process_bodylocs(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Code, STRING);
+
+    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, myastEOL, EOL);
 
     switch ( enPhase )
     {

@@ -260,7 +260,6 @@ typedef struct
 static char *m_apcInternalProcess[] =
 {
     "index",
-    "*eol",
     NULL,
 };
 
@@ -317,13 +316,6 @@ static int Sets_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLineN
 
         return 1;
     }
-    else if ( !stricmp(acKey, "*eol") )
-    {
-        acOutput[0] = '0';
-        acOutput[1] = 0;
-
-        return 1;
-    }
 
     return 0;
 }
@@ -335,13 +327,6 @@ static int Sets_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, c
     if ( !stricmp(acKey, "index") )
     {
         strncpy(acOutput, m_astSets[pstLineInfo->wSetId].vindex, sizeof(m_astSets[pstLineInfo->wSetId].vindex));
-
-        return 1;
-    }
-    else if ( !stricmp(acKey, "*eol") )
-    {
-        acOutput[0] = '0';
-        acOutput[1] = 0;
 
         return 1;
     }
@@ -573,6 +558,8 @@ static void Sets_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLineIn
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FParam8, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FMin8, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FMax8, INT);
+
+    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, myasteol, EOL);
 }
 
 int process_sets(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)

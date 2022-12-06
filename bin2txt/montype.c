@@ -44,7 +44,6 @@ typedef struct
 static char *m_apcInternalProcess[] =
 {
     "type",
-    "*eol",
     NULL,
 };
 
@@ -82,13 +81,6 @@ static int MonType_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLi
 
         return 1;
     }
-    else if ( !stricmp(acKey, "*eol") )
-    {
-        acOutput[0] = '0';
-        acOutput[1] = 0;
-
-        return 1;
-    }
 
     return 0;
 }
@@ -98,13 +90,6 @@ static int MonType_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo
     if ( !stricmp(acKey, "type") )
     {
         strncpy(acOutput, m_astMonType[iLineNo].vtype, sizeof(m_astMonType[iLineNo].vtype));
-
-        return 1;
-    }
-    else if ( !stricmp(acKey, "*eol") )
-    {
-        acOutput[0] = '0';
-        acOutput[1] = 0;
 
         return 1;
     }
@@ -125,6 +110,8 @@ int process_montype(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, strsing, USHORT_STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, strplur, USHORT_STRING);
+
+    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, myasteol, EOL);
 
     switch ( enPhase )
     {

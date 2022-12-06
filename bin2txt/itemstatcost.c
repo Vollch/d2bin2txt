@@ -747,7 +747,6 @@ typedef struct
 static char *m_apcInternalProcess[] =
 {
     "Stat",
-    "*eol",
     NULL,
 };
 
@@ -776,13 +775,6 @@ static int ItemStatCost_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned in
         m_iItemStatesCount++;
         return 1;
     }
-    else if ( !stricmp(acKey, "*eol") )
-    {
-        acOutput[0] = '0';
-        acOutput[1] = 0;
-
-        return 1;
-    }
 
     return 0;
 }
@@ -794,13 +786,6 @@ static int ItemStatCost_FieldProc(void *pvLineInfo, char *acKey, unsigned int iL
     if ( !stricmp(acKey, "Stat") )
     {
         strncpy(acOutput, m_astItemStates[pstLineInfo->vID].vStat, sizeof(m_astItemStates[pstLineInfo->vID].vStat));
-
-        return 1;
-    }
-    else if ( !stricmp(acKey, "*eol") )
-    {
-        acOutput[0] = '0';
-        acOutput[1] = 0;
 
         return 1;
     }
@@ -954,6 +939,8 @@ static void ItemStatCost_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *p
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, opmyspstat3, USHORT_ITEMSTAT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stuff, UINT);
+
+    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, myasteol, EOL);
 }
 
 int process_itemstatcost(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)

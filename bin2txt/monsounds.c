@@ -154,7 +154,6 @@ typedef struct
 static char *m_apcInternalProcess[] = 
 {
     "Id",
-    "EOL",
     NULL,
 };
 
@@ -208,13 +207,6 @@ static int MonSounds_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int i
         m_iMonSoundsCount++;
         return 1;
     }
-    else if ( !stricmp(acKey, "EOL") )
-    {
-        acOutput[0] = '0';
-        acOutput[1] = 0;
-
-        return 1;
-    }
 
     return 0;
 }
@@ -224,13 +216,6 @@ static int MonSounds_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLine
     if ( !stricmp(acKey, "Id") )
     {
         strncpy(acOutput, m_astMonSounds[iLineNo].vId, sizeof(m_astMonSounds[iLineNo].vId));
-
-        return 1;
-    }
-    else if ( !stricmp(acKey, "EOL") )
-    {
-        acOutput[0] = '0';
-        acOutput[1] = 0;
 
         return 1;
     }
@@ -299,6 +284,8 @@ static void MonSounds_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstL
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, CvtTgt3, UCHAR_MONMODE);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, CvtSk3, USHORT_SKILL);
+
+    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, EOL, EOL);
 }
 
 int process_monsounds(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)

@@ -613,7 +613,6 @@ typedef struct
 static char *m_apcInternalProcess[] = 
 {
     "skilldesc",
-    "eol",
     NULL,
 };
 
@@ -640,13 +639,6 @@ static int SkillDesc_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int i
         m_iSkillDescCount++;
         return 1;
     }
-    else if ( !stricmp(acKey, "eol") )
-    {
-        acOutput[0] = '0';
-        acOutput[1] = 0;
-
-        return 1;
-    }
 
     return 0;
 }
@@ -658,13 +650,6 @@ static int SkillDesc_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLine
     if ( !stricmp(acKey, "skilldesc") )
     {
         strncpy(acOutput, m_astSkillDesc[pstLineInfo->wSkillDesc].vskilldesc, sizeof(m_astSkillDesc[pstLineInfo->wSkillDesc].vskilldesc));
-
-        return 1;
-    }
-    else if ( !stricmp(acKey, "eol") )
-    {
-        acOutput[0] = '0';
-        acOutput[1] = 0;
 
         return 1;
     }
@@ -835,6 +820,8 @@ static void SkillDesc_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstL
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3calcb5, UINT_DESCCODE);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3calcb6, UINT_DESCCODE);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3calcb7, UINT_DESCCODE);
+
+    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, eol, EOL);
 }
 
 int process_skilldesc(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)

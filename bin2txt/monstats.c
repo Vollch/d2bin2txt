@@ -1165,7 +1165,6 @@ typedef struct
 static char *m_apcInternalProcess[] = 
 {
     "Id",
-    "*eol",
     NULL,
 };
 
@@ -1240,13 +1239,6 @@ static int MonStats_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iL
         m_iMonStatsCount++;
         return 1;
     }
-    else if ( !stricmp(acKey, "*eol") )
-    {
-        acOutput[0] = '0';
-        acOutput[1] = 0;
-
-        return 1;
-    }
 
     return 0;
 }
@@ -1258,13 +1250,6 @@ static int MonStats_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineN
     if ( !stricmp(acKey, "Id") )
     {
         strncpy(acOutput, m_astMonStats[pstLineInfo->vhcIdx].vId, sizeof(m_astMonStats[pstLineInfo->vhcIdx].vId));
-
-        return 1;
-    }
-    else if ( !stricmp(acKey, "*eol") )
-    {
-        acOutput[0] = '0';
-        acOutput[1] = 0;
 
         return 1;
     }
@@ -1869,6 +1854,8 @@ static void MonStats_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLi
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SplGetModeChart, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SplEndGeneric, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SplClientEnd, UCHAR);
+
+    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, myasteol, EOL);
 }
 
 int process_monstats(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)

@@ -13,30 +13,11 @@ typedef struct
 } ST_LINE_INFO; // 1.1
 #pragma pack(pop)
 
-static char *m_apcInternalProcess[] =
-{
-    "*eol",
-    NULL,
-};
-
 static char *m_apcNotUsed[] = 
 {
     "*remarks",
     NULL,
 };
-
-static int CharStart_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
-{
-    if ( !stricmp(acKey, "*eol") )
-    {
-        acOutput[0] = '0';
-        acOutput[1] = 0;
-
-        return 1;
-    }
-
-    return 0;
-}
 
 int process_CharStart(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
@@ -49,6 +30,8 @@ int process_CharStart(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, StatName, USHORT_ITEMSTAT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SkillName, USHORT_SKILL);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ParamVal, INT);
+
+    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, myasteol, EOL);
 
     switch ( enPhase )
     {
@@ -64,8 +47,6 @@ int process_CharStart(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
 
         case EN_MODULE_INIT:
             m_stCallback.iOptional = 1;
-            m_stCallback.pfnFieldProc = CharStart_FieldProc;
-            m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
 
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 

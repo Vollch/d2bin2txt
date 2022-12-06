@@ -30,25 +30,6 @@ typedef struct
     int vvalue4;
 } ST_LINE_INFO;
 
-static char *m_apcInternalProcess[] =
-{
-    "*eol",
-    NULL,
-};
-
-static int D2RedPortal_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
-{
-    if ( !stricmp(acKey, "*eol") )
-    {
-        acOutput[0] = '0';
-        acOutput[1] = 0;
-
-        return 1;
-    }
-
-    return 0;
-}
-
 int process_D2RedPortal(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
     ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
@@ -79,6 +60,8 @@ int process_D2RedPortal(char *acTemplatePath, char *acBinPath, char *acTxtPath, 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, param4, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, value4, UINT_ITEMCODE);
 
+    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, myasteol, EOL);
+
     switch ( enPhase )
     {
         case EN_MODULE_PREPARE:
@@ -92,8 +75,6 @@ int process_D2RedPortal(char *acTemplatePath, char *acBinPath, char *acTxtPath, 
 
         case EN_MODULE_INIT:
             m_stCallback.iOptional = 1;
-            m_stCallback.pfnFieldProc = D2RedPortal_FieldProc;
-            m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);

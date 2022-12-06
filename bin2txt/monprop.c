@@ -323,12 +323,6 @@ typedef struct
     unsigned short sString;
 } ST_MON_PROP;
 
-static char *m_apcInternalProcess[] =
-{
-    "*eol",
-    NULL,
-};
-
 static unsigned int m_iMonPropCount = 0;
 static ST_MON_PROP *m_astMonProp = NULL;
 
@@ -349,19 +343,6 @@ char *MonProp_GetPropId(unsigned int id)
     }
 
     return m_astMonProp[id].vId;
-}
-
-static int MonProp_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
-{
-    if ( !stricmp(acKey, "*eol") )
-    {
-        acOutput[0] = '0';
-        acOutput[1] = 0;
-
-        return 1;
-    }
-
-    return 0;
 }
 
 static int MonProp_ConvertValue_Pre(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
@@ -516,6 +497,8 @@ static void MonProp_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLin
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, chance5myspmybr1Hmybr2, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, chance6myspmybr1Hmybr2, UCHAR);
+
+    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, myasteol, EOL);
 }
 
 int process_monprop(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
@@ -538,7 +521,6 @@ int process_monprop(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
             m_stCallback.pfnConvertValue = MonProp_ConvertValue_Pre;
             m_stCallback.pfnSetLines = module_SetLines_Pre;
             m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
-            m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
             return process_file(acTemplatePath, acBinPath, NULL, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);
@@ -552,8 +534,6 @@ int process_monprop(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
             MonProp_InitValueMap(pstValueMap, pstLineInfo);
 
             m_stCallback.pfnConvertValue = MonProp_ConvertValue;
-            m_stCallback.pfnFieldProc = MonProp_FieldProc;
-            m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);

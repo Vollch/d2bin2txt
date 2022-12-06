@@ -312,7 +312,6 @@ static char *m_apcNotUsed[] =
 static char *m_apcInternalProcess[] = 
 {
     "state",
-    "eol",
     NULL,
 };
 
@@ -349,13 +348,6 @@ static int States_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLin
         m_iItemStatesCount++;
         return 1;
     }
-    else if ( !stricmp(acKey, "eol") )
-    {
-        acOutput[0] = '0';
-        acOutput[1] = 0;
-
-        return 1;
-    }
 
     return 0;
 }
@@ -367,13 +359,6 @@ static int States_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo,
     if ( !stricmp(acKey, "state") )
     {
         strncpy(acOutput, m_astItemStates[pstLineInfo->vid].vstate, sizeof(m_astItemStates[pstLineInfo->vid].vstate));
-
-        return 1;
-    }
-    else if ( !stricmp(acKey, "eol") )
-    {
-        acOutput[0] = '0';
-        acOutput[1] = 0;
 
         return 1;
     }
@@ -684,6 +669,8 @@ static void States_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLine
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, skill, USHORT_SKILL);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, missile, USHORT_MISSILE);
+
+    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, eol, EOL);
 }
 
 int process_states(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)

@@ -133,13 +133,6 @@ static char *m_apcInternalProcess_131[] =
 {
     "*LevelName",
     "*Act",
-    "*eol",
-    NULL,
-};
-
-static char *m_apcInternalProcess_010[] =
-{
-    "*eol",
     NULL,
 };
 
@@ -161,26 +154,6 @@ static int Waypoints_FieldProc_131(void *pvLineInfo, char *acKey, unsigned int i
     else if ( !stricmp(acKey, "*Act") )
     {
         sprintf(acOutput, "%u", Levels_GetAct(pstLineInfo->vLevelID));
-
-        return 1;
-    }
-    else if ( !stricmp(acKey, "*eol") )
-    {
-        acOutput[0] = '0';
-        acOutput[1] = 0;
-
-        return 1;
-    }
-
-    return 0;
-}
-
-static int Waypoints_FieldProc_010(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
-{
-    if ( !stricmp(acKey, "*eol") )
-    {
-        acOutput[0] = '0';
-        acOutput[1] = 0;
 
         return 1;
     }
@@ -286,6 +259,8 @@ int process_Waypoints_131(char *acTemplatePath, char *acBinPath, char *acTxtPath
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, DestroyReqItemmybr1Nmybr2, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, DestroyReqItemmybr1Hmybr2, UCHAR);
 
+    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, myasteol, EOL);
+
     m_stCallback.iOptional = 1;
     m_stCallback.pfnFieldProc = Waypoints_FieldProc_131;
     m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess_131;
@@ -322,9 +297,9 @@ int process_Waypoints_010(char *acTemplatePath, char *acBinPath, char *acTxtPath
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, KillKeyItemmybr1Nmybr2, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, KillKeyItemmybr1Hmybr2, UCHAR);
 
+    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, myasteol, EOL);
+
     m_stCallback.iOptional = 1;
-    m_stCallback.pfnFieldProc = Waypoints_FieldProc_010;
-    m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess_010;
 
     return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
         pstValueMap, Global_GetValueMapCount(), &m_stCallback);

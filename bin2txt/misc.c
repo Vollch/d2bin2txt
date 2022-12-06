@@ -939,7 +939,6 @@ static char *m_apcInternalProcess[] =
 {
     "name",
     "*name",
-    "*eol",
     NULL,
 };
 
@@ -1067,13 +1066,6 @@ static int Misc_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, c
         {
             strncpy(acOutput, pstLineInfo->vcode, sizeof(pstLineInfo->vcode));
         }
-
-        return 1;
-    }
-    else if ( !stricmp(acKey, "*eol") )
-    {
-        acOutput[0] = '0';
-        acOutput[1] = 0;
 
         return 1;
     }
@@ -1376,6 +1368,8 @@ static void Misc_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLineIn
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PermStoreItem, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, multibuy, UCHAR);
+
+    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, myasteol, EOL);
 }
 
 int process_misc(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)

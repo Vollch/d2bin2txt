@@ -620,31 +620,10 @@ typedef struct
     unsigned char vId[32];
 } ST_MONSTAT;
 
-static char *m_apcInternalProcess[] = 
-{
-    "EOL",
-    NULL,
-};
-
 static unsigned int m_iMonStatsCount = 0;
 static ST_MONSTAT *m_astMonStats = NULL;
 
 MODULE_SETLINES_FUNC(m_astMonStats, ST_MONSTAT);
-
-static int MonStats2_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
-{
-    ST_LINE_INFO *pstLineInfo = pvLineInfo;
-
-    if ( !stricmp(acKey, "EOL") )
-    {
-        acOutput[0] = '0';
-        acOutput[1] = 0;
-
-        return 1;
-    }
-
-    return 0;
-}
 
 static int MonStats2_ConvertValue_Pre(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
 {
@@ -1318,6 +1297,8 @@ static void MonStats2_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstL
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, BodyPart, STRING);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, restore, UINT);
+
+    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, EOL, EOL);
 }
 
 int process_monstats2(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
@@ -1338,7 +1319,6 @@ int process_monstats2(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
             m_stCallback.pfnConvertValue = MonStats2_ConvertValue_Pre;
             m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
             m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
-            m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
             m_iMonStatsCount = 0;
 
@@ -1358,8 +1338,6 @@ int process_monstats2(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
 
             m_stCallback.pfnConvertValue = MonStats2_ConvertValue;
             m_stCallback.pfnBitProc = MonStats2_BitProc;
-            m_stCallback.pfnFieldProc = MonStats2_FieldProc;
-            m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo),
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);
