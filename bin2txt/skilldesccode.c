@@ -149,7 +149,7 @@ static int SkillDescCode_SkillArg2Proc(unsigned char *pcBinBuf, unsigned char *p
             break;
 
         default:
-            my_error("unknown skill arg 1\r\n");
+            my_error("unknown skill arg 2\r\n");
             result = 0;
             break;
     }
@@ -194,7 +194,7 @@ static int SkillDescCode_StatArg1Proc(unsigned char *pcBinBuf, unsigned char *pc
             break;
 
         default:
-            my_error("unknown skill arg 1-%x\r\n", pcBinBuf[0]);
+            my_error("unknown stat arg 1-%x\r\n", pcBinBuf[0]);
             SkillDescCode_PrintHex();
             result = 0;
             break;
@@ -205,7 +205,15 @@ static int SkillDescCode_StatArg1Proc(unsigned char *pcBinBuf, unsigned char *pc
 #ifdef USE_NUMBER
         sprintf(pcTxtBuf, "%u", uiSkillIndex);
 #else
-        pcResult = ItemStatCost_GetStateName(uiSkillIndex);
+        if ( pcBinBuf[0] == 0x04 && 0 == uiSkillIndex)
+        {
+            my_printf("  Expression %u is missing arg1 of stat()\r\n", m_uiSkillDescCodeCount);
+            pcResult = "fixme";
+        }
+        else
+        {
+            pcResult = ItemStatCost_GetStateName(uiSkillIndex);
+        }
 
         if ( pcResult)
         {
@@ -243,14 +251,20 @@ static int SkillDescCode_StatArg2Proc(unsigned char *pcBinBuf, unsigned char *pc
             break;
 
         default:
-            my_error("unknown skill arg 1\r\n");
+            my_error("unknown stat arg 2\r\n");
             result = 0;
             break;
     }
 
     if ( 0 != result )
     {
-        if ( 0 == uiSkillIndex )
+        if ( pcBinBuf[0] == 0x04 && 0 == uiSkillIndex)
+        {
+            my_printf("  Expression %u is missing arg2 of stat()\r\n", m_uiSkillDescCodeCount);
+            pcTxtBuf[-1] = ' ';
+            strcpy(pcTxtBuf, "fixme");
+        }
+        else if ( 0 == uiSkillIndex )
         {
             strcpy(pcTxtBuf, "accr");
         }
@@ -442,7 +456,7 @@ static int SkillDescCode_SkLvlArg2Proc(unsigned char *pcBinBuf, unsigned char *p
             break;
 
         default:
-            my_error("unknown skillcalc arg 1\r\n");
+            my_error("unknown skillcalc arg 2\r\n");
             result = 0;
             break;
     }
@@ -491,7 +505,7 @@ static int SkillDescCode_SkLvlArg3Proc(unsigned char *pcBinBuf, unsigned char *p
             break;
 
         default:
-            my_error("unknown skillcalc arg 1\r\n");
+            my_error("unknown skillcalc arg 3\r\n");
             result = 0;
             break;
     }
@@ -536,6 +550,11 @@ static int SkillDescCode_OutputExpression(unsigned char *pcTempBuf)
 
     if ( SkillDescCode_ConverterBin2Txt(pcTempBuf, m_astSkillCode[m_uiSkillDescCodeCount].acExpressionTxt) )
     {
+        int iExpLen = strlen(m_astSkillCode[m_uiSkillDescCodeCount].acExpressionTxt);
+        if ( iExpLen >= 255 )
+        {
+            my_printf("  Expression %u is %u characters long, consider refactoring it, or shortening related IDs\r\n", m_uiSkillDescCodeCount, iExpLen);
+        }
         memcpy(m_astSkillCode[m_uiSkillDescCodeCount].acExpressionBin, m_acGlobalBuffer, m_uiExpressionIndex);
         m_astSkillCode[m_uiSkillDescCodeCount].uiBinLen = m_uiExpressionIndex;
         m_uiExpressionIndex = 0;
@@ -1071,9 +1090,7 @@ int SkillDescCode_ParseBin(char *acTemplatePath, char *acBinPath, char*acTxtPath
 
                 if ( Stack_GetIndex(m_pvStack) > 1 )
                 {
-                    SkillDescCode_PrintHex();
-                    my_error("invalid expression\r\n");
-                    //goto error;
+                    my_printf("  Expression %u is missing some operators\r\n", m_uiSkillDescCodeCount);
 
                     while ( Stack_GetIndex(m_pvStack) > 1 )
                     {
@@ -1144,8 +1161,8 @@ int SkillDescCode_ParseBin(char *acTemplatePath, char *acBinPath, char*acTxtPath
 
                 if ( 0 == result )
                 {
-                    my_error("unknown tag2 %x\r\n", bOperater);
                     SkillDescCode_PrintHex();
+                    my_error("unknown tag2 %x\r\n", bOperater);
                     goto error;
                 }
                 break;
@@ -1153,6 +1170,7 @@ int SkillDescCode_ParseBin(char *acTemplatePath, char *acBinPath, char*acTxtPath
             default:
                 if ( 0 == SkillDescCode_OperaterProc(acTempBuf[0]) )
                 {
+                    SkillDescCode_PrintHex();
                     my_error("proc operater %x fail\r\n", acTempBuf[0]);
                     //goto error;
                 }

@@ -149,7 +149,7 @@ static int MissCode_SkillArg2Proc(unsigned char *pcBinBuf, unsigned char *pcTxtB
             break;
 
         default:
-            my_error("unknown miss arg 1\r\n");
+            my_error("unknown skill arg 2\r\n");
             result = 0;
             break;
     }
@@ -194,7 +194,7 @@ static int MissCode_StatArg1Proc(unsigned char *pcBinBuf, unsigned char *pcTxtBu
             break;
 
         default:
-            my_error("unknown miss arg 1\r\n");
+            my_error("unknown stat arg 1-%x\r\n", pcBinBuf[0]);
             MissCode_PrintHex();
             result = 0;
             break;
@@ -205,7 +205,15 @@ static int MissCode_StatArg1Proc(unsigned char *pcBinBuf, unsigned char *pcTxtBu
 #ifdef USE_NUMBER
         sprintf(pcTxtBuf, "%u", uiSkillIndex);
 #else
-        pcResult = ItemStatCost_GetStateName(uiSkillIndex);
+        if ( pcBinBuf[0] == 0x04 && 0 == uiSkillIndex)
+        {
+            my_printf("  Expression %u is missing arg1 of stat()\r\n", m_uiMissCodeCount);
+            pcResult = "fixme";
+        }
+        else
+        {
+            pcResult = ItemStatCost_GetStateName(uiSkillIndex);
+        }
 
         if ( pcResult)
         {
@@ -243,14 +251,20 @@ static int MissCode_StatArg2Proc(unsigned char *pcBinBuf, unsigned char *pcTxtBu
             break;
 
         default:
-            my_error("unknown miss arg 1\r\n");
+            my_error("unknown stat arg 2\r\n");
             result = 0;
             break;
     }
 
     if ( 0 != result )
     {
-        if ( 0 == uiSkillIndex )
+        if ( pcBinBuf[0] == 0x04 && 0 == uiSkillIndex)
+        {
+            my_printf("  Expression %u is missing arg2 of stat()\r\n", m_uiMissCodeCount);
+            pcTxtBuf[-1] = ' ';
+            strcpy(pcTxtBuf, "fixme");
+        }
+        else if ( 0 == uiSkillIndex )
         {
             strcpy(pcTxtBuf, "accr");
         }
@@ -442,7 +456,7 @@ static int MissCode_SkLvlArg2Proc(unsigned char *pcBinBuf, unsigned char *pcTxtB
             break;
 
         default:
-            my_error("unknown skillcalc arg 1\r\n");
+            my_error("unknown skillcalc arg 2\r\n");
             result = 0;
             break;
     }
@@ -491,7 +505,7 @@ static int MissCode_SkLvlArg3Proc(unsigned char *pcBinBuf, unsigned char *pcTxtB
             break;
 
         default:
-            my_error("unknown skillcalc arg 1\r\n");
+            my_error("unknown skillcalc arg 3\r\n");
             result = 0;
             break;
     }
@@ -536,6 +550,11 @@ static int MissCode_OutputExpression(unsigned char *pcTempBuf)
 
     if ( MissCode_ConverterBin2Txt(pcTempBuf, m_astMissCode[m_uiMissCodeCount].acExpressionTxt) )
     {
+        int iExpLen = strlen(m_astMissCode[m_uiMissCodeCount].acExpressionTxt);
+        if ( iExpLen >= 255 )
+        {
+            my_printf("  Expression %u is %u characters long, consider refactoring it, or shortening related IDs\r\n", m_uiMissCodeCount, iExpLen);
+        }
         memcpy(m_astMissCode[m_uiMissCodeCount].acExpressionBin, m_acGlobalBuffer, m_uiExpressionIndex);
         m_astMissCode[m_uiMissCodeCount].uiBinLen = m_uiExpressionIndex;
         m_uiExpressionIndex = 0;
@@ -1071,9 +1090,7 @@ int MissCode_ParseBin(char *acTemplatePath, char *acBinPath, char*acTxtPath)
 
                 if ( Stack_GetIndex(m_pvStack) > 1 )
                 {
-                    MissCode_PrintHex();
-                    my_error("invalid expression\r\n");
-                    //goto error;
+                    my_printf("  Expression %u is missing some operators\r\n", m_uiMissCodeCount);
 
                     while ( Stack_GetIndex(m_pvStack) > 1 )
                     {
@@ -1144,8 +1161,8 @@ int MissCode_ParseBin(char *acTemplatePath, char *acBinPath, char*acTxtPath)
 
                 if ( 0 == result )
                 {
-                    my_error("unknown tag2 %x\r\n", bOperater);
                     MissCode_PrintHex();
+                    my_error("unknown tag2 %x\r\n", bOperater);
                     goto error;
                 }
                 break;
@@ -1153,6 +1170,7 @@ int MissCode_ParseBin(char *acTemplatePath, char *acBinPath, char*acTxtPath)
             default:
                 if ( 0 == MissCode_OperaterProc(acTempBuf[0]) )
                 {
+                    MissCode_PrintHex();
                     my_error("proc operater %x fail\r\n", acTempBuf[0]);
                     //goto error;
                 }

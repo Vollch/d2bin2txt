@@ -1765,8 +1765,10 @@ typedef struct
 
     unsigned short vaurastat1;  //ItemStatCost
     unsigned short vaurastat2;  //ItemStatCost
+
     unsigned short vaurastat3;  //ItemStatCost
     unsigned short vaurastat4;  //ItemStatCost
+
     unsigned short vaurastat5;  //ItemStatCost
     unsigned short vaurastat6;  //ItemStatCost
 
