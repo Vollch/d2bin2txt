@@ -56,16 +56,16 @@ int process_D2Spawn(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
 
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo,IDx, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo,hcIDxSU1, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo,hcIDxSU2, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo,amountSU, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo,randMobs, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo,hcIDxMob1, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo,hcIDxMob2, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo,amountMob, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo,levelreq, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo,ReqLevelID, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, IDx, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, hcIDxSU1, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, hcIDxSU2, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, amountSU, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, randMobs, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, hcIDxMob1, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, hcIDxMob2, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, amountMob, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, levelreq, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ReqLevelID, USHORT);
 
     VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, myasteol, EOL);
 

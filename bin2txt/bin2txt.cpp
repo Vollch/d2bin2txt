@@ -241,6 +241,7 @@ void Init_Settings(char* acTemplatePath, char* acBinPath, char* acTxtPath)
         g_pcCustomTable3 = strdup(acIniBuff);
     }
 
+    memset(acIniBuff, 0, sizeof(acIniBuff));
     GetPrivateProfileSection("NAME_FORMAT", acIniBuff, sizeof(acIniBuff), pcIniFile);
 
     pcAnchor = acIniBuff;
@@ -249,6 +250,12 @@ void Init_Settings(char* acTemplatePath, char* acBinPath, char* acTxtPath)
         ENUM_MODULE_ID eModule;
 
         pcAnchor2 = strchr(pcAnchor, '=');
+        if ( !pcAnchor2 )
+        {
+            pcAnchor = pcAnchor + strlen(pcAnchor) + 1;
+            continue;
+        }
+
         *pcAnchor2 = 0;
         pcAnchor2++;
 
@@ -259,6 +266,7 @@ void Init_Settings(char* acTemplatePath, char* acBinPath, char* acTxtPath)
         pcAnchor = pcAnchor2 + strlen(pcAnchor2) + 1;
     }
 
+    memset(acIniBuff, 0, sizeof(acIniBuff));
     GetPrivateProfileSection("NAME_SIZE", acIniBuff, sizeof(acIniBuff), pcIniFile);
 
     pcAnchor = acIniBuff;
@@ -267,6 +275,12 @@ void Init_Settings(char* acTemplatePath, char* acBinPath, char* acTxtPath)
         ENUM_MODULE_ID eModule;
 
         pcAnchor2 = strchr(pcAnchor, '=');
+        if ( !pcAnchor2 )
+        {
+            pcAnchor = pcAnchor + strlen(pcAnchor) + 1;
+            continue;
+        }
+
         *pcAnchor2 = 0;
         pcAnchor2++;
 
@@ -285,6 +299,7 @@ void Init_Settings(char* acTemplatePath, char* acBinPath, char* acTxtPath)
         pcAnchor = pcAnchor2 + strlen(pcAnchor2) + 1;
     }
 
+    memset(acIniBuff, 0, sizeof(acIniBuff));
     GetPrivateProfileSection("NAME_SEPARATOR", acIniBuff, sizeof(acIniBuff), pcIniFile);
 
     pcAnchor = acIniBuff;
@@ -293,6 +308,12 @@ void Init_Settings(char* acTemplatePath, char* acBinPath, char* acTxtPath)
         ENUM_MODULE_ID eModule;
 
         pcAnchor2 = strchr(pcAnchor, '=');
+        if ( !pcAnchor2 )
+        {
+            pcAnchor = pcAnchor + strlen(pcAnchor) + 1;
+            continue;
+        }
+
         *pcAnchor2 = 0;
         pcAnchor2++;
 

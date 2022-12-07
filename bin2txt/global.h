@@ -24,6 +24,8 @@ extern "C" {
     X(D2KillCounter) \
     X(D2Spawn) \
     X(D2RedPortal) \
+    X(D2SpawnTown) \
+    X(D2LvlTown) \
     X(KillCounter) \
     X(BookOfLore) \
     X(LevelFX) \
