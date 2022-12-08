@@ -26,6 +26,9 @@ extern "C" {
     X(D2RedPortal) \
     X(D2SpawnTown) \
     X(D2LvlTown) \
+    X(D2Vendors) \
+    X(D2StrSound) \
+    X(D2NPCFunc) \
     X(KillCounter) \
     X(BookOfLore) \
     X(LevelFX) \
@@ -142,13 +145,13 @@ typedef struct
 typedef enum
 {
     EN_VALUE_INT, // 0x02
-    EN_VALUE_UINT,
+    EN_VALUE_UINT, // 0x02
     EN_VALUE_SHORT,
     EN_VALUE_USHORT, // 0x03
     EN_VALUE_CHAR, // 0x04
     EN_VALUE_UCHAR, // 0x06
     EN_VALUE_BIT,
-    EN_VALUE_STRING, // 0x09, 0x01
+    EN_VALUE_STRING, // 0x09[4], 0x01[*]
     EN_VALUE_UINT_ITEM,
     EN_VALUE_UINT_ITEMCODE, // 0x19
     EN_VALUE_UINT_MISSCODE,
@@ -169,7 +172,7 @@ typedef enum
     EN_VALUE_USHORT_SET,
     EN_VALUE_USHORT_SKILLDESC,
     EN_VALUE_USHORT_SKILL, // 0x14
-    EN_VALUE_USHORT_STRING,
+    EN_VALUE_USHORT_STRING, // 0x16
     EN_VALUE_USHORT_STRING2,
     EN_VALUE_USHORT_TREASURE,
     EN_VALUE_USHORT_SOUND,
