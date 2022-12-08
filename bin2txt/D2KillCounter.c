@@ -24,8 +24,7 @@ static int D2KillCounter_FieldProc(void *pvLineInfo, char *acKey, unsigned int i
 
     if ( !stricmp(acKey, "*desc") )
     {
-        char *pcName = ItemStatCost_GetStateName(pstLineInfo->vStat);
-        if ( !String_BuildName(FORMAT(D2KillCounter), ItemStatCost_GetString(pstLineInfo->vStat), pcTemplate, pcName, iLineNo, NULL, acOutput) )
+        if ( !String_BuildName(FORMAT(D2KillCounter), ItemStatCost_GetString(pstLineInfo->vStat), pcTemplate, ItemStatCost_GetStateName(pstLineInfo->vStat), iLineNo, NULL, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
         }

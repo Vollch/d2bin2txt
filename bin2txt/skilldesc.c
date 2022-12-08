@@ -607,7 +607,7 @@ typedef struct
 typedef struct
 {
     char vskilldesc[64];
-    unsigned short vString;
+    unsigned short vstrmyspname;
 } ST_SKILL_DESC;
 
 static char *m_apcInternalProcess[] = 
@@ -633,7 +633,7 @@ static int SkillDesc_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int i
             sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->wSkillDesc);
         }
 
-        m_astSkillDesc[pstLineInfo->wSkillDesc].vString = pstLineInfo->vstrmyspname;
+        m_astSkillDesc[pstLineInfo->wSkillDesc].vstrmyspname = pstLineInfo->vstrmyspname;
         strncpy(m_astSkillDesc[pstLineInfo->wSkillDesc].vskilldesc, acOutput, sizeof(m_astSkillDesc[pstLineInfo->wSkillDesc].vskilldesc));
         String_Trim(m_astSkillDesc[pstLineInfo->wSkillDesc].vskilldesc);
         m_iSkillDescCount++;
@@ -674,7 +674,7 @@ unsigned int SkillDesc_GetString(unsigned int id)
         return 0xFFFF;
     }
 
-    return m_astSkillDesc[id].vString;
+    return m_astSkillDesc[id].vstrmyspname;
 }
 
 static int SkillDesc_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)

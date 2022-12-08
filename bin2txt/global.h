@@ -21,6 +21,7 @@ extern "C" {
     X(RoS) \
     X(CharStart) \
     X(D2NewStats) \
+    X(D2AddSkill) \
     X(D2KillCounter) \
     X(D2Spawn) \
     X(D2RedPortal) \
@@ -147,7 +148,7 @@ typedef enum
 {
     EN_VALUE_INT, // 0x02
     EN_VALUE_UINT, // 0x02
-    EN_VALUE_SHORT,
+    EN_VALUE_SHORT, // 0x03
     EN_VALUE_USHORT, // 0x03
     EN_VALUE_CHAR, // 0x04
     EN_VALUE_UCHAR, // 0x06
@@ -172,7 +173,7 @@ typedef enum
     EN_VALUE_USHORT_OVERLAY,
     EN_VALUE_USHORT_SET,
     EN_VALUE_USHORT_SKILLDESC,
-    EN_VALUE_USHORT_SKILL, // 0x14
+    EN_VALUE_USHORT_SKILL, // 0x11, 0x14
     EN_VALUE_USHORT_STRING, // 0x16
     EN_VALUE_USHORT_STRING2,
     EN_VALUE_USHORT_TREASURE,
@@ -274,8 +275,8 @@ typedef struct
         map[m_iValueMapIndex].acKeyName = #key;\
         map[m_iValueMapIndex].pvValue = line;\
         map[m_iValueMapIndex].enValueType = EN_VALUE_##type;\
-        map[m_iValueMapIndex].iValueLen = sizeof(line);\
-        map[m_iValueMapIndex].iActiveColumn = 1;\
+        map[m_iValueMapIndex].iValueLen = 0;\
+        map[m_iValueMapIndex].iActiveColumn = 0;\
         m_iValueMapIndex++;\
     } while (0)
 
