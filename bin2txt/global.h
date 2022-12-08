@@ -29,6 +29,7 @@ extern "C" {
     X(D2Vendors) \
     X(D2StrSound) \
     X(D2NPCFunc) \
+    X(MagicTwn) \
     X(KillCounter) \
     X(BookOfLore) \
     X(LevelFX) \
