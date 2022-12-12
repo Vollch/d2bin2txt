@@ -2077,6 +2077,10 @@ static int Skills_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo,
 
         return 1;
     }
+    else if ( isD2SigmaActive() && Skills2_ExternProc(pvLineInfo, acKey, iLineNo, pcTemplate, acOutput) )
+    {
+        return 1;
+    }
 
     return 0;
 }
@@ -2113,264 +2117,60 @@ static int Skills_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, 
     return 0;
 }
 
-static int Skills_BitProc(void *pvLineInfo, char *acKey, char *acOutput)
-{
-    ST_LINE_INFO *pstLineInfo = pvLineInfo;
-    int result = 0;
-
-    if ( !stricmp(acKey, "interrupt") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 31)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "leftskill") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 30)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "ItemTgtDo") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 29)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "AttackNoMana") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 28)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "TargetItem") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 27)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "TargetAlly") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 26)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "TargetPet") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 25)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "TargetCorpse") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 24)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "SearchOpenXY") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 23)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "SearchEnemyNear") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 22)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "SearchEnemyXY") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 21)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "TargetableOnly") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 20)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "UseAttackRate") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 19)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "durability") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 18)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "enhanceable") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 17)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "noammo") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 16)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "immediate") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 15)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "weaponsnd") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 14)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "stsounddelay") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 13)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "stsuccessonly") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 12)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "repeat") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 11)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "InGame") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 10)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "Kick") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 9)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "InTown") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 8)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "prgstack") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 7)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "periodic") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 6)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "aura") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 5)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "passive") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 4)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "finishing") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 3)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "progressive") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 2)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "lob") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 1)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "decquant") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & 1) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "warp") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined2 & (1 << 6)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "usemanaondo") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined2 & (1 << 5)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "scroll") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined2 & (1 << 4)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "general") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined2 & (1 << 3)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "ItemCltCheckStart") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined2 & (1 << 2)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "ItemCheckStart") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined2 & (1 << 1)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "TgtPlaceCheck") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined2 & 1) != 0);
-        result = 1;
-    }
-
-    return result;
-}
-
 static void Skills_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLineInfo)
 {
     INIT_VALUE_BUFFER;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Id, UINT);
 
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, interrupt, BitCombined, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, ItemTgtDo, BitCombined, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, leftskill, BitCombined, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, AttackNoMana, BitCombined, BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, interrupt, BitCombined, 31, UINT_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, leftskill, BitCombined, 30, UINT_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, ItemTgtDo, BitCombined, 29, UINT_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, AttackNoMana, BitCombined, 28, UINT_BIT);
 
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, TargetItem, BitCombined, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, TargetAlly, BitCombined, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, TargetPet, BitCombined, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, TargetCorpse, BitCombined, BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, TargetItem, BitCombined, 27, UINT_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, TargetAlly, BitCombined, 26, UINT_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, TargetPet, BitCombined, 25, UINT_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, TargetCorpse, BitCombined, 24, UINT_BIT);
 
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, SearchOpenXY, BitCombined, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, SearchEnemyNear, BitCombined, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, SearchEnemyXY, BitCombined, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, TargetableOnly, BitCombined, BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, SearchOpenXY, BitCombined, 23, UINT_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, SearchEnemyNear, BitCombined, 22, UINT_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, SearchEnemyXY, BitCombined, 21, UINT_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, TargetableOnly, BitCombined, 20, UINT_BIT);
 
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, UseAttackRate, BitCombined, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, durability, BitCombined, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, enhanceable, BitCombined, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, noammo, BitCombined, BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, UseAttackRate, BitCombined, 19, UINT_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, durability, BitCombined, 18, UINT_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, enhanceable, BitCombined, 17, UINT_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, noammo, BitCombined, 16, UINT_BIT);
 
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, immediate, BitCombined, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, weaponsnd, BitCombined, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, stsounddelay, BitCombined, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, stsuccessonly, BitCombined, BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, immediate, BitCombined, 15, UINT_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, weaponsnd, BitCombined, 14, UINT_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, stsounddelay, BitCombined, 13, UINT_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, stsuccessonly, BitCombined, 12, UINT_BIT);
 
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, repeat, BitCombined, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, InGame, BitCombined, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, Kick, BitCombined, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, InTown, BitCombined, BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, repeat, BitCombined, 11, UINT_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, InGame, BitCombined, 10, UINT_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, Kick, BitCombined, 9, UINT_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, InTown, BitCombined, 8, UINT_BIT);
 
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, prgstack, BitCombined, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, periodic, BitCombined, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, aura, BitCombined, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, passive, BitCombined, BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, prgstack, BitCombined, 7, UINT_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, periodic, BitCombined, 6, UINT_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, aura, BitCombined, 5, UINT_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, passive, BitCombined, 4, UINT_BIT);
 
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, finishing, BitCombined, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, progressive, BitCombined, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, lob, BitCombined, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, decquant, BitCombined, BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, finishing, BitCombined, 3, UINT_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, progressive, BitCombined, 2, UINT_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, lob, BitCombined, 1, UINT_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, decquant, BitCombined, 0, UINT_BIT);
 
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, warp, BitCombined2, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, usemanaondo, BitCombined2, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, scroll, BitCombined2, BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, warp, BitCombined2, 6, UINT_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, usemanaondo, BitCombined2, 5, UINT_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, scroll, BitCombined2, 4, UINT_BIT);
 
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, general, BitCombined2, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, ItemCltCheckStart, BitCombined2, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, ItemCheckStart, BitCombined2, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, TgtPlaceCheck, BitCombined2, BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, general, BitCombined2, 3, UINT_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, ItemCltCheckStart, BitCombined2, 2, UINT_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, ItemCheckStart, BitCombined2, 1, UINT_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, TgtPlaceCheck, BitCombined2, 0, UINT_BIT);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, charclass, UCHAR_PLRCLASS);
 
@@ -2648,6 +2448,7 @@ int process_skills(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_
             MODULE_DEPEND_CALL(string, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(skilldesc, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(monstats, acTemplatePath, acBinPath, acTxtPath);
+            MODULE_DEPEND_CALL(Skills2, acTemplatePath, acBinPath, acTxtPath);
             break;
 
         case EN_MODULE_SELF_DEPEND:
@@ -2659,7 +2460,7 @@ int process_skills(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_
             m_stCallback.pfnSetLines = module_SetLines_Pre;
             m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
-            m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
+            m_stCallback.ppcKeyInternalProcess = isD2SigmaActive() ? Skills2_ExternList : m_apcInternalProcess;
 
             return process_file(acTemplatePath, acBinPath, NULL, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo),
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);
@@ -2689,9 +2490,8 @@ int process_skills(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_
 
             m_stCallback.pfnFieldProc = Skills_FieldProc;
             m_stCallback.pfnConvertValue = Skills_ConvertValue;
-            m_stCallback.pfnBitProc = Skills_BitProc;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
-            m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
+            m_stCallback.ppcKeyInternalProcess = isD2SigmaActive() ? Skills2_ExternList : m_apcInternalProcess;
 
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo),
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);

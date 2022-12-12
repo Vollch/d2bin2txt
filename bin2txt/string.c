@@ -300,7 +300,7 @@ int String_Sanitize(char *pcInput, char *acOutput, unsigned int iSize, char cSpa
             pcInput += 4;
             continue;
         }
-        else if ( isalpha(*pcInput) || isdigit(*pcInput) ) // Output letters and numbers
+        else if ( isalnum(*pcInput) ) // Output letters and numbers
         {
             *acOutput = *pcInput;
             acOutput++;

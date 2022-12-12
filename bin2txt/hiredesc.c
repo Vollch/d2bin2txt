@@ -89,7 +89,7 @@ int process_hiredesc_D2(char *acTemplatePath, char *acBinPath, char *acTxtPath)
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Code, STRING);
-    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, myastEOL, EOL);
+    VALUE_MAP_DEFINE_VIRT(pstValueMap, pstLineInfo, myastEOL, EOL);
 
     m_stCallback.pfnFieldProc = HireDesc_FieldProc_D2;
     m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
@@ -136,10 +136,10 @@ int process_hiredesc(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
 
             if ( m_iBinStructSize == sizeof(ST_LINE_INFO_MD) )
             {
-                my_printf("  MercDesc detected, make sure you have \"NameStr\" in hiredesc.txt template\n");
                 return process_hiredesc_MD(acTemplatePath, acBinPath, acTxtPath);
+            } else {
+                return process_hiredesc_D2(acTemplatePath, acBinPath, acTxtPath);
             }
-            return process_hiredesc_D2(acTemplatePath, acBinPath, acTxtPath);
             break;
 
         case EN_MODULE_OTHER_DEPEND:

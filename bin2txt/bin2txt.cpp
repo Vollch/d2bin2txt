@@ -478,7 +478,6 @@ int main(int argc, char* argv[])
     }
 
 out:
-    my_printf("press RETURN to exit!\r\n");
     if ( NULL != m_pfLogHandle )
     {
         fclose(m_pfLogHandle);
@@ -487,8 +486,11 @@ out:
 
     MemMgr_FreeAll();
 
-    getchar();
-    getchar();
+    if( isatty(_fileno(stdout))) {
+        my_printf("press RETURN to exit!\r\n");
+        getchar();
+        getchar();
+    }
 
     return 0;
 }

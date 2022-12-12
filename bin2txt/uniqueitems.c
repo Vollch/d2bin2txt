@@ -415,35 +415,6 @@ static int UniqueItems_ConvertValue_Pre(void *pvLineInfo, char *acKey, char *pcT
     return 0;
 }
 
-static int UniqueItems_BitProc(void *pvLineInfo, char *acKey, char *acOutput)
-{
-    ST_LINE_INFO *pstLineInfo = pvLineInfo;
-    int result = 0;
-
-    if ( !stricmp(acKey, "ladder") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 3)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "carry1") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 2)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "nolimit") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 1)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "enabled") )
-    {
-        sprintf(acOutput, "%d", ((pstLineInfo->vBitCombined & 1)) != 0);
-        result = 1;
-    }
-
-    return result;
-}
-
 int process_uniqueitems(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
     ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
@@ -456,10 +427,14 @@ int process_uniqueitems(char *acTemplatePath, char *acBinPath, char *acTxtPath, 
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, code, STRING);
 
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, ladder, BitCombined, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, carry1, BitCombined, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, nolimit, BitCombined, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, enabled, BitCombined, BIT);
+    if ( isD2SigmaActive() ) {
+        VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, nosocket, BitCombined, 4, UCHAR_BIT);
+    }
+
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, ladder, BitCombined, 3, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, carry1, BitCombined, 2, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, nolimit, BitCombined, 1, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, enabled, BitCombined, 0, UCHAR_BIT);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, rarity, UINT);
 
@@ -541,11 +516,12 @@ int process_uniqueitems(char *acTemplatePath, char *acBinPath, char *acTxtPath, 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, min12, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, max12, INT);
 
-    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, myasteol, EOL);
+    VALUE_MAP_DEFINE_VIRT(pstValueMap, pstLineInfo, myasteol, EOL);
 
     switch ( enPhase )
     {
         case EN_MODULE_PREPARE:
+            MODULE_DEPEND_CALL(UniqueItems2, acTemplatePath, acBinPath, acTxtPath);
             break;
 
         case EN_MODULE_SELF_DEPEND:
@@ -567,8 +543,13 @@ int process_uniqueitems(char *acTemplatePath, char *acBinPath, char *acTxtPath, 
             break;
 
         case EN_MODULE_INIT:
-            m_stCallback.pfnBitProc = UniqueItems_BitProc;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
+
+            if ( isD2SigmaActive() )
+            {
+                m_stCallback.pfnFieldProc = UniqueItems2_ExternProc;
+                m_stCallback.ppcKeyInternalProcess = UniqueItems2_ExternList;
+            }
 
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo),
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);

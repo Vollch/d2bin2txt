@@ -179,13 +179,45 @@ static char *m_apcNotUsed[] =
     NULL,
 };
 
+
+static int automap_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
+{
+    ST_LINE_INFO *pstLineInfo = pvLineInfo;
+
+    if ( isD2SigmaActive() )
+    {
+        if ( !stricmp(acKey, "LevelName") )
+        {
+            char *pcResult = LvlTypes_GetName(*(unsigned short *)&pstLineInfo->vLevelName[0]);
+            if ( pcResult )
+            {
+                strcpy(acOutput, pcResult);
+            }
+            else
+            {
+                acOutput[0] = 0;
+            }
+            return 1;
+        }
+    }
+
+    return 0;
+}
+
 int process_automap(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
     ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
 
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, LevelName, STRING);
+
+    if ( isD2SigmaActive() )
+    {
+        VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, LevelName, USHORT);
+    } else {
+        VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, LevelName, STRING);
+    }
+
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TileName, STRING);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Style, UCHAR);
@@ -200,10 +232,16 @@ int process_automap(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
     switch ( enPhase )
     {
         case EN_MODULE_PREPARE:
+            MODULE_DEPEND_CALL(CellFiles, acTemplatePath, acBinPath, acTxtPath);
+            if ( isD2SigmaActive() )
+            {
+                MODULE_DEPEND_CALL(lvltypes, acTemplatePath, acBinPath, acTxtPath);
+            }
             break;
 
         case EN_MODULE_SELF_DEPEND:
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
+            m_stCallback.pfnConvertValue = automap_ConvertValue;
 
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);

@@ -633,15 +633,18 @@ static char *Cubemain_GenerateOutputProp(char *acOutput, ST_CUBE_OUTPUT *sOutput
         acOutput += strlen(acOutput);
     }
 
-    if ( sOutput->bSockets )
+    if ( !(isD2SigmaActive() && sOutput->cType >= 0x01 && sOutput->cType <= 0x06) )
     {
-        sprintf(acOutput, ",sock=%d", sOutput->cQuantity);
-        acOutput += strlen(acOutput);
-    }
-    else if ( sOutput->cQuantity > 0 )
-    {
-        sprintf(acOutput, ",qty=%d", sOutput->cQuantity);
-        acOutput += strlen(acOutput);
+        if ( sOutput->bSockets )
+        {
+            sprintf(acOutput, ",sock=%d", sOutput->cQuantity);
+            acOutput += strlen(acOutput);
+        }
+        else if ( sOutput->cQuantity > 0 )
+        {
+            sprintf(acOutput, ",qty=%d", sOutput->cQuantity);
+            acOutput += strlen(acOutput);
+        }
     }
 
     if ( sOutput->bEthereal )
@@ -704,58 +707,64 @@ static char *Cubemain_GenerateOutputProp(char *acOutput, ST_CUBE_OUTPUT *sOutput
         acOutput += strlen(acOutput);
     }
 
-    if ( cOutGrade == GRADE_NORMAL )
+    if ( !(isD2SigmaActive() && sOutput->cType >= 0x01 && sOutput->cType <= 0x06) )
     {
-        strcpy(acOutput, ",nor");
-        acOutput += strlen(acOutput);
+        if ( cOutGrade == GRADE_NORMAL )
+        {
+            strcpy(acOutput, ",nor");
+            acOutput += strlen(acOutput);
+        }
+
+        if ( cOutGrade == GRADE_SUPERIOR )
+        {
+            strcpy(acOutput, ",hiq");
+            acOutput += strlen(acOutput);
+        }
+
+        if ( cOutGrade == GRADE_MAGIC )
+        {
+            strcpy(acOutput, ",mag");
+            acOutput += strlen(acOutput);
+        }
+
+        if ( cOutGrade == GRADE_SET )
+        {
+            strcpy(acOutput, ",set");
+            acOutput += strlen(acOutput);
+        }
+
+        if ( cOutGrade == GRADE_RARE )
+        {
+            strcpy(acOutput, ",rar");
+            acOutput += strlen(acOutput);
+        }
+
+        if ( cOutGrade == GRADE_UNIQ )
+        {
+            strcpy(acOutput, ",uni");
+            acOutput += strlen(acOutput);
+        }
+
+        if ( cOutGrade == GRADE_CRAFT )
+        {
+            strcpy(acOutput, ",crf");
+            acOutput += strlen(acOutput);
+        }
+
+        if ( cOutGrade == GRADE_TAMPERED )
+        {
+            strcpy(acOutput, ",tmp");
+            acOutput += strlen(acOutput);
+        }
     }
 
-    if ( cOutGrade == GRADE_SUPERIOR )
+    if ( !(isRoSActive() && sOutput->cType == 0x82) )
     {
-        strcpy(acOutput, ",hiq");
-        acOutput += strlen(acOutput);
-    }
-
-    if ( cOutGrade == GRADE_MAGIC )
-    {
-        strcpy(acOutput, ",mag");
-        acOutput += strlen(acOutput);
-    }
-
-    if ( cOutGrade == GRADE_SET )
-    {
-        strcpy(acOutput, ",set");
-        acOutput += strlen(acOutput);
-    }
-
-    if ( cOutGrade == GRADE_RARE )
-    {
-        strcpy(acOutput, ",rar");
-        acOutput += strlen(acOutput);
-    }
-
-    if ( cOutGrade == GRADE_UNIQ )
-    {
-        strcpy(acOutput, ",uni");
-        acOutput += strlen(acOutput);
-    }
-
-    if ( cOutGrade == GRADE_CRAFT )
-    {
-        strcpy(acOutput, ",crf");
-        acOutput += strlen(acOutput);
-    }
-
-    if ( cOutGrade == GRADE_TAMPERED )
-    {
-        strcpy(acOutput, ",tmp");
-        acOutput += strlen(acOutput);
-    }
-
-    if ( sOutput->sPrefix > 0 && !(isRoSActive() && sOutput->cType == 0x82))
-    {
-        sprintf(acOutput, ",pre=%d", sOutput->sPrefix);
-        acOutput += strlen(acOutput);
+        if ( sOutput->sPrefix > 0 )
+        {
+            sprintf(acOutput, ",pre=%d", sOutput->sPrefix);
+            acOutput += strlen(acOutput);
+        }
     }
 
     if ( sOutput->sSuffix > 0 )
@@ -794,19 +803,23 @@ static int Cubemain_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate
                 pcOutput++;
             }
 
-            if ( (sInput->bItemCode && sInput->bSpecific) && sInput->cGrade == GRADE_UNIQ && (pcResult = UniqueItems_GetItemUniqueCode(sInput->sSpecificID)) )
+            if ( (sInput->bItemCode && sInput->bSpecific) && sInput->cGrade == GRADE_UNIQ 
+                && (pcResult = UniqueItems_GetItemUniqueCode(sInput->sSpecificID)) )
             {
                 strcpy(pcOutput, pcResult);
             }
-            else if ( (sInput->bItemCode && sInput->bSpecific) && sInput->cGrade == GRADE_SET && (pcResult = SetItems_GetItemUniqueCode(sInput->sSpecificID)) )
+            else if ( (sInput->bItemCode && sInput->bSpecific) && sInput->cGrade == GRADE_SET 
+                && (pcResult = SetItems_GetItemUniqueCode(sInput->sSpecificID)) )
             {
                 strcpy(pcOutput, pcResult);
             }
-            else if ( sInput->bItemCode && (pcResult = Misc_GetItemUniqueCode(sInput->sGenericID)) )
+            else if ( sInput->bItemCode 
+                && (pcResult = Misc_GetItemUniqueCode(sInput->sGenericID)) )
             {
                 strcpy(pcOutput, pcResult);
             }
-            else if ( sInput->bTypeCode && (pcResult = ItemTypes_GetItemCode(sInput->sGenericID)) )
+            else if ( sInput->bTypeCode 
+                && (pcResult = ItemTypes_GetItemCode(sInput->sGenericID)) )
             {
                 strcpy(pcOutput, pcResult);
             }
@@ -848,19 +861,23 @@ static int Cubemain_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate
                 pcOutput++;
             }
 
-            if ( sOutput->bSpecific && sOutput->cGrade == GRADE_UNIQ && (pcResult = UniqueItems_GetItemUniqueCode(sOutput->sSpecificID)) )
+            if ( sOutput->bSpecific && sOutput->cGrade == GRADE_UNIQ 
+                && (pcResult = UniqueItems_GetItemUniqueCode(sOutput->sSpecificID)) )
             {
                 strcpy(pcOutput, pcResult);
             }
-            else if ( sOutput->bSpecific && sOutput->cGrade == GRADE_SET && (pcResult = SetItems_GetItemUniqueCode(sOutput->sSpecificID)) )
+            else if ( sOutput->bSpecific && sOutput->cGrade == GRADE_SET 
+                && (pcResult = SetItems_GetItemUniqueCode(sOutput->sSpecificID)) )
             {
                 strcpy(pcOutput, pcResult);
             }
-            else if ( sOutput->cType == 0xFC && (pcResult = Misc_GetItemUniqueCode(sOutput->sGenericID)) )
+            else if ( sOutput->cType == 0xFC 
+                && (pcResult = Misc_GetItemUniqueCode(sOutput->sGenericID)) )
             {
                 strcpy(pcOutput, pcResult);
             }
-            else if ( sOutput->cType == 0xFD && (pcResult = ItemTypes_GetItemCode(sOutput->sGenericID)) )
+            else if ( sOutput->cType == 0xFD 
+                && (pcResult = ItemTypes_GetItemCode(sOutput->sGenericID)) )
             {
                 strcpy(pcOutput, pcResult);
             }
@@ -871,6 +888,33 @@ static int Cubemain_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate
             else if ( sOutput->cType == 0xFF )
             {
                 strcpy(pcOutput, "usetype");
+            }
+            else if ( isD2SigmaActive() && sOutput->cType == 0x01 
+                && (pcResult = Levels_GetLevelName(*(unsigned short*)&sOutput->cGrade)) )
+            {
+                sprintf(pcOutput, "portal=%s", pcResult);
+            }
+            else if ( isD2SigmaActive() && sOutput->cType == 0x02 )
+            {
+                sprintf(pcOutput, "skillpts=%u", *(unsigned short*)&sOutput->cGrade);
+            }
+            else if ( isD2SigmaActive() && sOutput->cType == 0x03 )
+            {
+                sprintf(pcOutput, "statpts=%u", *(unsigned short*)&sOutput->cGrade);
+            }
+            else if ( isD2SigmaActive() && sOutput->cType == 0x04 
+                && (pcResult = MonStats_GetStatsName(*(unsigned short*)&sOutput->cGrade)) )
+            {
+                sprintf(pcOutput, "mon=%s", pcResult);
+            }
+            else if ( isD2SigmaActive() && sOutput->cType == 0x05 
+                && (pcResult = SuperUniques_GetItemUniqueCode(*(unsigned short*)&sOutput->cGrade)) )
+            {
+                sprintf(pcOutput, "boss=%s", pcResult);
+            }
+            else if ( isD2SigmaActive() && sOutput->cType == 0x06 )
+            {
+                sprintf(pcOutput, "goldcost=%u", *(unsigned short*)&sOutput->cGrade);
             }
             else if ( sOutput->cType == 0x01 )
             {
@@ -884,7 +928,7 @@ static int Cubemain_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate
             {
                 strcpy(pcOutput, "Pandemonium Finale Portal");
             }
-            else if ( isRoSActive() && sOutput->cType == 0x80 )
+            else if ( sOutput->cType == 0x80 )
             {
                 strcpy(pcOutput, "red portal");
             }
@@ -892,7 +936,8 @@ static int Cubemain_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate
             {
                 strcpy(pcOutput, "addstat");
             }
-            else if ( isRoSActive() && sOutput->cType == 0x82 && (pcResult = Sets_GetSetName(sOutput->sPrefix)) )
+            else if ( isRoSActive() && sOutput->cType == 0x82 
+                && (pcResult = Sets_GetSetName(sOutput->sPrefix)) )
             {
                 strcpy(pcOutput, pcResult);
             }
@@ -917,6 +962,7 @@ static int Cubemain_BuildDescription(void *pvLineInfo, char *acOutput, unsigned 
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
     int i, j, iUse;
     char *pcResult;
+    char acBuffer[128] = {0};
 
     ST_CUBE_INPUT *sInput = (ST_CUBE_INPUT *)pstLineInfo->vinputmysp1;
 
@@ -955,6 +1001,33 @@ static int Cubemain_BuildDescription(void *pvLineInfo, char *acOutput, unsigned 
         else if ( sOutputs[i]->cType == 0xFF )
         {
             iUse = 2; // usetype
+        }
+        else if ( isD2SigmaActive() && sOutputs[i]->cType == 0x01 )
+        {
+            pcResult = Levels_GetLevelName(*(unsigned short*)&sOutputs[i]->cGrade);
+        }
+        else if ( isD2SigmaActive() && sOutputs[i]->cType == 0x02 )
+        {
+            sprintf(acBuffer, "%u Skill Points", *(unsigned short*)&sOutputs[i]->cGrade);
+            pcResult = &acBuffer[0];
+        }
+        else if ( isD2SigmaActive() && sOutputs[i]->cType == 0x03 )
+        {
+            sprintf(acBuffer, "%u Stat Points", *(unsigned short*)&sOutputs[i]->cGrade);
+            pcResult = &acBuffer[0];
+        }
+        else if ( isD2SigmaActive() && sOutputs[i]->cType == 0x04 )
+        {
+            pcResult = MonStats_GetStatsName(*(unsigned short*)&sOutputs[i]->cGrade);
+        }
+        else if ( isD2SigmaActive() && sOutputs[i]->cType == 0x05 )
+        {
+            pcResult = SuperUniques_GetItemUniqueCode(*(unsigned short*)&sOutputs[i]->cGrade);
+        }
+        else if ( isD2SigmaActive() && sOutputs[i]->cType == 0x06 )
+        {
+            sprintf(acBuffer, "%u Gold Cost", *(unsigned short*)&sOutputs[i]->cGrade);
+            pcResult = &acBuffer[0];
         }
         else if ( sOutputs[i]->cType == 0x01 )
         {
@@ -1122,6 +1195,10 @@ static int Cubemain_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineN
 
         return 1;
     }
+    else if ( isD2SigmaActive() && CubemainExt_ExternProc(pvLineInfo, acKey, iLineNo, pcTemplate, acOutput) )
+    {
+        return 1;
+    }
 
     return 0;
 }
@@ -1284,11 +1361,15 @@ int process_cubemain(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cmyspmodmysp5myspmax, SHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cmyspmodmysp5myspchance, USHORT);
 
-    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, myasteol, EOL);
+    VALUE_MAP_DEFINE_VIRT(pstValueMap, pstLineInfo, myasteol, EOL);
 
     switch ( enPhase )
     {
         case EN_MODULE_PREPARE:
+            MODULE_DEPEND_CALL(RoS, acTemplatePath, acBinPath, acTxtPath);
+            MODULE_DEPEND_CALL(CubemainExt, acTemplatePath, acBinPath, acTxtPath);
+            break;
+
         case EN_MODULE_SELF_DEPEND:
             break;
 
@@ -1299,17 +1380,23 @@ int process_cubemain(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
             MODULE_DEPEND_CALL(itemtypes, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(uniqueitems, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(setitems, acTemplatePath, acBinPath, acTxtPath);
-            MODULE_DEPEND_CALL(RoS, acTemplatePath, acBinPath, acTxtPath);
             if ( isRoSActive() )
             {
                 MODULE_DEPEND_CALL(sets, acTemplatePath, acBinPath, acTxtPath);
+            }
+            if ( isD2SigmaActive() )
+            {
+                MODULE_DEPEND_CALL(levels, acTemplatePath, acBinPath, acTxtPath);
+                MODULE_DEPEND_CALL(monstats, acTemplatePath, acBinPath, acTxtPath);
+                MODULE_DEPEND_CALL(superuniques, acTemplatePath, acBinPath, acTxtPath);
             }
             break;
 
         case EN_MODULE_INIT:
             m_stCallback.pfnConvertValue = Cubemain_ConvertValue;
             m_stCallback.pfnFieldProc = Cubemain_FieldProc;
-            m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
+
+            m_stCallback.ppcKeyInternalProcess = isD2SigmaActive() ? CubemainExt_ExternList : m_apcInternalProcess;
 
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);

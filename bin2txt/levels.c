@@ -530,7 +530,7 @@ typedef struct
 
     unsigned char vIsInside;
     unsigned char vDrawEdges;
-    unsigned short iPadding2;
+    unsigned short vpad0x0A;
 
     unsigned int vWarpDist;
 
@@ -714,7 +714,7 @@ typedef struct
     unsigned char vObjPrb7;
     unsigned char vLevelName[40];
 
-    unsigned char vLevelWarp[40];
+    unsigned char vLevelWarp[40]; //0x11D
 
     unsigned char vEntryFile[39];
 
@@ -840,7 +840,7 @@ static char *m_apcNotUsed[] =
 static char *m_apcInternalProcess[] = 
 {
     "Name",
-     NULL,
+    NULL,
 };
 
 static unsigned int m_iLevelsCount = 0;
@@ -882,6 +882,43 @@ static int Levels_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo,
         strncpy(acOutput, m_astLevels[pstLineInfo->vId].vname, sizeof(m_astLevels[pstLineInfo->vId].vname));
 
         return 1;
+    }
+
+    return 0;
+}
+
+static int Levels_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
+{
+    ST_LINE_INFO *pstLineInfo = pvLineInfo;
+
+    if ( isD2SigmaActive() )
+    {
+        if ( !stricmp(acKey, "LvlBckg") )
+        {
+            char *pcResult = CellFiles_GetName(*(unsigned short *)&pstLineInfo->vEntryFile[7]);
+            if ( pcResult )
+            {
+                strcpy(acOutput, pcResult);
+            }
+            else
+            {
+                acOutput[0] = 0;
+            }
+            return 1;
+        }
+        else if ( !stricmp(acKey, "PortalLevel") )
+        {
+            char *pcResult = Levels_GetLevelName(*(unsigned short *)&pstLineInfo->vEntryFile[9]);
+            if ( pcResult )
+            {
+                strcpy(acOutput, pcResult);
+            }
+            else
+            {
+                acOutput[0] = 0;
+            }
+            return 1;
+        }
     }
 
     return 0;
@@ -1157,7 +1194,30 @@ static void Levels_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLine
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, LevelWarp, STRING);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, EntryFile, STRING);
+    if ( isD2SigmaActive() )
+    {
+        VALUE_MAP_DEFINE_NAMED(pstValueMap, pstLineInfo, Stars, Mud, UCHAR);
+        VALUE_MAP_DEFINE_NAMED(pstValueMap, pstLineInfo, EventSound, pad0x0A, USHORT_SOUND);
+        VALUE_MAP_DEFINE_NAMED(pstValueMap, pstLineInfo, StrLevelName, EntryFile[0], USHORT_STRING);
+        VALUE_MAP_DEFINE_NAMED(pstValueMap, pstLineInfo, StrLevelWarp, EntryFile[2], USHORT_STRING);
+        //VALUE_MAP_DEFINE_NAMED(pstValueMap, pstLineInfo, Name, EntryFile[4], USHORT);
+        VALUE_MAP_DEFINE_NAMED(pstValueMap, pstLineInfo, isTown, EntryFile[6], UCHAR);
+        VALUE_MAP_DEFINE_NAMED(pstValueMap, pstLineInfo, LvlBckg, EntryFile[7], USHORT);
+        VALUE_MAP_DEFINE_NAMED(pstValueMap, pstLineInfo, PortalLevel, EntryFile[9], USHORT);
+        VALUE_MAP_DEFINE_NAMED(pstValueMap, pstLineInfo, PortalMonth, EntryFile[11], UCHAR);
+        VALUE_MAP_DEFINE_NAMED(pstValueMap, pstLineInfo, MinDiff, EntryFile[12], UCHAR);
+        VALUE_MAP_DEFINE_NAMED(pstValueMap, pstLineInfo, NoAutomapWarp, EntryFile[13], UCHAR);
+        VALUE_MAP_DEFINE_NAMED(pstValueMap, pstLineInfo, QuestLock, EntryFile[14], USHORT);
+        VALUE_MAP_DEFINE_NAMED(pstValueMap, pstLineInfo, Tplock, EntryFile[16], UCHAR);
+        VALUE_MAP_DEFINE_NAMED(pstValueMap, pstLineInfo, PortalObject, EntryFile[17], USHORT);
+        VALUE_MAP_DEFINE_NAMED(pstValueMap, pstLineInfo, LevelReqmyspmybr1Nmybr2, EntryFile[19], UCHAR);
+        VALUE_MAP_DEFINE_NAMED(pstValueMap, pstLineInfo, LevelReqmyspmybr1NMmybr2, EntryFile[20], UCHAR);
+        VALUE_MAP_DEFINE_NAMED(pstValueMap, pstLineInfo, LevelReqmyspmybr1Hmybr2, EntryFile[21], UCHAR);
+        VALUE_MAP_DEFINE_NAMED(pstValueMap, pstLineInfo, AlwaysDisplayName, EntryFile[22], UCHAR);
+        VALUE_MAP_DEFINE_NAMED(pstValueMap, pstLineInfo, GoblinChance, EntryFile[23], USHORT);
+    } else {
+        VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, EntryFile, STRING);
+    }
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Themes, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FloorFilter, UINT);
@@ -1228,6 +1288,8 @@ int process_levels(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_
     switch ( enPhase )
     {
         case EN_MODULE_PREPARE:
+            MODULE_DEPEND_CALL(CellFiles, acTemplatePath, acBinPath, acTxtPath);
+
             return Levels_CombineBin(acBinPath);
             break;
 
@@ -1250,11 +1312,17 @@ int process_levels(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_
 
         case EN_MODULE_OTHER_DEPEND:
             MODULE_DEPEND_CALL(monstats, acTemplatePath, acBinPath, acTxtPath);
+            if ( isD2SigmaActive() )
+            {
+                MODULE_DEPEND_CALL(sounds, acTemplatePath, acBinPath, acTxtPath);
+                MODULE_DEPEND_CALL(string, acTemplatePath, acBinPath, acTxtPath);
+            }
             break;
 
         case EN_MODULE_INIT:
             Levels_InitValueMap(pstValueMap, pstLineInfo);
 
+            m_stCallback.pfnConvertValue = Levels_ConvertValue;
             m_stCallback.pfnFieldProc = Levels_FieldProc;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;

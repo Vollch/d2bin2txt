@@ -62,7 +62,7 @@ int process_bodylocs(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Code, STRING);
 
-    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, myastEOL, EOL);
+    VALUE_MAP_DEFINE_VIRT(pstValueMap, pstLineInfo, myastEOL, EOL);
 
     switch ( enPhase )
     {

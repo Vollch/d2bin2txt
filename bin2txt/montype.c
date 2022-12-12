@@ -111,7 +111,7 @@ int process_montype(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, strsing, USHORT_STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, strplur, USHORT_STRING);
 
-    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, myasteol, EOL);
+    VALUE_MAP_DEFINE_VIRT(pstValueMap, pstLineInfo, myasteol, EOL);
 
     switch ( enPhase )
     {

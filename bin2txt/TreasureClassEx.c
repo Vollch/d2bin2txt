@@ -358,7 +358,7 @@ int process_treasureclassex(char *acTemplatePath, char *acBinPath, char *acTxtPa
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Prob10, INT);
 
-    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, Term, EOL);
+    VALUE_MAP_DEFINE_VIRT(pstValueMap, pstLineInfo, Term, EOL);
 
     switch ( enPhase )
     {

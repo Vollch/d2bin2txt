@@ -55,7 +55,16 @@ static char *m_apcNotUsed[] =
     NULL,
 };
 
+typedef struct
+{
+    char acName[64];
+} ST_LVL_TYPE;
+
 static unsigned int m_iLvlTypesCount = 0;
+static ST_LVL_TYPE *m_astLvlTypes = NULL;
+
+MODULE_SETLINES_FUNC(m_astLvlTypes, ST_LVL_TYPE);
+MODULE_HAVENAME_FUNC(m_astLvlTypes, acName, m_iLvlTypesCount);
 
 static int LvlTypes_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
@@ -63,21 +72,17 @@ static int LvlTypes_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineN
 
     if ( !stricmp(acKey, "Name") )
     {
+        int iNextId = ( isD2SigmaActive() ? LvlTypeNames_GetLineID(iLineNo) : m_iLvlTypesCount );
         char acName[33] = {0};
         String_StripFileName(pstLineInfo->vFilemysp1, acName, 32);
-        if ( !String_BuildName(FORMAT(lvltypes), 0xFFFF, pcTemplate, acName, iLineNo, NULL, acOutput) )
+        if ( !String_BuildName(FORMAT(lvltypes), 0xFFFF, pcTemplate, acName, iNextId, ( isD2SigmaActive() ? MODULE_HAVENAME : NULL ), acOutput) )
         {
-            sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
+            sprintf(acOutput, "%s%u", NAME_PREFIX, iNextId);
         }
 
-        return 1;
-    }
-    else if ( !stricmp("Id", acKey) )
-    {
-        sprintf(acOutput, "%d", m_iLvlTypesCount);
-
+        strncpy(m_astLvlTypes[iNextId].acName, acOutput, sizeof(m_astLvlTypes[iNextId].acName));
+        String_Trim(m_astLvlTypes[iNextId].acName);
         m_iLvlTypesCount++;
-
         return 1;
     }
 
@@ -129,6 +134,7 @@ int process_lvltypes(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
     switch ( enPhase )
     {
         case EN_MODULE_PREPARE:
+            MODULE_DEPEND_CALL(LvlTypeNames, acTemplatePath, acBinPath, acTxtPath);
             break;
 
         case EN_MODULE_SELF_DEPEND:
@@ -136,6 +142,8 @@ int process_lvltypes(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
 
             m_stCallback.pfnFieldProc = LvlTypes_FieldProc;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
+            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
+            m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
 
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
@@ -151,3 +159,12 @@ int process_lvltypes(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
     return 1;
 }
 
+char *LvlTypes_GetName(unsigned int id)
+{
+    if ( id >= m_iLvlTypesCount )
+    {
+        return NULL;
+    }
+
+    return m_astLvlTypes[id].acName;
+}

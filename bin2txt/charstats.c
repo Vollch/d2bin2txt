@@ -417,6 +417,9 @@ int process_charstats(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
     switch ( enPhase )
     {
         case EN_MODULE_PREPARE:
+            MODULE_DEPEND_CALL(CharStatsExp, acTemplatePath, acBinPath, acTxtPath);
+            break;
+
         case EN_MODULE_SELF_DEPEND:
             break;
 
@@ -429,6 +432,12 @@ int process_charstats(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
         case EN_MODULE_INIT:
             m_stCallback.pfnGetKey = CharStats_GetKey;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
+
+            if ( isD2SigmaActive() )
+            {
+                m_stCallback.pfnFieldProc = CharStatsExp_ExternProc;
+                m_stCallback.ppcKeyInternalProcess = CharStatsExp_ExternList;
+            }
 
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);

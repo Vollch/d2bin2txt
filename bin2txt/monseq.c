@@ -128,7 +128,7 @@ int process_monseq(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dir, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, event, UCHAR);
 
-    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, eol, EOL);
+    VALUE_MAP_DEFINE_VIRT(pstValueMap, pstLineInfo, eol, EOL);
 
     switch ( enPhase )
     {

@@ -285,7 +285,7 @@ static void MonSounds_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstL
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, CvtSk3, USHORT_SKILL);
 
-    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, EOL, EOL);
+    VALUE_MAP_DEFINE_VIRT(pstValueMap, pstLineInfo, EOL, EOL);
 }
 
 int process_monsounds(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)

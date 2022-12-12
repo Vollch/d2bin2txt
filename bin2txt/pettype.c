@@ -171,6 +171,10 @@ static int PetType_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo
 
         return 1;
     }
+    else if ( isD2SigmaActive() && PetTypeExt_ExternProc(pvLineInfo, acKey, iLineNo, pcTemplate, acOutput) )
+    {
+        return 1;
+    }
 
     return 0;
 }
@@ -185,57 +189,18 @@ static char *PetType_GetKey(void *pvLineInfo, char *pcKey, unsigned int *iKeyLen
     return pcKey;
 }
 
-static int PetType_BitProc(void *pvLineInfo, char *acKey, char *acOutput)
-{
-    ST_LINE_INFO *pstLineInfo = pvLineInfo;
-    int result = 0;
-
-    if ( !stricmp(acKey, "drawhp") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vCombinedBit & (1 << 5)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "automap") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vCombinedBit & (1 << 4)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "unsummon") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vCombinedBit & (1 << 3)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "partysend") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vCombinedBit & (1 << 2)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "range") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vCombinedBit & (1 << 1)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "warp") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vCombinedBit & 1) != 0);
-        result = 1;
-    }
-
-    return result;
-}
-
 static void PetType_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLineInfo)
 {
     INIT_VALUE_BUFFER;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, idx, UINT);
 
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, drawhp, CombinedBit, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, automap, CombinedBit, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, unsummon, CombinedBit, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, partysend, CombinedBit, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, range, CombinedBit, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, warp, CombinedBit, BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, drawhp, CombinedBit, 5, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, automap, CombinedBit, 4, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, unsummon, CombinedBit, 3, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, partysend, CombinedBit, 2, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, range, CombinedBit, 1, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, warp, CombinedBit, 0, UCHAR_BIT);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, name, USHORT_STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, group, USHORT);
@@ -255,7 +220,7 @@ static void PetType_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLin
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mclass4, USHORT);
 
-    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, eol, EOL);
+    VALUE_MAP_DEFINE_VIRT(pstValueMap, pstLineInfo, eol, EOL);
 }
 
 int process_pettype(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
@@ -268,6 +233,7 @@ int process_pettype(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
     {
         case EN_MODULE_PREPARE:
             MODULE_DEPEND_CALL(string, acTemplatePath, acBinPath, acTxtPath);
+            MODULE_DEPEND_CALL(PetTypeExt, acTemplatePath, acBinPath, acTxtPath);
             break;
 
         case EN_MODULE_SELF_DEPEND:
@@ -279,14 +245,13 @@ int process_pettype(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
             m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
             m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
             //m_stCallback.pfnGetKey = PetType_GetKey;
-            m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
+            m_stCallback.ppcKeyInternalProcess = isD2SigmaActive() ? PetTypeExt_ExternList : m_apcInternalProcess;
 
             return process_file(acTemplatePath, acBinPath, NULL, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo),
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);
             break;
 
         case EN_MODULE_OTHER_DEPEND:
-            MODULE_DEPEND_CALL(string, acTemplatePath, acBinPath, acTxtPath);
             break;
 
         case EN_MODULE_INIT:
@@ -294,8 +259,7 @@ int process_pettype(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
 
             m_stCallback.pfnFieldProc = PetType_FieldProc;
             //m_stCallback.pfnGetKey = PetType_GetKey;
-            m_stCallback.pfnBitProc = PetType_BitProc;
-            m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
+            m_stCallback.ppcKeyInternalProcess = isD2SigmaActive() ? PetTypeExt_ExternList : m_apcInternalProcess;
 
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo),
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);

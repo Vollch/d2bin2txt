@@ -309,7 +309,7 @@ typedef struct
     unsigned char vset6;
 
     unsigned char vset7;
-    unsigned char vset8;
+    unsigned char vpad0x09;
     unsigned short vval1;
 
     unsigned short vval2;
@@ -329,7 +329,7 @@ typedef struct
     unsigned char vfunc5;
     unsigned char vfunc6;
     unsigned char vfunc7;
-    unsigned char vfunc8;
+    unsigned char vpad0x1F;
 
     unsigned short vstat1;
     unsigned short vstat2;
@@ -414,24 +414,20 @@ static void Properties_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pst
     INIT_VALUE_BUFFER;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, code, USHORT);
+
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, set1, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, set2, UCHAR);
-
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, set3, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, set4, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, set5, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, set6, UCHAR);
-
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, set7, UCHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, set8, UCHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, val1, USHORT);
 
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, val1, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, val2, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, val3, USHORT);
-
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, val4, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, val5, USHORT);
-
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, val6, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, val7, USHORT);
 
@@ -439,29 +435,23 @@ static void Properties_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pst
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, func2, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, func3, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, func4, UCHAR);
-
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, func5, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, func6, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, func7, UCHAR);
 
     if ( isRoSActive() ) {
-        VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, ShowRange, func8, UCHAR);
-    } else {
-        VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, func8, UCHAR);
+        VALUE_MAP_DEFINE_NAMED(pstValueMap, pstLineInfo, ShowRange, pad0x1F, UCHAR);
     }
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat1, USHORT_ITEMSTAT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat2, USHORT_ITEMSTAT);
-
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat3, USHORT_ITEMSTAT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat4, USHORT_ITEMSTAT);
-
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat5, USHORT_ITEMSTAT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat6, USHORT_ITEMSTAT);
-
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat7, USHORT_ITEMSTAT);
 
-    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, myasteol, EOL);
+    VALUE_MAP_DEFINE_VIRT(pstValueMap, pstLineInfo, myasteol, EOL);
 }
 
 int process_properties(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
@@ -475,6 +465,7 @@ int process_properties(char *acTemplatePath, char *acBinPath, char *acTxtPath, E
         case EN_MODULE_PREPARE:
             MODULE_DEPEND_CALL(itemstatcost, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(RoS, acTemplatePath, acBinPath, acTxtPath);
+            MODULE_DEPEND_CALL(PropertiesExt, acTemplatePath, acBinPath, acTxtPath);
             break;
 
         case EN_MODULE_SELF_DEPEND:
@@ -499,6 +490,12 @@ int process_properties(char *acTemplatePath, char *acBinPath, char *acTxtPath, E
 
             m_stCallback.pfnConvertValue = Properties_ConvertValue;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
+
+            if ( isD2SigmaActive() )
+            {
+                m_stCallback.pfnFieldProc = PropertiesExt_ExternProc;
+                m_stCallback.ppcKeyInternalProcess = PropertiesExt_ExternList;
+            }
 
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);

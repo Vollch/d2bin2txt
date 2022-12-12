@@ -677,7 +677,7 @@ int process_setitems(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, amin5b, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, amax5b, INT);
 
-    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, myasteol, EOL);
+    VALUE_MAP_DEFINE_VIRT(pstValueMap, pstLineInfo, myasteol, EOL);
 
     switch ( enPhase )
     {

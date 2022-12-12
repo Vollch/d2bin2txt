@@ -793,65 +793,6 @@ static int ItemStatCost_FieldProc(void *pvLineInfo, char *acKey, unsigned int iL
     return 0;
 }
 
-static int ItemStatCost_BitProc(void *pvLineInfo, char *acKey, char *acOutput)
-{
-    ST_LINE_INFO *pstLineInfo = pvLineInfo;
-    int result = 0;
-
-    if ( !stricmp(acKey, "CSvSigned") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits2 & (1 << 5)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "Saved") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits2 & (1 << 4)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "fCallback") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits2 & (1 << 3)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "fMin") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits2 & (1 << 2)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "UpdateAnimRate") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits2 & (1 << 1)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "direct") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits1 & (1 << 4)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "itemspecific") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits1 & (1 << 3)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "damagerelated") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits1 & (1 << 2)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "Signed") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits1 & (1 << 1)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "Send Other") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits1 & 1) != 0);
-        result = 1;
-    }
-
-    return result;
-}
-
 static char *ItemStatCost_GetKey(void *pvLineInfo, char *pcKey, unsigned int *iKeyLen)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
@@ -868,18 +809,18 @@ static void ItemStatCost_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *p
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ID, USHORT);
 
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, CSvSigned, CombinedBits2, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, Saved, CombinedBits2, BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, CSvSigned, CombinedBits2, 5, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, Saved, CombinedBits2, 4, UCHAR_BIT);
 
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, fCallback, CombinedBits2, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, fMin, CombinedBits2, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, UpdateAnimRate, CombinedBits2, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, direct, CombinedBits1, BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, fCallback, CombinedBits2, 3, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, fMin, CombinedBits2, 2, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, UpdateAnimRate, CombinedBits2, 1, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, direct, CombinedBits1, 4, UCHAR_BIT);
 
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, itemspecific, CombinedBits1, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, damagerelated, CombinedBits1, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, Signed, CombinedBits1, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, SendmyspOther, CombinedBits1, BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, itemspecific, CombinedBits1, 3, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, damagerelated, CombinedBits1, 2, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, Signed, CombinedBits1, 1, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, SendmyspOther, CombinedBits1, 0, UCHAR_BIT);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SendmyspBits, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SendmyspParammyspBits, UCHAR);
@@ -940,7 +881,7 @@ static void ItemStatCost_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *p
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, opmyspstat3, USHORT_ITEMSTAT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stuff, UINT);
 
-    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, myasteol, EOL);
+    VALUE_MAP_DEFINE_VIRT(pstValueMap, pstLineInfo, myasteol, EOL);
 }
 
 int process_itemstatcost(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
@@ -979,7 +920,6 @@ int process_itemstatcost(char *acTemplatePath, char *acBinPath, char *acTxtPath,
 
             //m_stCallback.pfnGetKey = ItemStatCost_GetKey;
             m_stCallback.pfnFieldProc = ItemStatCost_FieldProc;
-            m_stCallback.pfnBitProc = ItemStatCost_BitProc;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo),

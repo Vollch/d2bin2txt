@@ -208,7 +208,7 @@ int process_monequip(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod2, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod3, UCHAR);
 
-    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, eol, EOL);
+    VALUE_MAP_DEFINE_VIRT(pstValueMap, pstLineInfo, eol, EOL);
 
     switch ( enPhase )
     {

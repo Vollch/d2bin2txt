@@ -821,7 +821,7 @@ static void SkillDesc_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstL
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3calcb6, UINT_DESCCODE);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dsc3calcb7, UINT_DESCCODE);
 
-    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, eol, EOL);
+    VALUE_MAP_DEFINE_VIRT(pstValueMap, pstLineInfo, eol, EOL);
 }
 
 int process_skilldesc(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)

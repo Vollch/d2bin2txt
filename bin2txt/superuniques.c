@@ -334,7 +334,7 @@ static void SuperUniques_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *p
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TCmybr1Hmybr2, USHORT_TREASURE);
 
-    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, myasteol, EOL);
+    VALUE_MAP_DEFINE_VIRT(pstValueMap, pstLineInfo, myasteol, EOL);
 }
 
 int process_superuniques(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)

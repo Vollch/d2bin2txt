@@ -213,7 +213,7 @@ int process_belts(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_M
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, box16top, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, box16bottom, UINT);
 
-    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, myastEOL, EOL);
+    VALUE_MAP_DEFINE_VIRT(pstValueMap, pstLineInfo, myastEOL, EOL);
 
     switch ( enPhase )
     {

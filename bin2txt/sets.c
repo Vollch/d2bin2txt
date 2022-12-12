@@ -559,7 +559,7 @@ static void Sets_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLineIn
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FMin8, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FMax8, INT);
 
-    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, myasteol, EOL);
+    VALUE_MAP_DEFINE_VIRT(pstValueMap, pstLineInfo, myasteol, EOL);
 }
 
 int process_sets(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)

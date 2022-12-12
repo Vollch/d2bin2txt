@@ -987,6 +987,10 @@ static int Missiles_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineN
 
         return 1;
     }
+    else if ( isD2SigmaActive() && Missiles2_ExternProc(pvLineInfo, acKey, iLineNo, pcTemplate, acOutput) )
+    {
+        return 1;
+    }
 
     return 0;
 }
@@ -999,95 +1003,6 @@ char *Missiles_GetMissile(unsigned int id)
     }
 
     return m_astMissiles[id].vMissile;
-}
-
-static int Missiles_BitProc(void *pvLineInfo, char *acKey, char *acOutput)
-{
-    ST_LINE_INFO *pstLineInfo = pvLineInfo;
-    int result = 0;
-
-    if ( !stricmp(acKey, "MissileSkill") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 15)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "Half2HSrc") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 14)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "NoUniqueMod") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 13)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "NoMultiShot") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 12)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "SrcTown") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 11)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "Town") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 10)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "ReturnFire") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 9)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "ApplyMastery") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 8)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "SoftHit") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 7)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "GetHit") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 6)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "ClientSend") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 5)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "CanDestroy") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 4)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "CanSlow") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 3)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "Pierce") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 2)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "Explosion") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined & (1 << 1)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "LastCollide") )
-    {
-        sprintf(acOutput, "%d", ((pstLineInfo->vBitCombined & 1)) != 0);
-        result = 1;
-    }
-
-    return result;
 }
 
 static int Missiles_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
@@ -1114,22 +1029,22 @@ int process_missiles(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Id, UINT);
 
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, MissileSkill, BitCombined, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, Half2HSrc, BitCombined, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, NoUniqueMod, BitCombined, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, NoMultiShot, BitCombined, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, SrcTown, BitCombined, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, Town, BitCombined, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, ReturnFire, BitCombined, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, ApplyMastery, BitCombined, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, SoftHit, BitCombined, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, GetHit, BitCombined, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, ClientSend, BitCombined, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, CanDestroy, BitCombined, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, CanSlow, BitCombined, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, Pierce, BitCombined, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, Explosion, BitCombined, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, LastCollide, BitCombined, BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, MissileSkill, BitCombined, 15, USHORT_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, Half2HSrc, BitCombined, 14, USHORT_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, NoUniqueMod, BitCombined, 13, USHORT_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, NoMultiShot, BitCombined, 12, USHORT_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, SrcTown, BitCombined, 11, USHORT_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, Town, BitCombined, 10, USHORT_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, ReturnFire, BitCombined, 9, USHORT_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, ApplyMastery, BitCombined, 8, USHORT_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, SoftHit, BitCombined, 7, USHORT_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, GetHit, BitCombined, 6, USHORT_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, ClientSend, BitCombined, 5, USHORT_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, CanDestroy, BitCombined, 4, USHORT_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, CanSlow, BitCombined, 3, USHORT_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, Pierce, BitCombined, 2, USHORT_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, Explosion, BitCombined, 1, USHORT_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, LastCollide, BitCombined, 0, USHORT_BIT);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, pCltDoFunc, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, pCltHitFunc, USHORT);
@@ -1303,11 +1218,12 @@ int process_missiles(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, DmgSymPerCalc, UINT_MISSCODE);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, EDmgSymPerCalc, UINT_MISSCODE);
 
-    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, EOL, EOL);
+    VALUE_MAP_DEFINE_VIRT(pstValueMap, pstLineInfo, EOL, EOL);
 
     switch ( enPhase )
     {
         case EN_MODULE_PREPARE:
+            MODULE_DEPEND_CALL(Missiles2, acTemplatePath, acBinPath, acTxtPath);
             break;
 
         case EN_MODULE_SELF_DEPEND:
@@ -1315,7 +1231,7 @@ int process_missiles(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
             m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
             m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
-            m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
+            m_stCallback.ppcKeyInternalProcess = isD2SigmaActive() ? Missiles2_ExternList : m_apcInternalProcess;
 
             m_iMisslesCount = 0;
 
@@ -1335,9 +1251,8 @@ int process_missiles(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
         case EN_MODULE_INIT:
             m_stCallback.pfnFieldProc = Missiles_FieldProc;
             m_stCallback.pfnConvertValue = Missiles_ConvertValue;
-            m_stCallback.pfnBitProc = Missiles_BitProc;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
-            m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
+            m_stCallback.ppcKeyInternalProcess = isD2SigmaActive() ? Missiles2_ExternList : m_apcInternalProcess;
 
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo),
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);

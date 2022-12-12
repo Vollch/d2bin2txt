@@ -1326,160 +1326,6 @@ static int MonStats_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate
     return result;
 }
 
-static int MonStats_BitProc(void *pvLineInfo, char *acKey, char *acOutput)
-{
-    ST_LINE_INFO *pstLineInfo = pvLineInfo;
-    int result = 0;
-
-    if ( !stricmp(acKey, "primeevil") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined1 & (1 << 7)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "boss") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined1 & (1 << 6)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "BossXfer") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined1 & (1 << 5)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "SetBoss") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined1 & (1 << 4)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "opendoors") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined1 & (1 << 3)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "noRatio") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined1 & (1 << 2)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "isMelee") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined1 & (1 << 1)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "isSpawn") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined1 & 1) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "killable") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined2 & (1 << 7)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "flying") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined2 & (1 << 6)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "demon") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined2 & (1 << 5)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "hUndead") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined2 & (1 << 4)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "lUndead") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined2 & (1 << 3)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "inTown") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined2 & (1 << 2)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "interact") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined2 & (1 << 1)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "npc") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined2 & 1) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "placespawn") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined3 & (1 << 7)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "zoo") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined3 & (1 << 6)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "genericSpawn") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined3 & (1 << 5)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "deathDmg") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined3 & (1 << 4)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "petIgnore") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined3 & (1 << 3)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "neverCount") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined3 & (1 << 2)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "nomultishot") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined3 & (1 << 1)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "switchai") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined3 & 1) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "rangedtype") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined4 & (1 << 4)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "noAura") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined4 & (1 << 3)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "NoShldBlock") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined4 & (1 << 2)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "enabled") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined4 & (1 << 1)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "inventory") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined4 & 1) != 0);
-        result = 1;
-    }
-
-    return result;
-}
-
 static void MonStats_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLineInfo)
 {
     INIT_VALUE_BUFFER;
@@ -1493,45 +1339,45 @@ static void MonStats_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLi
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, DescStr, USHORT_STRING);    //strings
 
     //0B
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, primeevil, BitCombined1, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, boss, BitCombined1, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, BossXfer, BitCombined1, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, SetBoss, BitCombined1, BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, primeevil, BitCombined1, 7, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, boss, BitCombined1, 6, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, BossXfer, BitCombined1, 5, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, SetBoss, BitCombined1, 4, UCHAR_BIT);
 
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, opendoors, BitCombined1, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, noRatio, BitCombined1, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, isMelee, BitCombined1, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, isSpawn, BitCombined1, BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, opendoors, BitCombined1, 3, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, noRatio, BitCombined1, 2, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, isMelee, BitCombined1, 1, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, isSpawn, BitCombined1, 0, UCHAR_BIT);
 
     //88
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, killable, BitCombined2, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, flying, BitCombined2, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, demon, BitCombined2, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, hUndead, BitCombined2, BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, killable, BitCombined2, 7, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, flying, BitCombined2, 6, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, demon, BitCombined2, 5, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, hUndead, BitCombined2, 4, UCHAR_BIT);
 
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, lUndead, BitCombined2, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, inTown, BitCombined2, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, interact, BitCombined2, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, npc, BitCombined2, BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, lUndead, BitCombined2, 3, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, inTown, BitCombined2, 2, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, interact, BitCombined2, 1, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, npc, BitCombined2, 0, UCHAR_BIT);
 
     //41
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, placespawn, BitCombined3, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, zoo, BitCombined3, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, genericSpawn, BitCombined3, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, deathDmg, BitCombined3, BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, placespawn, BitCombined3, 7, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, zoo, BitCombined3, 6, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, genericSpawn, BitCombined3, 5, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, deathDmg, BitCombined3, 4, UCHAR_BIT);
 
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, petIgnore, BitCombined3, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, neverCount, BitCombined3, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, nomultishot, BitCombined3, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, switchai, BitCombined3, BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, petIgnore, BitCombined3, 3, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, neverCount, BitCombined3, 2, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, nomultishot, BitCombined3, 1, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, switchai, BitCombined3, 0, UCHAR_BIT);
 
     //02
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, rangedtype, BitCombined4, BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, rangedtype, BitCombined4, 4, UCHAR_BIT);
 
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, noAura, BitCombined4, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, NoShldBlock, BitCombined4, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, enabled, BitCombined4, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, inventory, BitCombined4, BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, noAura, BitCombined4, 3, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, NoShldBlock, BitCombined4, 2, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, enabled, BitCombined4, 1, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, inventory, BitCombined4, 0, UCHAR_BIT);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Code, STRING);
 
@@ -1855,7 +1701,7 @@ static void MonStats_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLi
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SplEndGeneric, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SplClientEnd, UCHAR);
 
-    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, myasteol, EOL);
+    VALUE_MAP_DEFINE_VIRT(pstValueMap, pstLineInfo, myasteol, EOL);
 }
 
 int process_monstats(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
@@ -1903,7 +1749,6 @@ int process_monstats(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
 
             m_stCallback.pfnFieldProc = MonStats_FieldProc;
             m_stCallback.pfnConvertValue = MonStats_ConvertValue;
-            m_stCallback.pfnBitProc = MonStats_BitProc;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 

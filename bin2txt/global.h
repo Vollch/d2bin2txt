@@ -30,6 +30,30 @@ extern "C" {
     X(D2Vendors) \
     X(D2StrSound) \
     X(D2NPCFunc) \
+    X(CellFiles) \
+    X(ObjPreset) \
+    X(LvlTypeNames) \
+    X(itemratio_sp) \
+    X(experience_sp) \
+    X(tables_strings) \
+    X(Qualities) \
+    X(StatScreen) \
+    X(SkillTree) \
+    X(Monstats3) \
+    X(Skills2) \
+    X(CharStatsExp) \
+    X(StateIcons) \
+    X(MonUModExp) \
+    X(Achievements) \
+    X(PetTypeExt) \
+    X(HireItems) \
+    X(MysticOrbs) \
+    X(SkillTabs) \
+    X(CubemainExt) \
+    X(Missiles2) \
+    X(UniqueItems2) \
+    X(PropertiesExt) \
+    X(ItemTypesExt) \
     X(MagicTwn) \
     X(KillCounter) \
     X(BookOfLore) \
@@ -152,7 +176,9 @@ typedef enum
     EN_VALUE_USHORT, // 0x03
     EN_VALUE_CHAR, // 0x04
     EN_VALUE_UCHAR, // 0x06
-    EN_VALUE_BIT,
+    EN_VALUE_UINT_BIT,
+    EN_VALUE_USHORT_BIT,
+    EN_VALUE_UCHAR_BIT,
     EN_VALUE_STRING, // 0x09[4], 0x01[*]
     EN_VALUE_UINT_ITEM,
     EN_VALUE_UINT_ITEMCODE, // 0x19
@@ -260,7 +286,17 @@ typedef struct
         m_iValueMapIndex++;\
     } while (0)
 
-#define VALUE_MAP_DEFINE_2(map, line, key, field, type) \
+#define VALUE_MAP_DEFINE_SIZED(map, line, key, field, len, type) \
+    do {\
+        map[m_iValueMapIndex].acKeyName = #key;\
+        map[m_iValueMapIndex].pvValue = &line->v##field;\
+        map[m_iValueMapIndex].enValueType = EN_VALUE_##type;\
+        map[m_iValueMapIndex].iValueLen = len;\
+        map[m_iValueMapIndex].iActiveColumn = 0;\
+        m_iValueMapIndex++;\
+    } while (0)
+
+#define VALUE_MAP_DEFINE_NAMED(map, line, key, field, type) \
     do {\
         map[m_iValueMapIndex].acKeyName = #key;\
         map[m_iValueMapIndex].pvValue = &line->v##field;\
@@ -270,7 +306,7 @@ typedef struct
         m_iValueMapIndex++;\
     } while (0)
 
-#define VALUE_MAP_DEFINE_3(map, line, key, type) \
+#define VALUE_MAP_DEFINE_VIRT(map, line, key, type) \
     do {\
         map[m_iValueMapIndex].acKeyName = #key;\
         map[m_iValueMapIndex].pvValue = line;\
@@ -335,8 +371,6 @@ extern void MemMgr_FreeAll();
 typedef char * (*fnGetKey) (void *pvLineInfo, char *acKey, unsigned int *iKeyLen);
 //转换value的内容，比如根据索引值，到另一文件中查找对应的字符串
 typedef int (*fnConvertValue) (void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput);
-//bit位处理接口
-typedef int (*fnBitProc) (void *pvLineInfo, char *acKey, char *acOutput);
 //特殊字段处理接口，当bin文件中没有处理某个字段的时候，可以在这里生成值，否则就直接使用模板文件里的内容
 typedef int (*fnFieldProc) (void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput);
 //通知该模块，bin文件的行数，便于分配内存
@@ -346,13 +380,20 @@ typedef void (*fnFinished)();
 //Check if name already used in module
 typedef int (*fnHaveName) (char *pcTestName);
 
+
+typedef enum
+{
+    EN_MODULE_CORE = 0,
+    EN_MODULE_PLUGIN,
+    EN_MODULE_EXTENSION,
+} ENUM_MODULE_TYPE;
+
 typedef struct
 {
-    int iOptional;
+    ENUM_MODULE_TYPE eModuleType;
 
     fnGetKey pfnGetKey;
     fnConvertValue pfnConvertValue;
-    fnBitProc pfnBitProc;
     fnFieldProc pfnFieldProc;
     fnSetFileLines pfnSetLines;
     fnFinished pfnFinished;
@@ -443,6 +484,7 @@ extern int process_file(char *acTemplatePath, char *acBinPath, char *acTxtPath, 
 extern int process_file_special_bin(char *acTemplatePath, char *acBinPath, char *acTxtPath, char *pcFilename,
     void *pvLineInfo, int iLineLength, ST_VALUE_MAP *pstValueMap, int iValueCount,
     ST_CALLBACK *pstCallback);
+extern int process_value(ST_VALUE_MAP *value, char *acOutput);
 extern int getBinStructSize(char *acBinPath, char *pcFilename);
 
 extern unsigned int my_printf( const char *pcFormat,... );
@@ -463,6 +505,28 @@ extern int Stack_GetIndex(void *pvStack);
 ALL_MODULES(MODULE_DECALRE_FUNC)
 
 extern int isRoSActive();
+
+extern int isD2SigmaActive();
+extern int LvlTypeNames_GetLineID(unsigned int line);
+extern char *CellFiles_GetName(unsigned int id);
+extern int CharStatsExp_ExternProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput);
+extern char *CharStatsExp_ExternList[];
+extern int CubemainExt_ExternProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput);
+extern char *CubemainExt_ExternList[];
+extern int PetTypeExt_ExternProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput);
+extern char *PetTypeExt_ExternList[];
+extern int MonUModExp_ExternProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput);
+extern char *MonUModExp_ExternList[];
+extern int PropertiesExt_ExternProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput);
+extern char *PropertiesExt_ExternList[];
+extern int Missiles2_ExternProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput);
+extern char *Missiles2_ExternList[];
+extern int ItemTypesExt_ExternProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput);
+extern char *ItemTypesExt_ExternList[];
+extern int Skills2_ExternProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput);
+extern char *Skills2_ExternList[];
+extern int UniqueItems2_ExternProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput);
+extern char *UniqueItems2_ExternList[];
 
 extern int String_StripFileName(char *pcInput, char *pcOutput, unsigned int iSize);
 extern int String_BuildName(char *pcNameFormat, int iNameSize, char cNameSeparator, unsigned int iStingId, char *pcTemplate, char *pcName, unsigned int iLine, fnHaveName pfnHaveName, char* acOutput);
@@ -543,6 +607,8 @@ extern char *HireDesc_GetDesc(unsigned int id);
 
 extern char *Levels_GetLevelName(unsigned int id);
 extern unsigned char Levels_GetAct(unsigned int id);
+
+extern char *LvlTypes_GetName(unsigned int id);
 
 extern char *MissCalc_GetCalcCode(unsigned int id);
 

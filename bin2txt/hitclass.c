@@ -61,7 +61,7 @@ int process_hitclass(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Code, STRING);
-    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, myastEOL, EOL);
+    VALUE_MAP_DEFINE_VIRT(pstValueMap, pstLineInfo, myastEOL, EOL);
 
     switch ( enPhase )
     {

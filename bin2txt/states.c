@@ -366,215 +366,6 @@ static int States_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo,
     return 0;
 }
 
-static int States_BitProc(void *pvLineInfo, char *acKey, char *acOutput)
-{
-    ST_LINE_INFO *pstLineInfo = pvLineInfo;
-    int result = 0;
-
-    if ( !stricmp(acKey, "damblue") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits1 & (1 << 7)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "remhit") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits1 & (1 << 6)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "active") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits1 & (1 << 5)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "pgsv") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits1 & (1 << 4)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "transform") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits1 & (1 << 3)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "hide") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits1 & (1 << 2)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "aura") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits1 & (1 << 1)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "nosend") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits1 & 1) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "bossstaydeath") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits2 & (1 << 7)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "monstaydeath") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits2 & (1 << 6)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "plrstaydeath") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits2 & (1 << 5)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "curable") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits2 & (1 << 4)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "curse") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits2 & (1 << 3)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "attred") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits2 & (1 << 2)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "attblue") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits2 & (1 << 1)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "damred") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits2 & 1) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "rpblue") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits3 & (1 << 7)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "rlblue") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits3 & (1 << 6)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "rcblue") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits3 & (1 << 5)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "rfblue") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits3 & (1 << 4)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "armblue") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits3 & (1 << 3)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "blue") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits3 & (1 << 2)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "restrict") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits3 & (1 << 1)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "disguise") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits3 & 1) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "shatter") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits4 & (1 << 7)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "exp") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits4 & (1 << 6)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "rpred") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits4 & (1 << 5)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "rlred") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits4 & (1 << 4)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "rcred") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits4 & (1 << 3)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "rfred") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits4 & (1 << 2)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "armred") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits4 & (1 << 1)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "stambarblue") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits4 & 1) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "notondead") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits5 & (1 << 7)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "meleeonly") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits5 & (1 << 6)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "bossinv") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits5 & (1 << 5)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "noclear") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits5 & (1 << 4)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "nooverlays") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits5 & (1 << 3)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "green") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits5 & (1 << 2)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "udead") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits5 & (1 << 1)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "life") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vCombinedBits5 & 1) != 0);
-        result = 1;
-    }
-
-    return result;
-}
-
 static void States_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLineInfo)
 {
     INIT_VALUE_BUFFER;
@@ -591,55 +382,55 @@ static void States_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLine
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, removerlay, USHORT_OVERLAY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, pgsvoverlay, USHORT_OVERLAY);
 
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, damblue, CombinedBits1, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, remhit, CombinedBits1, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, active, CombinedBits1, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, pgsv, CombinedBits1, BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, damblue, CombinedBits1, 7, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, remhit, CombinedBits1, 6, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, active, CombinedBits1, 5, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, pgsv, CombinedBits1, 4, UCHAR_BIT);
 
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, transform, CombinedBits1, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, hide, CombinedBits1, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, aura, CombinedBits1, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, nosend, CombinedBits1, BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, transform, CombinedBits1, 3, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, hide, CombinedBits1, 2, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, aura, CombinedBits1, 1, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, nosend, CombinedBits1, 0, UCHAR_BIT);
 
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, bossstaydeath, CombinedBits2, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, monstaydeath, CombinedBits2, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, plrstaydeath, CombinedBits2, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, curable, CombinedBits2, BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, bossstaydeath, CombinedBits2, 7, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, monstaydeath, CombinedBits2, 6, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, plrstaydeath, CombinedBits2, 5, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, curable, CombinedBits2, 4, UCHAR_BIT);
 
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, curse, CombinedBits2, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, attred, CombinedBits2, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, attblue, CombinedBits2, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, damred, CombinedBits2, BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, curse, CombinedBits2, 3, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, attred, CombinedBits2, 2, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, attblue, CombinedBits2, 1, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, damred, CombinedBits2, 0, UCHAR_BIT);
 
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, rpblue, CombinedBits3, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, rlblue, CombinedBits3, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, rcblue, CombinedBits3, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, rfblue, CombinedBits3, BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, rpblue, CombinedBits3, 7, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, rlblue, CombinedBits3, 6, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, rcblue, CombinedBits3, 5, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, rfblue, CombinedBits3, 4, UCHAR_BIT);
 
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, armblue, CombinedBits3, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, blue, CombinedBits3, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, restrict, CombinedBits3, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, disguise, CombinedBits3, BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, armblue, CombinedBits3, 3, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, blue, CombinedBits3, 2, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, restrict, CombinedBits3, 1, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, disguise, CombinedBits3, 0, UCHAR_BIT);
 
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, shatter, CombinedBits4, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, exp, CombinedBits4, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, rpred, CombinedBits4, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, rlred, CombinedBits4, BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, shatter, CombinedBits4, 7, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, exp, CombinedBits4, 6, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, rpred, CombinedBits4, 5, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, rlred, CombinedBits4, 4, UCHAR_BIT);
 
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, rcred, CombinedBits4, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, rfred, CombinedBits4, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, armred, CombinedBits4, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, stambarblue, CombinedBits4, BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, rcred, CombinedBits4, 3, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, rfred, CombinedBits4, 2, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, armred, CombinedBits4, 1, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, stambarblue, CombinedBits4, 0, UCHAR_BIT);
 
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, notondead, CombinedBits5, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, meleeonly, CombinedBits5, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, bossinv, CombinedBits5, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, noclear, CombinedBits5, BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, notondead, CombinedBits5, 7, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, meleeonly, CombinedBits5, 6, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, bossinv, CombinedBits5, 5, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, noclear, CombinedBits5, 4, UCHAR_BIT);
 
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, nooverlays, CombinedBits5, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, green, CombinedBits5, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, udead, CombinedBits5, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, life, CombinedBits5, BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, nooverlays, CombinedBits5, 3, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, green, CombinedBits5, 2, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, udead, CombinedBits5, 1, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, life, CombinedBits5, 0, UCHAR_BIT);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat, USHORT_ITEMSTAT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, setfunc, USHORT);
@@ -670,7 +461,7 @@ static void States_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLine
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, skill, USHORT_SKILL);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, missile, USHORT_MISSILE);
 
-    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, eol, EOL);
+    VALUE_MAP_DEFINE_VIRT(pstValueMap, pstLineInfo, eol, EOL);
 }
 
 int process_states(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
@@ -714,7 +505,6 @@ int process_states(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_
             States_InitValueMap(pstValueMap, pstLineInfo);
 
             m_stCallback.pfnFieldProc = States_FieldProc;
-            m_stCallback.pfnBitProc = States_BitProc;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 

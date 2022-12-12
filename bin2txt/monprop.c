@@ -498,7 +498,7 @@ static void MonProp_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLin
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, chance5myspmybr1Hmybr2, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, chance6myspmybr1Hmybr2, UCHAR);
 
-    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, myasteol, EOL);
+    VALUE_MAP_DEFINE_VIRT(pstValueMap, pstLineInfo, myasteol, EOL);
 }
 
 int process_monprop(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)

@@ -194,6 +194,337 @@ static int String_ReplaceSpecialChar(char *key, char *acTempKey)
     return j;
 }
 
+int process_value(ST_VALUE_MAP *value, char *acOutput)
+{
+    if ( EN_VALUE_CHAR == value->enValueType )
+    {
+        sprintf(acOutput, "%d", *(char *)value->pvValue);
+    }
+    else if ( EN_VALUE_SHORT == value->enValueType )
+    {
+        sprintf(acOutput, "%d", *(short *)value->pvValue);
+    }
+    else if ( EN_VALUE_INT == value->enValueType )
+    {
+        sprintf(acOutput, "%d", *(int *)value->pvValue);
+    }
+    else if ( EN_VALUE_UCHAR == value->enValueType )
+    {
+        sprintf(acOutput, "%u", *(unsigned char *)value->pvValue);
+    }
+    else if ( EN_VALUE_USHORT == value->enValueType )
+    {
+        sprintf(acOutput, "%u", *(unsigned short *)value->pvValue);
+    }
+    else if ( EN_VALUE_UINT == value->enValueType )
+    {
+        sprintf(acOutput, "%u", *(unsigned int *)value->pvValue);
+    }
+    else if ( EN_VALUE_UINT_BIT == value->enValueType )
+    {
+        sprintf(acOutput, "%d", ((*(unsigned int *)value->pvValue) & (1 << value->iValueLen)) != 0);
+    }
+    else if ( EN_VALUE_USHORT_BIT == value->enValueType )
+    {
+        sprintf(acOutput, "%d", ((*(unsigned short *)value->pvValue) & (1 << value->iValueLen)) != 0);
+    }
+    else if ( EN_VALUE_UCHAR_BIT == value->enValueType )
+    {
+        sprintf(acOutput, "%d", ((*(unsigned char *)value->pvValue) & (1 << value->iValueLen)) != 0);
+    }
+    else if ( EN_VALUE_STRING == value->enValueType )
+    {
+        strncpy(acOutput, value->pvValue, value->iValueLen);
+    }
+    else if ( EN_VALUE_UINT_ITEM == value->enValueType )
+    {
+        char *pcResult = Misc_GetItemUniqueCode(*(unsigned int *)value->pvValue);
+        if ( pcResult )
+        {
+            strcpy(acOutput, pcResult);
+        }
+    }
+    else if ( EN_VALUE_UINT_ITEMCODE == value->enValueType )
+    {
+        char *pcResult = ItemsCode_GetExpression(*(unsigned int *)value->pvValue);
+        if ( pcResult )
+        {
+            strcpy(acOutput, pcResult);
+        }
+    }
+    else if ( EN_VALUE_UINT_MISSCODE == value->enValueType )
+    {
+        char *pcResult = MissCode_GetExpression(*(unsigned int *)value->pvValue);
+        if ( pcResult )
+        {
+            strcpy(acOutput, pcResult);
+        }
+    }
+    else if ( EN_VALUE_UINT_SKILLCODE == value->enValueType )
+    {
+        char *pcResult = SkillsCode_GetExpression(*(unsigned int *)value->pvValue);
+        if ( pcResult )
+        {
+            strcpy(acOutput, pcResult);
+        }
+    }
+    else if ( EN_VALUE_UINT_DESCCODE == value->enValueType )
+    {
+        char *pcResult = SkillDescCode_GetExpression(*(unsigned int *)value->pvValue);
+        if ( pcResult )
+        {
+            strcpy(acOutput, pcResult);
+        }
+    }
+    else if ( EN_VALUE_UINT_PROPERTY == value->enValueType )
+    {
+        char *pcResult = Properties_GetProperty(*(unsigned int *)value->pvValue);
+        if ( pcResult )
+        {
+            strcpy(acOutput, pcResult);
+        }
+    }
+    else if ( EN_VALUE_USHORT_EVENT == value->enValueType )
+    {
+        char *pcResult = Events_GetEventName(*(unsigned short *)value->pvValue);
+        if ( pcResult )
+        {
+            strcpy(acOutput, pcResult);
+        }
+    }
+    else if ( EN_VALUE_USHORT_ITEMTYPE == value->enValueType )
+    {
+        char *pcResult = ItemTypes_GetItemCode(*(unsigned short *)value->pvValue);
+        if ( pcResult )
+        {
+            strcpy(acOutput, pcResult);
+        }
+    }
+    else if ( EN_VALUE_USHORT_ITEMSTAT == value->enValueType )
+    {
+        char *pcResult = ItemStatCost_GetStateName(*(unsigned short *)value->pvValue);
+        if ( pcResult )
+        {
+            strcpy(acOutput, pcResult);
+        }
+    }
+    else if ( EN_VALUE_USHORT_MISSILE == value->enValueType )
+    {
+        char *pcResult = Missiles_GetMissile(*(unsigned short *)value->pvValue);
+        if ( pcResult )
+        {
+            strcpy(acOutput, pcResult);
+        }
+    }
+    else if ( EN_VALUE_USHORT_MONAI == value->enValueType )
+    {
+        char *pcResult = MonAi_GetAiName(*(unsigned short *)value->pvValue);
+        if ( pcResult )
+        {
+            strcpy(acOutput, pcResult);
+        }
+    }
+    else if ( EN_VALUE_USHORT_MONPROP == value->enValueType )
+    {
+        char *pcResult = MonProp_GetPropId(*(unsigned short *)value->pvValue);
+        if ( pcResult )
+        {
+            strcpy(acOutput, pcResult);
+        }
+    }
+    else if ( EN_VALUE_USHORT_MONSOUND == value->enValueType )
+    {
+        char *pcResult = MonSounds_GetItemSoundsCode(*(unsigned short *)value->pvValue);
+        if ( pcResult )
+        {
+            strcpy(acOutput, pcResult);
+        }
+    }
+    else if ( EN_VALUE_USHORT_MONSTAT == value->enValueType )
+    {
+        char *pcResult = MonStats_GetStatsName(*(unsigned short *)value->pvValue);
+        if ( pcResult )
+        {
+            strcpy(acOutput, pcResult);
+        }
+    }
+    else if ( EN_VALUE_USHORT_MONSTAT2 == value->enValueType )
+    {
+        char *pcResult = MonStats2_GetStatsName(*(unsigned short *)value->pvValue);
+        if ( pcResult )
+        {
+            strcpy(acOutput, pcResult);
+        }
+    }
+    else if ( EN_VALUE_USHORT_MONTYPE == value->enValueType )
+    {
+        char *pcResult = MonType_GetType(*(unsigned short *)value->pvValue);
+        if ( pcResult )
+        {
+            strcpy(acOutput, pcResult);
+        }
+    }
+    else if ( EN_VALUE_USHORT_OVERLAY == value->enValueType )
+    {
+        char *pcResult = Overlay_GetOverlay(*(unsigned short *)value->pvValue);
+        if ( pcResult )
+        {
+            strcpy(acOutput, pcResult);
+        }
+    }
+    else if ( EN_VALUE_USHORT_SET == value->enValueType )
+    {
+        char *pcResult = Sets_GetSetName(*(unsigned short *)value->pvValue);
+        if ( pcResult )
+        {
+            strcpy(acOutput, pcResult);
+        }
+    }
+    else if ( EN_VALUE_USHORT_SKILLDESC == value->enValueType )
+    {
+        char *pcResult = SkillDesc_GetDesc(*(unsigned short *)value->pvValue);
+        if ( pcResult )
+        {
+            strcpy(acOutput, pcResult);
+        }
+    }
+    else if ( EN_VALUE_USHORT_SKILL == value->enValueType )
+    {
+        char *pcResult = Skills_GetSkillName(*(unsigned short *)value->pvValue);
+        if ( pcResult )
+        {
+            strcpy(acOutput, pcResult);
+        }
+    }
+    else if ( EN_VALUE_USHORT_STRING == value->enValueType )
+    {
+        char *pcResult = String_FindString(*(unsigned short *)value->pvValue, "dummy");
+        if ( pcResult )
+        {
+            strcpy(acOutput, pcResult);
+        }
+    }
+    else if ( EN_VALUE_USHORT_STRING2 == value->enValueType )
+    {
+        char *pcResult = String_FindString_2(*(unsigned short *)value->pvValue, "dummy", "x");
+        if ( pcResult )
+        {
+            strcpy(acOutput, pcResult);
+        }
+    }
+    else if ( EN_VALUE_USHORT_TREASURE == value->enValueType )
+    {
+        char *pcResult = TreasureClassEx_GetItemTreasureClass(*(unsigned short *)value->pvValue);
+        if ( pcResult )
+        {
+            strcpy(acOutput, pcResult);
+        }
+    }
+    else if ( EN_VALUE_USHORT_SOUND == value->enValueType )
+    {
+        char *pcResult = Sounds_GetSoundName(*(unsigned short *)value->pvValue);
+        if ( pcResult )
+        {
+            strcpy(acOutput, pcResult);
+        }
+    }
+    else if ( EN_VALUE_USHORT_STATE == value->enValueType )
+    {
+        char *pcResult = States_GetStateName(*(unsigned short *)value->pvValue);
+        if ( pcResult )
+        {
+            strcpy(acOutput, pcResult);
+        }
+    }
+    else if ( EN_VALUE_UCHAR_BODYLOC == value->enValueType )
+    {
+        char *pcResult = BodyLocs_GetLocStr(*(unsigned char *)value->pvValue);
+        if ( pcResult )
+        {
+            strcpy(acOutput, pcResult);
+        }
+    }
+    else if ( EN_VALUE_UCHAR_COLOR == value->enValueType )
+    {
+        char *pcResult = Colors_GetColorCode(*(unsigned char *)value->pvValue);
+        if ( pcResult )
+        {
+            strcpy(acOutput, pcResult);
+        }
+    }
+    else if ( EN_VALUE_UCHAR_ELEM == value->enValueType )
+    {
+        char *pcResult = ElemTypes_GetElemStr(*(unsigned char *)value->pvValue);
+        if ( pcResult )
+        {
+            strcpy(acOutput, pcResult);
+        }
+    }
+    else if ( EN_VALUE_UCHAR_HIREDESC == value->enValueType )
+    {
+        char *pcResult = HireDesc_GetDesc(*(unsigned char *)value->pvValue);
+        if ( pcResult )
+        {
+            strcpy(acOutput, pcResult);
+        }
+    }
+    else if ( EN_VALUE_UCHAR_HITCLASS == value->enValueType )
+    {
+        char *pcResult = HitClass_GetClassStr(*(unsigned char *)value->pvValue);
+        if ( pcResult )
+        {
+            strcpy(acOutput, pcResult);
+        }
+    }
+    else if ( EN_VALUE_UCHAR_PLRCLASS == value->enValueType )
+    {
+        char *pcResult = PlayerClass_GetClass(*(unsigned char *)value->pvValue);
+        if ( pcResult )
+        {
+            strcpy(acOutput, pcResult);
+        }
+    }
+    else if ( EN_VALUE_UCHAR_MONMODE == value->enValueType )
+    {
+        char *pcResult = MonMode_GetCode(*(unsigned char *)value->pvValue);
+        if ( pcResult )
+        {
+            strcpy(acOutput, pcResult);
+        }
+    }
+    else if ( EN_VALUE_UCHAR_PLRMODE == value->enValueType )
+    {
+        char *pcResult = PlrMode_GetCode(*(unsigned char *)value->pvValue);
+        if ( pcResult )
+        {
+            strcpy(acOutput, pcResult);
+        }
+    }
+    else if ( EN_VALUE_UCHAR_PET == value->enValueType )
+    {
+        char *pcResult = Pettype_GetPetType(*(unsigned char *)value->pvValue);
+        if ( pcResult )
+        {
+            strcpy(acOutput, pcResult);
+        }
+    }
+    else if ( EN_VALUE_UCHAR_STORE == value->enValueType )
+    {
+        char *pcResult = StorePage_GetCode(*(unsigned char *)value->pvValue);
+        if ( pcResult )
+        {
+            strcpy(acOutput, pcResult);
+        }
+    }
+    else if ( EN_VALUE_EOL == value->enValueType )
+    {
+        acOutput[0] = '0';
+        acOutput[1] = 0;
+    }
+
+    return 1;
+}
+
 /*
 合并字段内容:
 1、对表头的字段名进行转换，关联到结构体的字段名，空格符在字段变量名中用mysp替代
@@ -228,324 +559,7 @@ static char * TXTBUF_FILL(char *key, ST_VALUE_MAP *map, int count, char *start, 
 
         if ( !callback || !callback->pfnConvertValue || 0 == callback->pfnConvertValue(pvLineInfo, key, from, acTempValue) )
         {
-            if ( EN_VALUE_CHAR == map[i].enValueType )
-            {
-                sprintf(acTempValue, "%d", *(char *)map[i].pvValue);
-            }
-            else if ( EN_VALUE_SHORT == map[i].enValueType )
-            {
-                sprintf(acTempValue, "%d", *(short *)map[i].pvValue);
-            }
-            else if ( EN_VALUE_INT == map[i].enValueType )
-            {
-                sprintf(acTempValue, "%d", *(int *)map[i].pvValue);
-            }
-            else if ( EN_VALUE_UCHAR == map[i].enValueType )
-            {
-                sprintf(acTempValue, "%u", *(unsigned char *)map[i].pvValue);
-            }
-            else if ( EN_VALUE_USHORT == map[i].enValueType )
-            {
-                sprintf(acTempValue, "%u", *(unsigned short *)map[i].pvValue);
-            }
-            else if ( EN_VALUE_UINT == map[i].enValueType )
-            {
-                sprintf(acTempValue, "%u", *(unsigned int *)map[i].pvValue);
-            }
-            else if ( EN_VALUE_BIT == map[i].enValueType && callback && callback->pfnBitProc )
-            {
-                callback->pfnBitProc(pvLineInfo, key, acTempValue);
-            }
-            else if ( EN_VALUE_STRING == map[i].enValueType )
-            {
-                strncpy(acTempValue, map[i].pvValue, map[i].iValueLen);
-            }
-            else if ( EN_VALUE_UINT_ITEM == map[i].enValueType )
-            {
-                char *pcResult = Misc_GetItemUniqueCode(*(unsigned int *)map[i].pvValue);
-                if ( pcResult )
-                {
-                    strcpy(acTempValue, pcResult);
-                }
-            }
-            else if ( EN_VALUE_UINT_ITEMCODE == map[i].enValueType )
-            {
-                char *pcResult = ItemsCode_GetExpression(*(unsigned int *)map[i].pvValue);
-                if ( pcResult )
-                {
-                    strcpy(acTempValue, pcResult);
-                }
-            }
-            else if ( EN_VALUE_UINT_MISSCODE == map[i].enValueType )
-            {
-                char *pcResult = MissCode_GetExpression(*(unsigned int *)map[i].pvValue);
-                if ( pcResult )
-                {
-                    strcpy(acTempValue, pcResult);
-                }
-            }
-            else if ( EN_VALUE_UINT_SKILLCODE == map[i].enValueType )
-            {
-                char *pcResult = SkillsCode_GetExpression(*(unsigned int *)map[i].pvValue);
-                if ( pcResult )
-                {
-                    strcpy(acTempValue, pcResult);
-                }
-            }
-            else if ( EN_VALUE_UINT_DESCCODE == map[i].enValueType )
-            {
-                char *pcResult = SkillDescCode_GetExpression(*(unsigned int *)map[i].pvValue);
-                if ( pcResult )
-                {
-                    strcpy(acTempValue, pcResult);
-                }
-            }
-            else if ( EN_VALUE_UINT_PROPERTY == map[i].enValueType )
-            {
-                char *pcResult = Properties_GetProperty(*(unsigned int *)map[i].pvValue);
-                if ( pcResult )
-                {
-                    strcpy(acTempValue, pcResult);
-                }
-            }
-            else if ( EN_VALUE_USHORT_EVENT == map[i].enValueType )
-            {
-                char *pcResult = Events_GetEventName(*(unsigned short *)map[i].pvValue);
-                if ( pcResult )
-                {
-                    strcpy(acTempValue, pcResult);
-                }
-            }
-            else if ( EN_VALUE_USHORT_ITEMTYPE == map[i].enValueType )
-            {
-                char *pcResult = ItemTypes_GetItemCode(*(unsigned short *)map[i].pvValue);
-                if ( pcResult )
-                {
-                    strcpy(acTempValue, pcResult);
-                }
-            }
-            else if ( EN_VALUE_USHORT_ITEMSTAT == map[i].enValueType )
-            {
-                char *pcResult = ItemStatCost_GetStateName(*(unsigned short *)map[i].pvValue);
-                if ( pcResult )
-                {
-                    strcpy(acTempValue, pcResult);
-                }
-            }
-            else if ( EN_VALUE_USHORT_MISSILE == map[i].enValueType )
-            {
-                char *pcResult = Missiles_GetMissile(*(unsigned short *)map[i].pvValue);
-                if ( pcResult )
-                {
-                    strcpy(acTempValue, pcResult);
-                }
-            }
-            else if ( EN_VALUE_USHORT_MONAI == map[i].enValueType )
-            {
-                char *pcResult = MonAi_GetAiName(*(unsigned short *)map[i].pvValue);
-                if ( pcResult )
-                {
-                    strcpy(acTempValue, pcResult);
-                }
-            }
-            else if ( EN_VALUE_USHORT_MONPROP == map[i].enValueType )
-            {
-                char *pcResult = MonProp_GetPropId(*(unsigned short *)map[i].pvValue);
-                if ( pcResult )
-                {
-                    strcpy(acTempValue, pcResult);
-                }
-            }
-            else if ( EN_VALUE_USHORT_MONSOUND == map[i].enValueType )
-            {
-                char *pcResult = MonSounds_GetItemSoundsCode(*(unsigned short *)map[i].pvValue);
-                if ( pcResult )
-                {
-                    strcpy(acTempValue, pcResult);
-                }
-            }
-            else if ( EN_VALUE_USHORT_MONSTAT == map[i].enValueType )
-            {
-                char *pcResult = MonStats_GetStatsName(*(unsigned short *)map[i].pvValue);
-                if ( pcResult )
-                {
-                    strcpy(acTempValue, pcResult);
-                }
-            }
-            else if ( EN_VALUE_USHORT_MONSTAT2 == map[i].enValueType )
-            {
-                char *pcResult = MonStats2_GetStatsName(*(unsigned short *)map[i].pvValue);
-                if ( pcResult )
-                {
-                    strcpy(acTempValue, pcResult);
-                }
-            }
-            else if ( EN_VALUE_USHORT_MONTYPE == map[i].enValueType )
-            {
-                char *pcResult = MonType_GetType(*(unsigned short *)map[i].pvValue);
-                if ( pcResult )
-                {
-                    strcpy(acTempValue, pcResult);
-                }
-            }
-            else if ( EN_VALUE_USHORT_OVERLAY == map[i].enValueType )
-            {
-                char *pcResult = Overlay_GetOverlay(*(unsigned short *)map[i].pvValue);
-                if ( pcResult )
-                {
-                    strcpy(acTempValue, pcResult);
-                }
-            }
-            else if ( EN_VALUE_USHORT_SET == map[i].enValueType )
-            {
-                char *pcResult = Sets_GetSetName(*(unsigned short *)map[i].pvValue);
-                if ( pcResult )
-                {
-                    strcpy(acTempValue, pcResult);
-                }
-            }
-            else if ( EN_VALUE_USHORT_SKILLDESC == map[i].enValueType )
-            {
-                char *pcResult = SkillDesc_GetDesc(*(unsigned short *)map[i].pvValue);
-                if ( pcResult )
-                {
-                    strcpy(acTempValue, pcResult);
-                }
-            }
-            else if ( EN_VALUE_USHORT_SKILL == map[i].enValueType )
-            {
-                char *pcResult = Skills_GetSkillName(*(unsigned short *)map[i].pvValue);
-                if ( pcResult )
-                {
-                    strcpy(acTempValue, pcResult);
-                }
-            }
-            else if ( EN_VALUE_USHORT_STRING == map[i].enValueType )
-            {
-                char *pcResult = String_FindString(*(unsigned short *)map[i].pvValue, "dummy");
-                if ( pcResult )
-                {
-                    strcpy(acTempValue, pcResult);
-                }
-            }
-            else if ( EN_VALUE_USHORT_STRING2 == map[i].enValueType )
-            {
-                char *pcResult = String_FindString_2(*(unsigned short *)map[i].pvValue, "dummy", "x");
-                if ( pcResult )
-                {
-                    strcpy(acTempValue, pcResult);
-                }
-            }
-            else if ( EN_VALUE_USHORT_TREASURE == map[i].enValueType )
-            {
-                char *pcResult = TreasureClassEx_GetItemTreasureClass(*(unsigned short *)map[i].pvValue);
-                if ( pcResult )
-                {
-                    strcpy(acTempValue, pcResult);
-                }
-            }
-            else if ( EN_VALUE_USHORT_SOUND == map[i].enValueType )
-            {
-                char *pcResult = Sounds_GetSoundName(*(unsigned short *)map[i].pvValue);
-                if ( pcResult )
-                {
-                    strcpy(acTempValue, pcResult);
-                }
-            }
-            else if ( EN_VALUE_USHORT_STATE == map[i].enValueType )
-            {
-                char *pcResult = States_GetStateName(*(unsigned short *)map[i].pvValue);
-                if ( pcResult )
-                {
-                    strcpy(acTempValue, pcResult);
-                }
-            }
-            else if ( EN_VALUE_UCHAR_BODYLOC == map[i].enValueType )
-            {
-                char *pcResult = BodyLocs_GetLocStr(*(unsigned char *)map[i].pvValue);
-                if ( pcResult )
-                {
-                    strcpy(acTempValue, pcResult);
-                }
-            }
-            else if ( EN_VALUE_UCHAR_COLOR == map[i].enValueType )
-            {
-                char *pcResult = Colors_GetColorCode(*(unsigned char *)map[i].pvValue);
-                if ( pcResult )
-                {
-                    strcpy(acTempValue, pcResult);
-                }
-            }
-            else if ( EN_VALUE_UCHAR_ELEM == map[i].enValueType )
-            {
-                char *pcResult = ElemTypes_GetElemStr(*(unsigned char *)map[i].pvValue);
-                if ( pcResult )
-                {
-                    strcpy(acTempValue, pcResult);
-                }
-            }
-            else if ( EN_VALUE_UCHAR_HIREDESC == map[i].enValueType )
-            {
-                char *pcResult = HireDesc_GetDesc(*(unsigned char *)map[i].pvValue);
-                if ( pcResult )
-                {
-                    strcpy(acTempValue, pcResult);
-                }
-            }
-            else if ( EN_VALUE_UCHAR_HITCLASS == map[i].enValueType )
-            {
-                char *pcResult = HitClass_GetClassStr(*(unsigned char *)map[i].pvValue);
-                if ( pcResult )
-                {
-                    strcpy(acTempValue, pcResult);
-                }
-            }
-            else if ( EN_VALUE_UCHAR_PLRCLASS == map[i].enValueType )
-            {
-                char *pcResult = PlayerClass_GetClass(*(unsigned char *)map[i].pvValue);
-                if ( pcResult )
-                {
-                    strcpy(acTempValue, pcResult);
-                }
-            }
-            else if ( EN_VALUE_UCHAR_MONMODE == map[i].enValueType )
-            {
-                char *pcResult = MonMode_GetCode(*(unsigned char *)map[i].pvValue);
-                if ( pcResult )
-                {
-                    strcpy(acTempValue, pcResult);
-                }
-            }
-            else if ( EN_VALUE_UCHAR_PLRMODE == map[i].enValueType )
-            {
-                char *pcResult = PlrMode_GetCode(*(unsigned char *)map[i].pvValue);
-                if ( pcResult )
-                {
-                    strcpy(acTempValue, pcResult);
-                }
-            }
-            else if ( EN_VALUE_UCHAR_PET == map[i].enValueType )
-            {
-                char *pcResult = Pettype_GetPetType(*(unsigned char *)map[i].pvValue);
-                if ( pcResult )
-                {
-                    strcpy(acTempValue, pcResult);
-                }
-            }
-            else if ( EN_VALUE_UCHAR_STORE == map[i].enValueType )
-            {
-                char *pcResult = StorePage_GetCode(*(unsigned char *)map[i].pvValue);
-                if ( pcResult )
-                {
-                    strcpy(acTempValue, pcResult);
-                }
-            }
-            else if ( EN_VALUE_EOL == map[i].enValueType )
-            {
-                acTempValue[0] = '0';
-                acTempValue[1] = 0;
-            }
-
+            process_value(&map[i], acTempValue);
 
             //4、清除值字段末尾的所有空格
             if ( 0 != acTempValue[0] && !('0' == acTempValue[0] && 0 == acTempValue[1] && EN_VALUE_STRING > map[i].enValueType) )
@@ -686,41 +700,42 @@ static int process_line_x(char *pcHeader, char *pcLineEnd, char *pcLineStart, ch
     return result;
 }
 
-static int Is_StringInList(char **ppcList, char *pcLookup)
+static int Find_StringInList(char **ppcList, char *pcLookup)
 {
     int i = 0;
 
     if ( !ppcList || !pcLookup )
     {
-        return 0;
+        return -1;
     }
 
     while ( NULL != ppcList[i] )
     {
         if ( !stricmp("all over in", ppcList[i]) )
         {
-            return 1;
+            return i;
         }
 
         if ( !stricmp(pcLookup, ppcList[i]) )
         {
-            return 1;
+            return i;
         }
 
         i++;
     }
 
-    return 0;
+    return -1;
 }
 
 //检查哪些字段在bin文件中没有读取出来的
-static int check_missing(char *pcHeader, char *pcLineEnd, ST_VALUE_MAP *astValueMap, int iCount, char *pcFileName, ST_CALLBACK *pstCallback)
+static int check_template(char *pcHeader, char *pcLineEnd, ST_VALUE_MAP *astValueMap, int iCount, char *pcFileName, ST_CALLBACK *pstCallback)
 {
     char *pcAnchor, *pcAnchorTemp;
     char bAnchor;
     int result = 1;
     int i;
     char acTempKey[256] = {0};
+    int iIntKeys = 0;
 
     m_acTempBuffer[0] = 0;
     //逐字段处理
@@ -771,18 +786,20 @@ static int check_missing(char *pcHeader, char *pcLineEnd, ST_VALUE_MAP *astValue
         }
         if ( i >= iCount )
         {
-            if ( pstCallback && Is_StringInList(pstCallback->ppcKeyInternalProcess, pcHeader) )
+            int iResult;
+            if ( pstCallback && (iResult = Find_StringInList(pstCallback->ppcKeyInternalProcess, pcHeader)) != -1 )
             {
+                iIntKeys |= (1 << iResult);
                 //已被内部处理
             }
-            else if ( pstCallback && Is_StringInList(pstCallback->ppcKeyNotUsed, pcHeader) )
+            else if ( pstCallback && Find_StringInList(pstCallback->ppcKeyNotUsed, pcHeader) != -1 )
             {
                 if ( !g_iCompactOutput )
                 {
                     sprintf(&m_acTempBuffer[strlen(m_acTempBuffer)], "  Not Used Field: %s\r\n", pcHeader);
                 }
             }
-            else if ( pstCallback && Is_StringInList(pstCallback->ppcKeyNotParsed, pcHeader) )
+            else if ( pstCallback && Find_StringInList(pstCallback->ppcKeyNotParsed, pcHeader) != -1 )
             {
                 sprintf(&m_acTempBuffer[strlen(m_acTempBuffer)], "  Not Parsed Field: %s\r\n", pcHeader);
             }
@@ -795,6 +812,16 @@ static int check_missing(char *pcHeader, char *pcLineEnd, ST_VALUE_MAP *astValue
         *pcAnchor = bAnchor;
     } while ( (pcHeader = strchr(pcHeader, '\t')) && pcHeader < pcLineEnd && pcHeader++ );
 
+    if ( pstCallback && pstCallback->ppcKeyInternalProcess )
+    {
+        for ( i = 0; NULL != pstCallback->ppcKeyInternalProcess[i]; i++ )
+        {
+            if ( (iIntKeys & (1 << i)) == 0 )
+            {
+                sprintf(&m_acTempBuffer[strlen(m_acTempBuffer)], "  Missing Field: %s\r\n", pstCallback->ppcKeyInternalProcess[i]);
+            }
+        }
+    }
     for ( i = 0; i < iCount; i++ )
     {
         if ( astValueMap[i].iActiveColumn )
@@ -966,9 +993,10 @@ loop:
     return process_line_x(pcHeader, pcLineEnd, pcLineStart, pcTxt, acClass, pvLineInfo, astValueMap, iCount, pstCallback, iLineNo);
 }
 
-static int check_active(void *pvLineInfo, int iLineLength, ST_VALUE_MAP *pstValueMap, int iValueCount, FILE *pfBinHandle, ST_FILE_HEADER stFileHeader)
+static int check_bin(void *pvLineInfo, int iLineLength, ST_VALUE_MAP *pstValueMap, int iValueCount, FILE *pfBinHandle, ST_FILE_HEADER stFileHeader)
 {
     unsigned int i, j;
+    unsigned int iFrom, iTo;
 
     if ( stFileHeader.iLines < 2 )
     {
@@ -997,12 +1025,38 @@ static int check_active(void *pvLineInfo, int iLineLength, ST_VALUE_MAP *pstValu
             }
         }
     }
+
+    if ( fgetc(pfBinHandle) != EOF )
+    {
+        return 0;
+    }
+
     fseek(pfBinHandle, sizeof(stFileHeader), SEEK_SET);
 
     for ( j = 0; j < (unsigned int)iValueCount; j++ )
     {
-        unsigned int iFrom = (unsigned int)pstValueMap[j].pvValue - (unsigned int)pvLineInfo;
-        unsigned int iTo = iFrom + pstValueMap[j].iValueLen;
+        iFrom = (unsigned int)pstValueMap[j].pvValue - (unsigned int)pvLineInfo;
+
+        if ( pstValueMap[j].enValueType == EN_VALUE_UCHAR_BIT )
+        {
+            iFrom += sizeof(unsigned char) - (pstValueMap[j].iValueLen / 8) - 1;
+            iTo = iFrom + 1;
+        }
+        else if ( pstValueMap[j].enValueType == EN_VALUE_USHORT_BIT )
+        {
+            iFrom += sizeof(unsigned short) - (pstValueMap[j].iValueLen / 8) - 1;
+            iTo = iFrom + 1;
+        }
+        else if ( pstValueMap[j].enValueType == EN_VALUE_UINT_BIT )
+        {
+            iFrom += sizeof(unsigned int) - (pstValueMap[j].iValueLen / 8) - 1;
+            iTo = iFrom + 1;
+        }
+        else
+        {
+            iTo = iFrom + pstValueMap[j].iValueLen;
+        }
+
         for ( i = iFrom; i < iTo; i++ )
         {
             if ( m_acTempBuffer[i] )
@@ -1085,7 +1139,12 @@ static int process_file_x(char *acTemplatePath, char *acBinPath, char *acTxtPath
     pfBinHandle = fopen(acBinFile, "rb");
     if ( NULL == pfBinHandle )
     {
-        if ( pstCallback->iOptional )
+        if ( pstCallback && pstCallback->eModuleType == EN_MODULE_CORE )
+        {
+            my_error("open %s bin file fail\r\n", pcFilename);
+            goto error;
+        }
+        else
         {
             if ( !g_iCompactOutput )
             {
@@ -1093,8 +1152,6 @@ static int process_file_x(char *acTemplatePath, char *acBinPath, char *acTxtPath
             }
             goto out;
         }
-        my_error("open %s bin file fail\r\n", pcFilename);
-        goto error;
     }
 
     pfTplHandle = fopen(acTemplateFile, "rb");
@@ -1102,9 +1159,12 @@ static int process_file_x(char *acTemplatePath, char *acBinPath, char *acTxtPath
     {
         char *pcColumn = acTplBuf;
 
-        my_printf("%s template not found, auto generated will be used\r\n", pcFilename);
+        if ( pstCallback && pstCallback->eModuleType < EN_MODULE_EXTENSION )
+        {
+            my_printf("%s template not found, auto generated will be used\r\n", pcFilename);
+        }
 
-        if ( pstCallback->ppcKeyInternalProcess )
+        if ( pstCallback && pstCallback->ppcKeyInternalProcess )
         {
             for ( i = 0; pstCallback->ppcKeyInternalProcess[i] != NULL; i++ )
             {
@@ -1184,14 +1244,14 @@ static int process_file_x(char *acTemplatePath, char *acBinPath, char *acTxtPath
 
     if ( acTxtPath )
     {
-        if ( !check_active(pvLineInfo, iLineLength, pstValueMap, iValueCount, pfBinHandle, stFileHeader) )
+        if ( !check_bin(pvLineInfo, iLineLength, pstValueMap, iValueCount, pfBinHandle, stFileHeader) )
         {
-            my_error("active columns detection failed\r\n", pcFilename);
+            my_error("%s bin struct check failed\r\n", pcFilename);
             goto error;
         }
 
         //检查有哪些字段没有处理
-        if ( !check_missing(acTxtBuf, strchr(acTxtBuf, '\r'), pstValueMap, iValueCount, pcFilename, pstCallback) )
+        if ( !check_template(acTxtBuf, strchr(acTxtBuf, '\r'), pstValueMap, iValueCount, pcFilename, pstCallback) )
         {
             goto error;
         }

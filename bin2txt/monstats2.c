@@ -808,347 +808,38 @@ char *MonStats2_GetStatsName(unsigned int id)
     return m_astMonStats[id].vId;
 }
 
-static int MonStats2_BitProc(void *pvLineInfo, char *acKey, char *acOutput)
-{
-    ST_LINE_INFO *pstLineInfo = pvLineInfo;
-    int result = 0;
-
-    if ( !stricmp(acKey, "corpseSel") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined1 & (1 << 7)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "shiftSel") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined1 & (1 << 6)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "noSel") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined1 & (1 << 5)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "alSel") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined1 & (1 << 4)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "isSel") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined1 & (1 << 3)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "noOvly") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined1 & (1 << 2)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "noMap") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined1 & (1 << 1)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "noGfxHitTest") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined1 & 1) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "noUniqueShift") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined2 & (1 << 7)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "Shadow") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined2 & (1 << 6)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "critter") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined2 & (1 << 5)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "soft") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined2 & (1 << 4)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "large") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined2 & (1 << 3)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "small") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined2 & (1 << 2)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "isAtt") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined2 & (1 << 1)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "revive") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined2 & 1) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "unflatDead") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined3 & (1 << 4)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "deadCol") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined3 & (1 << 3)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "objCol") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined3 & (1 << 2)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "inert") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined3 & (1 << 1)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "compositeDeath") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined3 & 1) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "SH") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined4 & (1 << 7)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "LH") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined4 & (1 << 6)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "RH") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined4 & (1 << 5)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "LA") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined4 & (1 << 4)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "RA") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined4 & (1 << 3)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "LG") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined4 & (1 << 2)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "TR") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined4 & (1 << 1)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "HD") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined4 & 1) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "S8") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined5 & (1 << 7)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "S7") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined5 & (1 << 6)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "S6") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined5 & (1 << 5)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "S5") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined5 & (1 << 4)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "S4") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined5 & (1 << 3)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "S3") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined5 & (1 << 2)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "S2") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined5 & (1 << 1)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "S1") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined5 & 1) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "mSC") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined6 & (1 << 7)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "mBL") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined6 & (1 << 6)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "mA2") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined6 & (1 << 5)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "mA1") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined6 & (1 << 4)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "mGH") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined6 & (1 << 3)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "mWL") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined6 & (1 << 2)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "mNU") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined6 & (1 << 1)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "mDT") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined6 & 1) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "mRN") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined7 & (1 << 7)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "mSQ") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined7 & (1 << 6)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "mKB") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined7 & (1 << 5)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "mDD") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined7 & (1 << 4)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "mS4") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined7 & (1 << 3)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "mS3") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined7 & (1 << 2)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "mS2") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined7 & (1 << 1)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "mS1") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined7 & 1) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "SCmv") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined8 & (1 << 7)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "A2mv") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined8 & (1 << 5)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "A1mv") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined8 & (1 << 4)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "S4mv") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined9 & (1 << 3)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "S3mv") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined9 & (1 << 2)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "S2mv") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined9 & (1 << 1)) != 0);
-        result = 1;
-    }
-    else if ( !stricmp(acKey, "S1mv") )
-    {
-        sprintf(acOutput, "%d", (pstLineInfo->vBitCombined9 & 1) != 0);
-        result = 1;
-    }
-
-    return result;
-}
-
 static void MonStats2_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLineInfo)
 {
     INIT_VALUE_BUFFER;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Id, USHORT_MONSTAT);
 
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, corpseSel, BitCombined1, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, shiftSel, BitCombined1, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, noSel, BitCombined1, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, alSel, BitCombined1, BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, corpseSel, BitCombined1, 7, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, shiftSel, BitCombined1, 6, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, noSel, BitCombined1, 5, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, alSel, BitCombined1, 4, UCHAR_BIT);
 
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, isSel, BitCombined1, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, noOvly, BitCombined1, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, noMap, BitCombined1, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, noGfxHitTest, BitCombined1, BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, isSel, BitCombined1, 3, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, noOvly, BitCombined1, 2, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, noMap, BitCombined1, 1, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, noGfxHitTest, BitCombined1, 0, UCHAR_BIT);
 
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, noUniqueShift, BitCombined2, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, Shadow, BitCombined2, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, critter, BitCombined2, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, soft, BitCombined2, BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, noUniqueShift, BitCombined2, 7, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, Shadow, BitCombined2, 6, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, critter, BitCombined2, 5, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, soft, BitCombined2, 4, UCHAR_BIT);
 
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, large, BitCombined2, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, small, BitCombined2, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, isAtt, BitCombined2, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, revive, BitCombined2, BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, large, BitCombined2, 3, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, small, BitCombined2, 2, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, isAtt, BitCombined2, 1, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, revive, BitCombined2, 0, UCHAR_BIT);
 
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, unflatDead, BitCombined3, BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, unflatDead, BitCombined3, 4, UCHAR_BIT);
 
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, deadCol, BitCombined3, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, objCol, BitCombined3, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, inert, BitCombined3, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, compositeDeath, BitCombined3, BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, deadCol, BitCombined3, 3, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, objCol, BitCombined3, 2, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, inert, BitCombined3, 1, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, compositeDeath, BitCombined3, 0, UCHAR_BIT);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SizeX, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SizeY, UCHAR);
@@ -1195,47 +886,47 @@ static void MonStats2_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstL
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, S8v, STRING);
 
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, SH, BitCombined4, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, LH, BitCombined4, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, RH, BitCombined4, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, LA, BitCombined4, BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, SH, BitCombined4, 7, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, LH, BitCombined4, 6, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, RH, BitCombined4, 5, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, LA, BitCombined4, 4, UCHAR_BIT);
 
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, RA, BitCombined4, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, LG, BitCombined4, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, TR, BitCombined4, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, HD, BitCombined4, BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, RA, BitCombined4, 3, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, LG, BitCombined4, 2, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, TR, BitCombined4, 1, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, HD, BitCombined4, 0, UCHAR_BIT);
 
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, S8, BitCombined5, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, S7, BitCombined5, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, S6, BitCombined5, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, S5, BitCombined5, BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, S8, BitCombined5, 7, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, S7, BitCombined5, 6, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, S6, BitCombined5, 5, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, S5, BitCombined5, 4, UCHAR_BIT);
 
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, S4, BitCombined5, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, S3, BitCombined5, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, S2, BitCombined5, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, S1, BitCombined5, BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, S4, BitCombined5, 3, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, S3, BitCombined5, 2, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, S2, BitCombined5, 1, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, S1, BitCombined5, 0, UCHAR_BIT);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TotalPieces, UINT);
 
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, mSC, BitCombined6, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, mBL, BitCombined6, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, mA2, BitCombined6, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, mA1, BitCombined6, BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, mSC, BitCombined6, 7, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, mBL, BitCombined6, 6, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, mA2, BitCombined6, 5, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, mA1, BitCombined6, 4, UCHAR_BIT);
 
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, mGH, BitCombined6, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, mWL, BitCombined6, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, mNU, BitCombined6, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, mDT, BitCombined6, BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, mGH, BitCombined6, 3, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, mWL, BitCombined6, 2, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, mNU, BitCombined6, 1, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, mDT, BitCombined6, 0, UCHAR_BIT);
 
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, mRN, BitCombined7, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, mSQ, BitCombined7, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, mKB, BitCombined7, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, mDD, BitCombined7, BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, mRN, BitCombined7, 7, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, mSQ, BitCombined7, 6, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, mKB, BitCombined7, 5, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, mDD, BitCombined7, 4, UCHAR_BIT);
 
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, mS4, BitCombined7, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, mS3, BitCombined7, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, mS2, BitCombined7, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, mS1, BitCombined7, BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, mS4, BitCombined7, 3, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, mS3, BitCombined7, 2, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, mS2, BitCombined7, 1, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, mS1, BitCombined7, 0, UCHAR_BIT);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dDT, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dNU, UCHAR);
@@ -1257,14 +948,14 @@ static void MonStats2_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstL
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dSQ, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dRN, UCHAR);
 
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, SCmv, BitCombined8, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, A2mv, BitCombined8, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, A1mv, BitCombined8, BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, SCmv, BitCombined8, 7, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, A2mv, BitCombined8, 5, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, A1mv, BitCombined8, 4, UCHAR_BIT);
 
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, S4mv, BitCombined9, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, S3mv, BitCombined9, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, S2mv, BitCombined9, BIT);
-    VALUE_MAP_DEFINE_2(pstValueMap, pstLineInfo, S1mv, BitCombined9, BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, S4mv, BitCombined9, 3, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, S3mv, BitCombined9, 2, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, S2mv, BitCombined9, 1, UCHAR_BIT);
+    VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, S1mv, BitCombined9, 0, UCHAR_BIT);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, InfernoLen, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, InfernoAnim, UCHAR);
@@ -1298,7 +989,7 @@ static void MonStats2_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstL
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, restore, UINT);
 
-    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, EOL, EOL);
+    VALUE_MAP_DEFINE_VIRT(pstValueMap, pstLineInfo, EOL, EOL);
 }
 
 int process_monstats2(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
@@ -1337,7 +1028,6 @@ int process_monstats2(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
             MonStats2_InitValueMap(pstValueMap, pstLineInfo);
 
             m_stCallback.pfnConvertValue = MonStats2_ConvertValue;
-            m_stCallback.pfnBitProc = MonStats2_BitProc;
 
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo),
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);

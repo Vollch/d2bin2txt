@@ -399,6 +399,10 @@ static int MonUMOD_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo
 
         return 1;
     }
+    else if ( isD2SigmaActive() && MonUModExp_ExternProc(pvLineInfo, acKey, iLineNo, pcTemplate, acOutput) )
+    {
+        return 1;
+    }
 
     return 0;
 }
@@ -432,7 +436,7 @@ int process_monumod(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, constants, UINT);
 
-    VALUE_MAP_DEFINE_3(pstValueMap, pstLineInfo, myasteol, EOL);
+    VALUE_MAP_DEFINE_VIRT(pstValueMap, pstLineInfo, myasteol, EOL);
 
     switch ( enPhase )
     {
@@ -442,12 +446,13 @@ int process_monumod(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
 
         case EN_MODULE_OTHER_DEPEND:
             MODULE_DEPEND_CALL(montype, acTemplatePath, acBinPath, acTxtPath);
+            MODULE_DEPEND_CALL(MonUModExp, acTemplatePath, acBinPath, acTxtPath);
             break;
 
         case EN_MODULE_INIT:
             m_stCallback.pfnFieldProc = MonUMOD_FieldProc;
-            m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
+            m_stCallback.ppcKeyInternalProcess = isD2SigmaActive() ? MonUModExp_ExternList : m_apcInternalProcess;
 
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);
