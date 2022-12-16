@@ -172,7 +172,7 @@ static int KillCounter_ConvertValue_12(void *pvLineInfo, char *acKey, char *pcTe
 
         return 1;
     }
-    else if ( 'H' == acKey[strlen(acKey)-2] && 1 == sscanf(acKey, "MsgParam%d(H)", &id) )
+    else if ( 'H' == acKey[strlen(acKey) - 2] && 1 == sscanf(acKey, "MsgParam%d(H)", &id) )
     {
         unsigned short sValue = *(&pstLineInfo->vMsgParam1mybr1Hmybr2 + (id - 1));
 
@@ -199,7 +199,7 @@ static int KillCounter_ConvertValue_12(void *pvLineInfo, char *acKey, char *pcTe
 
         return 1;
     }
-    else if ( 'N' == acKey[strlen(acKey)-2] &&  1 == sscanf(acKey, "MsgParam%d(N)", &id) )
+    else if ( 'N' == acKey[strlen(acKey) - 2] &&  1 == sscanf(acKey, "MsgParam%d(N)", &id) )
     {
         unsigned short sValue = *(&pstLineInfo->vMsgParam1mybr1Nmybr2 + (id - 1));
 

@@ -159,76 +159,11 @@ typedef struct
     int vT1Param7;
     int vT1Min7;
     int vT1Max7;
-} ST_LINE_INFO_D2;
+} ST_LINE_INFO;
 
 typedef struct
 {
-    unsigned char vName[64];
-
-    unsigned char vRunemyspName[64];
-
-    unsigned char vcomplete;
-    unsigned char vserver;
-    unsigned short iPadding32;
-
-    unsigned short iPadding33;
-    unsigned short vitype1; //itemtypes
-
-    unsigned short vitype2; //itemtypes
-    unsigned short vitype3; //itemtypes
-
-    unsigned short vitype4; //itemtypes
-    unsigned short vitype5; //itemtypes
-
-    unsigned short vitype6; //itemtypes
-    unsigned short vetype1; //itemtypes
-
-    unsigned short vetype2; //itemtypes
-    unsigned short vetype3; //itemtypes
-
-    unsigned int vRune1;    //miscs
-    unsigned int vRune2;
-
-    unsigned int vRune3;
-    unsigned int vRune4;
-
-    unsigned int vRune5;
-    unsigned int vRune6;
-
-    unsigned int vT1Code1;  //properties
-    int vT1Param1;
-    int vT1Min1;
-    int vT1Max1;
-
-    unsigned int vT1Code2;  //properties
-    int vT1Param2;
-    int vT1Min2;
-    int vT1Max2;
-
-    unsigned int vT1Code3;  //properties
-    int vT1Param3;
-    int vT1Min3;
-    int vT1Max3;
-
-    unsigned int vT1Code4;  //properties
-    int vT1Param4;
-    int vT1Min4;
-    int vT1Max4;
-
-    unsigned int vT1Code5;  //properties
-    int vT1Param5;
-    int vT1Min5;
-    int vT1Max5;
-
-    unsigned int vT1Code6;  //properties
-    int vT1Param6;
-    int vT1Min6;
-    int vT1Max6;
-
-    unsigned int vT1Code7;  //properties
-    int vT1Param7;
-    int vT1Min7;
-    int vT1Max7;
+    ST_LINE_INFO sLineInfo;
 
     unsigned int vT1Code8;  //properties
     int vT1Param8;
@@ -259,7 +194,7 @@ typedef struct
     int vT1Param13;
     int vT1Min13;
     int vT1Max13;
-} ST_LINE_INFO_SIGMA;
+} ST_LINE_INFO_D2SIGMA;
 
 typedef struct
 {
@@ -275,13 +210,13 @@ static char *m_apcNotUsed[] =
     NULL,
 };
 
-static int Runes_ConvertValue_D2(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
+static int Runes_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
 {
-    ST_LINE_INFO_D2 *pstLineInfo = pvLineInfo;
+    ST_LINE_INFO *pstLineInfo = pvLineInfo;
     char *pcResult;
     int id;
 
-    if ( strlen("T1Param1") == strlen(acKey) && 1 == sscanf(acKey, "T1Param%d", &id) )
+    if ( 1 == sscanf(acKey, "T1Param%d", &id) )
     {
         ST_RUNE_CODE *pwItype = (ST_RUNE_CODE *)&pstLineInfo->vT1Code1;
         if ( 0 != pwItype[id - 1].vT1Param1 )
@@ -306,43 +241,9 @@ static int Runes_ConvertValue_D2(void *pvLineInfo, char *acKey, char *pcTemplate
     return 0;
 }
 
-static int Runes_ConvertValue_Sigma(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
+static void Runes_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLineInfo)
 {
-    ST_LINE_INFO_SIGMA *pstLineInfo = pvLineInfo;
-    char *pcResult;
-    int id;
-
-    if ( (strlen("T1Param1") == strlen(acKey) || strlen("T1Param10") == strlen(acKey)) 
-        && 1 == sscanf(acKey, "T1Param%d", &id) )
-    {
-        ST_RUNE_CODE *pwItype = (ST_RUNE_CODE *)&pstLineInfo->vT1Code1;
-        if ( 0 != pwItype[id - 1].vT1Param1 )
-        {
-            pcResult = Skills_GetSkillName(pwItype[id - 1].vT1Param1);
-            if ( pcResult )
-            {
-                strcpy(acOutput, pcResult);
-            }
-            else
-            {
-                sprintf(acOutput, "%d", pwItype[id - 1].vT1Param1);
-            }
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        return 1;
-    }
-
-    return 0;
-}
-
-int process_runes_D2(char *acTemplatePath, char *acBinPath, char *acTxtPath)
-{
-    ST_LINE_INFO_D2 *pstLineInfo = (ST_LINE_INFO_D2 *)m_acLineInfoBuf;
-
-    ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
+    INIT_VALUE_BUFFER;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Name, STRING);
 
@@ -409,127 +310,50 @@ int process_runes_D2(char *acTemplatePath, char *acBinPath, char *acTxtPath)
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Min7, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Max7, INT);
 
-    VALUE_MAP_DEFINE_VIRT(pstValueMap, pstLineInfo, eol, EOL);
+    if ( isD2SigmaActive() )
+    {
+        ST_LINE_INFO_D2SIGMA *pstLineInfoSigma = (ST_LINE_INFO_D2SIGMA *)m_acLineInfoBuf;
 
-    m_stCallback.pfnConvertValue = Runes_ConvertValue_D2;
-    m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
+        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Code8, UINT_PROPERTY);
+        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Param8, INT);
+        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Min8, INT);
+        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Max8, INT);
 
-    return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
-        pstValueMap, Global_GetValueMapCount(), &m_stCallback);
-}
+        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Code9, UINT_PROPERTY);
+        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Param9, INT);
+        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Min9, INT);
+        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Max9, INT);
 
-int process_runes_Sigma(char *acTemplatePath, char *acBinPath, char *acTxtPath)
-{
-    ST_LINE_INFO_SIGMA *pstLineInfo = (ST_LINE_INFO_SIGMA *)m_acLineInfoBuf;
+        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Code10, UINT_PROPERTY);
+        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Param10, INT);
+        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Min10, INT);
+        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Max10, INT);
 
-    ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
+        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Code11, UINT_PROPERTY);
+        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Param11, INT);
+        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Min11, INT);
+        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Max11, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Name, STRING);
+        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Code12, UINT_PROPERTY);
+        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Param12, INT);
+        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Min12, INT);
+        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Max12, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, RunemyspName, STRING);
-
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, complete, UCHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, server, UCHAR);
-
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itype1, USHORT_ITEMTYPE);
-
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itype2, USHORT_ITEMTYPE);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itype3, USHORT_ITEMTYPE);
-
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itype4, USHORT_ITEMTYPE);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itype5, USHORT_ITEMTYPE);
-
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itype6, USHORT_ITEMTYPE);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, etype1, USHORT_ITEMTYPE);
-
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, etype2, USHORT_ITEMTYPE);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, etype3, USHORT_ITEMTYPE);
-
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Rune1, UINT_ITEM);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Rune2, UINT_ITEM);
-
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Rune3, UINT_ITEM);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Rune4, UINT_ITEM);
-
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Rune5, UINT_ITEM);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Rune6, UINT_ITEM);
-
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Code1, UINT_PROPERTY);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Param1, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Min1, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Max1, INT);
-
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Code2, UINT_PROPERTY);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Param2, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Min2, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Max2, INT);
-
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Code3, UINT_PROPERTY);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Param3, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Min3, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Max3, INT);
-
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Code4, UINT_PROPERTY);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Param4, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Min4, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Max4, INT);
-
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Code5, UINT_PROPERTY);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Param5, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Min5, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Max5, INT);
-
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Code6, UINT_PROPERTY);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Param6, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Min6, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Max6, INT);
-
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Code7, UINT_PROPERTY);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Param7, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Min7, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Max7, INT);
-
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Code8, UINT_PROPERTY);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Param8, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Min8, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Max8, INT);
-
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Code9, UINT_PROPERTY);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Param9, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Min9, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Max9, INT);
-
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Code10, UINT_PROPERTY);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Param10, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Min10, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Max10, INT);
-
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Code11, UINT_PROPERTY);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Param11, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Min11, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Max11, INT);
-
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Code12, UINT_PROPERTY);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Param12, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Min12, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Max12, INT);
-
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Code13, UINT_PROPERTY);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Param13, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Min13, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Max13, INT);
+        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Code13, UINT_PROPERTY);
+        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Param13, INT);
+        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Min13, INT);
+        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Max13, INT);
+    }
 
     VALUE_MAP_DEFINE_VIRT(pstValueMap, pstLineInfo, eol, EOL);
-
-    m_stCallback.pfnConvertValue = Runes_ConvertValue_Sigma;
-    m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
-
-    return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
-        pstValueMap, Global_GetValueMapCount(), &m_stCallback);
 }
 
 int process_runes(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
+    ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
+
+    ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
+
     switch ( enPhase )
     {
         case EN_MODULE_PREPARE:
@@ -549,12 +373,14 @@ int process_runes(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_M
             break;
 
         case EN_MODULE_INIT:
-            if ( isD2SigmaActive() )
-            {
-                return process_runes_Sigma(acTemplatePath, acBinPath, acTxtPath);
-            } else {
-                return process_runes_D2(acTemplatePath, acBinPath, acTxtPath);
-            }
+            Runes_InitValueMap(pstValueMap, pstLineInfo);
+
+            m_stCallback.pfnConvertValue = Runes_ConvertValue;
+            m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
+
+            return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, 
+                ( isD2SigmaActive() ? sizeof(ST_LINE_INFO_D2SIGMA) : sizeof(ST_LINE_INFO) ), 
+                pstValueMap, Global_GetValueMapCount(), &m_stCallback);
             break;
 
         default:

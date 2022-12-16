@@ -13,7 +13,7 @@ typedef struct
     unsigned char vcolor;
     unsigned char vfont;
     unsigned short vstat;
-    unsigned short vlayer; 
+    unsigned short vlayer;
     unsigned char visBase;
     unsigned char visPercent;
     int valign;
