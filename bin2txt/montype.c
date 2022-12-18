@@ -87,9 +87,11 @@ static int MonType_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLi
 
 static int MonType_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
+    ST_LINE_INFO *pstLineInfo = pvLineInfo;
+
     if ( !stricmp(acKey, "type") )
     {
-        strncpy(acOutput, m_astMonType[iLineNo].vtype, sizeof(m_astMonType[iLineNo].vtype));
+        strncpy(acOutput, m_astMonType[pstLineInfo->vId].vtype, sizeof(m_astMonType[pstLineInfo->vId].vtype));
 
         return 1;
     }

@@ -213,9 +213,11 @@ static int MonSounds_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int i
 
 static int MonSounds_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
+    ST_LINE_INFO *pstLineInfo = pvLineInfo;
+
     if ( !stricmp(acKey, "Id") )
     {
-        strncpy(acOutput, m_astMonSounds[iLineNo].vId, sizeof(m_astMonSounds[iLineNo].vId));
+        strncpy(acOutput, m_astMonSounds[pstLineInfo->vId].vId, sizeof(m_astMonSounds[pstLineInfo->vId].vId));
 
         return 1;
     }
