@@ -20,6 +20,7 @@ extern "C" {
 #define ALL_MODULES(X) \
     X(RoS) \
     X(CharStart) \
+    X(D2StatsEx2) \
     X(D2NewStats) \
     X(D2AddSkill) \
     X(D2KillCounter) \
