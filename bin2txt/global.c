@@ -132,6 +132,13 @@ void String_RestoreSpecialChar( char *key, char *acOutput )
             acOutput++;
 
         }
+        else if ( !strncmp(key, "myqm", strlen("myqm")) )
+        {
+            key += strlen("myqm");
+            *acOutput = '?';
+            acOutput++;
+
+        }
         else
         {
             *acOutput = *key;
@@ -181,6 +188,11 @@ static int String_ReplaceSpecialChar(char *key, char *acTempKey)
         else if ( '*' == key[i] )
         {
             strcpy(&acTempKey[j], "myast");
+            j += (int)strlen(&acTempKey[j]);
+        }
+        else if ( '?' == key[i] )
+        {
+            strcpy(&acTempKey[j], "myqm");
             j += (int)strlen(&acTempKey[j]);
         }
         else

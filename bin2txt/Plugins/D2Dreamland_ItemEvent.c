@@ -10,8 +10,8 @@ typedef struct
     int vParam1;
     int vParam2;
     int vParam3;
-    unsigned int vCalc1; // scollcode
-    unsigned int vCalc2; // scollcode
+    unsigned int vCalc1; // skillcode
+    unsigned int vCalc2; // skillcode
 } ST_LINE_INFO;
 #pragma pack(pop)
 

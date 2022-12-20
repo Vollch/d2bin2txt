@@ -50,7 +50,7 @@ static int ItemsCode_ConverterBin2Txt(unsigned char *pcBinBuf, unsigned char *pc
             }
             else
             {
-                my_error("unknown skill calc\r\n");
+                my_error("unknown skill calc in expression %u\r\n", m_uiItemCodeCount);
                 result = 0;
             }
             break;
@@ -72,7 +72,7 @@ static int ItemsCode_ConverterBin2Txt(unsigned char *pcBinBuf, unsigned char *pc
             break;
 
         default:
-            my_error("unknown binary\r\n");
+            my_error("unknown binary in expression %u\r\n", m_uiItemCodeCount);
             result = 0;
             break;
     }
@@ -101,7 +101,7 @@ static int ItemsCode_SkillArg1Proc(unsigned char *pcBinBuf, unsigned char *pcTxt
             break;
 
         default:
-            my_error("unknown skill arg 1\r\n");
+            my_error("unknown skill arg 1 in expression %u\r\n", m_uiItemCodeCount);
             result = 0;
             break;
     }
@@ -149,7 +149,7 @@ static int ItemsCode_SkillArg2Proc(unsigned char *pcBinBuf, unsigned char *pcTxt
             break;
 
         default:
-            my_error("unknown skill arg 2\r\n");
+            my_error("unknown skill arg 2 in expression %u\r\n", m_uiItemCodeCount);
             result = 0;
             break;
     }
@@ -194,8 +194,7 @@ static int ItemsCode_StatArg1Proc(unsigned char *pcBinBuf, unsigned char *pcTxtB
             break;
 
         default:
-            my_error("unknown stat arg 1-%x\r\n", pcBinBuf[0]);
-            ItemsCode_PrintHex();
+            my_error("unknown stat arg 1 in expression %u\r\n", m_uiItemCodeCount);
             result = 0;
             break;
     }
@@ -251,7 +250,7 @@ static int ItemsCode_StatArg2Proc(unsigned char *pcBinBuf, unsigned char *pcTxtB
             break;
 
         default:
-            my_error("unknown stat arg 2\r\n");
+            my_error("unknown stat arg 2 in expression %u\r\n", m_uiItemCodeCount);
             result = 0;
             break;
     }
@@ -278,8 +277,7 @@ static int ItemsCode_StatArg2Proc(unsigned char *pcBinBuf, unsigned char *pcTxtB
         }
         else
         {
-            my_error("invalid itemstatcost %u\r\n", uiSkillIndex);
-            ItemsCode_PrintHex();
+            my_error("invalid itemstatcost %u in expression %u\r\n", uiSkillIndex, m_uiItemCodeCount);
             result = 0;
         }
     }
@@ -309,7 +307,7 @@ static int ItemsCode_MissArg1Proc(unsigned char *pcBinBuf, unsigned char *pcTxtB
             break;
 
         default:
-            my_error("unknown miss arg 1\r\n");
+            my_error("unknown miss arg 1 in expression %u\r\n", m_uiItemCodeCount);
             result = 0;
             break;
     }
@@ -358,7 +356,7 @@ static int ItemsCode_MissArg2Proc(unsigned char *pcBinBuf, unsigned char *pcTxtB
             break;
 
         default:
-            my_error("unknown miss arg 1\r\n");
+            my_error("unknown miss arg 1 in expression %u\r\n", m_uiItemCodeCount);
             result = 0;
             break;
     }
@@ -407,7 +405,7 @@ static int ItemsCode_SkLvlArg1Proc(unsigned char *pcBinBuf, unsigned char *pcTxt
             break;
 
         default:
-            my_error("unknown skill arg 1\r\n");
+            my_error("unknown skill arg 1 in expression %u\r\n", m_uiItemCodeCount);
             result = 0;
             break;
     }
@@ -456,7 +454,7 @@ static int ItemsCode_SkLvlArg2Proc(unsigned char *pcBinBuf, unsigned char *pcTxt
             break;
 
         default:
-            my_error("unknown skillcalc arg 2\r\n");
+            my_error("unknown skillcalc arg 2 in expression %u\r\n", m_uiItemCodeCount);
             result = 0;
             break;
     }
@@ -505,7 +503,7 @@ static int ItemsCode_SkLvlArg3Proc(unsigned char *pcBinBuf, unsigned char *pcTxt
             break;
 
         default:
-            my_error("unknown skillcalc arg 3\r\n");
+            my_error("unknown skillcalc arg 3 in expression %u\r\n", m_uiItemCodeCount);
             result = 0;
             break;
     }
@@ -965,8 +963,7 @@ static int ItemsCode_OperaterProc(unsigned char bOperater)
 
     if ( MAX_OPERATER_LEVEL == uiOpLevel )
     {
-        my_error("unknown tag %u\r\n", bOperater);
-        ItemsCode_PrintHex();
+        my_error("unknown tag %u in expression %u\r\n", bOperater, m_uiItemCodeCount);
         return result;
     }
 
@@ -987,8 +984,7 @@ static int ItemsCode_OperaterProc(unsigned char bOperater)
             break;
 
         default:
-            my_error("unknown argnum %u\r\n", bOperater);
-            ItemsCode_PrintHex();
+            my_error("unknown argnum %u in expression %u\r\n", bOperater, m_uiItemCodeCount);
             return result;
             break;
     }
@@ -1143,8 +1139,7 @@ int ItemsCode_ParseBin(char *acTemplatePath, char *acBinPath, char*acTxtPath)
 
                 if ( 0 == result )
                 {
-                    ItemsCode_PrintHex();
-                    my_error("unknown tag2 %x\r\n", bOperater);
+                    my_error("unknown tag2 %x in expression %u\r\n", bOperater, m_uiItemCodeCount);
                     goto error;
                 }
                 break;
@@ -1152,8 +1147,7 @@ int ItemsCode_ParseBin(char *acTemplatePath, char *acBinPath, char*acTxtPath)
             default:
                 if ( 0 == ItemsCode_OperaterProc(acTempBuf[0]) )
                 {
-                    ItemsCode_PrintHex();
-                    my_error("proc operater %x fail\r\n", acTempBuf[0]);
+                    my_error("proc operater %x fail in expression %u\r\n", acTempBuf[0], m_uiItemCodeCount);
                     //goto error;
                 }
                 break;

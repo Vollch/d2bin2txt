@@ -776,182 +776,201 @@ static char *Cubemain_GenerateOutputProp(char *acOutput, ST_CUBE_OUTPUT *sOutput
     return acOutput;
 }
 
+
+int Cubemain_ProcessInput(void *vInput, char *pcOutput)
+{
+    ST_CUBE_INPUT *sInput = (ST_CUBE_INPUT*)vInput;
+    unsigned char cOutGrade = sInput->cGrade;
+    char *pcResult;
+
+    if ( sInput->bSpecific && ( sInput->cGrade == GRADE_SET || sInput->cGrade == GRADE_UNIQ ) )
+    {
+        // No need to write ",uni" and ",set" after explicitly defined sets and uniques, it's just a clutter
+        cOutGrade = 0;
+    }
+
+    if ( sInput->bItemCode || sInput->bTypeCode )
+    {
+        if ( (sInput->sFlags & 0xFFBC) || cOutGrade || sInput->cQuantity )
+        {
+            // Add quotes if there's any qualifiers after ID
+            pcOutput[0] = '"';
+            pcOutput++;
+        }
+
+        if ( (sInput->bItemCode && sInput->bSpecific) && sInput->cGrade == GRADE_UNIQ 
+            && (pcResult = UniqueItems_GetItemUniqueCode(sInput->sSpecificID)) )
+        {
+            strcpy(pcOutput, pcResult);
+        }
+        else if ( (sInput->bItemCode && sInput->bSpecific) && sInput->cGrade == GRADE_SET 
+            && (pcResult = SetItems_GetItemUniqueCode(sInput->sSpecificID)) )
+        {
+            strcpy(pcOutput, pcResult);
+        }
+        else if ( sInput->bItemCode 
+            && (pcResult = Misc_GetItemUniqueCode(sInput->sGenericID)) )
+        {
+            strcpy(pcOutput, pcResult);
+        }
+        else if ( sInput->bTypeCode 
+            && (pcResult = ItemTypes_GetItemCode(sInput->sGenericID)) )
+        {
+            strcpy(pcOutput, pcResult);
+        }
+        else if ( sInput->sGenericID == 0xFFFF )
+        {
+            strcpy(pcOutput, "any");
+        }
+
+        if ( (sInput->sFlags & 0xFFBC) || cOutGrade || sInput->cQuantity )
+        {
+            pcOutput += strlen(pcOutput);
+            pcOutput = Cubemain_GenerateInputProp(pcOutput, sInput, cOutGrade);
+            pcOutput[0] = '"';
+            pcOutput++;
+        }
+   }
+
+    return 1;
+}
+
+int Cubemain_ProcessOutput(void *vOutput, char *pcOutput)
+{
+    ST_CUBE_OUTPUT *sOutput = (ST_CUBE_OUTPUT*)vOutput;
+    unsigned char cOutGrade = sOutput->cGrade;
+    char *pcResult;
+
+    if ( sOutput->bSpecific && ( sOutput->cGrade == GRADE_SET || sOutput->cGrade == GRADE_UNIQ ) )
+    {
+        // No need to write ",uni" and ",set" after explicitly defined sets and uniques, it's just a clutter
+        cOutGrade = 0;
+    }
+
+    if ( sOutput->bSpecific || sOutput->cType )
+    {
+        if ( (sOutput->sFlags & 0xFFF7) || cOutGrade || sOutput->cQuantity || sOutput->sPrefix || sOutput->sSuffix )
+        {
+            // Add quotes if there's any qualifiers after ID
+            pcOutput[0] = '"';
+            pcOutput++;
+        }
+
+        if ( sOutput->bSpecific && sOutput->cGrade == GRADE_UNIQ 
+            && (pcResult = UniqueItems_GetItemUniqueCode(sOutput->sSpecificID)) )
+        {
+            strcpy(pcOutput, pcResult);
+        }
+        else if ( sOutput->bSpecific && sOutput->cGrade == GRADE_SET 
+            && (pcResult = SetItems_GetItemUniqueCode(sOutput->sSpecificID)) )
+        {
+            strcpy(pcOutput, pcResult);
+        }
+        else if ( sOutput->cType == 0xFC 
+            && (pcResult = Misc_GetItemUniqueCode(sOutput->sGenericID)) )
+        {
+            strcpy(pcOutput, pcResult);
+        }
+        else if ( sOutput->cType == 0xFD 
+            && (pcResult = ItemTypes_GetItemCode(sOutput->sGenericID)) )
+        {
+            strcpy(pcOutput, pcResult);
+        }
+        else if ( sOutput->cType == 0xFE)
+        {
+            strcpy(pcOutput, "useitem");
+        }
+        else if ( sOutput->cType == 0xFF )
+        {
+            strcpy(pcOutput, "usetype");
+        }
+        else if ( isD2SigmaActive() && sOutput->cType == 0x01 
+            && (pcResult = Levels_GetLevelName(*(unsigned short*)&sOutput->cGrade)) )
+        {
+            sprintf(pcOutput, "portal=%s", pcResult);
+        }
+        else if ( isD2SigmaActive() && sOutput->cType == 0x02 )
+        {
+            sprintf(pcOutput, "skillpts=%u", *(unsigned short*)&sOutput->cGrade);
+        }
+        else if ( isD2SigmaActive() && sOutput->cType == 0x03 )
+        {
+            sprintf(pcOutput, "statpts=%u", *(unsigned short*)&sOutput->cGrade);
+        }
+        else if ( isD2SigmaActive() && sOutput->cType == 0x04 
+            && (pcResult = MonStats_GetStatsName(*(unsigned short*)&sOutput->cGrade)) )
+        {
+            sprintf(pcOutput, "mon=%s", pcResult);
+        }
+        else if ( isD2SigmaActive() && sOutput->cType == 0x05 
+            && (pcResult = SuperUniques_GetItemUniqueCode(*(unsigned short*)&sOutput->cGrade)) )
+        {
+            sprintf(pcOutput, "boss=%s", pcResult);
+        }
+        else if ( isD2SigmaActive() && sOutput->cType == 0x06 )
+        {
+            sprintf(pcOutput, "goldcost=%u", *(unsigned short*)&sOutput->cGrade);
+        }
+        else if ( sOutput->cType == 0x01 )
+        {
+            strcpy(pcOutput, "Cow Portal");
+        }
+        else if ( sOutput->cType == 0x02 )
+        {
+            strcpy(pcOutput, "Pandemonium Portal");
+        }
+        else if ( sOutput->cType == 0x03 )
+        {
+            strcpy(pcOutput, "Pandemonium Finale Portal");
+        }
+        else if ( sOutput->cType == 0x80 )
+        {
+            strcpy(pcOutput, "red portal");
+        }
+        else if ( isRoSActive() && sOutput->cType == 0x81 )
+        {
+            strcpy(pcOutput, "addstat");
+        }
+        else if ( isRoSActive() && sOutput->cType == 0x82 
+            && (pcResult = Sets_GetSetName(sOutput->sPrefix)) )
+        {
+            strcpy(pcOutput, pcResult);
+        }
+
+        if ( (sOutput->sFlags & 0xFFF7) || cOutGrade || sOutput->cQuantity || sOutput->sPrefix || sOutput->sSuffix )
+        {
+            pcOutput += strlen(pcOutput);
+            pcOutput = Cubemain_GenerateOutputProp(pcOutput, sOutput, cOutGrade);
+            pcOutput[0] = '"';
+            pcOutput++;
+        }
+    }
+
+    return 1;
+}
+
 static int Cubemain_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
-    char *pcResult;
-    char *pcOutput = acOutput;
     int id;
 
     if ( 1 == sscanf(acKey, "input %d", &id) )
     {
         ST_CUBE_INPUT *sInput = (ST_CUBE_INPUT *)&pstLineInfo->vinputmysp1 + (id - 1);
 
-        unsigned char cOutGrade = sInput->cGrade;
-        if ( sInput->bSpecific && ( sInput->cGrade == GRADE_SET || sInput->cGrade == GRADE_UNIQ ) )
-        {
-            // No need to write ",uni" and ",set" after explicitly defined sets and uniques, it's just a clutter
-            cOutGrade = 0;
-        }
-
-        if ( sInput->bItemCode || sInput->bTypeCode )
-        { 
-            if ( (sInput->sFlags & 0xFFBC) || cOutGrade || sInput->cQuantity )
-            {
-                // Add quotes if there's any qualifiers after ID
-                pcOutput[0] = '"';
-                pcOutput++;
-            }
-
-            if ( (sInput->bItemCode && sInput->bSpecific) && sInput->cGrade == GRADE_UNIQ 
-                && (pcResult = UniqueItems_GetItemUniqueCode(sInput->sSpecificID)) )
-            {
-                strcpy(pcOutput, pcResult);
-            }
-            else if ( (sInput->bItemCode && sInput->bSpecific) && sInput->cGrade == GRADE_SET 
-                && (pcResult = SetItems_GetItemUniqueCode(sInput->sSpecificID)) )
-            {
-                strcpy(pcOutput, pcResult);
-            }
-            else if ( sInput->bItemCode 
-                && (pcResult = Misc_GetItemUniqueCode(sInput->sGenericID)) )
-            {
-                strcpy(pcOutput, pcResult);
-            }
-            else if ( sInput->bTypeCode 
-                && (pcResult = ItemTypes_GetItemCode(sInput->sGenericID)) )
-            {
-                strcpy(pcOutput, pcResult);
-            }
-            else if ( sInput->sGenericID == 0xFFFF )
-            {
-                strcpy(pcOutput, "any");
-            }
-
-            if ( (sInput->sFlags & 0xFFBC) || cOutGrade || sInput->cQuantity )
-            {
-                pcOutput += strlen(pcOutput);
-                pcOutput = Cubemain_GenerateInputProp(pcOutput, sInput, cOutGrade);
-                pcOutput[0] = '"';
-                pcOutput++;
-            }
-       }
-
-       return 1;
+        return Cubemain_ProcessInput(sInput, acOutput);
     }
-    else if ( !strnicmp(acKey, "output", strlen("output")) )
+    else if ( !stricmp(acKey, "output") )
     {
-        ST_CUBE_OUTPUT *sOutput = !stricmp("output b", acKey) ? (ST_CUBE_OUTPUT *)pstLineInfo->voutputmyspb :
-                                  !stricmp("output c", acKey) ? (ST_CUBE_OUTPUT *)pstLineInfo->voutputmyspc :
-                                                                (ST_CUBE_OUTPUT *)pstLineInfo->voutput;
-
-        unsigned char cOutGrade = sOutput->cGrade;
-        if ( sOutput->bSpecific && ( sOutput->cGrade == GRADE_SET || sOutput->cGrade == GRADE_UNIQ ) )
-        {
-            // No need to write ",uni" and ",set" after explicitly defined sets and uniques, it's just a clutter
-            cOutGrade = 0;
-        }
-
-        if ( sOutput->bSpecific || sOutput->cType )
-        {
-            if ( (sOutput->sFlags & 0xFFF7) || cOutGrade || sOutput->cQuantity || sOutput->sPrefix || sOutput->sSuffix )
-            {
-                // Add quotes if there's any qualifiers after ID
-                pcOutput[0] = '"';
-                pcOutput++;
-            }
-
-            if ( sOutput->bSpecific && sOutput->cGrade == GRADE_UNIQ 
-                && (pcResult = UniqueItems_GetItemUniqueCode(sOutput->sSpecificID)) )
-            {
-                strcpy(pcOutput, pcResult);
-            }
-            else if ( sOutput->bSpecific && sOutput->cGrade == GRADE_SET 
-                && (pcResult = SetItems_GetItemUniqueCode(sOutput->sSpecificID)) )
-            {
-                strcpy(pcOutput, pcResult);
-            }
-            else if ( sOutput->cType == 0xFC 
-                && (pcResult = Misc_GetItemUniqueCode(sOutput->sGenericID)) )
-            {
-                strcpy(pcOutput, pcResult);
-            }
-            else if ( sOutput->cType == 0xFD 
-                && (pcResult = ItemTypes_GetItemCode(sOutput->sGenericID)) )
-            {
-                strcpy(pcOutput, pcResult);
-            }
-            else if ( sOutput->cType == 0xFE)
-            {
-                strcpy(pcOutput, "useitem");
-            }
-            else if ( sOutput->cType == 0xFF )
-            {
-                strcpy(pcOutput, "usetype");
-            }
-            else if ( isD2SigmaActive() && sOutput->cType == 0x01 
-                && (pcResult = Levels_GetLevelName(*(unsigned short*)&sOutput->cGrade)) )
-            {
-                sprintf(pcOutput, "portal=%s", pcResult);
-            }
-            else if ( isD2SigmaActive() && sOutput->cType == 0x02 )
-            {
-                sprintf(pcOutput, "skillpts=%u", *(unsigned short*)&sOutput->cGrade);
-            }
-            else if ( isD2SigmaActive() && sOutput->cType == 0x03 )
-            {
-                sprintf(pcOutput, "statpts=%u", *(unsigned short*)&sOutput->cGrade);
-            }
-            else if ( isD2SigmaActive() && sOutput->cType == 0x04 
-                && (pcResult = MonStats_GetStatsName(*(unsigned short*)&sOutput->cGrade)) )
-            {
-                sprintf(pcOutput, "mon=%s", pcResult);
-            }
-            else if ( isD2SigmaActive() && sOutput->cType == 0x05 
-                && (pcResult = SuperUniques_GetItemUniqueCode(*(unsigned short*)&sOutput->cGrade)) )
-            {
-                sprintf(pcOutput, "boss=%s", pcResult);
-            }
-            else if ( isD2SigmaActive() && sOutput->cType == 0x06 )
-            {
-                sprintf(pcOutput, "goldcost=%u", *(unsigned short*)&sOutput->cGrade);
-            }
-            else if ( sOutput->cType == 0x01 )
-            {
-                strcpy(pcOutput, "Cow Portal");
-            }
-            else if ( sOutput->cType == 0x02 )
-            {
-                strcpy(pcOutput, "Pandemonium Portal");
-            }
-            else if ( sOutput->cType == 0x03 )
-            {
-                strcpy(pcOutput, "Pandemonium Finale Portal");
-            }
-            else if ( sOutput->cType == 0x80 )
-            {
-                strcpy(pcOutput, "red portal");
-            }
-            else if ( isRoSActive() && sOutput->cType == 0x81 )
-            {
-                strcpy(pcOutput, "addstat");
-            }
-            else if ( isRoSActive() && sOutput->cType == 0x82 
-                && (pcResult = Sets_GetSetName(sOutput->sPrefix)) )
-            {
-                strcpy(pcOutput, pcResult);
-            }
-
-            if ( (sOutput->sFlags & 0xFFF7) || cOutGrade || sOutput->cQuantity || sOutput->sPrefix || sOutput->sSuffix )
-            {
-                pcOutput += strlen(pcOutput);
-                pcOutput = Cubemain_GenerateOutputProp(pcOutput, sOutput, cOutGrade);
-                pcOutput[0] = '"';
-                pcOutput++;
-            }
-        }
-
-        return 1;
+        return Cubemain_ProcessOutput(&pstLineInfo->voutput, acOutput);
+    }
+    else if ( !stricmp(acKey, "output b") )
+    {
+        return Cubemain_ProcessOutput(&pstLineInfo->voutputmyspb, acOutput);
+    }
+    else if ( !stricmp(acKey, "output c") )
+    {
+        return Cubemain_ProcessOutput(&pstLineInfo->voutputmyspc, acOutput);
     }
 
     return 0;
@@ -1371,9 +1390,6 @@ int process_cubemain(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
             break;
 
         case EN_MODULE_SELF_DEPEND:
-            break;
-
-        case EN_MODULE_OTHER_DEPEND:
             MODULE_DEPEND_CALL(playerclass, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(properties, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(misc, acTemplatePath, acBinPath, acTxtPath);
@@ -1390,6 +1406,9 @@ int process_cubemain(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
                 MODULE_DEPEND_CALL(monstats, acTemplatePath, acBinPath, acTxtPath);
                 MODULE_DEPEND_CALL(superuniques, acTemplatePath, acBinPath, acTxtPath);
             }
+            break;
+
+        case EN_MODULE_OTHER_DEPEND:
             break;
 
         case EN_MODULE_INIT:

@@ -74,6 +74,12 @@ extern "C" {
     X(ItemEvent) \
     X(ShrineBaseGemTypes) \
     X(TreasureClassEx2NoDrop) \
+    X(DebauchedQuests) \
+    X(DebauchedSkills) \
+    X(DebauchedWaypoints) \
+    X(DebauchedItems) \
+    X(DebauchedTemplate) \
+    X(DebauchedCharacter) \
     X(MagicTwn) \
     X(KillCounter) \
     X(BookOfLore) \
@@ -554,6 +560,9 @@ extern int String_BuildName(char *pcNameFormat, int iNameSize, char cNameSeparat
 extern char *String_FindString(unsigned int id, char* pcFilter);
 extern char *String_FindString_2(unsigned int id, char* pcFilter, char* pcFilter2);
 extern char *String_GetString(unsigned int id, char* pcFilter, char* pcFilter2);
+
+extern int Cubemain_ProcessInput(void *vInput, char *pcOutput);
+extern int Cubemain_ProcessOutput(void *vOutput, char *pcOutput);
 
 extern char *Armor_GetArmorCode(unsigned int id);
 extern unsigned int Armor_GetArmorString(unsigned int id);
