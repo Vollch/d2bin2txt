@@ -55,6 +55,25 @@ extern "C" {
     X(UniqueItems2) \
     X(PropertiesExt) \
     X(ItemTypesExt) \
+    X(Utility) \
+    X(Towns) \
+    X(Charstats2) \
+    X(UIPanel) \
+    X(pSpell) \
+    X(pSpawn) \
+    X(objects3) \
+    X(Npc2) \
+    X(vendor) \
+    X(npctalk) \
+    X(TreasureClassEx2) \
+    X(GlobalTCEx2Settings) \
+    X(RuneDropList) \
+    X(AddStat) \
+    X(LevelsEx) \
+    X(DreamlandConfig) \
+    X(ItemEvent) \
+    X(ShrineBaseGemTypes) \
+    X(TreasureClassEx2NoDrop) \
     X(MagicTwn) \
     X(KillCounter) \
     X(BookOfLore) \
@@ -203,6 +222,7 @@ typedef enum
     EN_VALUE_USHORT_SKILL, // 0x11, 0x14
     EN_VALUE_USHORT_STRING, // 0x16
     EN_VALUE_USHORT_STRING2,
+    EN_VALUE_USHORT_UNIQ,
     EN_VALUE_USHORT_TREASURE,
     EN_VALUE_USHORT_SOUND,
     EN_VALUE_USHORT_STATE,
@@ -506,7 +526,7 @@ extern int Stack_GetIndex(void *pvStack);
 ALL_MODULES(MODULE_DECALRE_FUNC)
 
 extern int isRoSActive();
-
+extern int isD2DreamlandActive();
 extern int isD2SigmaActive();
 extern int LvlTypeNames_GetLineID(unsigned int line);
 extern char *CellFiles_GetName(unsigned int id);

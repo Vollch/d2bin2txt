@@ -99,6 +99,78 @@ typedef struct
 } ST_LINE_INFO_12;
 #pragma pack(pop)
 
+#pragma pack(push, 1)
+typedef struct
+{
+    unsigned char vMainFunc[16];
+    unsigned char vSubFunc[16];
+    char vEnabled;
+    unsigned short vKilledMon; // monstats
+    char vMonLvLIsLower;
+    char vMonLvLIsHigher;
+    unsigned char vKilledPlayer; // class
+    unsigned short vFuncStat; // itemstat
+    int vFuncVal;
+    char vSoftcore;
+    char vHardcore;
+    char vNormal;
+    char vNightmare;
+    char vHell;
+    unsigned short vChance;
+    unsigned short vChancemybr1Nmybr2;
+    unsigned short vChancemybr1Hmybr2;
+    unsigned short vStat1; // itemstat
+    int vVal1;
+    unsigned short vStat2; // itemstat
+    int vVal2;
+    unsigned short vStat3; // itemstat
+    int vVal3;
+    unsigned short vStat1mybr1Nmybr2; // itemstat
+    int vVal1mybr1Nmybr2;
+    unsigned short vStat2mybr1Nmybr2; // itemstat
+    int vVal2mybr1Nmybr2;
+    unsigned short vStat3mybr1Nmybr2; // itemstat
+    int vVal3mybr1Nmybr2;
+    unsigned short vStat1mybr1Hmybr2; // itemstat
+    int vVal1mybr1Hmybr2;
+    unsigned short vStat2mybr1Hmybr2; // itemstat
+    int vVal2mybr1Hmybr2;
+    unsigned short vStat3mybr1Hmybr2; // itemstat
+    int vVal3mybr1Hmybr2;
+    unsigned short vCastState; // state
+    unsigned short vStateLen;
+    unsigned short vSkillEffect;
+    unsigned short vSkillLvl;
+    unsigned short vSkillLvlmybr1Nmybr2;
+    unsigned short vSkillLvlmybr1Hmybr2;
+    unsigned short vCastSkill; // skill
+    unsigned short vCastSkillmybr1Nmybr2; // skill
+    unsigned short vCastSkillmybr1Hmybr2; // skill
+    unsigned short vTreasureClass; // treasure
+    unsigned short vTreasureClassmybr1Nmybr2; // treasure
+    unsigned short vTreasureClassmybr1Hmybr2; // treasure
+    unsigned short vRedPortal;
+    unsigned short vTile;
+    unsigned short vWarp;
+    unsigned short vMonster;
+    unsigned short vMonstermybr1Nmybr2;
+    unsigned short vMonstermybr1Hmybr2;
+    unsigned short vSpawn; // monstats
+    unsigned short vSpawnmybr1Nmybr2; // monstats
+    unsigned short vSpawnmybr1Hmybr2; // monstats
+    unsigned short vSuperUniques;
+    unsigned short vSuperUniquesmybr1Nmybr2;
+    unsigned short vSuperUniquesmybr1Hmybr2;
+    unsigned short vSpawnSU; // uniq
+    unsigned short vSpawnSUmybr1Nmybr2; // uniq
+    unsigned short vSpawnSUmybr1Hmybr2; // uniq
+    unsigned short vSound;
+    unsigned short vScrollMsg; // string
+    unsigned short vScrollMsgmybr1Nmybr2; // string
+    unsigned short vScrollMsgmybr1Hmybr2; // string
+} ST_LINE_INFO_DREAMLAND;
+#pragma pack(pop)
+
 static char *m_apcNotUsed[] = 
 {
     "*remarks",
@@ -258,6 +330,86 @@ static int KillCounter_ConvertValue_12(void *pvLineInfo, char *acKey, char *pcTe
     return 0;
 }
 
+int process_KillCounter_Dreamland(char *acTemplatePath, char *acBinPath, char *acTxtPath)
+{
+    ST_LINE_INFO_DREAMLAND *pstLineInfo = (ST_LINE_INFO_DREAMLAND *)m_acLineInfoBuf;
+
+    ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
+
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MainFunc, STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SubFunc, STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Enabled, CHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, KilledMon, USHORT_MONSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MonLvLIsLower, CHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MonLvLIsHigher, CHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, KilledPlayer, UCHAR_PLRCLASS);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FuncStat, USHORT_ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FuncVal, INT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Softcore, CHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Hardcore, CHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Normal, CHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Nightmare, CHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Hell, CHAR);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Chance, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Chancemybr1Nmybr2, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Chancemybr1Hmybr2, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat1, USHORT_ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Val1, INT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat2, USHORT_ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Val2, INT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat3, USHORT_ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Val3, INT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat1mybr1Nmybr2, USHORT_ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Val1mybr1Nmybr2, INT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat2mybr1Nmybr2, USHORT_ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Val2mybr1Nmybr2, INT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat3mybr1Nmybr2, USHORT_ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Val3mybr1Nmybr2, INT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat1mybr1Hmybr2, USHORT_ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Val1mybr1Hmybr2, INT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat2mybr1Hmybr2, USHORT_ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Val2mybr1Hmybr2, INT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat3mybr1Hmybr2, USHORT_ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Val3mybr1Hmybr2, INT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, CastState, USHORT_STATE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, StateLen, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SkillEffect, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SkillLvl, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SkillLvlmybr1Nmybr2, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SkillLvlmybr1Hmybr2, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, CastSkill, USHORT_SKILL);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, CastSkillmybr1Nmybr2, USHORT_SKILL);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, CastSkillmybr1Hmybr2, USHORT_SKILL);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TreasureClass, USHORT_TREASURE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TreasureClassmybr1Nmybr2, USHORT_TREASURE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TreasureClassmybr1Hmybr2, USHORT_TREASURE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, RedPortal, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Tile, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Warp, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Monster, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Monstermybr1Nmybr2, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Monstermybr1Hmybr2, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Spawn, USHORT_MONSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Spawnmybr1Nmybr2, USHORT_MONSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Spawnmybr1Hmybr2, USHORT_MONSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SuperUniques, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SuperUniquesmybr1Nmybr2, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SuperUniquesmybr1Hmybr2, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SpawnSU, USHORT_UNIQ);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SpawnSUmybr1Nmybr2, USHORT_UNIQ);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SpawnSUmybr1Hmybr2, USHORT_UNIQ);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Sound, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ScrollMsg, USHORT_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ScrollMsgmybr1Nmybr2, USHORT_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ScrollMsgmybr1Hmybr2, USHORT_STRING);
+
+    m_stCallback.eModuleType = EN_MODULE_PLUGIN;
+    m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
+
+    return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
+        pstValueMap, Global_GetValueMapCount(), &m_stCallback);
+}
+
 int process_KillCounter_10(char *acTemplatePath, char *acBinPath, char *acTxtPath)
 {
     ST_LINE_INFO_10 *pstLineInfo = (ST_LINE_INFO_10 *)m_acLineInfoBuf;
@@ -396,7 +548,7 @@ int process_KillCounter(char *acTemplatePath, char *acBinPath, char *acTxtPath, 
             break;
 
         case EN_MODULE_OTHER_DEPEND:
-            if ( m_iBinStructSize != sizeof(ST_LINE_INFO_10) )
+            if ( m_iBinStructSize == sizeof(ST_LINE_INFO_DREAMLAND) || m_iBinStructSize == sizeof(ST_LINE_INFO_12) )
             {
                 MODULE_DEPEND_CALL(string, acTemplatePath, acBinPath, acTxtPath);
                 MODULE_DEPEND_CALL(treasureclassex, acTemplatePath, acBinPath, acTxtPath);
@@ -404,15 +556,31 @@ int process_KillCounter(char *acTemplatePath, char *acBinPath, char *acTxtPath, 
                 MODULE_DEPEND_CALL(monstats, acTemplatePath, acBinPath, acTxtPath);
                 MODULE_DEPEND_CALL(playerclass, acTemplatePath, acBinPath, acTxtPath);
             }
+            if ( m_iBinStructSize == sizeof(ST_LINE_INFO_DREAMLAND) )
+            {
+                MODULE_DEPEND_CALL(states, acTemplatePath, acBinPath, acTxtPath);
+                MODULE_DEPEND_CALL(skills, acTemplatePath, acBinPath, acTxtPath);
+                MODULE_DEPEND_CALL(superuniques, acTemplatePath, acBinPath, acTxtPath);
+            }
             break;
 
         case EN_MODULE_INIT:
-            if ( m_iBinStructSize == sizeof(ST_LINE_INFO_10) )
+            if ( m_iBinStructSize == sizeof(ST_LINE_INFO_12) )
             {
-                my_printf("KillCounter 1.0 detected\n");
+                return process_KillCounter_12(acTemplatePath, acBinPath, acTxtPath);
+            }
+            else if ( m_iBinStructSize == sizeof(ST_LINE_INFO_10) )
+            {
                 return process_KillCounter_10(acTemplatePath, acBinPath, acTxtPath);
             }
-            return process_KillCounter_12(acTemplatePath, acBinPath, acTxtPath);
+            else if ( m_iBinStructSize == sizeof(ST_LINE_INFO_DREAMLAND) )
+            {
+                return process_KillCounter_Dreamland(acTemplatePath, acBinPath, acTxtPath);
+            }
+            else if ( m_iBinStructSize > 0 )
+            {
+                my_printf("Unknown version of KillCounter\n");
+            }
             break;
 
         default:

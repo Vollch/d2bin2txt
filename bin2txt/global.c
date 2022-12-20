@@ -412,6 +412,14 @@ int process_value(ST_VALUE_MAP *value, char *acOutput)
             strcpy(acOutput, pcResult);
         }
     }
+    else if ( EN_VALUE_USHORT_UNIQ == value->enValueType )
+    {
+        char *pcResult = SuperUniques_GetItemUniqueCode(*(unsigned short *)value->pvValue);
+        if ( pcResult )
+        {
+            strcpy(acOutput, pcResult);
+        }
+    }
     else if ( EN_VALUE_USHORT_TREASURE == value->enValueType )
     {
         char *pcResult = TreasureClassEx_GetItemTreasureClass(*(unsigned short *)value->pvValue);
