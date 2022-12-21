@@ -83,13 +83,14 @@ static int load_strings_tbl(char *acBinPath, char *pcTblFile, ST_STRING **aStrin
     ST_TBL_HASH stTblHash;
     unsigned int i;
     unsigned int uiHashOffset = 0;
+    int result = -1;
 
     sprintf(acTblFile, "%s\\%s.tbl", acBinPath, pcTblFile);
     pfTblHandle = fopen(acTblFile, "rb");
 
     if ( !pfTblHandle || sizeof(stTblHeader) != fread(&stTblHeader, 1, sizeof(stTblHeader), pfTblHandle) )
     {
-        return -1;
+        goto out;
     }
 
     *aStringList = MemMgr_Malloc(sizeof(ST_STRING) * stTblHeader.usNumElements);
@@ -103,16 +104,21 @@ static int load_strings_tbl(char *acBinPath, char *pcTblFile, ST_STRING **aStrin
 
         if ( sizeof(stTblHash) != fread(&stTblHash, 1, sizeof(stTblHash), pfTblHandle) )
         {
-            return -1;
+            goto out;
         }
 
         (*aStringList)[stTblHash.usIndex].vString = read_bin_string(pfTblHandle, stTblHash.dwKeyOffset);
         (*aStringList)[stTblHash.usIndex].vText = read_bin_string(pfTblHandle, stTblHash.dwStringOffset);
     }
 
-    fclose(pfTblHandle);
+    result = stTblHeader.usNumElements;
 
-    return stTblHeader.usNumElements;
+out:
+    if ( NULL != pfTblHandle )
+    {
+        fclose(pfTblHandle);
+    }
+    return result;
 }
 
 static int load_strings_txt(char *acBinPath, char *pcTxtFile, ST_STRING **aStringList)

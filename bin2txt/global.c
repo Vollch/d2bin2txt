@@ -1093,7 +1093,7 @@ static int check_bin(void *pvLineInfo, int iLineLength, ST_VALUE_MAP *pstValueMa
 int getBinStructSize(char *acBinPath, char *pcFilename)
 {
     char acBinFile[256] = {0};
-    unsigned int iBinLineSize;
+    unsigned int iBinLineSize = 0;
 
     FILE *pfBinHandle = NULL;
     ST_FILE_HEADER stFileHeader;
@@ -1103,13 +1103,17 @@ int getBinStructSize(char *acBinPath, char *pcFilename)
 
     if ( !pfBinHandle || (sizeof(stFileHeader) != fread(&stFileHeader, 1, sizeof(stFileHeader), pfBinHandle)) )
     {
-        return 0;
+        goto out;
     }
 
     fseek(pfBinHandle, 0, SEEK_END);
     iBinLineSize = (ftell(pfBinHandle) - sizeof(stFileHeader)) / stFileHeader.iLines;
-    fclose(pfBinHandle);
 
+out:
+    if ( NULL != pfBinHandle )
+    {
+        fclose(pfBinHandle);
+    }
     return iBinLineSize;
 }
 

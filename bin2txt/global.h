@@ -18,6 +18,7 @@ extern "C" {
 #include <assert.h>
 
 #define ALL_MODULES(X) \
+    X(HavModEx) \
     X(RoS) \
     X(CharStart) \
     X(D2StatsEx2) \
