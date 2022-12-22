@@ -1018,11 +1018,6 @@ static int check_bin(void *pvLineInfo, int iLineLength, ST_VALUE_MAP *pstValueMa
     unsigned int i, j;
     unsigned int iFrom, iTo;
 
-    if ( stFileHeader.iLines < 2 )
-    {
-        return 1;
-    }
-
     memset(m_acTempBuffer, 0, iLineLength * 3);
 
     if ( iLineLength != fread((m_acTempBuffer+iLineLength), 1, iLineLength, pfBinHandle) )
@@ -1308,7 +1303,7 @@ static int process_file_x(char *acTemplatePath, char *acBinPath, char *acTxtPath
         if ( iLineLength != fread(pvLineInfo, 1, iLineLength, pfBinHandle) )
         {
             my_error("\r\nread %s bin fail at line %d\r\n", pcFilename, i);
-            break;
+            goto error;
         }
 
         if ( pstCallback && pstCallback->pfnGetKey )

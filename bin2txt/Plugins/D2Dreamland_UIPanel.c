@@ -54,6 +54,12 @@ typedef struct
     char vd2modhighres;
     int vAddBarXpos;
     int vminDrawX;
+} ST_LINE_INFO_813568;
+
+typedef struct
+{
+    ST_LINE_INFO_813568 sLineInfo;
+
     unsigned char vcharclass1; // class
     unsigned char vcharclass2; // class
     unsigned char vcharclass3; // class
@@ -61,12 +67,14 @@ typedef struct
     unsigned char vcharclass5; // class
     unsigned char vcharclass6; // class
     unsigned char vcharclass7; // class
-} ST_LINE_INFO;
+} ST_LINE_INFO_2900992;
 #pragma pack(pop)
+
+static unsigned int m_iBinStructSize = 0;
 
 int process_UIPanel(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
-    ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
+    ST_LINE_INFO_813568 *pstLineInfo = (ST_LINE_INFO_813568 *)m_acLineInfoBuf;
 
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
@@ -119,30 +127,43 @@ int process_UIPanel(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, d2modhighres, CHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, AddBarXpos, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, minDrawX, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, charclass1, UCHAR_PLRCLASS);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, charclass2, UCHAR_PLRCLASS);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, charclass3, UCHAR_PLRCLASS);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, charclass4, UCHAR_PLRCLASS);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, charclass5, UCHAR_PLRCLASS);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, charclass6, UCHAR_PLRCLASS);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, charclass7, UCHAR_PLRCLASS);
+
+    if ( m_iBinStructSize == sizeof(ST_LINE_INFO_2900992) )
+    {
+        ST_LINE_INFO_2900992 *pstLineInfoExt = (ST_LINE_INFO_2900992 *)m_acLineInfoBuf;
+
+        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoExt, charclass1, UCHAR_PLRCLASS);
+        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoExt, charclass2, UCHAR_PLRCLASS);
+        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoExt, charclass3, UCHAR_PLRCLASS);
+        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoExt, charclass4, UCHAR_PLRCLASS);
+        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoExt, charclass5, UCHAR_PLRCLASS);
+        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoExt, charclass6, UCHAR_PLRCLASS);
+        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoExt, charclass7, UCHAR_PLRCLASS);
+    }
 
     switch ( enPhase )
     {
         case EN_MODULE_PREPARE:
+            m_iBinStructSize = getBinStructSize(acBinPath, FILE_PREFIX);
+            break;
+
         case EN_MODULE_SELF_DEPEND:
             break;
 
         case EN_MODULE_OTHER_DEPEND:
             MODULE_DEPEND_CALL(string, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(itemtypes, acTemplatePath, acBinPath, acTxtPath);
-            MODULE_DEPEND_CALL(playerclass, acTemplatePath, acBinPath, acTxtPath);
+
+            if ( m_iBinStructSize == sizeof(ST_LINE_INFO_2900992) )
+            {
+                MODULE_DEPEND_CALL(playerclass, acTemplatePath, acBinPath, acTxtPath);
+            }
             break;
 
         case EN_MODULE_INIT:
             m_stCallback.eModuleType = EN_MODULE_PLUGIN;
 
-            return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
+            return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, m_iBinStructSize, 
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);
             break;
 

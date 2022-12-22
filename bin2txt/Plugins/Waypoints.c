@@ -317,7 +317,7 @@ int process_Waypoints(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
             break;
 
         case EN_MODULE_OTHER_DEPEND:
-            if ( m_iBinStructSize != sizeof(ST_LINE_INFO_010) )
+            if ( m_iBinStructSize == sizeof(ST_LINE_INFO_131) )
             {
                 MODULE_DEPEND_CALL(string, acTemplatePath, acBinPath, acTxtPath);
                 MODULE_DEPEND_CALL(itemstatcost, acTemplatePath, acBinPath, acTxtPath);
@@ -328,10 +328,16 @@ int process_Waypoints(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
         case EN_MODULE_INIT:
             if ( m_iBinStructSize == sizeof(ST_LINE_INFO_010) )
             {
-                my_printf("Waypoints 0.10 detected\n");
                 return process_Waypoints_010(acTemplatePath, acBinPath, acTxtPath);
             }
-            return process_Waypoints_131(acTemplatePath, acBinPath, acTxtPath);
+            else if ( m_iBinStructSize == sizeof(ST_LINE_INFO_131) )
+            {
+                return process_Waypoints_131(acTemplatePath, acBinPath, acTxtPath);
+            }
+            else if ( m_iBinStructSize > 0 )
+            {
+                my_printf("Unknown version of Waypoints\n");
+            }
             break;
 
         default:

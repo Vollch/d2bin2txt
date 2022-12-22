@@ -8,8 +8,15 @@ typedef struct
 {
     unsigned char vAct;
     unsigned char vLevelID;
+} ST_LINE_INFO_813568;
+
+typedef struct
+{
+    ST_LINE_INFO_813568 sLineInfo;
+
     unsigned char vdifficulty;
-} ST_LINE_INFO;
+} ST_LINE_INFO_2900992;
+
 #pragma pack(pop)
 
 static char *m_apcInternalProcess[] =
@@ -18,9 +25,11 @@ static char *m_apcInternalProcess[] =
     NULL,
 };
 
+static unsigned int m_iBinStructSize = 0;
+
 static int Towns_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
-    ST_LINE_INFO *pstLineInfo = pvLineInfo;
+    ST_LINE_INFO_813568 *pstLineInfo = pvLineInfo;
 
     if ( !stricmp(acKey, "*desc") )
     {
@@ -37,17 +46,26 @@ static int Towns_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, 
 
 int process_Towns(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
-    ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
+    ST_LINE_INFO_813568 *pstLineInfo = (ST_LINE_INFO_813568 *)m_acLineInfoBuf;
 
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Act, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, LevelID, UCHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, difficulty, UCHAR);
+
+    if ( m_iBinStructSize == sizeof(ST_LINE_INFO_2900992) )
+    {
+        ST_LINE_INFO_2900992 *pstLineInfoExt = (ST_LINE_INFO_2900992 *)m_acLineInfoBuf;
+
+        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoExt, difficulty, UCHAR);
+    }
 
     switch ( enPhase )
     {
         case EN_MODULE_PREPARE:
+            m_iBinStructSize = getBinStructSize(acBinPath, FILE_PREFIX);
+            break;
+
         case EN_MODULE_SELF_DEPEND:
             break;
 
@@ -60,7 +78,7 @@ int process_Towns(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_M
             m_stCallback.pfnFieldProc = Towns_FieldProc;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
-            return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
+            return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, m_iBinStructSize, 
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);
             break;
 
