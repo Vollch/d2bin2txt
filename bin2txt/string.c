@@ -12,7 +12,7 @@ typedef struct
 {
     unsigned short usCRC;
     unsigned short usNumElements;
-    int iHashTableSize;
+    unsigned int iHashTableSize;
     char cUnknown;
     unsigned int dwIndexStart;
     unsigned int uiMaxHashMiss;
@@ -81,6 +81,7 @@ static int load_strings_tbl(char *acBinPath, char *pcTblFile, ST_STRING **aStrin
     FILE *pfTblHandle = NULL;
     ST_TBL_HEADER stTblHeader;
     ST_TBL_HASH stTblHash;
+    ST_STRING *sString;
     unsigned int i;
     unsigned int uiHashOffset = 0;
     int result = -1;
@@ -98,7 +99,7 @@ static int load_strings_tbl(char *acBinPath, char *pcTblFile, ST_STRING **aStrin
 
     uiHashOffset = sizeof(stTblHeader) + (stTblHeader.usNumElements * 2);
 
-    for ( i = 0; i < stTblHeader.usNumElements; i++ )
+    for ( i = 0; i < stTblHeader.iHashTableSize; i++ )
     {
         fseek(pfTblHandle, uiHashOffset + (i * sizeof(stTblHash)), SEEK_SET);
 
@@ -107,8 +108,12 @@ static int load_strings_tbl(char *acBinPath, char *pcTblFile, ST_STRING **aStrin
             goto out;
         }
 
-        (*aStringList)[stTblHash.usIndex].vString = read_bin_string(pfTblHandle, stTblHash.dwKeyOffset);
-        (*aStringList)[stTblHash.usIndex].vText = read_bin_string(pfTblHandle, stTblHash.dwStringOffset);
+        sString = &(*aStringList)[stTblHash.usIndex];
+        if ( !sString->vString )
+        {
+            sString->vString = read_bin_string(pfTblHandle, stTblHash.dwKeyOffset);
+            sString->vText = read_bin_string(pfTblHandle, stTblHash.dwStringOffset);
+        }
     }
 
     result = stTblHeader.usNumElements;
