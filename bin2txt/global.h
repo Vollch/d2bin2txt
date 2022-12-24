@@ -23,6 +23,7 @@ extern "C" {
     X(HavModEx) \
     X(RoS) \
     X(CharStart) \
+    X(D2DC6) \
     X(D2StatsEx2) \
     X(D2NewStats) \
     X(D2AddSkill) \

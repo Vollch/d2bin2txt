@@ -81,9 +81,9 @@ static int load_strings_tbl(char *acBinPath, char *pcTblFile, ST_STRING **aStrin
     FILE *pfTblHandle = NULL;
     ST_TBL_HEADER stTblHeader;
     ST_TBL_HASH stTblHash;
-    ST_STRING *sString;
     unsigned int i;
-    unsigned int uiHashOffset = 0;
+    unsigned int uiOffset;
+    unsigned short *ausStrIndex = NULL;
     int result = -1;
 
     sprintf(acTblFile, "%s\\%s.tbl", acBinPath, pcTblFile);
@@ -97,28 +97,34 @@ static int load_strings_tbl(char *acBinPath, char *pcTblFile, ST_STRING **aStrin
     *aStringList = MemMgr_Malloc(sizeof(ST_STRING) * stTblHeader.usNumElements);
     memset(*aStringList, 0, sizeof(ST_STRING) * stTblHeader.usNumElements);
 
-    uiHashOffset = sizeof(stTblHeader) + (stTblHeader.usNumElements * 2);
-
-    for ( i = 0; i < stTblHeader.iHashTableSize; i++ )
+    uiOffset = sizeof(short) * stTblHeader.usNumElements;
+    ausStrIndex = MemMgr_Malloc(uiOffset);
+    if ( !ausStrIndex || uiOffset != fread(ausStrIndex, 1, uiOffset, pfTblHandle) )
     {
-        fseek(pfTblHandle, uiHashOffset + (i * sizeof(stTblHash)), SEEK_SET);
+        goto out;
+    }
+
+    uiOffset += sizeof(stTblHeader);
+    for ( i = 0; i < stTblHeader.usNumElements; i++ )
+    {
+        fseek(pfTblHandle, uiOffset + (ausStrIndex[i] * sizeof(stTblHash)), SEEK_SET);
 
         if ( sizeof(stTblHash) != fread(&stTblHash, 1, sizeof(stTblHash), pfTblHandle) )
         {
             goto out;
         }
 
-        sString = &(*aStringList)[stTblHash.usIndex];
-        if ( !sString->vString )
-        {
-            sString->vString = read_bin_string(pfTblHandle, stTblHash.dwKeyOffset);
-            sString->vText = read_bin_string(pfTblHandle, stTblHash.dwStringOffset);
-        }
+        (*aStringList)[i].vString = read_bin_string(pfTblHandle, stTblHash.dwKeyOffset);
+        (*aStringList)[i].vText = read_bin_string(pfTblHandle, stTblHash.dwStringOffset);
     }
 
     result = stTblHeader.usNumElements;
 
 out:
+    if ( NULL != ausStrIndex )
+    {
+        MemMgr_Free(ausStrIndex);
+    }
     if ( NULL != pfTblHandle )
     {
         fclose(pfTblHandle);
@@ -211,8 +217,10 @@ static int process_string_x(char *acTemplatePath, char *acBinPath, char *acTxtPa
         m_iCustom3Count = load_strings(acBinPath, g_pcCustomTable3, &m_astCustom3);
     }
 
-    return (m_iStringCount && m_iPatchStringCount && m_iExpansionsStringCount &&
-        (!g_pcCustomTable1 || m_iCustom1Count) && (!g_pcCustomTable2 || m_iCustom2Count) && (!g_pcCustomTable3 || m_iCustom3Count));
+    return (m_iStringCount && m_iPatchStringCount && m_iExpansionsStringCount
+        && (!g_pcCustomTable1 || m_iCustom1Count) 
+        && (!g_pcCustomTable2 || m_iCustom2Count) 
+        && (!g_pcCustomTable3 || m_iCustom3Count));
 }
 
 int process_string(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
