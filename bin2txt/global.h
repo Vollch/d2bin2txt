@@ -18,6 +18,8 @@ extern "C" {
 #include <assert.h>
 
 #define ALL_MODULES(X) \
+    X(KillExp) \
+    X(SklTree) \
     X(GameDiff) \
     X(skpoints) \
     X(HavModEx) \
