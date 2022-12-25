@@ -750,7 +750,7 @@ zqtjingzi: 回复 0无所从来0 :只有普通难度是这样，其实两个文�
 
 typedef struct
 {//total 424 bytes
-    unsigned short vhcIdx;
+    unsigned short vId;
     unsigned short vBaseId; //monstats
 
     unsigned short vNextInClass;    //monstats
@@ -1164,7 +1164,7 @@ typedef struct
 
 static char *m_apcInternalProcess[] = 
 {
-    "Id",
+    "hcIdx",
     NULL,
 };
 
@@ -1218,24 +1218,35 @@ int MonStats_LinkMonProp(void *astMonProp, unsigned int iMonPropCount, unsigned 
     return 1;
 }
 
-static int MonStats_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
+char *MonStats_GetStatsName(unsigned int id)
+{
+    if ( id >= m_iMonStatsCount )
+    {
+        return NULL;
+    }
+
+    return m_astMonStats[id].vId;
+}
+
+static int MonStats_ConvertValue_Pre(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
     if ( !stricmp(acKey, "Id") )
     {
-        char acName[5];
+        char acName[5] = {0};
         strncpy(acName, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
-        if ( !String_BuildName(FORMAT(monstats), pstLineInfo->vNameStr, pcTemplate, acName, pstLineInfo->vhcIdx, MODULE_HAVENAME, acOutput) )
+
+        if ( !String_BuildName(FORMAT(monstats), pstLineInfo->vNameStr, pcTemplate, acName, pstLineInfo->vId, MODULE_HAVENAME, acOutput) )
         {
-            sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vhcIdx);
+            sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vId);
         }
 
-        memcpy(&m_astMonStats[pstLineInfo->vhcIdx].vSkill1, &pstLineInfo->vSkill1, sizeof(pstLineInfo->vSkill1) * 8);
-        m_astMonStats[pstLineInfo->vhcIdx].vNameStr = pstLineInfo->vNameStr;
-        m_astMonStats[pstLineInfo->vhcIdx].vMonProp = pstLineInfo->vMonProp;
-        strncpy(m_astMonStats[pstLineInfo->vhcIdx].vId, acOutput, sizeof(m_astMonStats[pstLineInfo->vhcIdx].vId));
-        String_Trim(m_astMonStats[pstLineInfo->vhcIdx].vId);
+        memcpy(&m_astMonStats[pstLineInfo->vId].vSkill1, &pstLineInfo->vSkill1, sizeof(pstLineInfo->vSkill1) * 8);
+        m_astMonStats[pstLineInfo->vId].vNameStr = pstLineInfo->vNameStr;
+        m_astMonStats[pstLineInfo->vId].vMonProp = pstLineInfo->vMonProp;
+        strncpy(m_astMonStats[pstLineInfo->vId].vId, acOutput, sizeof(m_astMonStats[pstLineInfo->vId].vId));
+        String_Trim(m_astMonStats[pstLineInfo->vId].vId);
         m_iMonStatsCount++;
         return 1;
     }
@@ -1247,9 +1258,9 @@ static int MonStats_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineN
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !stricmp(acKey, "Id") )
+    if ( !stricmp(acKey, "hcIdx") )
     {
-        strncpy(acOutput, m_astMonStats[pstLineInfo->vhcIdx].vId, sizeof(m_astMonStats[pstLineInfo->vhcIdx].vId));
+        sprintf(acOutput, "%u", pstLineInfo->vId);
 
         return 1;
     }
@@ -1257,80 +1268,45 @@ static int MonStats_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineN
     return 0;
 }
 
-char *MonStats_GetStatsName(unsigned int id)
-{
-    if ( id >= m_iMonStatsCount )
-    {
-        return NULL;
-    }
-
-    return m_astMonStats[id].vId;
-}
-
 static int MonStats_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
     char *pcResult;
     int id;
-    int result = 0;
 
     if ( !stricmp(acKey, "NameStr") )
     {
-        pcResult = String_FindString(pstLineInfo->vNameStr, NULL);
-
-        if ( pcResult )
+        if ( pcResult = String_FindString(pstLineInfo->vNameStr, NULL, NULL) )
         {
             strcpy(acOutput, pcResult);
         }
-        else
-        {
-            acOutput[0] = 0;
-        }
 
-        result = 1;
+        return 1;
     }
     else if ( strlen("Sk1mode") == strlen(acKey) && 1 == sscanf(acKey, "Sk%dmode", &id) )
     {
-        unsigned char *pbType = &pstLineInfo->vSk1modeType;
-        unsigned short *pwSkill = &pstLineInfo->vSk1mode;
+        unsigned char pbType = ((char *)&pstLineInfo->vSk1modeType)[id - 1];
+        unsigned short pwSkill = ((short *)&pstLineInfo->vSk1mode)[id - 1];
 
-        if ( 0xFFFF == pwSkill[id - 1] && 0 != pbType[id - 1] )
+        if ( 0xFFFF == pwSkill && 0 != pbType )
         {
-            pcResult = MonMode_GetCode(pbType[id - 1]);
-            if ( pcResult )
+            if ( pcResult = MonMode_GetCode(pbType) )
             {
                 strcpy(acOutput, pcResult);
             }
-            else
-            {
-                acOutput[0] = 0;
-            }
-        }
-        else
-        {
-            pcResult = MonSeq_GetSequence(pwSkill[id - 1]);
 
-            if ( pcResult )
-            {
-                strcpy(acOutput, pcResult);
-            }
-            else
-            {
-                acOutput[0] = 0;
-            }
+            return 1;
         }
-
-        result = 1;
     }
 
-    return result;
+    return 0;
 }
 
 static void MonStats_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLineInfo)
 {
     INIT_VALUE_BUFFER;
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, hcIdx, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Id, USHORT_MONSTAT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, BaseId, USHORT_MONSTAT);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, NextInClass, USHORT_MONSTAT);
@@ -1670,17 +1646,17 @@ static void MonStats_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLi
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skill7, USHORT_SKILL);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skill8, USHORT_SKILL);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Sk1mode, USHORT);   //monseq
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Sk2mode, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Sk1mode, USHORT_MONSEQ);   //monseq
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Sk2mode, USHORT_MONSEQ);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Sk3mode, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Sk4mode, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Sk3mode, USHORT_MONSEQ);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Sk4mode, USHORT_MONSEQ);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Sk5mode, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Sk6mode, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Sk5mode, USHORT_MONSEQ);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Sk6mode, USHORT_MONSEQ);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Sk7mode, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Sk8mode, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Sk7mode, USHORT_MONSEQ);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Sk8mode, USHORT_MONSEQ);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Sk1lvl, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Sk2lvl, UCHAR);
@@ -1719,7 +1695,7 @@ int process_monstats(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
         case EN_MODULE_SELF_DEPEND:
             MonStats_InitValueMap(pstValueMap, pstLineInfo);
 
-            m_stCallback.pfnFieldProc = MonStats_FieldProc_Pre;
+            m_stCallback.pfnConvertValue = MonStats_ConvertValue_Pre;
             m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
             m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;

@@ -62,7 +62,7 @@ v.eol = 行结束符‘0’
 
 typedef struct
 {
-    unsigned int vidx;
+    unsigned int vpetmysptype;
 
 #if 1
     unsigned char vCombinedBit;
@@ -77,7 +77,7 @@ typedef struct
     unsigned char vwarp : 1;
 #endif
 
-    unsigned char iPadding1[3];
+    unsigned char pad0x05[3];
 
     unsigned short vgroup;
     unsigned short vbasemax;
@@ -89,27 +89,18 @@ typedef struct
     unsigned char vmicon2[32];
     unsigned char vmicon3[32];
     unsigned char vmicon4[32];
-    unsigned char iPadding43;
+    unsigned char pad0x90;
 
-    unsigned short iPadding44;
+    unsigned char pad0x91[2];
     unsigned short vmclass1;
 
     unsigned short vmclass2;
     unsigned short vmclass3;
 
     unsigned short vmclass4;
-    unsigned short iPadding46;
+    unsigned char pad0xBA[2];
 
-    unsigned int iPadding47;
-    unsigned int iPadding48;
-    unsigned int iPadding49;
-
-    unsigned int iPadding50;
-    unsigned int iPadding51;
-    unsigned int iPadding52;
-    unsigned int iPadding53;
-    unsigned int iPadding54;
-    unsigned int iPadding55;
+    unsigned char pad0xBC[36];
 } ST_LINE_INFO;
 
 typedef struct
@@ -119,7 +110,7 @@ typedef struct
 
 static char *m_apcInternalProcess[] =
 {
-    "pet type",
+    "idx",
     NULL,
 };
 
@@ -139,21 +130,22 @@ char *Pettype_GetPetType(unsigned int id)
     return m_astPetTypes[id].vpetmysptype;
 }
 
-static int PetType_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
+static int PetType_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
     if ( !stricmp(acKey, "pet type") )
     {
-        char acName[33];
+        char acName[33] = {0};
         strncpy(acName, pstLineInfo->vbaseicon, sizeof(pstLineInfo->vbaseicon));
-        if ( !String_BuildName(FORMAT(pettype), pstLineInfo->vname, pcTemplate, acName, pstLineInfo->vidx, MODULE_HAVENAME, acOutput) )
+
+        if ( !String_BuildName(FORMAT(pettype), pstLineInfo->vname, pcTemplate, acName, pstLineInfo->vpetmysptype, MODULE_HAVENAME, acOutput) )
         {
-            sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vidx);
+            sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vpetmysptype);
         }
 
-        strncpy(m_astPetTypes[pstLineInfo->vidx].vpetmysptype, acOutput, sizeof(m_astPetTypes[pstLineInfo->vidx].vpetmysptype));
-        String_Trim(m_astPetTypes[pstLineInfo->vidx].vpetmysptype);
+        strncpy(m_astPetTypes[pstLineInfo->vpetmysptype].vpetmysptype, acOutput, sizeof(m_astPetTypes[pstLineInfo->vpetmysptype].vpetmysptype));
+        String_Trim(m_astPetTypes[pstLineInfo->vpetmysptype].vpetmysptype);
         m_iPetTypeCount++;
         return 1;
     }
@@ -165,9 +157,9 @@ static int PetType_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !stricmp(acKey, "pet type") )
+    if ( !stricmp(acKey, "idx") )
     {
-        strncpy(acOutput, m_astPetTypes[pstLineInfo->vidx].vpetmysptype, sizeof(m_astPetTypes[pstLineInfo->vidx].vpetmysptype));
+        sprintf(acOutput, "%u", pstLineInfo->vpetmysptype);
 
         return 1;
     }
@@ -183,7 +175,7 @@ static char *PetType_GetKey(void *pvLineInfo, char *pcKey, unsigned int *iKeyLen
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    sprintf(pcKey, "%u", pstLineInfo->vidx);
+    sprintf(pcKey, "%u", pstLineInfo->vpetmysptype);
     *iKeyLen = (unsigned int)strlen(pcKey);
 
     return pcKey;
@@ -193,7 +185,7 @@ static void PetType_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLin
 {
     INIT_VALUE_BUFFER;
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, idx, UINT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, petmysptype, UCHAR_PET);
 
     VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, drawhp, CombinedBit, 5, UCHAR_BIT);
     VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, automap, CombinedBit, 4, UCHAR_BIT);
@@ -241,30 +233,19 @@ int process_pettype(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
 
             m_iPetTypeCount = 0;
 
-            m_stCallback.pfnFieldProc = PetType_FieldProc_Pre;
+            m_stCallback.pfnConvertValue = PetType_ConvertValue;
             m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
             m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
             //m_stCallback.pfnGetKey = PetType_GetKey;
-            m_stCallback.ppcKeyInternalProcess = isD2SigmaActive() ? PetTypeExt_ExternList : m_apcInternalProcess;
-
-            return process_file(acTemplatePath, acBinPath, NULL, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo),
-                pstValueMap, Global_GetValueMapCount(), &m_stCallback);
-            break;
-
-        case EN_MODULE_OTHER_DEPEND:
-            break;
-
-        case EN_MODULE_INIT:
-            PetType_InitValueMap(pstValueMap, pstLineInfo);
-
             m_stCallback.pfnFieldProc = PetType_FieldProc;
-            //m_stCallback.pfnGetKey = PetType_GetKey;
             m_stCallback.ppcKeyInternalProcess = isD2SigmaActive() ? PetTypeExt_ExternList : m_apcInternalProcess;
 
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo),
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);
             break;
 
+        case EN_MODULE_OTHER_DEPEND:
+        case EN_MODULE_INIT:
         default:
             break;
     }

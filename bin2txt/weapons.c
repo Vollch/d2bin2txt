@@ -502,8 +502,8 @@ typedef struct
     unsigned short vStrBonus;
     unsigned short vDexBonus;
     unsigned short vreqstr;
-    unsigned short vreqdex;
 
+    unsigned short vreqdex;
     unsigned char vabsorbs;
     unsigned char vinvwidth;
 
@@ -512,7 +512,7 @@ typedef struct
     unsigned char vdurability;
     unsigned char vnodurability;
 
-    unsigned char bPad1;
+    unsigned char pad0x114;
     unsigned char vcomponent;
     unsigned char vrArm;
     unsigned char vlArm;
@@ -525,9 +525,10 @@ typedef struct
     unsigned char v2handed;
     unsigned char vuseable;
     unsigned short vtype;   //itemtypes
-    unsigned short vtype2;   //itemtypes
 
-    unsigned char acPad1[2];
+    unsigned short vtype2;   //itemtypes
+    unsigned char pad0x122[2];
+
     unsigned short vdropsound;
     unsigned short vusesound;
 
@@ -538,7 +539,7 @@ typedef struct
 
     unsigned char vtransparent;
     unsigned char vtranstbl;
-    unsigned char bPad2;
+    unsigned char pad0x12E;
     unsigned char vlightradius;
 
     unsigned char vbelt;
@@ -674,14 +675,14 @@ typedef struct
     unsigned char vMalahMagicLvl;
     unsigned char vLarzukMagicLvl;
     unsigned char vDrehyaMagicLvl;
-    unsigned char bPad3;
+    unsigned char pad0x19B;
 
     unsigned char vNightmareUpgrade[4];
     unsigned char vHellUpgrade[4];
 
     unsigned char vPermStoreItem;
     unsigned char vmultibuy;
-    unsigned char acPad20[2];
+    unsigned char pad0x1A6[2];
 } ST_LINE_INFO;
 
 typedef struct
@@ -803,7 +804,7 @@ static int Weapons_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate,
 
     if ( !stricmp(acKey, "namestr") )
     {
-        pcResult = String_FindString(pstLineInfo->vnamestr, "dummy");
+        pcResult = String_FindString(pstLineInfo->vnamestr, "dummy", NULL);
         if ( pcResult )
         {
             strcpy(acOutput, pcResult);
@@ -1085,8 +1086,8 @@ int process_weapons(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
             m_stCallback.pfnFieldProc = Weapons_FieldProc_Pre;
             m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
             m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
-            m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
+            m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
 
             return process_file(acTemplatePath, acBinPath, NULL, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);
@@ -1107,8 +1108,8 @@ int process_weapons(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
             //m_stCallback.pfnGetKey = Weapons_GetKey;
             m_stCallback.pfnConvertValue = Weapons_ConvertValue;
             m_stCallback.pfnFieldProc = Weapons_FieldProc;
-            m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
+            m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
 
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);

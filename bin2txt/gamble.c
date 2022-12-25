@@ -19,11 +19,11 @@ static int Gamble_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo,
 
     if ( !stricmp(acKey, "name") )
     {
-        char acName[13];
-        strncpy(acName, pstLineInfo->vcode, sizeof(pstLineInfo->vcode));
-        String_Trim(acName);
+        char acCode[13] = {0};
+        strncpy(acCode, pstLineInfo->vcode, sizeof(pstLineInfo->vcode));
+        String_Trim(acCode);
 
-        if ( !String_BuildName(FORMAT(gamble), Misc_GetItemString2(pstLineInfo->vcode), pcTemplate, acName, iLineNo, NULL, acOutput) )
+        if ( !String_BuildName(FORMAT(gamble), Misc_GetItemString2(acCode), pcTemplate, acCode, iLineNo, NULL, acOutput) )
         {
             strncpy(acOutput, pstLineInfo->vcode, sizeof(pstLineInfo->vcode));
         }

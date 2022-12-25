@@ -126,37 +126,37 @@ typedef struct
     unsigned int vRune6;
 
     unsigned int vT1Code1;  //properties
-    int vT1Param1;
+    unsigned int vT1Param1;
     int vT1Min1;
     int vT1Max1;
 
     unsigned int vT1Code2;  //properties
-    int vT1Param2;
+    unsigned int vT1Param2;
     int vT1Min2;
     int vT1Max2;
 
     unsigned int vT1Code3;  //properties
-    int vT1Param3;
+    unsigned int vT1Param3;
     int vT1Min3;
     int vT1Max3;
 
     unsigned int vT1Code4;  //properties
-    int vT1Param4;
+    unsigned int vT1Param4;
     int vT1Min4;
     int vT1Max4;
 
     unsigned int vT1Code5;  //properties
-    int vT1Param5;
+    unsigned int vT1Param5;
     int vT1Min5;
     int vT1Max5;
 
     unsigned int vT1Code6;  //properties
-    int vT1Param6;
+    unsigned int vT1Param6;
     int vT1Min6;
     int vT1Max6;
 
     unsigned int vT1Code7;  //properties
-    int vT1Param7;
+    unsigned int vT1Param7;
     int vT1Min7;
     int vT1Max7;
 } ST_LINE_INFO;
@@ -166,32 +166,32 @@ typedef struct
     ST_LINE_INFO sLineInfo;
 
     unsigned int vT1Code8;  //properties
-    int vT1Param8;
+    unsigned int vT1Param8;
     int vT1Min8;
     int vT1Max8;
 
     unsigned int vT1Code9;  //properties
-    int vT1Param9;
+    unsigned int vT1Param9;
     int vT1Min9;
     int vT1Max9;
 
     unsigned int vT1Code10;  //properties
-    int vT1Param10;
+    unsigned int vT1Param10;
     int vT1Min10;
     int vT1Max10;
 
     unsigned int vT1Code11;  //properties
-    int vT1Param11;
+    unsigned int vT1Param11;
     int vT1Min11;
     int vT1Max11;
 
     unsigned int vT1Code12;  //properties
-    int vT1Param12;
+    unsigned int vT1Param12;
     int vT1Min12;
     int vT1Max12;
 
     unsigned int vT1Code13;  //properties
-    int vT1Param13;
+    unsigned int vT1Param13;
     int vT1Min13;
     int vT1Max13;
 } ST_LINE_INFO_D2SIGMA;
@@ -200,8 +200,8 @@ typedef struct
 {
     unsigned int vT1Code1;  //properties
     unsigned int vT1Param1;
-    unsigned int vT1Min1;
-    unsigned int vT1Max1;
+    int vT1Min1;
+    int vT1Max1;
 } ST_RUNE_CODE;
 
 static char *m_apcNotUsed[] =
@@ -275,38 +275,38 @@ static void Runes_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLineI
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Rune5, UINT_ITEM);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Rune6, UINT_ITEM);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Code1, UINT_PROPERTY);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Param1, INT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Code1, USHORT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Param1, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Min1, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Max1, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Code2, UINT_PROPERTY);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Param2, INT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Code2, USHORT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Param2, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Min2, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Max2, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Code3, UINT_PROPERTY);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Param3, INT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Code3, USHORT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Param3, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Min3, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Max3, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Code4, UINT_PROPERTY);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Param4, INT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Code4, USHORT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Param4, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Min4, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Max4, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Code5, UINT_PROPERTY);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Param5, INT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Code5, USHORT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Param5, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Min5, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Max5, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Code6, UINT_PROPERTY);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Param6, INT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Code6, USHORT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Param6, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Min6, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Max6, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Code7, UINT_PROPERTY);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Param7, INT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Code7, USHORT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Param7, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Min7, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, T1Max7, INT);
 
@@ -314,33 +314,33 @@ static void Runes_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLineI
     {
         ST_LINE_INFO_D2SIGMA *pstLineInfoSigma = (ST_LINE_INFO_D2SIGMA *)m_acLineInfoBuf;
 
-        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Code8, UINT_PROPERTY);
-        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Param8, INT);
+        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Code8, USHORT_PROPERTY);
+        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Param8, UINT);
         VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Min8, INT);
         VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Max8, INT);
 
-        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Code9, UINT_PROPERTY);
-        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Param9, INT);
+        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Code9, USHORT_PROPERTY);
+        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Param9, UINT);
         VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Min9, INT);
         VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Max9, INT);
 
-        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Code10, UINT_PROPERTY);
-        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Param10, INT);
+        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Code10, USHORT_PROPERTY);
+        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Param10, UINT);
         VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Min10, INT);
         VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Max10, INT);
 
-        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Code11, UINT_PROPERTY);
-        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Param11, INT);
+        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Code11, USHORT_PROPERTY);
+        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Param11, UINT);
         VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Min11, INT);
         VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Max11, INT);
 
-        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Code12, UINT_PROPERTY);
-        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Param12, INT);
+        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Code12, USHORT_PROPERTY);
+        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Param12, UINT);
         VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Min12, INT);
         VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Max12, INT);
 
-        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Code13, UINT_PROPERTY);
-        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Param13, INT);
+        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Code13, USHORT_PROPERTY);
+        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Param13, UINT);
         VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Min13, INT);
         VALUE_MAP_DEFINE(pstValueMap, pstLineInfoSigma, T1Max13, INT);
     }

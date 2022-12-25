@@ -375,7 +375,7 @@ char *Properties_GetProperty(unsigned int id)
     return m_astProperty[id].vcode;
 }
 
-static int Properties_ConvertValue_Pre(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
+static int Properties_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
@@ -395,25 +395,11 @@ static int Properties_ConvertValue_Pre(void *pvLineInfo, char *acKey, char *pcTe
     return 0;
 }
 
-static int Properties_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
-{
-    ST_LINE_INFO *pstLineInfo = pvLineInfo;
-
-    if ( !stricmp(acKey, "code") )
-    {
-        strncpy(acOutput, m_astProperty[pstLineInfo->vcode].vcode, sizeof(m_astProperty[pstLineInfo->vcode].vcode));
-
-        return 1;
-    }
-
-    return 0;
-}
-
 static void Properties_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLineInfo)
 {
     INIT_VALUE_BUFFER;
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, code, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, code, USHORT_PROPERTY);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, set1, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, set2, UCHAR);
@@ -473,22 +459,9 @@ int process_properties(char *acTemplatePath, char *acBinPath, char *acTxtPath, E
 
             m_iPropertyCount = 0;
 
-            m_stCallback.pfnConvertValue = Properties_ConvertValue_Pre;
+            m_stCallback.pfnConvertValue = Properties_ConvertValue;
             m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
             m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
-            m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
-
-            return process_file(acTemplatePath, acBinPath, NULL, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
-                pstValueMap, Global_GetValueMapCount(), &m_stCallback);
-            break;
-
-        case EN_MODULE_OTHER_DEPEND:
-            break;
-
-        case EN_MODULE_INIT:
-            Properties_InitValueMap(pstValueMap, pstLineInfo);
-
-            m_stCallback.pfnConvertValue = Properties_ConvertValue;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
 
             if ( isD2SigmaActive() )
@@ -501,6 +474,8 @@ int process_properties(char *acTemplatePath, char *acBinPath, char *acTxtPath, E
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);
             break;
 
+        case EN_MODULE_OTHER_DEPEND:
+        case EN_MODULE_INIT:
         default:
             break;
     }

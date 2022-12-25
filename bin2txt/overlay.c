@@ -110,17 +110,21 @@ Tips, Ideas and Suggestions:
 
 typedef struct
 {
-    unsigned short vId;
+    unsigned short voverlay;
     unsigned char vFilename[64];//Where is the overlay? The game looks at data/global/overlays for a dcc file.
     unsigned short vversion;
 
     unsigned int vFrames;
-    unsigned int vPreDraw;
+
+    unsigned char vPreDraw;
+    unsigned char pad0x49[3];
+
     unsigned int v1ofN;
 
     unsigned char vDir;
     unsigned char vOpen;
-    unsigned short vBeta;
+    unsigned char vBeta;
+    unsigned char pad0x53;
 
     int vXoffset;
     int vYoffset;
@@ -141,7 +145,7 @@ typedef struct
 
     unsigned char vNumDirections;
     unsigned char vLocalBlood;
-    char acPadding2[2];
+    unsigned char pad0x82[2];
 } ST_LINE_INFO;
 
 typedef struct
@@ -155,19 +159,13 @@ static char *m_apcNotUsed[] =
     NULL,
 };
 
-static char *m_apcInternalProcess[] =
-{
-    "overlay",
-    NULL,
-};
-
 static unsigned int m_iOverlayCount = 0;
 static ST_OVERLAY *m_astOverlay = NULL;
 
 MODULE_SETLINES_FUNC(m_astOverlay, ST_OVERLAY);
 MODULE_HAVENAME_FUNC(m_astOverlay, voverlay, m_iOverlayCount);
 
-static int OverLay_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
+static int Overlay_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
@@ -175,13 +173,13 @@ static int OverLay_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo
     {
         char acFile[33] = {0};
         String_StripFileName(pstLineInfo->vFilename, acFile, 32);
-        if ( !String_BuildName(FORMAT(overlay), 0xFFFF, pcTemplate, acFile, pstLineInfo->vId, MODULE_HAVENAME, acOutput) )
+        if ( !String_BuildName(FORMAT(overlay), 0xFFFF, pcTemplate, acFile, pstLineInfo->voverlay, MODULE_HAVENAME, acOutput) )
         {
-            sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vId);
+            sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->voverlay);
         }
 
-        strncpy(m_astOverlay[pstLineInfo->vId].voverlay, acOutput, sizeof(m_astOverlay[pstLineInfo->vId].voverlay));
-        String_Trim(m_astOverlay[pstLineInfo->vId].voverlay);
+        strncpy(m_astOverlay[pstLineInfo->voverlay].voverlay, acOutput, sizeof(m_astOverlay[pstLineInfo->voverlay].voverlay));
+        String_Trim(m_astOverlay[pstLineInfo->voverlay].voverlay);
         m_iOverlayCount++;
         return 1;
     }
@@ -205,14 +203,15 @@ int process_overlay(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
 
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, overlay, USHORT_OVERLAY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Filename, STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, version, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Frames, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PreDraw, UINT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PreDraw, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, 1ofN, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Dir, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Open, UCHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Beta, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Beta, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Xoffset, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Yoffset, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Height1, INT);
@@ -238,11 +237,10 @@ int process_overlay(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
         case EN_MODULE_SELF_DEPEND:
             m_iOverlayCount = 0;
 
-            m_stCallback.pfnFieldProc = OverLay_FieldProc;
+            m_stCallback.pfnConvertValue = Overlay_ConvertValue;
             m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
             m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
-            m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo),
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);

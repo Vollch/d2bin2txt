@@ -283,33 +283,31 @@ typedef struct
 {
     unsigned char vName[32];
 
-    unsigned short iPadding8;
+    unsigned char pad0x21[2];
     unsigned short vversion;
 
     unsigned int vmod1code; //properties
-    int vmod1param;
+    unsigned int vmod1param;
     int vmod1min;
     int vmod1max;
 
     unsigned int vmod2code; //properties
-    int vmod2param;
+    unsigned int vmod2param;
     int vmod2min;
     int vmod2max;
 
     unsigned int vmod3code; //properties
-    int vmod3param;
+    unsigned int vmod3param;
     int vmod3min;
     int vmod3max;
 
-    unsigned short vspawnable;
+    unsigned char vspawnable;
+    unsigned char pad0x55;
     unsigned char vtransformcolor; //colors
-    unsigned char bPad1;
+    unsigned char pad0x57;
 
-    unsigned short vlevel;
-    unsigned short iPadding22;
-
+    unsigned int vlevel;
     unsigned int vgroup;
-
     unsigned int vmaxlevel;
 
     unsigned char vrare;
@@ -370,28 +368,26 @@ int process_magicprefix(char *acTemplatePath, char *acBinPath, char *acTxtPath, 
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, version, USHORT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod1code, UINT_PROPERTY);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod1param, INT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod1code, USHORT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod1param, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod1min, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod1max, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod2code, UINT_PROPERTY);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod2param, INT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod2code, USHORT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod2param, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod2min, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod2max, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod3code, UINT_PROPERTY);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod3param, INT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod3code, USHORT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod3param, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod3min, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod3max, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, spawnable, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, spawnable, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, transformcolor, UCHAR_COLOR);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, level, USHORT);
-
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, level, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, group, UINT);
-
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, maxlevel, UINT);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, rare, UCHAR);

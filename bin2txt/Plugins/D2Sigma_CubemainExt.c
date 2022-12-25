@@ -17,15 +17,6 @@ MODULE_SETLINES_FUNC(m_astLines, ST_LINE_INFO);
 char *CubemainExt_ExternList[] =
 {
     "description",
-    "lvl",
-    "b lvl",
-    "c lvl",
-    "plvl",
-    "b plvl",
-    "c plvl",
-    "ilvl",
-    "b ilvl",
-    "c ilvl",
     "goldcost",
     NULL,
 };

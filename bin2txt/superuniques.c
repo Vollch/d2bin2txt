@@ -196,11 +196,11 @@ Superuniques.txt中的Mod1~3列中的内容与Monumod.txt中的uniquemod列中�
 
 typedef struct
 {
-    unsigned short wHcIdx;
+    unsigned short vSuperunique;
     unsigned short vName;   //strings
 
     unsigned short vClass;    //monstats
-    unsigned short sPad1;
+    unsigned char pad0x06[2];
 
     unsigned int vhcIdx;
 
@@ -209,7 +209,7 @@ typedef struct
     unsigned int vMod3;
 
     unsigned short vMonSound; //sounds
-    unsigned short sPad2;
+    unsigned char pad0x1A[2];
 
     unsigned int vMinGrp;
     unsigned int vMaxGrp;
@@ -222,25 +222,19 @@ typedef struct
     unsigned char vUtrans;
     unsigned char vUtransmybr1Nmybr2;
     unsigned char vUtransmybr1Hmybr2;
-    unsigned char iPadding10;
+    unsigned char pad0x2B;
 
     unsigned short vTC;             //TreasureClassEx
     unsigned short vTCmybr1Nmybr2;  //TreasureClassEx
 
     unsigned short vTCmybr1Hmybr2;  //TreasureClassEx
-    unsigned short iPadding12;
+    unsigned char pad0x32[2];
 } ST_LINE_INFO;
 
 typedef struct
 {
     unsigned char vSuperunique[64];
 } ST_SUPER_UNIQUES;
-
-static char *m_apcInternalProcess[] =
-{
-    "Superunique",
-    NULL,
-};
 
 static unsigned int m_iSuperUniquesCount = 0;
 static ST_SUPER_UNIQUES *m_astSuperUniques = NULL;
@@ -258,43 +252,29 @@ char *SuperUniques_GetItemUniqueCode(unsigned int id)
     return NULL;
 }
 
-static int SuperUniques_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
+static int SuperUniques_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
     char *pcResult = NULL;
 
     if ( !stricmp(acKey, "Superunique") )
     {
-        if ( !String_BuildName(FORMAT(superuniques), pstLineInfo->vName, pcTemplate, NAME_PREFIX, pstLineInfo->wHcIdx, MODULE_HAVENAME, acOutput) )
+        if ( !String_BuildName(FORMAT(superuniques), pstLineInfo->vName, pcTemplate, NAME_PREFIX, pstLineInfo->vSuperunique, MODULE_HAVENAME, acOutput) )
         {
-            pcResult = String_FindString(pstLineInfo->vName, "dummy");
+            pcResult = String_FindString(pstLineInfo->vName, "dummy", NULL);
             if ( pcResult )
             {
                 strcpy(acOutput, pcResult);
             }
             else
             {
-                sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->wHcIdx);
+                sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vSuperunique);
             }
         }
 
-        strncpy(m_astSuperUniques[pstLineInfo->wHcIdx].vSuperunique, acOutput, sizeof(m_astSuperUniques[pstLineInfo->wHcIdx].vSuperunique));
-        String_Trim(m_astSuperUniques[pstLineInfo->wHcIdx].vSuperunique);
+        strncpy(m_astSuperUniques[pstLineInfo->vSuperunique].vSuperunique, acOutput, sizeof(m_astSuperUniques[pstLineInfo->vSuperunique].vSuperunique));
+        String_Trim(m_astSuperUniques[pstLineInfo->vSuperunique].vSuperunique);
         m_iSuperUniquesCount++;
-        return 1;
-    }
-
-    return 0;
-}
-
-static int SuperUniques_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
-{
-    ST_LINE_INFO *pstLineInfo = pvLineInfo;
-
-    if ( !stricmp(acKey, "Superunique") )
-    {
-        strncpy(acOutput, m_astSuperUniques[pstLineInfo->wHcIdx].vSuperunique, sizeof(m_astSuperUniques[pstLineInfo->wHcIdx].vSuperunique));
-
         return 1;
     }
 
@@ -305,6 +285,7 @@ static void SuperUniques_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *p
 {
     INIT_VALUE_BUFFER;
 
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Superunique, USHORT_UNIQ);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Name, USHORT_STRING);   //strings
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Class, USHORT_MONSTAT);
@@ -354,10 +335,9 @@ int process_superuniques(char *acTemplatePath, char *acBinPath, char *acTxtPath,
 
             m_iSuperUniquesCount = 0;
 
-            m_stCallback.pfnFieldProc = SuperUniques_FieldProc_Pre;
+            m_stCallback.pfnConvertValue = SuperUniques_ConvertValue;
             m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
             m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
-            m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
             return process_file(acTemplatePath, acBinPath, NULL, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);
@@ -372,9 +352,6 @@ int process_superuniques(char *acTemplatePath, char *acBinPath, char *acTxtPath,
 
         case EN_MODULE_INIT:
             SuperUniques_InitValueMap(pstValueMap, pstLineInfo);
-
-            m_stCallback.pfnFieldProc = SuperUniques_FieldProc;
-            m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);

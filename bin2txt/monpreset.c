@@ -5,37 +5,31 @@
 typedef struct
 {
     unsigned char vAct;
-    unsigned char iPadding0;
+    unsigned char bPlaceType;
     unsigned short vPlace;
 } ST_LINE_INFO;
 
 static int MonPreset_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
-    char *pcResult = NULL;
 
     if ( !stricmp(acKey, "Place") )
     {
-        if ( 1 == pstLineInfo->iPadding0 )
-        {
-            pcResult = MonStats_GetStatsName(pstLineInfo->vPlace);
-        }
-        else if ( 0 == pstLineInfo->iPadding0 )
-        {
-            pcResult = MonPlace_GetPlaceName(pstLineInfo->vPlace);
-        }
-        else if ( 2 == pstLineInfo->iPadding0 )
-        {
-            pcResult = SuperUniques_GetItemUniqueCode(pstLineInfo->vPlace);
-        }
-        if ( pcResult )
+        char *pcResult = NULL;
+
+        if ( 1 == pstLineInfo->bPlaceType && (pcResult = MonStats_GetStatsName(pstLineInfo->vPlace)) )
         {
             strcpy(acOutput, pcResult);
         }
-        else
+        else if ( 0 == pstLineInfo->bPlaceType && (pcResult = MonPlace_GetPlaceName(pstLineInfo->vPlace)) )
         {
-            acOutput[0] = 0;
+            strcpy(acOutput, pcResult);
         }
+        else if ( 2 == pstLineInfo->bPlaceType && (pcResult = SuperUniques_GetItemUniqueCode(pstLineInfo->vPlace)) )
+        {
+            strcpy(acOutput, pcResult);
+        }
+
         return 1;
     }
 

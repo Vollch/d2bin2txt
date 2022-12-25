@@ -747,8 +747,8 @@ typedef struct
     unsigned short vStrBonus;
     unsigned short vDexBonus;
     unsigned short vreqstr;
-    unsigned short vreqdex;
 
+    unsigned short vreqdex;
     unsigned char vabsorbs;
     unsigned char vinvwidth;    //物品在物品栏中的宽度。
 
@@ -757,7 +757,7 @@ typedef struct
     unsigned char vdurability;
     unsigned char vnodurability;    //没有耐久度，即天生无法破坏。如幻化之刃，但防具中暂时没有。
 
-    unsigned char bPad1;
+    unsigned char pad0x114;
     unsigned char vcomponent;   //角色使用此物品时，采用哪一层（Layer）；同文件关联。这是我抄来的，我也没理解。
     unsigned char vrArm;
     unsigned char vlArm;
@@ -770,9 +770,10 @@ typedef struct
     unsigned char v2handed;
     unsigned char vuseable; //能否用右键使用。0表示不可以，1表示可以。
     unsigned short vtype;    //基本类型。同itemtypes.txt关联。
-    unsigned short vtype2;   //次要类型；同itemtypes.txt关联。
 
-    unsigned char acPad1[2];
+    unsigned short vtype2;   //次要类型；同itemtypes.txt关联。
+    unsigned char pad0x122[2];
+
     unsigned short vdropsound;  //物品掉落时的声音；同sounds.txt关联。
     unsigned short vusesound;   //物品使用时的声音；同sounds.txt关联。
 
@@ -783,7 +784,7 @@ typedef struct
 
     unsigned char vtransparent; //不知道什么意思的参数，但都填0。
     unsigned char vtranstbl;    //不知道什么意思的参数，但都填5。
-    unsigned char bPad2;
+    unsigned char pad0x12E;
     unsigned char vlightradius; //不知道什么意思的参数。
 
     unsigned char vbelt;    //腰带专用，表示在belts.txt中的位置。
@@ -919,14 +920,14 @@ typedef struct
     unsigned char vMalahMagicLvl;
     unsigned char vLarzukMagicLvl;
     unsigned char vDrehyaMagicLvl;
-    unsigned char bPad3;
+    unsigned char pad0x19B;
 
     unsigned char vNightmareUpgrade[4]; //在“恶梦”难度下，会卖这种物品的NPC改卖什么物品（xxx表示还卖这个）。如轻微治疗药剂hp1在此列的值为hp4，表示在普通难度卖轻微治疗药剂的NPC在恶梦难度改卖强力药剂了。
     unsigned char vHellUpgrade[4];  //在“地狱”难度下，会卖此种物品的NPC改卖什么物品（xxx表示还卖这个）。如轻微治疗药剂hp1在此列的值为hp5，表示在普通难度卖轻微治疗药剂的NPC在恶梦难度改卖超级治疗药剂了。
 
     unsigned char vPermStoreItem;   //是否总在NPC处有出售。
     unsigned char vmultibuy;    //
-    unsigned char acPad20[2];
+    unsigned char pad0x1A6[2];
 } ST_LINE_INFO;
 
 typedef struct
@@ -1100,7 +1101,7 @@ static int Misc_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, ch
 
     if ( !stricmp(acKey, "namestr") )
     {
-        pcResult = String_FindString(pstLineInfo->vnamestr, "dummy");
+        pcResult = String_FindString(pstLineInfo->vnamestr, "dummy", NULL);
         if ( pcResult )
         {
             strcpy(acOutput, pcResult);

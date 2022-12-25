@@ -18,84 +18,84 @@ extern "C" {
 #include <assert.h>
 
 #define ALL_MODULES(X) \
-    X(KillExp) \
-    X(SklTree) \
-    X(GameDiff) \
-    X(skpoints) \
-    X(HavModEx) \
-    X(RoS) \
+    X(BookOfLore) \
+    X(bufficons) \
     X(CharStart) \
-    X(D2DC6) \
-    X(D2StatsEx2) \
-    X(D2NewStats) \
     X(D2AddSkill) \
-    X(D2KillCounter) \
-    X(D2Spawn) \
-    X(D2RedPortal) \
-    X(D2SpawnTown) \
-    X(D2LvlTown) \
-    X(D2Vendors) \
-    X(D2StrSound) \
-    X(D2NPCFunc) \
-    X(CellFiles) \
-    X(ObjPreset) \
-    X(LvlTypeNames) \
-    X(itemratio_sp) \
-    X(experience_sp) \
-    X(tables_strings) \
-    X(Qualities) \
-    X(StatScreen) \
-    X(SkillTree) \
-    X(Monstats3) \
-    X(Skills2) \
-    X(CharStatsExp) \
-    X(StateIcons) \
-    X(MonUModExp) \
-    X(Achievements) \
-    X(PetTypeExt) \
-    X(HireItems) \
-    X(MysticOrbs) \
-    X(SkillTabs) \
-    X(CubemainExt) \
-    X(Missiles2) \
-    X(UniqueItems2) \
-    X(PropertiesExt) \
-    X(ItemTypesExt) \
-    X(Utility) \
-    X(Towns) \
-    X(Charstats2) \
-    X(UIPanel) \
-    X(pSpell) \
-    X(pSpawn) \
-    X(objects3) \
-    X(Npc2) \
-    X(vendor) \
-    X(npctalk) \
-    X(TreasureClassEx2) \
-    X(GlobalTCEx2Settings) \
-    X(RuneDropList) \
+    X(D2DC6) \
     X(AddStat) \
-    X(LevelsEx) \
+    X(Charstats2) \
     X(DreamlandConfig) \
+    X(GlobalTCEx2Settings) \
     X(ItemEvent) \
+    X(LevelsEx) \
+    X(Npc2) \
+    X(npctalk) \
+    X(objects3) \
+    X(pSpawn) \
+    X(pSpell) \
+    X(RuneDropList) \
     X(ShrineBaseGemTypes) \
+    X(Towns) \
+    X(TreasureClassEx2) \
     X(TreasureClassEx2NoDrop) \
+    X(UIPanel) \
+    X(Utility) \
+    X(vendor) \
+    X(D2KillCounter) \
+    X(D2NewStats) \
+    X(D2NPCFunc) \
+    X(D2StrSound) \
+    X(D2Vendors) \
+    X(D2RedPortal) \
+    X(Achievements) \
+    X(CellFiles) \
+    X(CharStatsExp) \
+    X(CubemainExt) \
+    X(experience_sp) \
+    X(HireItems) \
+    X(itemratio_sp) \
+    X(ItemTypesExt) \
+    X(LvlTypeNames) \
+    X(Missiles2) \
+    X(Monstats3) \
+    X(MonUModExp) \
+    X(MysticOrbs) \
+    X(ObjPreset) \
+    X(PetTypeExt) \
+    X(PropertiesExt) \
+    X(Qualities) \
+    X(Skills2) \
+    X(SkillTabs) \
+    X(SkillTree) \
+    X(StateIcons) \
+    X(StatScreen) \
+    X(tables_strings) \
+    X(UniqueItems2) \
+    X(D2Spawn) \
+    X(D2StatsEx2) \
+    X(D2LvlTown) \
+    X(D2SpawnTown) \
+    X(DebauchedCharacter) \
+    X(DebauchedItems) \
     X(DebauchedQuests) \
     X(DebauchedSkills) \
-    X(DebauchedWaypoints) \
-    X(DebauchedItems) \
     X(DebauchedTemplate) \
-    X(DebauchedCharacter) \
-    X(MagicTwn) \
-    X(KillCounter) \
-    X(BookOfLore) \
-    X(LevelFX) \
+    X(DebauchedWaypoints) \
+    X(GameDiff) \
+    X(HavModEx) \
     X(ItemDesc) \
-    X(Waypoints) \
+    X(KillCounter) \
+    X(KillExp) \
+    X(LevelFX) \
+    X(skpoints) \
+    X(MagicTwn) \
     X(NoSock) \
     X(QDrop) \
+    X(RoS) \
     X(scrollspell) \
-    X(bufficons) \
+    X(SklTree) \
+    X(Waypoints) \
     X(arena) \
     X(armor) \
     X(armtype) \
@@ -212,23 +212,25 @@ typedef enum
     EN_VALUE_USHORT_BIT,
     EN_VALUE_UCHAR_BIT,
     EN_VALUE_STRING, // 0x09[4], 0x01[*]
-    EN_VALUE_UINT_ITEM,
+    EN_VALUE_EOL, // 0x00
     EN_VALUE_UINT_ITEMCODE, // 0x19
     EN_VALUE_UINT_MISSCODE,
     EN_VALUE_UINT_SKILLCODE,
     EN_VALUE_UINT_DESCCODE,
-    EN_VALUE_UINT_PROPERTY,
+    EN_VALUE_UINT_ITEM,
     EN_VALUE_USHORT_EVENT,
     EN_VALUE_USHORT_ITEMTYPE,
     EN_VALUE_USHORT_ITEMSTAT, // 0x14
     EN_VALUE_USHORT_MISSILE,
     EN_VALUE_USHORT_MONAI,
     EN_VALUE_USHORT_MONPROP,
+    EN_VALUE_USHORT_MONSEQ,
     EN_VALUE_USHORT_MONSOUND,
     EN_VALUE_USHORT_MONSTAT,
     EN_VALUE_USHORT_MONSTAT2,
     EN_VALUE_USHORT_MONTYPE,
     EN_VALUE_USHORT_OVERLAY,
+    EN_VALUE_USHORT_PROPERTY,
     EN_VALUE_USHORT_SET,
     EN_VALUE_USHORT_SKILLDESC,
     EN_VALUE_USHORT_SKILL, // 0x11, 0x14
@@ -248,8 +250,6 @@ typedef enum
     EN_VALUE_UCHAR_PLRMODE,
     EN_VALUE_UCHAR_PET,
     EN_VALUE_UCHAR_STORE,
-
-    EN_VALUE_EOL // 0x00
 } ENUM_VALUE_TYPE;
 
 typedef enum
@@ -454,6 +454,7 @@ extern char *g_pcCustomTable1;
 extern char *g_pcCustomTable2;
 extern char *g_pcCustomTable3;
 extern int g_iTrimSpace;
+extern int g_iPrintUnresolvedIds;
 extern int g_iCompactOutput;
 
 extern int File_GetFileSize(char *pcFileName);
@@ -563,8 +564,7 @@ extern char *UniqueItems2_ExternList[];
 
 extern int String_StripFileName(char *pcInput, char *pcOutput, unsigned int iSize);
 extern int String_BuildName(char *pcNameFormat, int iNameSize, char cNameSeparator, unsigned int iStingId, char *pcTemplate, char *pcName, unsigned int iLine, fnHaveName pfnHaveName, char* acOutput);
-extern char *String_FindString(unsigned int id, char* pcFilter);
-extern char *String_FindString_2(unsigned int id, char* pcFilter, char* pcFilter2);
+extern char *String_FindString(unsigned int id, char* pcFilter, char* pcFilter2);
 extern char *String_GetString(unsigned int id, char* pcFilter, char* pcFilter2);
 
 extern int Cubemain_ProcessInput(void *vInput, char *pcOutput);

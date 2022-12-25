@@ -644,7 +644,7 @@ func = 28—— +[value] [技能名]
 
 typedef struct
 {//total 324 bytes
-    unsigned short vID;
+    unsigned short vStat;
     unsigned char pad0x02[2];
 
 #if 1
@@ -746,7 +746,7 @@ typedef struct
 
 static char *m_apcInternalProcess[] =
 {
-    "Stat",
+    "ID",
     NULL,
 };
 
@@ -756,22 +756,22 @@ static ST_ITEM_STATES *m_astItemStates = NULL;
 MODULE_SETLINES_FUNC(m_astItemStates, ST_ITEM_STATES);
 MODULE_HAVENAME_FUNC(m_astItemStates, vStat, m_iItemStatesCount);
 
-static int ItemStatCost_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
+static int ItemStatCost_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
     if ( !stricmp(acKey, "Stat") )
     {
-        if ( !String_BuildName(FORMAT(itemstatcost), pstLineInfo->vdescstrpos, pcTemplate, NAME_PREFIX, pstLineInfo->vID, MODULE_HAVENAME, acOutput) )
+        if ( !String_BuildName(FORMAT(itemstatcost), pstLineInfo->vdescstrpos, pcTemplate, NAME_PREFIX, pstLineInfo->vStat, MODULE_HAVENAME, acOutput) )
         {
-            sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vID);
+            sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vStat);
         }
 
-        m_astItemStates[pstLineInfo->vID].vdescstrpos = pstLineInfo->vdescstrpos;
-        m_astItemStates[pstLineInfo->vID].vdgrp = pstLineInfo->vdgrp;
-        m_astItemStates[pstLineInfo->vID].vdgrpstrpos = pstLineInfo->vdgrpstrpos;
-        strncpy(m_astItemStates[pstLineInfo->vID].vStat, acOutput, sizeof(m_astItemStates[pstLineInfo->vID].vStat));
-        String_Trim(m_astItemStates[pstLineInfo->vID].vStat);
+        m_astItemStates[pstLineInfo->vStat].vdescstrpos = pstLineInfo->vdescstrpos;
+        m_astItemStates[pstLineInfo->vStat].vdgrp = pstLineInfo->vdgrp;
+        m_astItemStates[pstLineInfo->vStat].vdgrpstrpos = pstLineInfo->vdgrpstrpos;
+        strncpy(m_astItemStates[pstLineInfo->vStat].vStat, acOutput, sizeof(m_astItemStates[pstLineInfo->vStat].vStat));
+        String_Trim(m_astItemStates[pstLineInfo->vStat].vStat);
         m_iItemStatesCount++;
         return 1;
     }
@@ -783,9 +783,9 @@ static int ItemStatCost_FieldProc(void *pvLineInfo, char *acKey, unsigned int iL
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !stricmp(acKey, "Stat") )
+    if ( !stricmp(acKey, "ID") )
     {
-        strncpy(acOutput, m_astItemStates[pstLineInfo->vID].vStat, sizeof(m_astItemStates[pstLineInfo->vID].vStat));
+        sprintf(acOutput, "%u", pstLineInfo->vStat);
 
         return 1;
     }
@@ -797,7 +797,7 @@ static char *ItemStatCost_GetKey(void *pvLineInfo, char *pcKey, unsigned int *iK
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    sprintf(pcKey, "%u", pstLineInfo->vID);
+    sprintf(pcKey, "%u", pstLineInfo->vStat);
     *iKeyLen = (unsigned int)strlen(pcKey);
 
     return pcKey;
@@ -807,7 +807,7 @@ static void ItemStatCost_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *p
 {
     INIT_VALUE_BUFFER;
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ID, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat, USHORT_ITEMSTAT);
 
     VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, CSvSigned, CombinedBits2, 5, UCHAR_BIT);
     VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, Saved, CombinedBits2, 4, UCHAR_BIT);
@@ -901,8 +901,8 @@ int process_itemstatcost(char *acTemplatePath, char *acBinPath, char *acTxtPath,
 
             m_iItemStatesCount = 0;
 
+            m_stCallback.pfnConvertValue = ItemStatCost_ConvertValue;
             //m_stCallback.pfnGetKey = ItemStatCost_GetKey;
-            m_stCallback.pfnFieldProc = ItemStatCost_FieldProc_Pre;
             m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
             m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;

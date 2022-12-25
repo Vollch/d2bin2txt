@@ -348,7 +348,8 @@ constants表格整理，即金怪、头目怪及其喽啰的能力提升值（1.
 
 typedef struct
 {
-    unsigned int vid;
+    unsigned short vuniquemod;
+    unsigned char pad0x02[2];
 
     unsigned short vversion;
     unsigned char venabled;
@@ -368,14 +369,14 @@ typedef struct
     unsigned short vupickmyspmybr1Nmybr2;
 
     unsigned short vupickmyspmybr1Hmybr2;
-    unsigned short iPadding6;
+    unsigned char pad0x1A[2];
 
     unsigned int vconstants;
 } ST_LINE_INFO;
 
 static char *m_apcInternalProcess[] =
 {
-    "uniquemod",
+    "id",
     NULL,
 };
 
@@ -386,16 +387,30 @@ static char *m_apcNotUsed[] =
     NULL,
 };
 
-static int MonUMOD_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
+static int MonUMOD_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
     if ( !stricmp(acKey, "uniquemod") )
     {
-        if ( !String_BuildName(FORMAT(monumod), 0xFFFF, pcTemplate, NAME_PREFIX, pstLineInfo->vid, NULL, acOutput) )
+        if ( !String_BuildName(FORMAT(monumod), 0xFFFF, pcTemplate, NAME_PREFIX, pstLineInfo->vuniquemod, NULL, acOutput) )
         {
-            sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vid);
+            sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vuniquemod);
         }
+
+        return 1;
+    }
+
+    return 0;
+}
+
+static int MonUMOD_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
+{
+    ST_LINE_INFO *pstLineInfo = pvLineInfo;
+
+    if ( !stricmp(acKey, "id") )
+    {
+        sprintf(acOutput, "%u", pstLineInfo->vuniquemod);
 
         return 1;
     }
@@ -413,7 +428,7 @@ int process_monumod(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
 
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, id, UINT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, uniquemod, USHORT);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, version, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, enabled, UCHAR);
@@ -450,9 +465,10 @@ int process_monumod(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
             break;
 
         case EN_MODULE_INIT:
+            m_stCallback.pfnConvertValue = MonUMOD_ConvertValue;
             m_stCallback.pfnFieldProc = MonUMOD_FieldProc;
-            m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
             m_stCallback.ppcKeyInternalProcess = isD2SigmaActive() ? MonUModExp_ExternList : m_apcInternalProcess;
+            m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
 
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);

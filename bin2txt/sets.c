@@ -152,13 +152,11 @@ Eol：行结束标志，必须填0。
 
 typedef struct
 {
-    unsigned short wSetId;
+    unsigned short vindex;
     unsigned short vname;   //strings
 
-    unsigned int vversion;
-
-    unsigned int iPadding2;
-    unsigned int dwSetItems;
+    unsigned short vversion;
+    unsigned char pad0x06[10];
 
     unsigned int vPCode2a;   //properties
     int vPParam2a;  //skills
@@ -240,13 +238,7 @@ typedef struct
     int vFMin8;
     int vFMax8;
 
-    unsigned int iPadding68;    //D2SetItemsTxt* pSetItem1
-    unsigned int iPadding69;
-
-    unsigned int iPadding70;
-    unsigned int iPadding71;
-    unsigned int iPadding72;
-    unsigned int iPadding73;
+    unsigned char pad0x110[24];    //D2SetItemsTxt* pSetItem1
 } ST_LINE_INFO;
 
 typedef struct
@@ -256,12 +248,6 @@ typedef struct
     int vPMin2a;
     int vPMax2a;
 } ST_SET_CODE;
-
-static char *m_apcInternalProcess[] =
-{
-    "index",
-    NULL,
-};
 
 static char *m_apcNotUsed[] =
 {
@@ -290,43 +276,29 @@ char *Sets_GetSetName(unsigned int id)
     return NULL;
 }
 
-static int Sets_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
+static int Sets_ConvertValue_Pre(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
     char *pcResult;
 
     if ( !stricmp(acKey, "index") )
     {
-        if ( !String_BuildName(FORMAT(sets), pstLineInfo->vname, pcTemplate, NAME_PREFIX, pstLineInfo->wSetId, MODULE_HAVENAME, acOutput) )
+        if ( !String_BuildName(FORMAT(sets), pstLineInfo->vname, pcTemplate, NAME_PREFIX, pstLineInfo->vindex, MODULE_HAVENAME, acOutput) )
         {
-            pcResult = String_FindString(pstLineInfo->vname, "dummy");
+            pcResult = String_FindString(pstLineInfo->vname, "dummy", NULL);
             if ( pcResult )
             {
                 strcpy(acOutput, pcResult);
             }
             else
             {
-                sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->wSetId);
+                sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vindex);
             }
         }
 
-        strncpy(m_astSets[pstLineInfo->wSetId].vindex, acOutput, sizeof(m_astSets[pstLineInfo->wSetId].vindex));
-        String_Trim(m_astSets[pstLineInfo->wSetId].vindex);
+        strncpy(m_astSets[pstLineInfo->vindex].vindex, acOutput, sizeof(m_astSets[pstLineInfo->vindex].vindex));
+        String_Trim(m_astSets[pstLineInfo->vindex].vindex);
         m_iSetCount++;
-
-        return 1;
-    }
-
-    return 0;
-}
-
-static int Sets_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
-{
-    ST_LINE_INFO *pstLineInfo = pvLineInfo;
-
-    if ( !stricmp(acKey, "index") )
-    {
-        strncpy(acOutput, m_astSets[pstLineInfo->wSetId].vindex, sizeof(m_astSets[pstLineInfo->wSetId].vindex));
 
         return 1;
     }
@@ -475,86 +447,87 @@ static void Sets_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLineIn
 {
     INIT_VALUE_BUFFER;
 
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, index, USHORT_SET);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, name, USHORT_STRING);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, version, UINT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, version, USHORT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PCode2a, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PCode2a, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PParam2a, INT);  //skills
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PMin2a, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PMax2a, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PCode2b, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PCode2b, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PParam2b, INT);  //skills
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PMin2b, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PMax2b, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PCode3a, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PCode3a, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PParam3a, INT);  //skills
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PMin3a, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PMax3a, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PCode3b, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PCode3b, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PParam3b, INT);  //skills
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PMin3b, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PMax3b, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PCode4a, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PCode4a, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PParam4a, INT);  //skills
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PMin4a, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PMax4a, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PCode4b, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PCode4b, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PParam4b, INT);  //skills
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PMin4b, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PMax4b, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PCode5a, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PCode5a, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PParam5a, INT);  //skills
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PMin5a, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PMax5a, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PCode5b, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PCode5b, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PParam5b, INT);  //skills
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PMin5b, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PMax5b, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FCode1, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FCode1, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FParam1, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FMin1, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FMax1, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FCode2, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FCode2, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FParam2, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FMin2, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FMax2, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FCode3, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FCode3, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FParam3, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FMin3, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FMax3, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FCode4, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FCode4, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FParam4, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FMin4, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FMax4, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FCode5, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FCode5, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FParam5, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FMin5, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FMax5, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FCode6, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FCode6, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FParam6, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FMin6, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FMax6, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FCode7, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FCode7, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FParam7, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FMin7, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FMax7, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FCode8, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FCode8, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FParam8, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FMin8, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FMax8, INT);
@@ -579,10 +552,9 @@ int process_sets(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MO
 
             m_iSetCount = 0;
 
-            m_stCallback.pfnFieldProc = Sets_FieldProc_Pre;
+            m_stCallback.pfnConvertValue = Sets_ConvertValue_Pre;
             m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
             m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
-            m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
 
             return process_file(acTemplatePath, acBinPath, NULL, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
@@ -600,8 +572,6 @@ int process_sets(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MO
             Sets_InitValueMap(pstValueMap, pstLineInfo);
 
             m_stCallback.pfnConvertValue = Sets_ConvertValue;
-            m_stCallback.pfnFieldProc = Sets_FieldProc;
-            m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
 
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 

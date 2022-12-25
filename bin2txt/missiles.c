@@ -706,7 +706,8 @@ EOL：行尾标志，必须为0。
 
 typedef struct
 {
-    unsigned int vId;
+    unsigned short vMissile;
+    unsigned char pad0x02[2];
 
 #if 1
     unsigned short vBitCombined;
@@ -729,7 +730,7 @@ typedef struct
     unsigned short vLastCollide : 1;
 #endif
 
-    unsigned short wPadding;
+    unsigned char pad0x06[2];
 
     unsigned short vpCltDoFunc;
     unsigned short vpCltHitFunc;
@@ -945,7 +946,7 @@ static char *m_apcNotUsed[] =
 
 static char *m_apcInternalProcess[] = 
 {
-    "Missile",
+    "Id",
     NULL,
 };
 
@@ -955,7 +956,7 @@ static ST_MISSILES *m_astMissiles = NULL;
 MODULE_SETLINES_FUNC(m_astMissiles, ST_MISSILES);
 MODULE_HAVENAME_FUNC(m_astMissiles, vMissile, m_iMisslesCount);
 
-static int Missiles_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
+static int Missiles_ConvertValue_Pre(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
@@ -963,13 +964,13 @@ static int Missiles_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iL
     {
         char acName[33] = {0};
         String_StripFileName(pstLineInfo->vCelFile, acName, 32);
-        if ( !String_BuildName(FORMAT(missiles), 0xFFFF, pcTemplate, acName, pstLineInfo->vId, MODULE_HAVENAME, acOutput) )
+        if ( !String_BuildName(FORMAT(missiles), 0xFFFF, pcTemplate, acName, pstLineInfo->vMissile, MODULE_HAVENAME, acOutput) )
         {
-            sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vId);
+            sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vMissile);
         }
 
-        strncpy(m_astMissiles[pstLineInfo->vId].vMissile, acOutput, sizeof(m_astMissiles[pstLineInfo->vId].vMissile));
-        String_Trim(m_astMissiles[pstLineInfo->vId].vMissile);
+        strncpy(m_astMissiles[pstLineInfo->vMissile].vMissile, acOutput, sizeof(m_astMissiles[pstLineInfo->vMissile].vMissile));
+        String_Trim(m_astMissiles[pstLineInfo->vMissile].vMissile);
         m_iMisslesCount++;
         return 1;
     }
@@ -981,9 +982,9 @@ static int Missiles_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineN
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !stricmp(acKey, "Missile") )
+    if ( !stricmp(acKey, "Id") )
     {
-        strncpy(acOutput, m_astMissiles[pstLineInfo->vId].vMissile, sizeof(m_astMissiles[pstLineInfo->vId].vMissile));
+        sprintf(acOutput, "%u", pstLineInfo->vMissile);
 
         return 1;
     }
@@ -1027,7 +1028,7 @@ int process_missiles(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
 
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Id, UINT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Missile, USHORT_MISSILE);
 
     VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, MissileSkill, BitCombined, 15, USHORT_BIT);
     VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, Half2HSrc, BitCombined, 14, USHORT_BIT);
@@ -1227,11 +1228,11 @@ int process_missiles(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
             break;
 
         case EN_MODULE_SELF_DEPEND:
-            m_stCallback.pfnFieldProc = Missiles_FieldProc_Pre;
+            m_stCallback.pfnConvertValue = Missiles_ConvertValue_Pre;
             m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
             m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
-            m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
             m_stCallback.ppcKeyInternalProcess = isD2SigmaActive() ? Missiles2_ExternList : m_apcInternalProcess;
+            m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
 
             m_iMisslesCount = 0;
 
@@ -1251,8 +1252,8 @@ int process_missiles(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
         case EN_MODULE_INIT:
             m_stCallback.pfnFieldProc = Missiles_FieldProc;
             m_stCallback.pfnConvertValue = Missiles_ConvertValue;
-            m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
             m_stCallback.ppcKeyInternalProcess = isD2SigmaActive() ? Missiles2_ExternList : m_apcInternalProcess;
+            m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
 
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo),
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);

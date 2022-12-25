@@ -501,7 +501,7 @@ typedef struct
 
     char vgridX;
     char vgridY;
-    unsigned short iPadding4;
+    unsigned char pad0x12[2];
 
     int vgridLeft;
     int vgridRight;
@@ -510,7 +510,7 @@ typedef struct
 
     char vgridBoxWidth;
     char vgridBoxHeight;
-    unsigned short iPadding9;
+    unsigned char pad0x26[2];
 
     int vrArmLeft;
     int vrArmRight;
@@ -519,7 +519,7 @@ typedef struct
 
     char vrArmWidth;
     char vrArmHeight;
-    unsigned short iPadding14;
+    unsigned char pad0x3A[2];
 
     int vtorsoLeft;
     int vtorsoRight;
@@ -528,7 +528,7 @@ typedef struct
 
     char vtorsoWidth;
     char vtorsoHeight;
-    unsigned short iPadding19;
+    unsigned char pad0x4E[2];
 
     int vlArmLeft;
     int vlArmRight;
@@ -537,7 +537,7 @@ typedef struct
 
     char vlArmWidth;
     char vlArmHeight;
-    unsigned short iPadding24;
+    unsigned char pad0x62[2];
 
     int vheadLeft;
     int vheadRight;
@@ -546,7 +546,7 @@ typedef struct
 
     char vheadWidth;
     char vheadHeight;
-    unsigned short iPadding29;
+    unsigned char pad0x76[2];
 
     int vneckLeft;
     int vneckRight;
@@ -555,7 +555,7 @@ typedef struct
 
     char vneckWidth;
     char vneckHeight;
-    unsigned short iPadding34;
+    unsigned char pad0x8A[2];
 
     int vrHandLeft;
     int vrHandRight;
@@ -564,7 +564,7 @@ typedef struct
 
     char vrHandWidth;
     char vrHandHeight;
-    unsigned short iPadding39;
+    unsigned char pad0x9E[2];
 
     int vlHandLeft;
     int vlHandRight;
@@ -573,7 +573,7 @@ typedef struct
 
     char vlHandWidth;
     char vlHandHeight;
-    unsigned short iPadding44;
+    unsigned char pad0xB2[2];
 
     int vbeltLeft;
     int vbeltRight;
@@ -582,7 +582,7 @@ typedef struct
 
     char vbeltWidth;
     char vbeltHeight;
-    unsigned short iPadding49;
+    unsigned char pad0xC6[2];
 
     int vfeetLeft;
     int vfeetRight;
@@ -591,7 +591,7 @@ typedef struct
 
     char vfeetWidth;
     char vfeetHeight;
-    unsigned short iPadding54;
+    unsigned char pad0xDA[2];
 
     int vglovesLeft;
     int vglovesRight;
@@ -600,7 +600,7 @@ typedef struct
 
     char vglovesWidth;
     char vglovesHeight;
-    unsigned short iPadding59;
+    unsigned char pad0xEE[2];
 } ST_LINE_INFO;
 
 static char *m_apcInternalProcess[] =

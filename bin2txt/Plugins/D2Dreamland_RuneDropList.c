@@ -24,7 +24,7 @@ static int RuneDropList_FieldProc(void *pvLineInfo, char *acKey, unsigned int iL
 
     if ( !stricmp(acKey, "*desc") )
     {
-        unsigned char acCode[5] = {0};
+        char acCode[5] = {0};
         strncpy(acCode, pstLineInfo->vItemCode, sizeof(pstLineInfo->vItemCode));
         String_Trim(acCode);
 

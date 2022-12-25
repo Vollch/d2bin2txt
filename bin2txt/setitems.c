@@ -286,17 +286,14 @@ aMax1a：属性1a的最大值参数。
 
 typedef struct
 {
-    unsigned short wSetItemId;
+    unsigned char pad0x00[2];
     unsigned char vindex[32];
-
-    unsigned short iPadding8;
-
-    unsigned int dwTblIndex;
+    unsigned char pad0x22[6];
 
     unsigned char vitem[4];
 
     unsigned short vset;  //sets.txt
-    unsigned short sPad1;
+    unsigned char pad0x2E[2];
 
     unsigned short vlvl;
     unsigned short vlvlmyspreq;
@@ -422,7 +419,7 @@ typedef struct
     unsigned char vindex[32];
 } ST_SETITEMS;
 
-static char *m_apcNotUsed[] =
+static char *m_apcInternalProcess[] =
 {
     "*item",
     NULL,
@@ -443,6 +440,30 @@ char *SetItems_GetItemUniqueCode(unsigned int id)
     return NULL;
 }
 
+static int SetItems_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
+{
+    ST_LINE_INFO *pstLineInfo = pvLineInfo;
+
+    if ( !stricmp(acKey, "*item") )
+    {
+        char acName[33] = {0};
+        char acCode[5] = {0};
+
+        strncpy(acName, pstLineInfo->vindex, sizeof(pstLineInfo->vindex));
+        strncpy(acCode, pstLineInfo->vitem, sizeof(pstLineInfo->vitem));
+        String_Trim(acCode);
+
+        if ( !String_BuildName(FORMAT(setitems), Misc_GetItemString2(acCode), pcTemplate, acName, iLineNo, NULL, acOutput) )
+        {
+            strncpy(acOutput, pstLineInfo->vitem, sizeof(pstLineInfo->vitem));
+        }
+
+        return 1;
+    }
+
+    return 0;
+}
+
 static int SetItems_ConvertValue_Pre(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
@@ -457,7 +478,7 @@ static int SetItems_ConvertValue_Pre(void *pvLineInfo, char *acKey, char *pcTemp
     return 0;
 }
 
-static int SetItems_ConverValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
+static int SetItems_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
     char *pcResult;
@@ -587,92 +608,92 @@ int process_setitems(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dropsfxframe, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, addmyspfunc, UCHAR);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop1, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop1, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, par1, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, min1, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, max1, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop2, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop2, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, par2, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, min2, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, max2, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop3, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop3, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, par3, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, min3, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, max3, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop4, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop4, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, par4, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, min4, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, max4, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop5, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop5, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, par5, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, min5, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, max5, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop6, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop6, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, par6, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, min6, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, max6, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop7, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop7, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, par7, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, min7, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, max7, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop8, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop8, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, par8, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, min8, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, max8, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop9, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop9, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, par9, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, min9, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, max9, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, aprop1a, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, aprop1a, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, apar1a, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, amin1a, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, amax1a, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, aprop1b, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, aprop1b, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, apar1b, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, amin1b, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, amax1b, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, aprop2a, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, aprop2a, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, apar2a, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, amin2a, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, amax2a, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, aprop2b, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, aprop2b, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, apar2b, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, amin2b, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, amax2b, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, aprop3a, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, aprop3a, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, apar3a, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, amin3a, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, amax3a, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, aprop3b, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, aprop3b, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, apar3b, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, amin3b, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, amax3b, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, aprop4a, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, aprop4a, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, apar4a, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, amin4a, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, amax4a, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, aprop4b, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, aprop4b, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, apar4b, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, amin4b, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, amax4b, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, aprop5a, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, aprop5a, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, apar5a, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, amin5a, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, amax5a, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, aprop5b, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, aprop5b, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, apar5b, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, amin5b, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, amax5b, INT);
@@ -690,7 +711,7 @@ int process_setitems(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
             m_stCallback.pfnConvertValue = SetItems_ConvertValue_Pre;
             m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
             m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
-            m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
+            m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
             return process_file(acTemplatePath, acBinPath, NULL, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);
@@ -702,11 +723,13 @@ int process_setitems(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
             MODULE_DEPEND_CALL(sounds, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(properties, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(skills, acTemplatePath, acBinPath, acTxtPath);
+            MODULE_DEPEND_CALL(misc, acTemplatePath, acBinPath, acTxtPath);
             break;
 
         case EN_MODULE_INIT:
-            m_stCallback.pfnConvertValue = SetItems_ConverValue;
-            m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
+            m_stCallback.pfnConvertValue = SetItems_ConvertValue;
+            m_stCallback.pfnFieldProc = SetItems_FieldProc;
+            m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);

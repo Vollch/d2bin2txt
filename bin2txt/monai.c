@@ -5,12 +5,19 @@
 
 typedef struct
 {
-    unsigned short vIndex;
+    unsigned short vAI;
 } ST_LINE_INFO;
 
-static char *m_apcInternalProcess[] =
+static char *m_apcNotUsed[] =
 {
-    "all over in",
+    "*aip1",
+    "*aip2",
+    "*aip3",
+    "*aip4",
+    "*aip5",
+    "*aip6",
+    "*aip7",
+    "*aip8",
     NULL,
 };
 
@@ -25,18 +32,18 @@ static ST_MON_AI *m_astMonAi = NULL;
 MODULE_SETLINES_FUNC(m_astMonAi, ST_MON_AI);
 MODULE_HAVENAME_FUNC(m_astMonAi, vAI, m_iMonAiCount);
 
-static int MonAI_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
+static int MonAI_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
     if ( !stricmp(acKey, "AI") )
     {
-        if ( !String_BuildName(FORMAT(monai), 0xFFFF, pcTemplate, NAME_PREFIX, pstLineInfo->vIndex, MODULE_HAVENAME, acOutput) )
+        if ( !String_BuildName(FORMAT(monai), 0xFFFF, pcTemplate, NAME_PREFIX, pstLineInfo->vAI, MODULE_HAVENAME, acOutput) )
         {
-            sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vIndex);
+            sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vAI);
         }
 
-        strncpy(m_astMonAi[pstLineInfo->vIndex].vAI, acOutput, sizeof(m_astMonAi[pstLineInfo->vIndex].vAI));
+        strncpy(m_astMonAi[pstLineInfo->vAI].vAI, acOutput, sizeof(m_astMonAi[pstLineInfo->vAI].vAI));
         m_iMonAiCount++;
         return 1;
     }
@@ -49,7 +56,7 @@ static char *MonAI_GetKey(void *pvLineInfo, char *pcKey, unsigned int *iKeyLen)
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
     memset(pcKey, 0, sizeof(pcKey));
-    sprintf(pcKey, "%u", pstLineInfo->vIndex);
+    sprintf(pcKey, "%u", pstLineInfo->vAI);
     *iKeyLen = (unsigned int)strlen(pcKey);
 
     return pcKey;
@@ -61,7 +68,9 @@ int process_monai(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_M
 
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Index, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, AI, USHORT_MONAI);
+
+    VALUE_MAP_DEFINE_VIRT(pstValueMap, pstLineInfo, myasteol, EOL);
 
     switch ( enPhase )
     {
@@ -72,10 +81,10 @@ int process_monai(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_M
             m_iMonAiCount = 0;
 
             //m_stCallback.pfnGetKey = MonAI_GetKey;
-            m_stCallback.pfnFieldProc = MonAI_FieldProc;
+            m_stCallback.pfnConvertValue = MonAI_ConvertValue;
             m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
             m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
-            m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
+            m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
 
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);

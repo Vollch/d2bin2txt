@@ -261,10 +261,10 @@ Max1：第一个属性的最大值。如乔丹之石此列为20。表示最多�
 
 typedef struct
 {
-    unsigned short iPadding0;
+    unsigned char pad0x00[2];
     unsigned char vindex[32];
 
-    unsigned short iPadding8;
+    unsigned char pad0x22[2];
     unsigned int vversion;
 
     unsigned char vcode[4];
@@ -281,9 +281,10 @@ typedef struct
     unsigned char venabled : 1;
 #endif
 
-    unsigned char iPadding11[3];
+    unsigned char pad0x2D[3];
 
-    unsigned int vrarity;
+    unsigned short vrarity;
+    unsigned char pad0x32[2];
 
     unsigned short vlvl;
     unsigned short vlvlmyspreq;
@@ -294,7 +295,7 @@ typedef struct
 
     unsigned char vinvfile[32];
 
-    unsigned short iPadding30;
+    unsigned char pad0x7A[2];
 
     unsigned int vcostmyspmult;
 
@@ -401,7 +402,7 @@ char *UniqueItems_GetItemUniqueCode(unsigned int id)
     return NULL;
 }
 
-static int UniqueItems_ConvertValue_Pre(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
+static int UniqueItems_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
@@ -436,7 +437,7 @@ int process_uniqueitems(char *acTemplatePath, char *acBinPath, char *acTxtPath, 
     VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, nolimit, BitCombined, 1, UCHAR_BIT);
     VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, enabled, BitCombined, 0, UCHAR_BIT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, rarity, UINT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, rarity, USHORT);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, lvl, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, lvlmyspreq, USHORT);
@@ -456,62 +457,62 @@ int process_uniqueitems(char *acTemplatePath, char *acBinPath, char *acTxtPath, 
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dropsfxframe, UINT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop1, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop1, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, par1, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, min1, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, max1, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop2, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop2, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, par2, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, min2, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, max2, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop3, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop3, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, par3, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, min3, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, max3, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop4, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop4, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, par4, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, min4, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, max4, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop5, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop5, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, par5, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, min5, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, max5, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop6, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop6, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, par6, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, min6, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, max6, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop7, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop7, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, par7, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, min7, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, max7, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop8, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop8, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, par8, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, min8, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, max8, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop9, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop9, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, par9, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, min9, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, max9, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop10, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop10, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, par10, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, min10, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, max10, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop11, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop11, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, par11, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, min11, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, max11, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop12, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, prop12, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, par12, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, min12, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, max12, INT);
@@ -527,10 +528,15 @@ int process_uniqueitems(char *acTemplatePath, char *acBinPath, char *acTxtPath, 
         case EN_MODULE_SELF_DEPEND:
             m_uiUniqueItemCount = 0;
 
-            m_stCallback.pfnConvertValue = UniqueItems_ConvertValue_Pre;
+            m_stCallback.pfnConvertValue = UniqueItems_ConvertValue;
             m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
             m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
+
+            if ( isD2SigmaActive() )
+            {
+                m_stCallback.ppcKeyInternalProcess = UniqueItems2_ExternList;
+            }
 
             return process_file(acTemplatePath, acBinPath, NULL, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);

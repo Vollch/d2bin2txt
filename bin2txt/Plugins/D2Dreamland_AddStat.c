@@ -48,11 +48,11 @@ int process_AddStat(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, softcore, CHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, chance, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sound, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, modcode1, UINT_PROPERTY);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, modcode2, UINT_PROPERTY);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, modcode3, UINT_PROPERTY);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, modcode4, UINT_PROPERTY);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, modcode5, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, modcode1, USHORT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, modcode2, USHORT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, modcode3, USHORT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, modcode4, USHORT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, modcode5, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, modparam1, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, modparam2, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, modparam3, UINT);

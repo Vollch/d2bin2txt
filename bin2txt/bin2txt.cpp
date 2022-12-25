@@ -181,6 +181,7 @@ char *g_pcCustomTable1 = NULL;
 char *g_pcCustomTable2 = NULL;
 char *g_pcCustomTable3 = NULL;
 int g_iTrimSpace = 0;
+int g_iPrintUnresolvedIds = 0;
 int g_iCompactOutput = 0;
 
 void Init_Settings(char* acTemplatePath, char* acBinPath, char* acTxtPath)
@@ -204,6 +205,9 @@ void Init_Settings(char* acTemplatePath, char* acBinPath, char* acTxtPath)
 
     GetPrivateProfileString("GENERAL", "TrimSpace", "0", acIniBuff, sizeof(acIniBuff), pcIniFile);
     g_iTrimSpace = atoi(acIniBuff);
+
+    GetPrivateProfileString("GENERAL", "PrintUnresolvedId", "0", acIniBuff, sizeof(acIniBuff), pcIniFile);
+    g_iPrintUnresolvedIds = atoi(acIniBuff);
 
     GetPrivateProfileString("GENERAL", "CompactOutput", "0", acIniBuff, sizeof(acIniBuff), pcIniFile);
     g_iCompactOutput = atoi(acIniBuff);

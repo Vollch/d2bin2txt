@@ -394,7 +394,7 @@ int String_BuildName(char *pcNameFormat, int iNameSize, char cNameSeparator, uns
         iStringFlag = 0;
         if ( !strncmp(pcFormatPos, "%S", 2) )
         {
-            pcTemp = String_FindString_2(iStingId, "dummy", "Dummy");
+            pcTemp = String_FindString(iStingId, "dummy", "Dummy");
             iStringFlag = 1;
         }
         else if ( !strncmp(pcFormatPos, "%s", 2) )
@@ -444,6 +444,7 @@ int String_BuildName(char *pcNameFormat, int iNameSize, char cNameSeparator, uns
                         return 0;
                     pcFormatPos = pcTemp + 1;
                     pcOutPos = acOutput;
+                    iTemplateFlag = 1;
                 }
             }
             else if ( !strncmp(pcFormatPos, "%l", 2) )
@@ -453,7 +454,24 @@ int String_BuildName(char *pcNameFormat, int iNameSize, char cNameSeparator, uns
                 pcFormatPos += 2;
                 iTemplateFlag = 0;
             }
-            else if ( *pcFormatPos == '|')
+            else if ( !strncmp(pcFormatPos, "%L", 2) )
+            {
+                unsigned int iCheckLine = atoi(acOutput);
+                memset(acOutput, 0, strlen(acOutput));
+                pcOutPos = acOutput;
+                if ( iLine == iCheckLine )
+                {
+                    pcFormatPos += 2;
+                }
+                else
+                {
+                    if ( !(pcTemp = strchr(pcFormatPos, '|')) )
+                        return 0;
+                    pcFormatPos = pcTemp + 1;
+                    iTemplateFlag = 1;
+                }
+            }
+            else if ( *pcFormatPos == '|' )
             {
                 break;
             }
@@ -497,29 +515,7 @@ int String_BuildName(char *pcNameFormat, int iNameSize, char cNameSeparator, uns
     return 1;
 }
 
-char *String_FindString(unsigned int id, char* pcFilter)
-{
-    ST_STRING *pcResult = String_ResolveID(id);
-
-    if ( !pcResult )
-    {
-        return NULL;
-    }
-
-    if ( !strcmp("DescBlank", pcResult->vString) )
-    {
-        printf("\r\n======%d======\r\n", id);
-    }
-
-    if ( NULL != pcFilter && !strcmp(pcResult->vString, pcFilter) )
-    {
-        return NULL;
-    }
-
-    return pcResult->vString;
-}
-
-char *String_FindString_2(unsigned int id, char* pcFilter, char* pcFilter2)
+char *String_FindString(unsigned int id, char* pcFilter, char* pcFilter2)
 {
     ST_STRING *pcResult = String_ResolveID(id);
 

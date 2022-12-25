@@ -227,7 +227,7 @@ max buy (H)：地狱难度下在此NPC处出售物品时的最高价格。
 typedef struct
 {
     unsigned short vnpc;  //monstats
-    unsigned short sPad1;
+    unsigned char pad0x02[2];
 
     unsigned int vsellmyspmult;
     unsigned int vbuymyspmult;

@@ -448,7 +448,7 @@ The values that you can put in the C1 column for skilldesc 40 and a couple of ot
 
 typedef struct
 {//total 288 bytes
-    unsigned short wSkillDesc;
+    unsigned short vskilldesc;
     unsigned char vSkillPage;
     unsigned char vSkillRow;
 
@@ -469,7 +469,7 @@ typedef struct
     unsigned short vdescdam;
 
     unsigned short vdescatt;
-    char acPadding20[2];
+    unsigned char pad0x16[2];
 
     unsigned int vddammyspcalc1;    //skilldesccode
     unsigned int vddammyspcalc2;
@@ -477,7 +477,7 @@ typedef struct
     unsigned char vp1dmelem; //elemtypes
     unsigned char vp2dmelem; //elemtypes
     unsigned char vp3dmelem; //elemtypes
-    char acPadding2;
+    unsigned char pad0x23;
 
     unsigned int vp1dmmin;  //skilldesccode
     unsigned int vp2dmmin;
@@ -511,7 +511,7 @@ typedef struct
     unsigned char vdsc3line5;
     unsigned char vdsc3line6;
     unsigned char vdsc3line7;
-    unsigned char bPadding20;
+    unsigned char pad0x53;
 
     //0-9999 string.txt 10000-19999 patchstring.txt 20000- expansionstring.txt
     unsigned short vdesctexta1;
@@ -610,47 +610,27 @@ typedef struct
     unsigned short vstrmyspname;
 } ST_SKILL_DESC;
 
-static char *m_apcInternalProcess[] = 
-{
-    "skilldesc",
-    NULL,
-};
-
 static unsigned int m_iSkillDescCount = 0;
 static ST_SKILL_DESC *m_astSkillDesc = NULL;
 
 MODULE_SETLINES_FUNC(m_astSkillDesc, ST_SKILL_DESC);
 MODULE_HAVENAME_FUNC(m_astSkillDesc, vskilldesc, m_iSkillDescCount);
 
-static int SkillDesc_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
+static int SkillDesc_ConvertValue_Pre(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
     if ( !stricmp(acKey, "skilldesc") )
     {
-        if ( !String_BuildName(FORMAT(skilldesc), pstLineInfo->vstrmyspname, pcTemplate, NAME_PREFIX, pstLineInfo->wSkillDesc, MODULE_HAVENAME, acOutput) )
+        if ( !String_BuildName(FORMAT(skilldesc), pstLineInfo->vstrmyspname, pcTemplate, NAME_PREFIX, pstLineInfo->vskilldesc, MODULE_HAVENAME, acOutput) )
         {
-            sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->wSkillDesc);
+            sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vskilldesc);
         }
 
-        m_astSkillDesc[pstLineInfo->wSkillDesc].vstrmyspname = pstLineInfo->vstrmyspname;
-        strncpy(m_astSkillDesc[pstLineInfo->wSkillDesc].vskilldesc, acOutput, sizeof(m_astSkillDesc[pstLineInfo->wSkillDesc].vskilldesc));
-        String_Trim(m_astSkillDesc[pstLineInfo->wSkillDesc].vskilldesc);
+        m_astSkillDesc[pstLineInfo->vskilldesc].vstrmyspname = pstLineInfo->vstrmyspname;
+        strncpy(m_astSkillDesc[pstLineInfo->vskilldesc].vskilldesc, acOutput, sizeof(m_astSkillDesc[pstLineInfo->vskilldesc].vskilldesc));
+        String_Trim(m_astSkillDesc[pstLineInfo->vskilldesc].vskilldesc);
         m_iSkillDescCount++;
-        return 1;
-    }
-
-    return 0;
-}
-
-static int SkillDesc_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
-{
-    ST_LINE_INFO *pstLineInfo = pvLineInfo;
-
-    if ( !stricmp(acKey, "skilldesc") )
-    {
-        strncpy(acOutput, m_astSkillDesc[pstLineInfo->wSkillDesc].vskilldesc, sizeof(m_astSkillDesc[pstLineInfo->wSkillDesc].vskilldesc));
-
         return 1;
     }
 
@@ -683,7 +663,7 @@ static int SkillDesc_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplat
 
     if ( !stricmp(acKey, "ListRow") )
     {
-        if ( 255 == pstLineInfo->vListRow )
+        if ( 0xFF == pstLineInfo->vListRow )
         {
             strcpy(acOutput, "-1");
             return 1;
@@ -697,6 +677,7 @@ static void SkillDesc_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstL
 {
     INIT_VALUE_BUFFER;
 
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, skilldesc, USHORT_SKILLDESC);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SkillPage, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SkillRow, UCHAR);
 
@@ -841,10 +822,9 @@ int process_skilldesc(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
 
             m_iSkillDescCount = 0;
 
-            m_stCallback.pfnFieldProc = SkillDesc_FieldProc_Pre;
+            m_stCallback.pfnConvertValue = SkillDesc_ConvertValue_Pre;
             m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
             m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
-            m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
             return process_file(acTemplatePath, acBinPath, NULL, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo),
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);
@@ -862,9 +842,7 @@ int process_skilldesc(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
         case EN_MODULE_INIT:
             SkillDesc_InitValueMap(pstValueMap, pstLineInfo);
 
-            m_stCallback.pfnFieldProc = SkillDesc_FieldProc;
             m_stCallback.pfnConvertValue = SkillDesc_ConvertValue;
-            m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);

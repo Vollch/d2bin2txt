@@ -166,7 +166,7 @@ typedef struct
 
     unsigned char vmod2;
     unsigned char vmod3;
-    unsigned short iPadding6;
+    unsigned char pad0x1A[2];
 } ST_LINE_INFO;
 
 static int MonEquip_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)

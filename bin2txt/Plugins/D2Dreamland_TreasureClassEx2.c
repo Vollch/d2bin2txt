@@ -5,7 +5,8 @@
 #pragma pack(push, 1)
 typedef struct
 {
-    unsigned char vmonster[3];
+    unsigned char bMonType;
+    unsigned short vmonster;
     unsigned int vhcIdx;
     unsigned short vgroup;
     unsigned short vminlevel;
@@ -88,14 +89,13 @@ static int TreasureClassEx2_ConvertValue(void *pvLineInfo, char *acKey, char *pc
 
     if ( !stricmp(acKey, "monster") )
     {
-        unsigned short usMonster = *(unsigned short*)&pstLineInfo->vmonster[1];
         char *pcResult = NULL;
 
-        if ( pstLineInfo->vmonster[0] == 1 && (pcResult = MonStats_GetStatsName(usMonster)))
+        if ( 1 == pstLineInfo->bMonType && (pcResult = MonStats_GetStatsName(pstLineInfo->vmonster)))
         {
             strcpy(acOutput, pcResult);
         }
-        else if ( pstLineInfo->vmonster[0] == 2 && (pcResult = SuperUniques_GetItemUniqueCode(usMonster)))
+        else if ( 2 == pstLineInfo->bMonType && (pcResult = SuperUniques_GetItemUniqueCode(pstLineInfo->vmonster)))
         {
             strcpy(acOutput, pcResult);
         }
@@ -155,9 +155,9 @@ int process_TreasureClassEx2(char *acTemplatePath, char *acBinPath, char *acTxtP
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Enabled, CHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, maxlevel, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, globalprob, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod1, UINT_PROPERTY);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod2, UINT_PROPERTY);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod3, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod1, USHORT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod2, USHORT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod3, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, modchance1, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, modchance2, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, modchance3, INT);

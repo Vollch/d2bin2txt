@@ -30,7 +30,7 @@ int CharStatsExp_ExternProc(void *pvLineInfo, char *acKey, unsigned int iLineNo,
     }
     else if ( !stricmp(acKey, "StrSkillTabs") )
     {
-        char *pcResult = String_FindString(m_astLines[iLineNo].vStrSkillTabs, "dummy");
+        char *pcResult = String_FindString(m_astLines[iLineNo].vStrSkillTabs, "dummy", NULL);
         if ( pcResult )
         {
             strcpy(acOutput, pcResult);

@@ -17,7 +17,7 @@ MODULE_SETLINES_FUNC(m_astLines, ST_LINE_INFO);
 
 char *PetTypeExt_ExternList[] =
 {
-    "pet type",
+    "idx",
     "totem",
     "InheritLaek",
     NULL,

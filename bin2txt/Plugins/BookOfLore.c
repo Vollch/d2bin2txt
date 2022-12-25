@@ -18,7 +18,7 @@ typedef struct
 
     unsigned char vTown;
     unsigned char vAllSame;
-    unsigned char acPad[2];
+    unsigned char pad0x0E[2];
 } ST_LINE_INFO;
 
 static char *m_apcInternalProcess[] =

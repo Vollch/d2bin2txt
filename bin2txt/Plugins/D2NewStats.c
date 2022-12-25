@@ -42,7 +42,7 @@ static int D2NewStats_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLin
     if ( !stricmp(acKey, "*Name") )
     {
         unsigned int iString = pstLineInfo->vtblIDx;
-        if ( !String_FindString(iString, "dummy") )
+        if ( !String_FindString(iString, "dummy", NULL) )
         {
             iString = ItemStatCost_GetString(pstLineInfo->vStat);
         }

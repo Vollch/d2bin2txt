@@ -519,6 +519,7 @@ Beta：无用参数。
 
 typedef struct
 {
+    // levels.bin
     unsigned short vId;
     unsigned char vPal;
     unsigned char vAct;
@@ -561,7 +562,7 @@ typedef struct
     unsigned char vrangedspawn;
     unsigned short vNumMon;
 
-    unsigned short iPadding13;
+    unsigned char pad0x33[2];
     unsigned short vmon1;   //MonStats
 
     unsigned short vmon2;
@@ -642,7 +643,7 @@ typedef struct
     unsigned short vumon2;
     unsigned short vumon3;
 
-    unsigned short vumon4;  //40
+    unsigned short vumon4;
     unsigned short vumon5;
 
     unsigned short vumon6;
@@ -688,8 +689,7 @@ typedef struct
     unsigned short vcpct4;
 
     unsigned short vcamt4;
-    unsigned short iPadding55;
-    unsigned int iPadding56;
+    unsigned char pad0xDE[6];
 
     unsigned char vWaypoint;
     unsigned char vObjGrp0;
@@ -714,60 +714,18 @@ typedef struct
     unsigned char vObjPrb7;
     unsigned char vLevelName[40];
 
-    unsigned char vLevelWarp[40]; //0x11D
+    unsigned char vLevelWarp[40];
 
-    unsigned char vEntryFile[39];
+    unsigned char vEntryFile[40];
 
-    unsigned int iPadding91;
-    unsigned int iPadding92;
-    unsigned int iPadding93;
-    unsigned int iPadding94;
-    unsigned int iPadding95;
-    unsigned int iPadding96;
-    unsigned int iPadding97;
-    unsigned int iPadding98;
-    unsigned int iPadding99;
+    unsigned char pad0x16D[163];
 
-    unsigned int iPadding100;
-    unsigned int iPadding101;
-    unsigned int iPadding102;
-    unsigned int iPadding103;
-    unsigned int iPadding104;
-    unsigned int iPadding105;
-    unsigned int iPadding106;
-    unsigned int iPadding107;
-    unsigned int iPadding108;
-    unsigned int iPadding109;
-
-    unsigned int iPadding110;
-    unsigned int iPadding111;
-    unsigned int iPadding112;
-    unsigned int iPadding113;
-    unsigned int iPadding114;
-    unsigned int iPadding115;
-    unsigned int iPadding116;
-    unsigned int iPadding117;
-    unsigned int iPadding118;
-    unsigned int iPadding119;
-
-    unsigned int iPadding120;
-    unsigned int iPadding121;
-    unsigned int iPadding122;
-    unsigned int iPadding123;
-    unsigned int iPadding124;
-    unsigned int iPadding125;
-    unsigned int iPadding126;
-    unsigned int iPadding127;
-    unsigned int iPadding128;
-    unsigned int iPadding129;
-
-    unsigned int iPadding130;
-    unsigned int iPadding131;
     unsigned int vThemes;
     unsigned int vFloorFilter;
     unsigned int vBlankScreen;
     unsigned int vSoundEnv;
 
+    // leveldefs.bin
     int vQuestFlag;
     int vQuestFlagEx;
     int vLayer;
@@ -817,7 +775,7 @@ typedef struct
     int vPosition;
 
     unsigned char vSaveMonsters;
-    char iPadding173[3];
+    char pad0x95[3];
 
     int vLOSDraw;
 } ST_LINE_INFO;
@@ -855,7 +813,7 @@ static int Levels_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLin
 
     if ( !stricmp(acKey, "Name") )
     {
-        char acName[41];
+        char acName[41] = {0};
         strncpy(acName, pstLineInfo->vLevelName, sizeof(pstLineInfo->vLevelName));
 
         if ( !String_BuildName(FORMAT(levels), 0xFFFF, pcTemplate, acName, pstLineInfo->vId, MODULE_HAVENAME, acOutput) )
@@ -1301,8 +1259,8 @@ int process_levels(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_
             m_stCallback.pfnFieldProc = Levels_FieldProc_Pre;
             m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
             m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
-            m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
+            m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
 
             sprintf(acBinTempFile, "%s\\%s", acBinPath, BIN_TEMP);
 
@@ -1324,8 +1282,8 @@ int process_levels(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_
 
             m_stCallback.pfnConvertValue = Levels_ConvertValue;
             m_stCallback.pfnFieldProc = Levels_FieldProc;
-            m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
+            m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
 
             sprintf(acBinTempFile, "%s\\%s", acBinPath, BIN_TEMP);
 

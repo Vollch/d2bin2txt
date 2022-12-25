@@ -33,7 +33,7 @@ MODULE_SETLINES_FUNC(m_astLines, ST_LINE_INFO);
 
 char *Skills2_ExternList[] =
 {
-    "skill",
+    "Id",
     "AuraStatParam1",
     "AuraStatParam2",
     "AuraStatParam3",

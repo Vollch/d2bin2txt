@@ -380,7 +380,7 @@ EOL：行尾标志，必须为0。
 typedef struct
 {
     unsigned short vId;
-    unsigned short sPad1;
+    unsigned char pad0x02[2];
 
 #if 1
     unsigned char vBitCombined1;
@@ -415,7 +415,7 @@ typedef struct
     unsigned char vinert : 1;
     unsigned char vcompositeDeath : 1;
 #endif
-    unsigned char iPadding1;
+    unsigned char pad0x07;
 
     unsigned char vSizeX;
     unsigned char vSizeY;
@@ -425,7 +425,7 @@ typedef struct
     unsigned char vOverlayHeight;
     unsigned char vpixHeight;
     unsigned char vMeleeRng;
-    unsigned char iPadding3;
+    unsigned char pad0x0F;
 
     unsigned char vBaseW[4];
 

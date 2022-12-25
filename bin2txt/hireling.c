@@ -274,7 +274,7 @@ typedef struct
 
     unsigned char vNameFirst[32];
     unsigned char vNameLast[32];
-    unsigned char cPad[5];
+    unsigned char pad0x114[5];
 } ST_LINE_INFO;
 
 

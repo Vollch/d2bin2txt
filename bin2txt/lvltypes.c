@@ -141,9 +141,9 @@ int process_lvltypes(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
             m_iLvlTypesCount = 0;
 
             m_stCallback.pfnFieldProc = LvlTypes_FieldProc;
-            m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
             m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
             m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
+            m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
 
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 

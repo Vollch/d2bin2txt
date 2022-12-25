@@ -33,8 +33,9 @@ static int MonMode_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo
 
     if ( !stricmp(acKey, "code") )
     {
-        char acName[21];
+        char acName[21] = {0};
         strncpy(acName, pstLineInfo->vtoken, sizeof(pstLineInfo->vtoken));
+
         if ( !String_BuildName(FORMAT(monmode), 0xFFFF, pcTemplate, acName, m_iMonModeCount, MODULE_HAVENAME, acOutput) )
         {
             strncpy(acOutput, pstLineInfo->vtoken, sizeof(pstLineInfo->vtoken));

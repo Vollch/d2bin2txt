@@ -26,7 +26,7 @@ The other place is the dmg-mon and att-mon properties.
 
 typedef struct
 {
-    unsigned short vId;
+    unsigned short vtype;
     unsigned short vequiv1;
 
     unsigned short vequiv2;
@@ -40,12 +40,6 @@ typedef struct
 {
     unsigned char vtype[64];
 } ST_MONTYPE;
-
-static char *m_apcInternalProcess[] =
-{
-    "type",
-    NULL,
-};
 
 static unsigned int m_iMonTypeCount = 0;
 static ST_MONTYPE *m_astMonType = NULL;
@@ -63,35 +57,21 @@ char *MonType_GetType(unsigned int id)
     return NULL;
 }
 
-static int MonType_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
-{
-     ST_LINE_INFO *pstLineInfo = pvLineInfo;
-
-    if ( !stricmp(acKey, "type") )
-    {
-        char *pcName = String_FindString(pstLineInfo->vstrplur, "dummy");
-        if ( !String_BuildName(FORMAT(montype), pstLineInfo->vstrsing, pcTemplate, pcName, pstLineInfo->vId, MODULE_HAVENAME, acOutput) )
-        {
-            sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vId);
-        }
-
-        strncpy(m_astMonType[pstLineInfo->vId].vtype, acOutput, sizeof(m_astMonType[pstLineInfo->vId].vtype));
-        String_Trim(m_astMonType[pstLineInfo->vId].vtype);
-        m_iMonTypeCount++;
-
-        return 1;
-    }
-
-    return 0;
-}
-
-static int MonType_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
+static int MonType_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
     if ( !stricmp(acKey, "type") )
     {
-        strncpy(acOutput, m_astMonType[pstLineInfo->vId].vtype, sizeof(m_astMonType[pstLineInfo->vId].vtype));
+        char *pcName = String_FindString(pstLineInfo->vstrplur, "dummy", NULL);
+        if ( !String_BuildName(FORMAT(montype), pstLineInfo->vstrsing, pcTemplate, pcName, pstLineInfo->vtype, MODULE_HAVENAME, acOutput) )
+        {
+            sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vtype);
+        }
+
+        strncpy(m_astMonType[pstLineInfo->vtype].vtype, acOutput, sizeof(m_astMonType[pstLineInfo->vtype].vtype));
+        String_Trim(m_astMonType[pstLineInfo->vtype].vtype);
+        m_iMonTypeCount++;
 
         return 1;
     }
@@ -105,6 +85,7 @@ int process_montype(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
 
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, type, USHORT_MONTYPE);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, equiv1, USHORT_MONTYPE);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, equiv2, USHORT_MONTYPE);
@@ -124,10 +105,9 @@ int process_montype(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
         case EN_MODULE_SELF_DEPEND:
             m_iMonTypeCount = 0;
 
-            m_stCallback.pfnFieldProc = MonType_FieldProc_Pre;
+            m_stCallback.pfnConvertValue = MonType_ConvertValue;
             m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
             m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
-            m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
             return process_file(acTemplatePath, acBinPath, NULL, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);
@@ -138,9 +118,6 @@ int process_montype(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
             break;
 
         case EN_MODULE_INIT:
-            m_stCallback.pfnFieldProc = MonType_FieldProc;
-            m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
-
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);
             break;

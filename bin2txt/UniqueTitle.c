@@ -14,20 +14,17 @@ static char *m_apcInternalProcess[] =
      NULL,
 };
 
-static unsigned int m_iUniqueTitle = 0;
-
 static int UniqueTitle_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
     if ( !stricmp(acKey, "Namco") )
     {
-        if ( !String_BuildName(FORMAT(uniquetitle), pstLineInfo->vName, pcTemplate, NAME_PREFIX, m_iUniqueTitle, NULL, acOutput) )
+        if ( !String_BuildName(FORMAT(uniquetitle), pstLineInfo->vName, pcTemplate, NAME_PREFIX, iLineNo, NULL, acOutput) )
         {
-            sprintf(acOutput, "%s%u", NAME_PREFIX, m_iUniqueTitle);
+            sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
         }
 
-        m_iUniqueTitle++;
         return 1;
     }
 

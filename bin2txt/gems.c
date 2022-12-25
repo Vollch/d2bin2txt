@@ -93,51 +93,51 @@ typedef struct
 
     unsigned int vcode;
 
-    unsigned short iPadding11;
+    unsigned char pad0x2C[2];
     unsigned char vnummods;
     unsigned char vtransform;
 
-    unsigned int vweaponMod1Code;   //
+    unsigned int vweaponMod1Code;   // property
     unsigned int vweaponMod1Param;
     int vweaponMod1Min;
     int vweaponMod1Max;
 
-    unsigned int vweaponMod2Code;   //
+    unsigned int vweaponMod2Code;   // property
     unsigned int vweaponMod2Param;
     int vweaponMod2Min;
     int vweaponMod2Max;
 
-    unsigned int vweaponMod3Code;   //
+    unsigned int vweaponMod3Code;   // property
     unsigned int vweaponMod3Param;
     int vweaponMod3Min;
     int vweaponMod3Max;
 
-    unsigned int vhelmMod1Code; //
+    unsigned int vhelmMod1Code; // property
     unsigned int vhelmMod1Param;
     int vhelmMod1Min;
     int vhelmMod1Max;
 
-    unsigned int vhelmMod2Code; //
+    unsigned int vhelmMod2Code; // property
     unsigned int vhelmMod2Param;
     int vhelmMod2Min;
     int vhelmMod2Max;
 
-    unsigned int vhelmMod3Code; //
+    unsigned int vhelmMod3Code; // property
     unsigned int vhelmMod3Param;
     int vhelmMod3Min;
     int vhelmMod3Max;
 
-    unsigned int vshieldMod1Code; //
+    unsigned int vshieldMod1Code; // property
     unsigned int vshieldMod1Param;
     int vshieldMod1Min;
     int vshieldMod1Max;
 
-    unsigned int vshieldMod2Code; //
+    unsigned int vshieldMod2Code; // property
     unsigned int vshieldMod2Param;
     int vshieldMod2Min;
     int vshieldMod2Max;
 
-    unsigned int vshieldMod3Code; //
+    unsigned int vshieldMod3Code; // property
     unsigned int vshieldMod3Param;
     int vshieldMod3Min;
     int vshieldMod3Max;
@@ -157,47 +157,47 @@ int process_gems(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MO
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, nummods, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, transform, UCHAR);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, weaponMod1Code, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, weaponMod1Code, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, weaponMod1Param, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, weaponMod1Min, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, weaponMod1Max, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, weaponMod2Code, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, weaponMod2Code, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, weaponMod2Param, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, weaponMod2Min, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, weaponMod2Max, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, weaponMod3Code, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, weaponMod3Code, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, weaponMod3Param, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, weaponMod3Min, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, weaponMod3Max, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, helmMod1Code, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, helmMod1Code, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, helmMod1Param, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, helmMod1Min, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, helmMod1Max, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, helmMod2Code, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, helmMod2Code, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, helmMod2Param, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, helmMod2Min, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, helmMod2Max, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, helmMod3Code, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, helmMod3Code, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, helmMod3Param, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, helmMod3Min, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, helmMod3Max, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, shieldMod1Code, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, shieldMod1Code, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, shieldMod1Param, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, shieldMod1Min, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, shieldMod1Max, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, shieldMod2Code, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, shieldMod2Code, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, shieldMod2Param, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, shieldMod2Min, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, shieldMod2Max, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, shieldMod3Code, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, shieldMod3Code, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, shieldMod3Param, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, shieldMod3Min, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, shieldMod3Max, INT);

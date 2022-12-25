@@ -31,14 +31,15 @@ typedef struct
 {
     unsigned short vName; //strings
     char vSpellIcon;
-    unsigned char iPadding0;
+    unsigned char pad0x03;
 
     unsigned int vpSpell;
 
     unsigned short vScrollSkill;  //skills
-    unsigned short sPad1;
+    unsigned char pad0x0A[2];
+
     unsigned short vBookSkill;    //skills
-    unsigned short sPad2;
+    unsigned char pad0x0E[2];
 
     unsigned int vBaseCost;
 

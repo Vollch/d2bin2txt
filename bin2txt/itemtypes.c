@@ -189,7 +189,7 @@ static int ItemTypes_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLine
 
     if ( !stricmp(acKey, "ItemType") )
     {
-        char acName[5];
+        char acName[5] = {0};
         strncpy(acName, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
 
         if ( !String_BuildName(FORMAT(itemtypes), 0xFFFF, pcTemplate, acName, iLineNo, NULL, acOutput) )
@@ -301,8 +301,8 @@ int process_itemtypes(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
             m_stCallback.pfnFieldProc = ItemTypes_FieldProc_Pre;
             m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
             m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
-            m_stCallback.ppcKeyInternalProcess = isD2SigmaActive() ? ItemTypesExt_ExternList : m_apcInternalProcess;
             m_stCallback.pfnConvertValue = ItemTypes_CalcTc;
+            m_stCallback.ppcKeyInternalProcess = isD2SigmaActive() ? ItemTypesExt_ExternList : m_apcInternalProcess;
 
             m_uiTcOffset = 0;
 

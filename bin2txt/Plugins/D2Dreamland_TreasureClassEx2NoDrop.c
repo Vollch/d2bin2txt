@@ -5,7 +5,8 @@
 #pragma pack(push, 1)
 typedef struct
 {
-    unsigned char vMonsterId[3];
+    unsigned char bMonType;
+    unsigned short vMonsterId;
     unsigned int vhcIdx;
 } ST_LINE_INFO;
 #pragma pack(pop)
@@ -16,14 +17,13 @@ static int TreasureClassEx2NoDrop_ConvertValue(void *pvLineInfo, char *acKey, ch
 
     if ( !stricmp(acKey, "MonsterId") )
     {
-        unsigned short usMonster = *(unsigned short*)&pstLineInfo->vMonsterId[1];
         char *pcResult = NULL;
 
-        if ( pstLineInfo->vMonsterId[0] == 1 && (pcResult = MonStats_GetStatsName(usMonster)))
+        if ( 1 == pstLineInfo->bMonType && (pcResult = MonStats_GetStatsName(pstLineInfo->vMonsterId)))
         {
             strcpy(acOutput, pcResult);
         }
-        else if ( pstLineInfo->vMonsterId[0] == 2 && (pcResult = SuperUniques_GetItemUniqueCode(usMonster)))
+        else if ( 2 == pstLineInfo->bMonType && (pcResult = SuperUniques_GetItemUniqueCode(pstLineInfo->vMonsterId)))
         {
             strcpy(acOutput, pcResult);
         }

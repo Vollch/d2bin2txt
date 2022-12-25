@@ -210,22 +210,22 @@ typedef struct
     unsigned char vgloves;
     unsigned char vbelt;
     unsigned char vnummods;
-    unsigned char iPadding2;
+    unsigned char pad0x0B;
 
     unsigned int vmod1code; //properties
     unsigned int vmod1param;
-    unsigned int vmod1min;
-    unsigned int vmod1max;
+    int vmod1min;
+    int vmod1max;
 
     unsigned int vmod2code; //properties
     unsigned int vmod2param;
-    unsigned int vmod2min;
-    unsigned int vmod2max;
+    int vmod2min;
+    int vmod2max;
 
     unsigned char veffect1[32];
     unsigned char veffect2[32];
 
-    unsigned int iPadding27;
+    unsigned char pad0x6C[4];
 } ST_LINE_INFO;
 
 static char *m_apcNotUsed[] =
@@ -265,15 +265,15 @@ int process_qualityitems(char *acTemplatePath, char *acBinPath, char *acTxtPath,
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, belt, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, nummods, UCHAR);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod1code, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod1code, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod1param, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod1min, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod1max, UINT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod1min, INT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod1max, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod2code, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod2code, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod2param, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod2min, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod2max, UINT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod2min, INT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod2max, INT);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, effect1, STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, effect2, STRING);

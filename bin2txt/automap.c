@@ -161,7 +161,7 @@ typedef struct
     unsigned char vStyle;
     char vStartSequence;
     char vEndSequence;
-    unsigned char bPadding6;
+    unsigned char pad0x1B;
 
     int vCel1;
     int vCel2;

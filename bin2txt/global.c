@@ -208,29 +208,29 @@ static int String_ReplaceSpecialChar(char *key, char *acTempKey)
 
 int process_value(ST_VALUE_MAP *value, char *acOutput)
 {
-    if ( EN_VALUE_CHAR == value->enValueType )
+    if ( EN_VALUE_INT == value->enValueType )
     {
-        sprintf(acOutput, "%d", *(char *)value->pvValue);
+        sprintf(acOutput, "%d", *(int *)value->pvValue);
+    }
+    else if ( EN_VALUE_UINT == value->enValueType )
+    {
+        sprintf(acOutput, "%u", *(unsigned int *)value->pvValue);
     }
     else if ( EN_VALUE_SHORT == value->enValueType )
     {
         sprintf(acOutput, "%d", *(short *)value->pvValue);
     }
-    else if ( EN_VALUE_INT == value->enValueType )
-    {
-        sprintf(acOutput, "%d", *(int *)value->pvValue);
-    }
-    else if ( EN_VALUE_UCHAR == value->enValueType )
-    {
-        sprintf(acOutput, "%u", *(unsigned char *)value->pvValue);
-    }
     else if ( EN_VALUE_USHORT == value->enValueType )
     {
         sprintf(acOutput, "%u", *(unsigned short *)value->pvValue);
     }
-    else if ( EN_VALUE_UINT == value->enValueType )
+    else if ( EN_VALUE_CHAR == value->enValueType )
     {
-        sprintf(acOutput, "%u", *(unsigned int *)value->pvValue);
+        sprintf(acOutput, "%d", *(char *)value->pvValue);
+    }
+    else if ( EN_VALUE_UCHAR == value->enValueType )
+    {
+        sprintf(acOutput, "%u", *(unsigned char *)value->pvValue);
     }
     else if ( EN_VALUE_UINT_BIT == value->enValueType )
     {
@@ -248,298 +248,200 @@ int process_value(ST_VALUE_MAP *value, char *acOutput)
     {
         strncpy(acOutput, value->pvValue, value->iValueLen);
     }
-    else if ( EN_VALUE_UINT_ITEM == value->enValueType )
-    {
-        char *pcResult = Misc_GetItemUniqueCode(*(unsigned int *)value->pvValue);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-    }
-    else if ( EN_VALUE_UINT_ITEMCODE == value->enValueType )
-    {
-        char *pcResult = ItemsCode_GetExpression(*(unsigned int *)value->pvValue);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-    }
-    else if ( EN_VALUE_UINT_MISSCODE == value->enValueType )
-    {
-        char *pcResult = MissCode_GetExpression(*(unsigned int *)value->pvValue);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-    }
-    else if ( EN_VALUE_UINT_SKILLCODE == value->enValueType )
-    {
-        char *pcResult = SkillsCode_GetExpression(*(unsigned int *)value->pvValue);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-    }
-    else if ( EN_VALUE_UINT_DESCCODE == value->enValueType )
-    {
-        char *pcResult = SkillDescCode_GetExpression(*(unsigned int *)value->pvValue);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-    }
-    else if ( EN_VALUE_UINT_PROPERTY == value->enValueType )
-    {
-        char *pcResult = Properties_GetProperty(*(unsigned int *)value->pvValue);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-    }
-    else if ( EN_VALUE_USHORT_EVENT == value->enValueType )
-    {
-        char *pcResult = Events_GetEventName(*(unsigned short *)value->pvValue);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-    }
-    else if ( EN_VALUE_USHORT_ITEMTYPE == value->enValueType )
-    {
-        char *pcResult = ItemTypes_GetItemCode(*(unsigned short *)value->pvValue);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-    }
-    else if ( EN_VALUE_USHORT_ITEMSTAT == value->enValueType )
-    {
-        char *pcResult = ItemStatCost_GetStateName(*(unsigned short *)value->pvValue);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-    }
-    else if ( EN_VALUE_USHORT_MISSILE == value->enValueType )
-    {
-        char *pcResult = Missiles_GetMissile(*(unsigned short *)value->pvValue);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-    }
-    else if ( EN_VALUE_USHORT_MONAI == value->enValueType )
-    {
-        char *pcResult = MonAi_GetAiName(*(unsigned short *)value->pvValue);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-    }
-    else if ( EN_VALUE_USHORT_MONPROP == value->enValueType )
-    {
-        char *pcResult = MonProp_GetPropId(*(unsigned short *)value->pvValue);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-    }
-    else if ( EN_VALUE_USHORT_MONSOUND == value->enValueType )
-    {
-        char *pcResult = MonSounds_GetItemSoundsCode(*(unsigned short *)value->pvValue);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-    }
-    else if ( EN_VALUE_USHORT_MONSTAT == value->enValueType )
-    {
-        char *pcResult = MonStats_GetStatsName(*(unsigned short *)value->pvValue);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-    }
-    else if ( EN_VALUE_USHORT_MONSTAT2 == value->enValueType )
-    {
-        char *pcResult = MonStats2_GetStatsName(*(unsigned short *)value->pvValue);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-    }
-    else if ( EN_VALUE_USHORT_MONTYPE == value->enValueType )
-    {
-        char *pcResult = MonType_GetType(*(unsigned short *)value->pvValue);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-    }
-    else if ( EN_VALUE_USHORT_OVERLAY == value->enValueType )
-    {
-        char *pcResult = Overlay_GetOverlay(*(unsigned short *)value->pvValue);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-    }
-    else if ( EN_VALUE_USHORT_SET == value->enValueType )
-    {
-        char *pcResult = Sets_GetSetName(*(unsigned short *)value->pvValue);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-    }
-    else if ( EN_VALUE_USHORT_SKILLDESC == value->enValueType )
-    {
-        char *pcResult = SkillDesc_GetDesc(*(unsigned short *)value->pvValue);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-    }
-    else if ( EN_VALUE_USHORT_SKILL == value->enValueType )
-    {
-        char *pcResult = Skills_GetSkillName(*(unsigned short *)value->pvValue);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-    }
-    else if ( EN_VALUE_USHORT_STRING == value->enValueType )
-    {
-        char *pcResult = String_FindString(*(unsigned short *)value->pvValue, "dummy");
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-    }
-    else if ( EN_VALUE_USHORT_STRING2 == value->enValueType )
-    {
-        char *pcResult = String_FindString_2(*(unsigned short *)value->pvValue, "dummy", "x");
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-    }
-    else if ( EN_VALUE_USHORT_UNIQ == value->enValueType )
-    {
-        char *pcResult = SuperUniques_GetItemUniqueCode(*(unsigned short *)value->pvValue);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-    }
-    else if ( EN_VALUE_USHORT_TREASURE == value->enValueType )
-    {
-        char *pcResult = TreasureClassEx_GetItemTreasureClass(*(unsigned short *)value->pvValue);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-    }
-    else if ( EN_VALUE_USHORT_SOUND == value->enValueType )
-    {
-        char *pcResult = Sounds_GetSoundName(*(unsigned short *)value->pvValue);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-    }
-    else if ( EN_VALUE_USHORT_STATE == value->enValueType )
-    {
-        char *pcResult = States_GetStateName(*(unsigned short *)value->pvValue);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-    }
-    else if ( EN_VALUE_UCHAR_BODYLOC == value->enValueType )
-    {
-        char *pcResult = BodyLocs_GetLocStr(*(unsigned char *)value->pvValue);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-    }
-    else if ( EN_VALUE_UCHAR_COLOR == value->enValueType )
-    {
-        char *pcResult = Colors_GetColorCode(*(unsigned char *)value->pvValue);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-    }
-    else if ( EN_VALUE_UCHAR_ELEM == value->enValueType )
-    {
-        char *pcResult = ElemTypes_GetElemStr(*(unsigned char *)value->pvValue);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-    }
-    else if ( EN_VALUE_UCHAR_HIREDESC == value->enValueType )
-    {
-        char *pcResult = HireDesc_GetDesc(*(unsigned char *)value->pvValue);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-    }
-    else if ( EN_VALUE_UCHAR_HITCLASS == value->enValueType )
-    {
-        char *pcResult = HitClass_GetClassStr(*(unsigned char *)value->pvValue);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-    }
-    else if ( EN_VALUE_UCHAR_PLRCLASS == value->enValueType )
-    {
-        char *pcResult = PlayerClass_GetClass(*(unsigned char *)value->pvValue);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-    }
-    else if ( EN_VALUE_UCHAR_MONMODE == value->enValueType )
-    {
-        char *pcResult = MonMode_GetCode(*(unsigned char *)value->pvValue);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-    }
-    else if ( EN_VALUE_UCHAR_PLRMODE == value->enValueType )
-    {
-        char *pcResult = PlrMode_GetCode(*(unsigned char *)value->pvValue);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-    }
-    else if ( EN_VALUE_UCHAR_PET == value->enValueType )
-    {
-        char *pcResult = Pettype_GetPetType(*(unsigned char *)value->pvValue);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-    }
-    else if ( EN_VALUE_UCHAR_STORE == value->enValueType )
-    {
-        char *pcResult = StorePage_GetCode(*(unsigned char *)value->pvValue);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-    }
     else if ( EN_VALUE_EOL == value->enValueType )
     {
         acOutput[0] = '0';
         acOutput[1] = 0;
+    }
+    else
+    {
+        char *pcResult = NULL;
+        if ( EN_VALUE_UINT_ITEMCODE == value->enValueType )
+        {
+            pcResult = ItemsCode_GetExpression(*(unsigned int *)value->pvValue);
+        }
+        else if ( EN_VALUE_UINT_MISSCODE == value->enValueType )
+        {
+            pcResult = MissCode_GetExpression(*(unsigned int *)value->pvValue);
+        }
+        else if ( EN_VALUE_UINT_SKILLCODE == value->enValueType )
+        {
+            pcResult = SkillsCode_GetExpression(*(unsigned int *)value->pvValue);
+        }
+        else if ( EN_VALUE_UINT_DESCCODE == value->enValueType )
+        {
+            pcResult = SkillDescCode_GetExpression(*(unsigned int *)value->pvValue);
+        }
+        if ( EN_VALUE_UINT_ITEM == value->enValueType )
+        {
+            pcResult = Misc_GetItemUniqueCode(*(unsigned int *)value->pvValue);
+        }
+        else if ( EN_VALUE_USHORT_EVENT == value->enValueType )
+        {
+            pcResult = Events_GetEventName(*(unsigned short *)value->pvValue);
+        }
+        else if ( EN_VALUE_USHORT_ITEMTYPE == value->enValueType )
+        {
+            pcResult = ItemTypes_GetItemCode(*(unsigned short *)value->pvValue);
+        }
+        else if ( EN_VALUE_USHORT_ITEMSTAT == value->enValueType )
+        {
+            pcResult = ItemStatCost_GetStateName(*(unsigned short *)value->pvValue);
+        }
+        else if ( EN_VALUE_USHORT_MISSILE == value->enValueType )
+        {
+            pcResult = Missiles_GetMissile(*(unsigned short *)value->pvValue);
+        }
+        else if ( EN_VALUE_USHORT_MONAI == value->enValueType )
+        {
+            pcResult = MonAi_GetAiName(*(unsigned short *)value->pvValue);
+        }
+        else if ( EN_VALUE_USHORT_MONPROP == value->enValueType )
+        {
+            pcResult = MonProp_GetPropId(*(unsigned short *)value->pvValue);
+        }
+        else if ( EN_VALUE_USHORT_MONSEQ == value->enValueType )
+        {
+            pcResult = MonSeq_GetSequence(*(unsigned short *)value->pvValue);
+        }
+        else if ( EN_VALUE_USHORT_MONSOUND == value->enValueType )
+        {
+            pcResult = MonSounds_GetItemSoundsCode(*(unsigned short *)value->pvValue);
+        }
+        else if ( EN_VALUE_USHORT_MONSTAT == value->enValueType )
+        {
+            pcResult = MonStats_GetStatsName(*(unsigned short *)value->pvValue);
+        }
+        else if ( EN_VALUE_USHORT_MONSTAT2 == value->enValueType )
+        {
+            pcResult = MonStats2_GetStatsName(*(unsigned short *)value->pvValue);
+        }
+        else if ( EN_VALUE_USHORT_MONTYPE == value->enValueType )
+        {
+            pcResult = MonType_GetType(*(unsigned short *)value->pvValue);
+        }
+        else if ( EN_VALUE_USHORT_OVERLAY == value->enValueType )
+        {
+            pcResult = Overlay_GetOverlay(*(unsigned short *)value->pvValue);
+        }
+        else if ( EN_VALUE_USHORT_PROPERTY == value->enValueType )
+        {
+            pcResult = Properties_GetProperty(*(unsigned short *)value->pvValue);
+        }
+        else if ( EN_VALUE_USHORT_SET == value->enValueType )
+        {
+            pcResult = Sets_GetSetName(*(unsigned short *)value->pvValue);
+        }
+        else if ( EN_VALUE_USHORT_SKILLDESC == value->enValueType )
+        {
+            pcResult = SkillDesc_GetDesc(*(unsigned short *)value->pvValue);
+        }
+        else if ( EN_VALUE_USHORT_SKILL == value->enValueType )
+        {
+            pcResult = Skills_GetSkillName(*(unsigned short *)value->pvValue);
+        }
+        else if ( EN_VALUE_USHORT_STRING == value->enValueType )
+        {
+            pcResult = (g_iPrintUnresolvedIds > 0 
+                ? String_FindString(*(unsigned short *)value->pvValue, NULL, NULL)
+                : String_FindString(*(unsigned short *)value->pvValue, "dummy", NULL));
+        }
+        else if ( EN_VALUE_USHORT_STRING2 == value->enValueType )
+        {
+            pcResult = (g_iPrintUnresolvedIds > 0 
+                ? String_FindString(*(unsigned short *)value->pvValue, NULL, NULL)
+                : String_FindString(*(unsigned short *)value->pvValue, "dummy", "x"));
+        }
+        else if ( EN_VALUE_USHORT_UNIQ == value->enValueType )
+        {
+            pcResult = SuperUniques_GetItemUniqueCode(*(unsigned short *)value->pvValue);
+        }
+        else if ( EN_VALUE_USHORT_TREASURE == value->enValueType )
+        {
+            pcResult = TreasureClassEx_GetItemTreasureClass(*(unsigned short *)value->pvValue);
+        }
+        else if ( EN_VALUE_USHORT_SOUND == value->enValueType )
+        {
+            pcResult = Sounds_GetSoundName(*(unsigned short *)value->pvValue);
+        }
+        else if ( EN_VALUE_USHORT_STATE == value->enValueType )
+        {
+            pcResult = States_GetStateName(*(unsigned short *)value->pvValue);
+        }
+        else if ( EN_VALUE_UCHAR_BODYLOC == value->enValueType )
+        {
+            pcResult = BodyLocs_GetLocStr(*(unsigned char *)value->pvValue);
+        }
+        else if ( EN_VALUE_UCHAR_COLOR == value->enValueType )
+        {
+            pcResult = Colors_GetColorCode(*(unsigned char *)value->pvValue);
+        }
+        else if ( EN_VALUE_UCHAR_ELEM == value->enValueType )
+        {
+            pcResult = ElemTypes_GetElemStr(*(unsigned char *)value->pvValue);
+        }
+        else if ( EN_VALUE_UCHAR_HIREDESC == value->enValueType )
+        {
+            pcResult = HireDesc_GetDesc(*(unsigned char *)value->pvValue);
+        }
+        else if ( EN_VALUE_UCHAR_HITCLASS == value->enValueType )
+        {
+            pcResult = HitClass_GetClassStr(*(unsigned char *)value->pvValue);
+        }
+        else if ( EN_VALUE_UCHAR_PLRCLASS == value->enValueType )
+        {
+            pcResult = PlayerClass_GetClass(*(unsigned char *)value->pvValue);
+        }
+        else if ( EN_VALUE_UCHAR_MONMODE == value->enValueType )
+        {
+            pcResult = MonMode_GetCode(*(unsigned char *)value->pvValue);
+        }
+        else if ( EN_VALUE_UCHAR_PLRMODE == value->enValueType )
+        {
+            pcResult = PlrMode_GetCode(*(unsigned char *)value->pvValue);
+        }
+        else if ( EN_VALUE_UCHAR_PET == value->enValueType )
+        {
+            pcResult = Pettype_GetPetType(*(unsigned char *)value->pvValue);
+        }
+        else if ( EN_VALUE_UCHAR_STORE == value->enValueType )
+        {
+            pcResult = StorePage_GetCode(*(unsigned char *)value->pvValue);
+        }
+
+        if ( pcResult )
+        {
+            strcpy(acOutput, pcResult);
+        }
+        else if ( g_iPrintUnresolvedIds > 0 )
+        {
+            unsigned int uiId = 0;
+            char uiMax = 0;
+            if ( EN_VALUE_UCHAR_BODYLOC <= value->enValueType )
+            {
+                uiId = *(unsigned char *)value->pvValue;
+                uiMax = (uiId == 0xFF);
+            }
+            else if ( EN_VALUE_USHORT_EVENT <= value->enValueType )
+            {
+                uiId = *(unsigned short *)value->pvValue;
+                uiMax = (uiId == 0xFFFF);
+            }
+            else if ( EN_VALUE_UINT_ITEM <= value->enValueType )
+            {
+                uiId = *(unsigned int *)value->pvValue;
+                uiMax = (uiId == 0xFFFFFFFF);
+            }
+
+            if ( uiMax )
+            {
+                sprintf(acOutput, "%d", -1);
+            }
+            else if ( uiId > 0 )
+            {
+                sprintf(acOutput, "%u", uiId);
+            }
+        }
     }
 
     return 1;
@@ -713,7 +615,7 @@ static int process_line_x(char *pcHeader, char *pcLineEnd, char *pcLineStart, ch
 
     if ( NULL != pcHeader && pcHeader < pcLineEnd )
     {
-        my_error("%s fail1 at lineend\r\n", acClass);
+        my_error("%s fai1 at lineend\r\n", acClass);
         result = 0;
     }
 
@@ -731,11 +633,6 @@ static int Find_StringInList(char **ppcList, char *pcLookup)
 
     while ( NULL != ppcList[i] )
     {
-        if ( !stricmp("all over in", ppcList[i]) )
-        {
-            return i;
-        }
-
         if ( !stricmp(pcLookup, ppcList[i]) )
         {
             return i;
@@ -1034,7 +931,8 @@ static int check_bin(void *pvLineInfo, int iLineLength, ST_VALUE_MAP *pstValueMa
 
         for ( j = 0; j < (unsigned int)iLineLength; j ++ )
         {
-            if ( m_acTempBuffer[iLineLength+j] != m_acTempBuffer[iLineLength*2+j] )
+            if ( m_acTempBuffer[iLineLength*2+j] > 0x00 && m_acTempBuffer[iLineLength*2+j] < 0xFF
+                ||  m_acTempBuffer[iLineLength+j] != m_acTempBuffer[iLineLength*2+j] )
             {
                 m_acTempBuffer[j] = 1;
             }
@@ -1178,7 +1076,7 @@ static int process_file_x(char *acTemplatePath, char *acBinPath, char *acTxtPath
     {
         char *pcColumn = acTplBuf;
 
-        if ( pstCallback && pstCallback->eModuleType < EN_MODULE_EXTENSION )
+        if ( pstCallback && pstCallback->eModuleType < ( g_iCompactOutput ? EN_MODULE_PLUGIN : EN_MODULE_EXTENSION ) )
         {
             my_printf("%s template not found, auto generated will be used\r\n", pcFilename);
         }

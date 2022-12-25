@@ -5,7 +5,7 @@
 
 typedef struct
 {
-    unsigned short vId;
+    unsigned short vcode;
 } ST_LINE_INFO;
 
 typedef struct
@@ -13,31 +13,25 @@ typedef struct
     char vcode[64];
 } ST_MON_PLACE;
 
-static char *m_apcInternalProcess[] =
-{
-    "code",
-    NULL,
-};
-
 static unsigned int m_iMonPlaceCount = 0;
 static ST_MON_PLACE *m_astMonPlace = NULL;
 
 MODULE_SETLINES_FUNC(m_astMonPlace, ST_MON_PLACE);
 MODULE_HAVENAME_FUNC(m_astMonPlace, vcode, m_iMonPlaceCount);
 
-static int MonPlace_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
+static int MonPlace_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
     if ( !stricmp(acKey, "code") )
     {
-        if ( !String_BuildName(FORMAT(monplace), 0xFFFF, pcTemplate, NAME_PREFIX, pstLineInfo->vId, MODULE_HAVENAME, acOutput) )
+        if ( !String_BuildName(FORMAT(monplace), 0xFFFF, pcTemplate, NAME_PREFIX, pstLineInfo->vcode, MODULE_HAVENAME, acOutput) )
         {
-            sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vId);
+            sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vcode);
         }
 
-        strncpy(m_astMonPlace[pstLineInfo->vId].vcode, acOutput, sizeof(m_astMonPlace[pstLineInfo->vId].vcode));
-        String_Trim(m_astMonPlace[pstLineInfo->vId].vcode);
+        strncpy(m_astMonPlace[pstLineInfo->vcode].vcode, acOutput, sizeof(m_astMonPlace[pstLineInfo->vcode].vcode));
+        String_Trim(m_astMonPlace[pstLineInfo->vcode].vcode);
         m_iMonPlaceCount++;
         return 1;
     }
@@ -51,7 +45,7 @@ int process_monplace(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
 
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Id, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, code, USHORT);
 
     switch ( enPhase )
     {
@@ -61,10 +55,9 @@ int process_monplace(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
         case EN_MODULE_SELF_DEPEND:
             m_iMonPlaceCount = 0;
 
-            m_stCallback.pfnFieldProc = MonPlace_FieldProc;
+            m_stCallback.pfnConvertValue = MonPlace_ConvertValue;
             m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
             m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
-            m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);

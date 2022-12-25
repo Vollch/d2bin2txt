@@ -448,41 +448,7 @@ typedef struct
 {
     unsigned char vName[64];
 
-    unsigned int iPadding16;
-    unsigned int iPadding17;
-    unsigned int iPadding18;
-    unsigned int iPadding19;
-
-    unsigned int iPadding20;
-    unsigned int iPadding21;
-    unsigned int iPadding22;
-    unsigned int iPadding23;
-    unsigned int iPadding24;
-    unsigned int iPadding25;
-    unsigned int iPadding26;
-    unsigned int iPadding27;
-    unsigned int iPadding28;
-    unsigned int iPadding29;
-
-    unsigned int iPadding30;
-    unsigned int iPadding31;
-    unsigned int iPadding32;
-    unsigned int iPadding33;
-    unsigned int iPadding34;
-    unsigned int iPadding35;
-    unsigned int iPadding36;
-    unsigned int iPadding37;
-    unsigned int iPadding38;
-    unsigned int iPadding39;
-
-    unsigned int iPadding40;
-    unsigned int iPadding41;
-    unsigned int iPadding42;
-    unsigned int iPadding43;
-    unsigned int iPadding44;
-    unsigned int iPadding45;
-    unsigned int iPadding46;
-    unsigned int iPadding47;
+    unsigned char pad0x40[128];
 
     unsigned char vToken[3];
     unsigned char vSpawnMax;
@@ -604,7 +570,7 @@ typedef struct
     unsigned char vMode5;
     unsigned char vMode6;
     unsigned char vMode7;
-    unsigned char iPadding81;
+    unsigned char pad0x147;
 
     int vXoffset;
     int vYoffset;
@@ -641,7 +607,7 @@ typedef struct
 
     int vNameOffset;
 
-    unsigned char iPadding91;
+    unsigned char pad0x16A;
     unsigned char vMonsterOK;
     unsigned char vOperateRange;
     unsigned char vShrineFunction;
@@ -653,7 +619,7 @@ typedef struct
 
     unsigned char vRestoreVirgins;
     unsigned char vSync;
-    unsigned char iPadding93_1[2];
+    unsigned char pad0x176[2];
 
     int vParm0;
     int vParm1;
@@ -672,7 +638,7 @@ typedef struct
 
     unsigned char vDamage;
     unsigned char vCollisionSubst;
-    unsigned short iPadding103;
+    unsigned char pad0x19F[2];
 
     int vLeft;
     int vTop;
@@ -955,8 +921,8 @@ int process_objects(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
             m_stCallback.pfnFieldProc = Objects_FieldProc;
             m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
             m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
-            m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
+            m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
 
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);

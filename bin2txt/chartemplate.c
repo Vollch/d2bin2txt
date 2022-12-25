@@ -49,91 +49,91 @@ typedef struct
 
     unsigned char vitem1loc;
     unsigned char vitem1count;
-    unsigned short iPadding31;
+    unsigned char pad0x7E[2];
 
     unsigned char vitem2[4];
 
     unsigned char vitem2loc;
     unsigned char vitem2count;
-    unsigned short iPadding33;
+    unsigned char pad0x86[2];
 
     unsigned char vitem3[4];
 
     unsigned char vitem3loc;
     unsigned char vitem3count;
-    unsigned short iPadding35;
+    unsigned char pad0x8E[2];
 
     unsigned char vitem4[4];
 
     unsigned char vitem4loc;
     unsigned char vitem4count;
-    unsigned short iPadding37;
+    unsigned char pad0x96[2];
 
     unsigned char vitem5[4];
 
     unsigned char vitem5loc;
     unsigned char vitem5count;
-    unsigned short iPadding39;
+    unsigned char pad0x9E[2];
 
     unsigned char vitem6[4];
 
     unsigned char vitem6loc;
     unsigned char vitem6count;
-    unsigned short iPadding41;
+    unsigned char pad0xA6[2];
 
     unsigned char vitem7[4];
 
     unsigned char vitem7loc;
     unsigned char vitem7count;
-    unsigned short iPadding43;
+    unsigned char pad0xAE[2];
 
     unsigned char vitem8[4];
 
     unsigned char vitem8loc;
     unsigned char vitem8count;
-    unsigned short iPadding45;
+    unsigned char pad0xB6[2];
 
     unsigned char vitem9[4];
 
     unsigned char vitem9loc;
     unsigned char vitem9count;
-    unsigned short iPadding47;
+    unsigned char pad0xBE[2];
 
     unsigned char vitem10[4];
 
     unsigned char vitem10loc;
     unsigned char vitem10count;
-    unsigned short iPadding49;
+    unsigned char pad0xC6[2];
 
     unsigned char vitem11[4];
 
     unsigned char vitem11loc;
     unsigned char vitem11count;
-    unsigned short iPadding51;
+    unsigned char pad0xCE[2];
 
     unsigned char vitem12[4];
 
     unsigned char vitem12loc;
     unsigned char vitem12count;
-    unsigned short iPadding53;
+    unsigned char pad0xD6[2];
 
     unsigned char vitem13[4];
 
     unsigned char vitem13loc;
     unsigned char vitem13count;
-    unsigned short iPadding55;
+    unsigned char pad0xDE[2];
 
     unsigned char vitem14[4];
 
     unsigned char vitem14loc;
     unsigned char vitem14count;
-    unsigned short iPadding57;
+    unsigned char pad0xE6[2];
 
     unsigned char vitem15[4];
 
     unsigned char vitem15loc;
     unsigned char vitem15count;
-    unsigned short iPadding59;
+    unsigned char pad0xEE[2];
 } ST_LINE_INFO;
 
 static char *m_apcInternalProcess[] =
@@ -161,9 +161,14 @@ static int CharTemplate_FieldProc(void *pvLineInfo, char *acKey, unsigned int iL
 
     if ( !stricmp(acKey, "Template") )
     {
-        char acName[31];
+        char acName[31] = {0};
+        char acCode[5] = {0};
+
         strncpy(acName, pstLineInfo->vName, sizeof(pstLineInfo->vName));
-        if ( !String_BuildName(FORMAT(chartemplate), Misc_GetItemString2(pstLineInfo->vitem1), pcTemplate, acName, iLineNo, NULL, acOutput) )
+        strncpy(acCode, pstLineInfo->vitem1, sizeof(pstLineInfo->vitem1));
+        String_Trim(acCode);
+
+        if ( !String_BuildName(FORMAT(chartemplate), Misc_GetItemString2(acCode), pcTemplate, acName, iLineNo, NULL, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
         }

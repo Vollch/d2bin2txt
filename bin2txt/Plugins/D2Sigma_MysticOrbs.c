@@ -61,32 +61,32 @@ int process_MysticOrbs(char *acTemplatePath, char *acBinPath, char *acTxtPath, E
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, etype2, USHORT_ITEMTYPE);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, limit, USHORT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo,prop1, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo,prop1, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo,par1, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo,min1, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo,max1, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo,prop2, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo,prop2, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo,par2, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo,min2, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo,max2, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo,prop3, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo,prop3, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo,par3, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo,min3, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo,max3, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo,prop4, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo,prop4, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo,par4, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo,min4, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo,max4, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo,prop5, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo,prop5, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo,par5, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo,min5, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo,max5, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo,prop6, UINT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo,prop6, USHORT_PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo,par6, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo,min6, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo,max6, INT);

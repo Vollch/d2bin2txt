@@ -342,11 +342,17 @@ int process_itemratio(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
     switch ( enPhase )
     {
         case EN_MODULE_PREPARE:
+            MODULE_DEPEND_CALL(CellFiles, acTemplatePath, acBinPath, acTxtPath);
             break;
 
         case EN_MODULE_SELF_DEPEND:
             m_stCallback.pfnFieldProc = ItemRatio_FieldProc;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
+
+            if ( isD2SigmaActive() )
+            {
+                m_stCallback.eModuleType = EN_MODULE_PLUGIN;
+            }
 
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);

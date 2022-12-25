@@ -5,7 +5,7 @@
 
 typedef struct
 {
-    unsigned int vId;
+    unsigned char pad0x00[4];
 
     unsigned int vnumboxes;
 
@@ -224,8 +224,8 @@ int process_belts(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_M
             m_uiBeltsCount = 0;
 
             m_stCallback.pfnFieldProc = Belts_FieldProc;
-            m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
+            m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
 
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);

@@ -195,7 +195,7 @@ srvactivefunc - srvdofunc called every frame the state is active
 
 typedef struct
 {
-    unsigned short vid;
+    unsigned short vstate;
     unsigned short voverlay1;   //overlay
 
     unsigned short voverlay2;   //overlay
@@ -311,7 +311,7 @@ static char *m_apcNotUsed[] =
 
 static char *m_apcInternalProcess[] = 
 {
-    "state",
+    "id",
     NULL,
 };
 
@@ -321,13 +321,13 @@ static ST_ITEM_STATES *m_astItemStates = NULL;
 MODULE_SETLINES_FUNC(m_astItemStates, ST_ITEM_STATES);
 MODULE_HAVENAME_FUNC(m_astItemStates, vstate, m_iItemStatesCount);
 
-static int States_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
+static int States_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
     if ( !stricmp(acKey, "state") )
     {
-        char *pcName;
+        char *pcName = NULL;
         ( (pcName = Overlay_GetOverlay(pstLineInfo->voverlay1)) ||
           (pcName = Overlay_GetOverlay(pstLineInfo->voverlay2)) ||
           (pcName = Overlay_GetOverlay(pstLineInfo->voverlay3)) ||
@@ -338,13 +338,13 @@ static int States_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLin
           (pcName = Sounds_GetSoundName2(pstLineInfo->vonsound)) ||
           (pcName = Sounds_GetSoundName2(pstLineInfo->voffsound)) );
 
-        if ( !String_BuildName(FORMAT(states), 0xFFFF, pcTemplate, pcName, pstLineInfo->vid, MODULE_HAVENAME, acOutput) )
+        if ( !String_BuildName(FORMAT(states), 0xFFFF, pcTemplate, pcName, pstLineInfo->vstate, MODULE_HAVENAME, acOutput) )
         {
-            sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vid);
+            sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vstate);
         }
 
-        strncpy(m_astItemStates[pstLineInfo->vid].vstate, acOutput, sizeof(m_astItemStates[pstLineInfo->vid].vstate));
-        String_Trim(m_astItemStates[pstLineInfo->vid].vstate);
+        strncpy(m_astItemStates[pstLineInfo->vstate].vstate, acOutput, sizeof(m_astItemStates[pstLineInfo->vstate].vstate));
+        String_Trim(m_astItemStates[pstLineInfo->vstate].vstate);
         m_iItemStatesCount++;
         return 1;
     }
@@ -356,9 +356,9 @@ static int States_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo,
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !stricmp(acKey, "state") )
+    if ( !stricmp(acKey, "id") )
     {
-        strncpy(acOutput, m_astItemStates[pstLineInfo->vid].vstate, sizeof(m_astItemStates[pstLineInfo->vid].vstate));
+        sprintf(acOutput, "%u", pstLineInfo->vstate);
 
         return 1;
     }
@@ -370,7 +370,7 @@ static void States_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLine
 {
     INIT_VALUE_BUFFER;
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, id, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, state, USHORT_STATE);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, overlay1, USHORT_OVERLAY);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, overlay2, USHORT_OVERLAY);
@@ -480,11 +480,11 @@ int process_states(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_
         case EN_MODULE_SELF_DEPEND:
             States_InitValueMap(pstValueMap, pstLineInfo);
 
-            m_stCallback.pfnFieldProc = States_FieldProc_Pre;
+            m_stCallback.pfnConvertValue = States_ConvertValue;
             m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
             m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
-            m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
+            m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
 
             m_iItemStatesCount = 0;
 
@@ -505,8 +505,8 @@ int process_states(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_
             States_InitValueMap(pstValueMap, pstLineInfo);
 
             m_stCallback.pfnFieldProc = States_FieldProc;
-            m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
+            m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
 
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);

@@ -16,7 +16,7 @@ MODULE_SETLINES_FUNC(m_astLines, ST_LINE_INFO);
 
 char *MonUModExp_ExternList[] =
 {
-    "uniquemod",
+    "id",
     "StrDesc",
     NULL,
 };
@@ -29,7 +29,7 @@ int MonUModExp_ExternProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, c
     }
     else if ( !stricmp(acKey, "StrDesc") )
     {
-        char *pcResult = String_FindString(m_astLines[iLineNo].vStrDesc, "dummy");
+        char *pcResult = String_FindString(m_astLines[iLineNo].vStrDesc, "dummy", NULL);
         if ( pcResult )
         {
             strcpy(acOutput, pcResult);

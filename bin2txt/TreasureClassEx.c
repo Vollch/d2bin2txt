@@ -187,48 +187,30 @@ typedef struct
     short vSet;
     short vUnique;
 
-    int iPadding12;
+    unsigned char pad0x30[4];
 
     int vNoDrop;
 
     char vItem1[64];
-
     char vItem2[64];
-
     char vItem3[64];
-
     char vItem4[64];
-
     char vItem5[64];
-
     char vItem6[64];
-
     char vItem7[64];
-
     char vItem8[64];
-
     char vItem9[64];
-
     char vItem10[64];
 
     int vProb1;
-
     int vProb2;
-
     int vProb3;
-
     int vProb4;
-
     int vProb5;
-
     int vProb6;
-
     int vProb7;
-
     int vProb8;
-
     int vProb9;
-
     int vProb10;
 } ST_LINE_INFO; //total 736 bytes
 
@@ -259,12 +241,9 @@ void TreasureClassEx_SetOffset(unsigned int uiOffset)
 
 char *TreasureClassEx_GetItemTreasureClass(unsigned int id)
 {
-    //id -= 161;    //原版
-    //id -= 321;  //魔电
-    //id -= 193;  //宝日8.4
     id -= m_uiTcOffset;
 
-    if ( id < m_iTreasureClassEx && strcmp("Gold", m_astTreasureClassEx[id].vTreasuremyspClass) )
+    if ( id < m_iTreasureClassEx && (g_iPrintUnresolvedIds > 0 || strcmp("Gold", m_astTreasureClassEx[id].vTreasuremyspClass)) )
     {
         return m_astTreasureClassEx[id].vTreasuremyspClass;
     }
@@ -319,43 +298,25 @@ int process_treasureclassex(char *acTemplatePath, char *acBinPath, char *acTxtPa
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, NoDrop, INT);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Item1, STRING);
-
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Item2, STRING);
-
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Item3, STRING);
-
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Item4, STRING);
-
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Item5, STRING);
-
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Item6, STRING);
-
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Item7, STRING);
-
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Item8, STRING);
-
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Item9, STRING);
-
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Item10, STRING);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Prob1, INT);
-
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Prob2, INT);
-
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Prob3, INT);
-
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Prob4, INT);
-
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Prob5, INT);
-
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Prob6, INT);
-
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Prob7, INT);
-
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Prob8, INT);
-
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Prob9, INT);
-
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Prob10, INT);
 
     VALUE_MAP_DEFINE_VIRT(pstValueMap, pstLineInfo, Term, EOL);

@@ -1655,7 +1655,8 @@ CostAdd：此技能作为物品属性对物品价格的提升数值。
 
 typedef struct
 {
-    unsigned int vId;
+    unsigned short vskill;
+    unsigned char pad0x02[2];
 
 #if 1
     unsigned int vBitCombined;
@@ -2031,7 +2032,7 @@ static char *m_apcNotUsed[] =
 
 static char *m_apcInternalProcess[] = 
 {
-    "skill",
+    "Id",
     NULL,
 };
 
@@ -2047,19 +2048,19 @@ static void module_SetLines_Pre(unsigned int uiLines)
     MonStats_LinkSkills(m_astSkills, uiLines, sizeof(ST_SKILLS), offsetof(ST_SKILLS, pcOwner));
 }
 
-static int Skills_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
+static int Skills_ConvertValue_Pre(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
     if ( !stricmp(acKey, "skill") )
     {
-        if ( !String_BuildName(FORMAT(skills), SkillDesc_GetString(pstLineInfo->vskilldesc), pcTemplate, m_astSkills[pstLineInfo->vId].pcOwner, pstLineInfo->vId, MODULE_HAVENAME, acOutput) )
+        if ( !String_BuildName(FORMAT(skills), SkillDesc_GetString(pstLineInfo->vskilldesc), pcTemplate, m_astSkills[pstLineInfo->vskill].pcOwner, pstLineInfo->vskill, MODULE_HAVENAME, acOutput) )
         {
-            sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vId);
+            sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vskill);
         }
 
-        strncpy(m_astSkills[pstLineInfo->vId].vskill, acOutput, sizeof(m_astSkills[pstLineInfo->vId].vskill));
-        String_Trim(m_astSkills[pstLineInfo->vId].vskill);
+        strncpy(m_astSkills[pstLineInfo->vskill].vskill, acOutput, sizeof(m_astSkills[pstLineInfo->vskill].vskill));
+        String_Trim(m_astSkills[pstLineInfo->vskill].vskill);
         m_iSkillsCount++;
         return 1;
     }
@@ -2071,9 +2072,9 @@ static int Skills_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo,
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !stricmp(acKey, "skill") )
+    if ( !stricmp(acKey, "Id") )
     {
-        strncpy(acOutput, m_astSkills[pstLineInfo->vId].vskill, sizeof(m_astSkills[pstLineInfo->vId].vskill));
+        sprintf(acOutput, "%u", pstLineInfo->vskill);
 
         return 1;
     }
@@ -2121,7 +2122,7 @@ static void Skills_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLine
 {
     INIT_VALUE_BUFFER;
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Id, UINT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, skill, USHORT_SKILL);
 
     VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, interrupt, BitCombined, 31, UINT_BIT);
     VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, leftskill, BitCombined, 30, UINT_BIT);
@@ -2456,11 +2457,11 @@ int process_skills(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_
 
             m_iSkillsCount = 0;
 
-            m_stCallback.pfnFieldProc = Skills_FieldProc_Pre;
+            m_stCallback.pfnConvertValue = Skills_ConvertValue_Pre;
             m_stCallback.pfnSetLines = module_SetLines_Pre;
             m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
-            m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
             m_stCallback.ppcKeyInternalProcess = isD2SigmaActive() ? Skills2_ExternList : m_apcInternalProcess;
+            m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
 
             return process_file(acTemplatePath, acBinPath, NULL, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo),
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);
@@ -2490,8 +2491,8 @@ int process_skills(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_
 
             m_stCallback.pfnFieldProc = Skills_FieldProc;
             m_stCallback.pfnConvertValue = Skills_ConvertValue;
-            m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
             m_stCallback.ppcKeyInternalProcess = isD2SigmaActive() ? Skills2_ExternList : m_apcInternalProcess;
+            m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
 
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo),
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);

@@ -85,11 +85,7 @@ multiply：价格放大因子。
 
 typedef struct
 {
-    unsigned int iPadding0;
-    unsigned int iPadding1;
-    unsigned int iPadding2;
-
-    unsigned short iPadding3;
+    unsigned char pad0x00[14];
     unsigned short vversion;
 
     unsigned short vitype1;
@@ -110,7 +106,7 @@ typedef struct
     unsigned short vetype4;
     unsigned char vname[32];
 
-    unsigned short iPadding17;
+    unsigned char pad0x46[2];
 } ST_LINE_INFO;
 
 static char *m_apcNotUsed[] =
@@ -150,13 +146,7 @@ int process_raresuffix(char *acTemplatePath, char *acBinPath, char *acTxtPath, E
     switch ( enPhase )
     {
         case EN_MODULE_PREPARE:
-            break;
-
         case EN_MODULE_SELF_DEPEND:
-            m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
-
-            return process_file(acTemplatePath, acBinPath, NULL, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo),
-                pstValueMap, Global_GetValueMapCount(), &m_stCallback);
             break;
 
         case EN_MODULE_OTHER_DEPEND:

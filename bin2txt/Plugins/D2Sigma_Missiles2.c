@@ -16,7 +16,7 @@ MODULE_SETLINES_FUNC(m_astLines, ST_LINE_INFO);
 
 char *Missiles2_ExternList[] =
 {
-    "Missile",
+    "Id",
     "palshift",
     NULL,
 };

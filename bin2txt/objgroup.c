@@ -59,7 +59,7 @@ typedef struct
 
     unsigned char vSHRINES;
     unsigned char vWELLS;
-    unsigned short iPadding12;
+    unsigned char pad0x32[2];
 } ST_LINE_INFO;
 
 static char *m_apcInternalProcess[] =

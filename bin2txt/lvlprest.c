@@ -173,7 +173,7 @@ typedef struct
     int vKillEdge;
     int vFillBlanks;
     int vExpansion;
-    int iPadding9;
+    unsigned char pad0x24[4];
 
     int vSizeX;
     int vSizeY;
@@ -184,15 +184,10 @@ typedef struct
     int vFiles;
 
     unsigned char vFile1[60];
-
     unsigned char vFile2[60];
-
     unsigned char vFile3[60];
-
     unsigned char vFile4[60];
-
     unsigned char vFile5[60];
-
     unsigned char vFile6[60];
 
     int vDt1Mask;
@@ -258,15 +253,10 @@ int process_lvlprest(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Files, INT);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, File1, STRING);
-
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, File2, STRING);
-
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, File3, STRING);
-
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, File4, STRING);
-
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, File5, STRING);
-
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, File6, STRING);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Expansion, INT);

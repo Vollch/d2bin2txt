@@ -42,7 +42,7 @@ eol: End of line, this field prevents M$ Excel from messing up the file, if you 
 
 typedef struct
 {
-    unsigned short vId;
+    unsigned short vsequence;
     unsigned char vmode;   //monmode
     unsigned char vframe;
 
@@ -55,51 +55,25 @@ typedef struct
     unsigned char vsequence[64];
 } ST_MONSEQ;
 
-static char *m_apcInternalProcess[] =
-{
-    "sequence",
-    NULL,
-};
-
 static unsigned int m_iMonSeqCount = 0;
 static ST_MONSEQ *m_astMonSeq = NULL;
 
 MODULE_SETLINES_FUNC(m_astMonSeq, ST_MONSEQ);
 MODULE_HAVENAME_FUNC(m_astMonSeq, vsequence, m_iMonSeqCount);
 
-static int MonSeq_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
+static int MonSeq_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
-    if ( !stricmp(acKey, "sequence") )
+    if ( !stricmp(acKey, "sequence") && m_iMonSeqCount <= pstLineInfo->vsequence )
     {
-        if ( m_iMonSeqCount > pstLineInfo->vId )
+        if ( !String_BuildName(FORMAT(monseq), 0xFFFF, pcTemplate, NAME_PREFIX, pstLineInfo->vsequence, MODULE_HAVENAME, acOutput) )
         {
-            strcpy(acOutput, m_astMonSeq[pstLineInfo->vId].vsequence);
-            return 1;
+            sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vsequence);
         }
 
-        if ( !String_BuildName(FORMAT(monseq), 0xFFFF, pcTemplate, NAME_PREFIX, pstLineInfo->vId, MODULE_HAVENAME, acOutput) )
-        {
-            sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vId);
-        }
-
-        strncpy(m_astMonSeq[m_iMonSeqCount].vsequence, acOutput, sizeof(m_astMonSeq[m_iMonSeqCount].vsequence));
+        strncpy(m_astMonSeq[pstLineInfo->vsequence].vsequence, acOutput, sizeof(m_astMonSeq[pstLineInfo->vsequence].vsequence));
         m_iMonSeqCount++;
-        return 1;
-    }
-
-    return 0;
-}
-
-static int MonSeq_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
-{
-    ST_LINE_INFO *pstLineInfo = pvLineInfo;
-
-    if ( !stricmp(acKey, "sequence") )
-    {
-        strncpy(acOutput, m_astMonSeq[pstLineInfo->vId].vsequence, sizeof(m_astMonSeq[pstLineInfo->vId].vsequence));
-
         return 1;
     }
 
@@ -122,6 +96,7 @@ int process_monseq(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_
 
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sequence, USHORT_MONSEQ);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mode, UCHAR_MONMODE);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, frame, UCHAR);
 
@@ -133,32 +108,22 @@ int process_monseq(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_
     switch ( enPhase )
     {
         case EN_MODULE_PREPARE:
+            MODULE_DEPEND_CALL(monmode, acTemplatePath, acBinPath, acTxtPath);
             break;
 
         case EN_MODULE_SELF_DEPEND:
             m_iMonSeqCount = 0;
 
-            m_stCallback.pfnFieldProc = MonSeq_FieldProc_Pre;
+            m_stCallback.pfnConvertValue = MonSeq_ConvertValue;
             m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
             m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
-            m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
-
-            return process_file(acTemplatePath, acBinPath, NULL, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
-                pstValueMap, Global_GetValueMapCount(), &m_stCallback);
-            break;
-
-        case EN_MODULE_OTHER_DEPEND:
-            MODULE_DEPEND_CALL(monmode, acTemplatePath, acBinPath, acTxtPath);
-            break;
-
-        case EN_MODULE_INIT:
-            m_stCallback.pfnFieldProc = MonSeq_FieldProc;
-            m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);
             break;
 
+        case EN_MODULE_OTHER_DEPEND:
+        case EN_MODULE_INIT:
         default:
             break;
     }

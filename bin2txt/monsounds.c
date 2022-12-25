@@ -64,20 +64,21 @@ CvtTgt1 to CvtTgt3: This is related to sounds that are played when certain skill
 
 typedef struct
 {
-    unsigned int vId;
+    unsigned short vId;
+    unsigned char pad0x02[2];
 
     unsigned short vAttack1;    //sounds
-    unsigned short sPad1;
+    unsigned char pad0x06[2];
 
     unsigned int vAtt1Del;
     unsigned int vAtt1Prb;
     unsigned short vWeapon1;    //sounds
-    unsigned short sPad2;
+    unsigned char pad0x12[2];
     unsigned int vWea1Del;
     unsigned int vWea1Vol;
 
     unsigned short vAttack2;    //sounds
-    unsigned short sPad3;
+    unsigned char pad0x1E[2];
 
     unsigned int vAtt2Del;
     unsigned int vAtt2Prb;
@@ -86,76 +87,70 @@ typedef struct
     unsigned int vWea2Vol;
 
     unsigned short vHitSound; //sounds
-    unsigned short sPad4;
+    unsigned char pad0x36[2];
 
     unsigned int vHitDelay;
 
-    unsigned short vDeathSound;
-    unsigned short sPad5;
+    unsigned short vDeathSound; //sound
+    unsigned char pad0x3E[2];
     unsigned short vDeaDelay;
-    unsigned short sPad6;
+    unsigned char pad0x42[2];
 
     unsigned short vSkill1;   //sounds
-    unsigned short sPad7;
+    unsigned char pad0x46[2];
     unsigned short vSkill2;   //sounds
-    unsigned short sPad8;
+    unsigned char pad0x4A[2];
     unsigned short vSkill3;   //sounds
-    unsigned short sPad9;
+    unsigned char pad0x4E[2];
     unsigned short vSkill4;   //sounds
-    unsigned short sPad10;
+    unsigned char pad0x52[2];
 
     unsigned short vFootstep; //sounds
-    unsigned short sPad11;
+    unsigned char pad0x56[2];
     unsigned short vFootstepLayer;    //sounds
-    unsigned short sPad12;
+    unsigned char pad0x5A[2];
 
     unsigned int vFsCnt;
     unsigned int vFsOff;
     unsigned int vFsPrb;
     unsigned short vNeutral;  //sounds
-    unsigned short sPad13;
+    unsigned char pad0x6A[2];
     unsigned int vNeuTime;
 
     unsigned short vInit; //sounds
-    unsigned short sPad14;
+    unsigned char pad0x72[2];
     unsigned short vTaunt;    //sounds
-    unsigned short sPad15;
+    unsigned char pad0x76[2];
 
     unsigned short vFlee; //sounds
-    unsigned short sPad16;
+    unsigned char pad0x7A[2];
 
     unsigned char vCvtMo1;  //monmode
     unsigned char vCvtTgt1;  //monmode
-    unsigned char iPadding31[2];
+    unsigned char pad0x7E[2];
 
     unsigned short vCvtSk1;   //skills
-    unsigned short sPad17;
+    unsigned char pad0x82[2];
 
     unsigned char vCvtMo2;  //monmode
     unsigned char vCvtTgt2;  //monmode
-    unsigned char iPadding33[2];
+    unsigned char pad0x86[2];
 
     unsigned short vCvtSk2;   //skills
-    unsigned short sPad18;
+    unsigned char pad0x8A[2];
 
     unsigned char vCvtMo3;  //monmode
     unsigned char vCvtTgt3;  //monmode
-    unsigned char iPadding35[2];
+    unsigned char pad0x8E[2];
 
     unsigned short vCvtSk3;   //skills
-    unsigned short sPad19;
+    unsigned char pad0x92[2];
 } ST_LINE_INFO;
 
 typedef struct
 {
     unsigned char vId[64];
 } ST_MONSOUND;
-
-static char *m_apcInternalProcess[] = 
-{
-    "Id",
-    NULL,
-};
 
 static unsigned int m_iMonSoundsCount = 0;
 static ST_MONSOUND *m_astMonSounds = NULL;
@@ -173,13 +168,13 @@ char *MonSounds_GetItemSoundsCode(unsigned int id)
     return NULL;
 }
 
-static int MonSounds_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
+static int MonSounds_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
     if ( !stricmp(acKey, "Id") )
     {
-        char *pcName;
+        char *pcName = NULL;
         ( (pcName = Sounds_GetSoundName2(pstLineInfo->vAttack1)) ||
           (pcName = Sounds_GetSoundName2(pstLineInfo->vAttack2)) ||
           (pcName = Sounds_GetSoundName2(pstLineInfo->vHitSound)) ||
@@ -205,30 +200,18 @@ static int MonSounds_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int i
         strncpy(m_astMonSounds[pstLineInfo->vId].vId, acOutput, sizeof(m_astMonSounds[pstLineInfo->vId].vId));
         String_Trim(m_astMonSounds[pstLineInfo->vId].vId);
         m_iMonSoundsCount++;
-        return 1;
-    }
-
-    return 0;
-}
-
-static int MonSounds_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
-{
-    ST_LINE_INFO *pstLineInfo = pvLineInfo;
-
-    if ( !stricmp(acKey, "Id") )
-    {
-        strncpy(acOutput, m_astMonSounds[pstLineInfo->vId].vId, sizeof(m_astMonSounds[pstLineInfo->vId].vId));
 
         return 1;
     }
 
     return 0;
 }
-
 
 static void MonSounds_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLineInfo)
 {
     INIT_VALUE_BUFFER;
+
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Id, USHORT_MONSOUND);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Attack1, USHORT_SOUND);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Weapon1, USHORT_SOUND);
@@ -307,10 +290,9 @@ int process_monsounds(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
 
             m_iMonSoundsCount = 0;
 
-            m_stCallback.pfnFieldProc = MonSounds_FieldProc_Pre;
+            m_stCallback.pfnConvertValue = MonSounds_ConvertValue;
             m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
             m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
-            m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
             return process_file(acTemplatePath, acBinPath, NULL, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);
@@ -323,9 +305,6 @@ int process_monsounds(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
 
         case EN_MODULE_INIT:
             MonSounds_InitValueMap(pstValueMap, pstLineInfo);
-
-            m_stCallback.pfnFieldProc = MonSounds_FieldProc;
-            m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);

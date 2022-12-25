@@ -84,62 +84,7 @@ typedef struct
     int vDt1Mask;
     int vGridSize;
 
-    int iPadding20;
-    int iPadding21;
-    int iPadding22;
-    int iPadding23;
-    int iPadding24;
-    int iPadding25;
-    int iPadding26;
-    int iPadding27;
-    int iPadding28;
-    int iPadding29;
-
-    int iPadding30;
-    int iPadding31;
-    int iPadding32;
-    int iPadding33;
-    int iPadding34;
-    int iPadding35;
-    int iPadding36;
-    int iPadding37;
-    int iPadding38;
-    int iPadding39;
-
-    int iPadding40;
-    int iPadding41;
-    int iPadding42;
-    int iPadding43;
-    int iPadding44;
-    int iPadding45;
-    int iPadding46;
-    int iPadding47;
-    int iPadding48;
-    int iPadding49;
-
-    int iPadding50;
-    int iPadding51;
-    int iPadding52;
-    int iPadding53;
-    int iPadding54;
-    int iPadding55;
-    int iPadding56;
-    int iPadding57;
-    int iPadding58;
-    int iPadding59;
-
-    int iPadding60;
-    int iPadding61;
-    int iPadding62;
-    int iPadding63;
-    int iPadding64;
-    int iPadding65;
-    int iPadding66;
-    int iPadding67;
-    int iPadding68;
-    int iPadding69;
-
-    int iPadding70;
+    unsigned char pad0x50[204];
 
     int vProb0;
 
