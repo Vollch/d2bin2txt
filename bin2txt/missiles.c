@@ -951,6 +951,7 @@ static char *m_apcInternalProcess[] =
 };
 
 static unsigned int m_iMisslesCount = 0;
+static unsigned int m_iMisslesHaveEmpty = 0;
 static ST_MISSILES *m_astMissiles = NULL;
 
 MODULE_SETLINES_FUNC(m_astMissiles, ST_MISSILES);
@@ -971,6 +972,8 @@ static int Missiles_ConvertValue_Pre(void *pvLineInfo, char *acKey, char *pcTemp
 
         strncpy(m_astMissiles[pstLineInfo->vMissile].vMissile, acOutput, sizeof(m_astMissiles[pstLineInfo->vMissile].vMissile));
         String_Trim(m_astMissiles[pstLineInfo->vMissile].vMissile);
+        m_iMisslesHaveEmpty |= !m_astMissiles[pstLineInfo->vMissile].vMissile[0];
+
         m_iMisslesCount++;
         return 1;
     }
@@ -998,12 +1001,17 @@ static int Missiles_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineN
 
 char *Missiles_GetMissile(unsigned int id)
 {
-    if ( id >= m_iMisslesCount )
+    if ( id < m_iMisslesCount )
     {
-        return NULL;
+        return m_astMissiles[id].vMissile;
     }
 
-    return m_astMissiles[id].vMissile;
+    if ( id == 0xFFFF && m_iMisslesHaveEmpty )
+    {
+        return g_pcFallbackID;
+    }
+
+    return NULL;
 }
 
 static int Missiles_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)

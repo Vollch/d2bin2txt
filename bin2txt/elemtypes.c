@@ -18,7 +18,8 @@ static char *m_apcInternalProcess[] =
     NULL,
 };
 
-static unsigned int m_iElemTypes = 0;
+static unsigned int m_iElemTypesCount = 0;
+static unsigned int m_iElemTypesHaveEmpty = 0;
 static ST_ELEM_TYPES *m_astElemTypes = NULL;
 
 MODULE_SETLINES_FUNC(m_astElemTypes, ST_ELEM_TYPES);
@@ -29,15 +30,16 @@ static int ElemTypes_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLine
 
     if ( !stricmp(acKey, "Elemental Type") )
     {
-        strncpy(m_astElemTypes[m_iElemTypes].vCode, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
+        strncpy(m_astElemTypes[m_iElemTypesCount].vCode, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
+        String_Trim(m_astElemTypes[m_iElemTypesCount].vCode);
+        m_iElemTypesHaveEmpty |= !m_astElemTypes[m_iElemTypesCount].vCode[0];
 
-        if ( !String_BuildName(FORMAT(elemtypes), 0xFFFF, pcTemplate, m_astElemTypes[m_iElemTypes].vCode, m_iElemTypes, NULL, acOutput) )
+        if ( !String_BuildName(FORMAT(elemtypes), 0xFFFF, pcTemplate, m_astElemTypes[m_iElemTypesCount].vCode, m_iElemTypesCount, NULL, acOutput) )
         {
             strncpy(acOutput, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
         }
 
-        String_Trim(m_astElemTypes[m_iElemTypes].vCode);
-        m_iElemTypes++;
+        m_iElemTypesCount++;
         return 1;
     }
 
@@ -69,7 +71,7 @@ int process_elemtypes(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
             break;
 
         case EN_MODULE_SELF_DEPEND:
-            m_iElemTypes = 0;
+            m_iElemTypesCount = 0;
 
             //m_stCallback.pfnGetKey = ElemTypes_GetKey;
             m_stCallback.pfnFieldProc = ElemTypes_FieldProc;
@@ -92,11 +94,16 @@ int process_elemtypes(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
 
 char *ElemTypes_GetElemStr(unsigned int id)
 {
-    if ( id >= m_iElemTypes )
+    if ( id < m_iElemTypesCount )
     {
-        return NULL;
+        return m_astElemTypes[id].vCode;
     }
 
-    return m_astElemTypes[id].vCode;
+    if ( id == 0xFF && m_iElemTypesHaveEmpty )
+    {
+        return g_pcFallbackID;
+    }
+
+    return NULL;
 }
 

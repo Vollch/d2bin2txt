@@ -59,85 +59,69 @@ int Skills2_ExternProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char
     {
         return 0;
     }
-    else if ( !stricmp(acKey, "AuraStatParam1") && m_astLines[iLineNo].vAuraStatParam1 )
+    else if ( !stricmp(acKey, "AuraStatParam1") )
     {
-        sprintf(acOutput, "%u", m_astLines[iLineNo].vAuraStatParam1);
-        return 1;
+        return process_value(EN_VALUE_INT, 4, &m_astLines[iLineNo].vAuraStatParam1, acOutput);
     }
-    else if ( !stricmp(acKey, "AuraStatParam2") && m_astLines[iLineNo].vAuraStatParam2 )
+    else if ( !stricmp(acKey, "AuraStatParam2") )
     {
-        sprintf(acOutput, "%u", m_astLines[iLineNo].vAuraStatParam2);
-        return 1;
+        return process_value(EN_VALUE_INT, 4, &m_astLines[iLineNo].vAuraStatParam2, acOutput);
     }
-    else if ( !stricmp(acKey, "AuraStatParam3") && m_astLines[iLineNo].vAuraStatParam3 )
+    else if ( !stricmp(acKey, "AuraStatParam3") )
     {
-        sprintf(acOutput, "%u", m_astLines[iLineNo].vAuraStatParam3);
-        return 1;
+        return process_value(EN_VALUE_INT, 4, &m_astLines[iLineNo].vAuraStatParam3, acOutput);
     }
-    else if ( !stricmp(acKey, "AuraStatParam4") && m_astLines[iLineNo].vAuraStatParam4 )
+    else if ( !stricmp(acKey, "AuraStatParam4") )
     {
-        sprintf(acOutput, "%u", m_astLines[iLineNo].vAuraStatParam4);
-        return 1;
+        return process_value(EN_VALUE_INT, 4, &m_astLines[iLineNo].vAuraStatParam4, acOutput);
     }
-    else if ( !stricmp(acKey, "AuraStatParam5") && m_astLines[iLineNo].vAuraStatParam5 )
+    else if ( !stricmp(acKey, "AuraStatParam5") )
     {
-        sprintf(acOutput, "%u", m_astLines[iLineNo].vAuraStatParam5);
-        return 1;
+        return process_value(EN_VALUE_INT, 4, &m_astLines[iLineNo].vAuraStatParam5, acOutput);
     }
-    else if ( !stricmp(acKey, "AuraStatParam6") && m_astLines[iLineNo].vAuraStatParam6 )
+    else if ( !stricmp(acKey, "AuraStatParam6") )
     {
-        sprintf(acOutput, "%u", m_astLines[iLineNo].vAuraStatParam6);
-        return 1;
+        return process_value(EN_VALUE_INT, 4, &m_astLines[iLineNo].vAuraStatParam6, acOutput);
     }
-    else if ( !stricmp(acKey, "PassiveStatParam1") && m_astLines[iLineNo].vPassiveStatParam1 )
+    else if ( !stricmp(acKey, "PassiveStatParam1") )
     {
-        sprintf(acOutput, "%u", m_astLines[iLineNo].vPassiveStatParam1);
-        return 1;
+        return process_value(EN_VALUE_INT, 4, &m_astLines[iLineNo].vPassiveStatParam1, acOutput);
     }
-    else if ( !stricmp(acKey, "PassiveStatParam2") && m_astLines[iLineNo].vPassiveStatParam2 )
+    else if ( !stricmp(acKey, "PassiveStatParam2") )
     {
-        sprintf(acOutput, "%u", m_astLines[iLineNo].vPassiveStatParam2);
-        return 1;
+        return process_value(EN_VALUE_INT, 4, &m_astLines[iLineNo].vPassiveStatParam2, acOutput);
     }
-    else if ( !stricmp(acKey, "PassiveStatParam3") && m_astLines[iLineNo].vPassiveStatParam3 )
+    else if ( !stricmp(acKey, "PassiveStatParam3") )
     {
-        sprintf(acOutput, "%u", m_astLines[iLineNo].vPassiveStatParam3);
-        return 1;
+        return process_value(EN_VALUE_INT, 4, &m_astLines[iLineNo].vPassiveStatParam3, acOutput);
     }
-    else if ( !stricmp(acKey, "PassiveStatParam4") && m_astLines[iLineNo].vPassiveStatParam4 )
+    else if ( !stricmp(acKey, "PassiveStatParam4") )
     {
-        sprintf(acOutput, "%u", m_astLines[iLineNo].vPassiveStatParam4);
-        return 1;
+        return process_value(EN_VALUE_INT, 4, &m_astLines[iLineNo].vPassiveStatParam4, acOutput);
     }
-    else if ( !stricmp(acKey, "PassiveStatParam5") && m_astLines[iLineNo].vPassiveStatParam5 )
+    else if ( !stricmp(acKey, "PassiveStatParam5") )
     {
-        sprintf(acOutput, "%u", m_astLines[iLineNo].vPassiveStatParam5);
-        return 1;
+        return process_value(EN_VALUE_INT, 4, &m_astLines[iLineNo].vPassiveStatParam5, acOutput);
     }
-    else if ( !stricmp(acKey, "DelayGroup") && m_astLines[iLineNo].vDelayGroup )
+    else if ( !stricmp(acKey, "DelayGroup") )
     {
-        sprintf(acOutput, "%u", m_astLines[iLineNo].vDelayGroup);
-        return 1;
+        return process_value(EN_VALUE_UCHAR, 1, &m_astLines[iLineNo].vDelayGroup, acOutput);
     }
-    else if ( !stricmp(acKey, "BaseSynergy") && m_astLines[iLineNo].vBaseSynergy )
+    else if ( !stricmp(acKey, "BaseSynergy") )
     {
-        sprintf(acOutput, "%u", m_astLines[iLineNo].vBaseSynergy);
-        return 1;
+        return process_value(EN_VALUE_UCHAR, 1, &m_astLines[iLineNo].vBaseSynergy, acOutput);
     }
-    else if ( !stricmp(acKey, "StaticDamage") && m_astLines[iLineNo].vStaticDamage )
+    else if ( !stricmp(acKey, "StaticDamage") )
     {
-        sprintf(acOutput, "%u", m_astLines[iLineNo].vStaticDamage);
-        return 1;
+        return process_value(EN_VALUE_UCHAR, 1, &m_astLines[iLineNo].vStaticDamage, acOutput);
     }
-    else if ( !stricmp(acKey, "maxlevel") && m_astLines[iLineNo].vmaxlevel )
+    else if ( !stricmp(acKey, "maxlevel") )
     {
-        sprintf(acOutput, "%u", m_astLines[iLineNo].vmaxlevel);
-        return 1;
+        return process_value(EN_VALUE_UCHAR, 1, &m_astLines[iLineNo].vmaxlevel, acOutput);
     }
-    else if ( !stricmp(acKey, "noitemdesc") && m_astLines[iLineNo].vnoitemdesc )
+    else if ( !stricmp(acKey, "noitemdesc") )
     {
-        sprintf(acOutput, "%u", m_astLines[iLineNo].vnoitemdesc);
-        return 1;
+        return process_value(EN_VALUE_UCHAR, 1, &m_astLines[iLineNo].vnoitemdesc, acOutput);
     }
 
     return 0;

@@ -410,6 +410,7 @@ static int UniqueItems_ConvertValue(void *pvLineInfo, char *acKey, char *pcTempl
     {
         strncpy(m_astUniqueItems[m_uiUniqueItemCount].vindex, pstLineInfo->vindex, sizeof(m_astUniqueItems[m_uiUniqueItemCount].vindex));
         String_Trim(m_astUniqueItems[m_uiUniqueItemCount].vindex);
+
         m_uiUniqueItemCount++;
     }
 

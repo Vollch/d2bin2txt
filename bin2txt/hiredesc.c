@@ -20,7 +20,8 @@ typedef struct
 } ST_HIRE_DESC;
 
 static unsigned int m_iBinStructSize = 0;
-static unsigned int m_iHireDesc = 0;
+static unsigned int m_iHireDescCount = 0;
+static unsigned int m_iHireDescHaveEmpty = 0;
 static ST_HIRE_DESC *m_astHireDesc = NULL;
 
 static char *m_apcInternalProcess[] =
@@ -33,12 +34,17 @@ MODULE_SETLINES_FUNC(m_astHireDesc, ST_HIRE_DESC);
 
 char *HireDesc_GetDesc(unsigned int id)
 {
-    if ( id >= m_iHireDesc )
+    if ( id < m_iHireDescCount )
     {
-        return NULL;
+        return m_astHireDesc[id].vCode;
     }
 
-    return m_astHireDesc[id].vCode;
+    if ( id == 0xFF && m_iHireDescHaveEmpty )
+    {
+        return g_pcFallbackID;
+    }
+
+    return NULL;
 }
 
 static int HireDesc_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
@@ -53,15 +59,16 @@ static int HireDesc_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineN
             uiString = ((ST_LINE_INFO_MERCDESC *)pvLineInfo)->vNameStr;
         }
 
-        strncpy(m_astHireDesc[m_iHireDesc].vCode, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
+        strncpy(m_astHireDesc[m_iHireDescCount].vCode, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
+        String_Trim(m_astHireDesc[m_iHireDescCount].vCode);
+        m_iHireDescHaveEmpty |= !m_astHireDesc[m_iHireDescCount].vCode[0];
 
-        if ( !String_BuildName(FORMAT(hiredesc), uiString, pcTemplate, m_astHireDesc[m_iHireDesc].vCode, m_iHireDesc, NULL, acOutput) )
+        if ( !String_BuildName(FORMAT(hiredesc), uiString, pcTemplate, m_astHireDesc[m_iHireDescCount].vCode, m_iHireDescCount, NULL, acOutput) )
         {
             strncpy(acOutput, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
         }
 
-        String_Trim(m_astHireDesc[m_iHireDesc].vCode);
-        m_iHireDesc++;
+        m_iHireDescCount++;
         return 1;
     }
 
@@ -103,7 +110,7 @@ int process_hiredesc(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
         case EN_MODULE_SELF_DEPEND:
             HireDesc_InitValueMap(pstValueMap, pstLineInfo);
 
-            m_iHireDesc = 0;
+            m_iHireDescCount = 0;
 
             m_stCallback.pfnFieldProc = HireDesc_FieldProc;
             m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;

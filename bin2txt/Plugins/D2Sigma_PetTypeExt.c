@@ -29,15 +29,13 @@ int PetTypeExt_ExternProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, c
     {
         return 0;
     }
-    else if ( !stricmp(acKey, "totem") && m_astLines[iLineNo].vtotem )
+    else if ( !stricmp(acKey, "totem") )
     {
-        sprintf(acOutput, "%u", m_astLines[iLineNo].vtotem);
-        return 1;
+        return process_value(EN_VALUE_UCHAR, 1, &m_astLines[iLineNo].vtotem, acOutput);
     }
-    else if ( !stricmp(acKey, "InheritLaek") && m_astLines[iLineNo].vInheritLaek )
+    else if ( !stricmp(acKey, "InheritLaek") )
     {
-        sprintf(acOutput, "%u", m_astLines[iLineNo].vInheritLaek);
-        return 1;
+        return process_value(EN_VALUE_UCHAR, 1, &m_astLines[iLineNo].vInheritLaek, acOutput);
     }
 
     return 0;

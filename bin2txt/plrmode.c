@@ -22,6 +22,7 @@ static char *m_apcInternalProcess[] =
 };
 
 static unsigned int m_iPlrModeCount = 0;
+static unsigned int m_iPlrModeHaveEmpty = 0;
 static ST_PLRMODE *m_astPlrMode = NULL;
 
 MODULE_SETLINES_FUNC(m_astPlrMode, ST_PLRMODE);
@@ -41,8 +42,11 @@ static int PlrMode_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo
             strcpy(acOutput, pstLineInfo->vToken);
         }
 
-        strncpy(m_astPlrMode[m_iPlrModeCount].vCode, acOutput, sizeof(m_astPlrMode[m_iPlrModeCount].vCode));
         strncpy(m_astPlrMode[m_iPlrModeCount].vName, pstLineInfo->vName, sizeof(m_astPlrMode[m_iPlrModeCount].vName));
+        strncpy(m_astPlrMode[m_iPlrModeCount].vCode, acOutput, sizeof(m_astPlrMode[m_iPlrModeCount].vCode));
+        String_Trim(m_astPlrMode[m_iPlrModeCount].vCode);
+        m_iPlrModeHaveEmpty |= !m_astPlrMode[m_iPlrModeCount].vCode[0];
+
         m_iPlrModeCount++;
         return 1;
     }
@@ -98,11 +102,16 @@ int process_plrmode(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
 
 char *PlrMode_GetCode(unsigned int id)
 {
-    if ( id >= m_iPlrModeCount )
+    if ( id < m_iPlrModeCount )
     {
-        return NULL;
+        return m_astPlrMode[id].vCode;
     }
 
-    return m_astPlrMode[id].vCode;
+    if ( id == 0xFF && m_iPlrModeHaveEmpty )
+    {
+        return g_pcFallbackID;
+    }
+
+    return NULL;
 }
 

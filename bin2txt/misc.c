@@ -718,7 +718,7 @@ typedef struct
     unsigned int vminac;
     unsigned int vmaxac;
     unsigned int vgamblemyspcost;   //53 看名字应该是别人在你这赌博时出的价格，但实际上没有这个功能，所以此列应该没有作用。可以肯定的是此列不影响赌博时的价格。
-    unsigned int vspeed;   //此防具对速度的降低程度。0代表不降低，数字越大速度越慢。
+    int vspeed;   //此防具对速度的降低程度。0代表不降低，数字越大速度越慢。
 
     unsigned int vbitfield1;  //装备的内部定义类型。说明：1为布类物品；3为铁类物品。
     unsigned int vcost;   //物品卖出时的基础价格。
@@ -971,15 +971,15 @@ char *Misc_GetItemUniqueCode(unsigned int id)
     {
         return Weapons_GetWeaponCode(id);
     }
-
     id -= iWeaponCnt;
+
     //armor
     if ( id < iArmorCnt )
     {
         return Armor_GetArmorCode(id);
     }
-
     id -= iArmorCnt;
+
     //misc
     if ( id < iMiscCnt )
     {
@@ -1085,6 +1085,7 @@ static int Misc_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLineN
         m_astMisc[m_iMiscCount].vString = pstLineInfo->vnamestr;
         strncpy(m_astMisc[m_iMiscCount].vcode, pstLineInfo->vcode, sizeof(pstLineInfo->vcode));
         String_Trim(m_astMisc[m_iMiscCount].vcode);
+
         m_iMiscCount++;
         return 1;
 
@@ -1165,7 +1166,7 @@ static void Misc_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLineIn
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, minac, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, maxac, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, gamblemyspcost, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, speed, UINT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, speed, INT);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, bitfield1, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cost, UINT);

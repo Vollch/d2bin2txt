@@ -26,10 +26,9 @@ int PropertiesExt_ExternProc(void *pvLineInfo, char *acKey, unsigned int iLineNo
     {
         return 0;
     }
-    else if ( !stricmp(acKey, "DefaultParam") && m_astLines[iLineNo].vDefaultParam )
+    else if ( !stricmp(acKey, "DefaultParam") )
     {
-        sprintf(acOutput, "%u", m_astLines[iLineNo].vDefaultParam);
-        return 1;
+        return process_value(EN_VALUE_UINT, 4, &m_astLines[iLineNo].vDefaultParam, acOutput);
     }
 
     return 0;

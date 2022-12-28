@@ -56,6 +56,7 @@ typedef struct
 } ST_MONSEQ;
 
 static unsigned int m_iMonSeqCount = 0;
+static unsigned int m_iMonSeqHaveEmpty = 0;
 static ST_MONSEQ *m_astMonSeq = NULL;
 
 MODULE_SETLINES_FUNC(m_astMonSeq, ST_MONSEQ);
@@ -73,6 +74,9 @@ static int MonSeq_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, 
         }
 
         strncpy(m_astMonSeq[pstLineInfo->vsequence].vsequence, acOutput, sizeof(m_astMonSeq[pstLineInfo->vsequence].vsequence));
+        String_Trim(m_astMonSeq[pstLineInfo->vsequence].vsequence);
+        m_iMonSeqHaveEmpty |= !m_astMonSeq[pstLineInfo->vsequence].vsequence[0];
+
         m_iMonSeqCount++;
         return 1;
     }
@@ -85,6 +89,11 @@ char *MonSeq_GetSequence(unsigned int id)
     if ( id < m_iMonSeqCount )
     {
         return m_astMonSeq[id].vsequence;
+    }
+
+    if ( id == 0xFFFF && m_iMonSeqHaveEmpty )
+    {
+        return g_pcFallbackID;
     }
 
     return NULL;

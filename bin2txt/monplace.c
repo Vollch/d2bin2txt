@@ -32,6 +32,7 @@ static int MonPlace_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate
 
         strncpy(m_astMonPlace[pstLineInfo->vcode].vcode, acOutput, sizeof(m_astMonPlace[pstLineInfo->vcode].vcode));
         String_Trim(m_astMonPlace[pstLineInfo->vcode].vcode);
+
         m_iMonPlaceCount++;
         return 1;
     }

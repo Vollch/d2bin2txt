@@ -31,6 +31,7 @@ static int MissCalc_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate
     {
         strncpy(m_astMissCalc[m_iMissCalc].vcode, pstLineInfo->vcode, sizeof(pstLineInfo->vcode));
         String_Trim(m_astMissCalc[m_iMissCalc].vcode);
+
         m_iMissCalc++;
     }
 

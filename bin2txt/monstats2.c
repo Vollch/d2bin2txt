@@ -621,6 +621,7 @@ typedef struct
 } ST_MONSTAT;
 
 static unsigned int m_iMonStatsCount = 0;
+static unsigned int m_iMonStatsHaveEmpty = 0;
 static ST_MONSTAT *m_astMonStats = NULL;
 
 MODULE_SETLINES_FUNC(m_astMonStats, ST_MONSTAT);
@@ -632,21 +633,16 @@ static int MonStats2_ConvertValue_Pre(void *pvLineInfo, char *acKey, char *pcTem
 
     if ( !stricmp(acKey, "Id") )
     {
-        pcResult = MonStats_GetStatsName(pstLineInfo->vId);
-
-        if ( pcResult )
+        if ( pcResult = MonStats_GetStatsName(pstLineInfo->vId) )
         {
             strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
         }
 
         strncpy(m_astMonStats[pstLineInfo->vId].vId, acOutput, sizeof(m_astMonStats[pstLineInfo->vId].vId));
         String_Trim(m_astMonStats[pstLineInfo->vId].vId);
-        m_iMonStatsCount++;
+        m_iMonStatsHaveEmpty |= !m_astMonStats[pstLineInfo->vId].vId[0];
 
+        m_iMonStatsCount++;
         return 1;
     }
 
@@ -655,7 +651,7 @@ static int MonStats2_ConvertValue_Pre(void *pvLineInfo, char *acKey, char *pcTem
 
 static char *MonStats2_GenerateList(ST_LINE_INFO *pstLineInfo, unsigned int count, unsigned char *pbList, unsigned int uiListNum, char *acOutput)
 {
-    unsigned int i, j;
+    unsigned int i;
     char *pcResult;
 
     if ( 1 < count )
@@ -664,24 +660,22 @@ static char *MonStats2_GenerateList(ST_LINE_INFO *pstLineInfo, unsigned int coun
         acOutput++;
     }
 
-    for ( i = 0, j = 0; i < uiListNum && j < count; i++ )
+    for ( i = 0; i < uiListNum && i < count; i++ )
     {
         pcResult = Compcode_GetCode(pbList[i]);
-        if ( pcResult )
+        if ( !pcResult )
         {
-            if ( 0 == j )
-            {
-                strcpy(acOutput, pcResult);
-            }
-            else
-            {
-                sprintf(acOutput, ",%s", pcResult);
-            }
-            String_Trim(acOutput);
-            acOutput += strlen(acOutput);
-
-            j++;
+            pcResult = g_pcFallbackCode;
         }
+
+        if ( i > 0 )
+        {
+            acOutput[0] = ',';
+            acOutput++;
+        }
+        strcpy(acOutput, pcResult);
+        String_Trim(acOutput);
+        acOutput += strlen(acOutput);
     }
 
     if ( 1 < count )
@@ -800,12 +794,17 @@ static int MonStats2_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplat
 
 char *MonStats2_GetStatsName(unsigned int id)
 {
-    if ( id >= m_iMonStatsCount )
+    if ( id < m_iMonStatsCount )
     {
-        return NULL;
+        return m_astMonStats[id].vId;
     }
 
-    return m_astMonStats[id].vId;
+    if ( id == 0xFFFF && m_iMonStatsHaveEmpty )
+    {
+        return g_pcFallbackID;
+    }
+
+    return NULL;
 }
 
 static void MonStats2_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLineInfo)

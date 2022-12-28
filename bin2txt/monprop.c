@@ -324,6 +324,7 @@ typedef struct
 } ST_MON_PROP;
 
 static unsigned int m_iMonPropCount = 0;
+static unsigned int m_iMonPropHaveEmpty = 0;
 static ST_MON_PROP *m_astMonProp = NULL;
 
 MODULE_SETLINES_FUNC(m_astMonProp, ST_MON_PROP);
@@ -337,12 +338,17 @@ static void module_SetLines_Pre(unsigned int uiLines)
 
 char *MonProp_GetPropId(unsigned int id)
 {
-    if ( id >= m_iMonPropCount )
+    if ( id < m_iMonPropCount )
     {
-        return NULL;
+        return m_astMonProp[id].vId;
     }
 
-    return m_astMonProp[id].vId;
+    if ( id == 0xFFFF && m_iMonPropHaveEmpty )
+    {
+        return g_pcFallbackID;
+    }
+
+    return NULL;
 }
 
 static int MonProp_ConvertValue_Pre(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
@@ -358,6 +364,8 @@ static int MonProp_ConvertValue_Pre(void *pvLineInfo, char *acKey, char *pcTempl
 
         strncpy(m_astMonProp[pstLineInfo->vId].vId, acOutput, sizeof(m_astMonProp[pstLineInfo->vId].vId));
         String_Trim(m_astMonProp[pstLineInfo->vId].vId);
+        m_iMonPropHaveEmpty |= !m_astMonProp[pstLineInfo->vId].vId[0];
+
         m_iMonPropCount++;
         return 1;
     }

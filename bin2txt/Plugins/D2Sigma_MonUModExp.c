@@ -29,13 +29,7 @@ int MonUModExp_ExternProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, c
     }
     else if ( !stricmp(acKey, "StrDesc") )
     {
-        char *pcResult = String_FindString(m_astLines[iLineNo].vStrDesc, "dummy", NULL);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-
-        return 1;
+        return process_value(EN_VALUE_USHORT_STRING, 2, &m_astLines[iLineNo].vStrDesc, acOutput);
     }
 
     return 0;

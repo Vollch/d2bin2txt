@@ -19,6 +19,7 @@ static char *m_apcInternalProcess[] =
 };
 
 static unsigned int m_iColorCount = 0;
+static unsigned int m_iColorHaveEmpty = 0;
 static ST_COLORS *m_astColors = NULL;
 
 MODULE_SETLINES_FUNC(m_astColors, ST_COLORS);
@@ -30,13 +31,14 @@ static int Colors_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo,
     if ( !stricmp(acKey, "Transform Color") )
     {
         strncpy(m_astColors[m_iColorCount].vCode, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
+        String_Trim(m_astColors[m_iColorCount].vCode);
+        m_iColorHaveEmpty |= !m_astColors[m_iColorCount].vCode[0];
 
         if ( !String_BuildName(FORMAT(colors), 0xFFFF, pcTemplate, m_astColors[m_iColorCount].vCode, m_iColorCount, NULL, acOutput) )
         {
             strncpy(acOutput, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
         }
 
-        String_Trim(m_astColors[m_iColorCount].vCode);
         m_iColorCount++;
         return 1;
     }
@@ -91,11 +93,16 @@ int process_colors(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_
 
 char *Colors_GetColorCode(unsigned int id)
 {
-    if ( id >= m_iColorCount )
+    if ( id < m_iColorCount )
     {
-        return NULL;
+        return m_astColors[id].vCode;
     }
 
-    return m_astColors[id].vCode;
+    if ( id == 0xFF && m_iColorHaveEmpty )
+    {
+        return g_pcFallbackID;
+    }
+
+    return NULL;
 }
 

@@ -32,12 +32,12 @@ Y.block 3 = 同上。
 
 typedef struct
 {
-    unsigned short vIndex;
+    unsigned short vSound;
 } ST_LINE_INFO;
 
 static char *m_apcInternalProcess[] =
 {
-    "Sound",
+    "Index",
     NULL,
 };
 
@@ -75,24 +75,42 @@ typedef struct
 } ST_ITEM_SOUNDS;
 
 static unsigned int m_iItemSoundsCount = 0;
+static unsigned int m_iItemSoundsHaveEmpty = 0;
 static ST_ITEM_SOUNDS *m_astItemSounds = NULL;
 
 MODULE_SETLINES_FUNC(m_astItemSounds, ST_ITEM_SOUNDS);
 MODULE_HAVENAME_FUNC(m_astItemSounds, vSound, m_iItemSoundsCount);
 
-static int Sounds_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
+static int Sounds_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
     if ( !stricmp(acKey, "Sound") )
     {
-        if ( !String_BuildName(FORMAT(sounds), 0xFFFF, pcTemplate, NAME_PREFIX, pstLineInfo->vIndex, MODULE_HAVENAME, acOutput) )
+        if ( !String_BuildName(FORMAT(sounds), 0xFFFF, pcTemplate, NAME_PREFIX, pstLineInfo->vSound, MODULE_HAVENAME, acOutput) )
         {
-            sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vIndex);
+            sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vSound);
         }
 
-        strncpy(m_astItemSounds[pstLineInfo->vIndex].vSound, acOutput, sizeof(m_astItemSounds[pstLineInfo->vIndex].vSound));
+        strncpy(m_astItemSounds[pstLineInfo->vSound].vSound, acOutput, sizeof(m_astItemSounds[pstLineInfo->vSound].vSound));
+        String_Trim(m_astItemSounds[pstLineInfo->vSound].vSound);
+        m_iItemSoundsHaveEmpty |= !m_astItemSounds[pstLineInfo->vSound].vSound[0];
+
         m_iItemSoundsCount++;
+        return 1;
+    }
+
+    return 0;
+}
+
+static int Sounds_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
+{
+    ST_LINE_INFO *pstLineInfo = pvLineInfo;
+
+    if ( !stricmp(acKey, "Index") )
+    {
+        sprintf(acOutput, "%u", pstLineInfo->vSound);
+
         return 1;
     }
 
@@ -104,7 +122,7 @@ static char *Sounds_GetKey(void *pvLineInfo, char *pcKey, unsigned int *iKeyLen)
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
     memset(pcKey, 0, sizeof(pcKey));
-    sprintf(pcKey, "%u", pstLineInfo->vIndex);
+    sprintf(pcKey, "%u", pstLineInfo->vSound);
     *iKeyLen = (unsigned int)strlen(pcKey);
 
     return pcKey;
@@ -116,7 +134,7 @@ int process_sounds(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_
 
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Index, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Sound, USHORT_SOUND);
 
     switch ( enPhase )
     {
@@ -131,6 +149,7 @@ int process_sounds(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_
             m_iItemSoundsCount = 0;
 
             //m_stCallback.pfnGetKey = Sounds_GetKey;
+            m_stCallback.pfnConvertValue = Sounds_ConvertValue;
             m_stCallback.pfnFieldProc = Sounds_FieldProc;
             m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
             m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
@@ -152,12 +171,17 @@ int process_sounds(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_
 
 char *Sounds_GetSoundName(unsigned int id)
 {
-    if ( id >= m_iItemSoundsCount )
+    if ( id < m_iItemSoundsCount )
     {
-        return NULL;
+        return m_astItemSounds[id].vSound;
     }
 
-    return m_astItemSounds[id].vSound;
+    if ( id == 0xFFFF && m_iItemSoundsHaveEmpty )
+    {
+        return g_pcFallbackID;
+    }
+
+    return NULL;
 }
 
 char *Sounds_GetSoundName2(unsigned int id)

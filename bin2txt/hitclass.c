@@ -19,6 +19,7 @@ static char *m_apcInternalProcess[] =
 };
 
 static unsigned int m_iHitClassCount = 0;
+static unsigned int m_iHitClassHaveEmpty = 0;
 static ST_HIT_CLASS *m_astHitClass = NULL;
 
 MODULE_SETLINES_FUNC(m_astHitClass, ST_HIT_CLASS);
@@ -30,13 +31,14 @@ static int HitClass_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineN
     if ( !stricmp(acKey, "Hit Class") )
     {
         strncpy(m_astHitClass[m_iHitClassCount].vCode, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
+        String_Trim(m_astHitClass[m_iHitClassCount].vCode);
+        m_iHitClassHaveEmpty |= !m_astHitClass[m_iHitClassCount].vCode[0];
 
         if ( !String_BuildName(FORMAT(hitclass), 0xFFFF, pcTemplate, m_astHitClass[m_iHitClassCount].vCode, m_iHitClassCount, NULL, acOutput) )
         {
             strncpy(acOutput, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
         }
 
-        String_Trim(m_astHitClass[m_iHitClassCount].vCode);
         m_iHitClassCount++;
         return 1;
     }
@@ -92,11 +94,16 @@ int process_hitclass(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
 
 char *HitClass_GetClassStr(unsigned int id)
 {
-    if ( id >= m_iHitClassCount )
+    if ( id < m_iHitClassCount )
     {
-        return NULL;
+        return m_astHitClass[id].vCode;
     }
 
-    return m_astHitClass[id].vCode;
+    if ( id == 0xFF && m_iHitClassHaveEmpty )
+    {
+        return g_pcFallbackID;
+    }
+
+    return NULL;
 }
 

@@ -49,26 +49,6 @@ unsigned char *String_Trim(unsigned char *pcValue)
 {
     int j;
 
-    if ( g_iTrimSpace == 0 )
-    {
-        return pcValue;
-    }
-    else if ( g_iTrimSpace == 1 )
-    {
-        for ( j = (int)strlen(pcValue) - 1; j >= 0; j-- )
-        {
-            if ( ' ' != pcValue[j] )
-            {
-                break;
-            }
-        }
-        if ( j < 0 )
-        {
-            return pcValue;
-        }
-    }
-
-
     for ( j = (int)strlen(pcValue) - 1; j >= 0; j-- )
     {
         if ( ' ' != pcValue[j] )
@@ -206,49 +186,80 @@ static int String_ReplaceSpecialChar(char *key, char *acTempKey)
     return j;
 }
 
-int process_value(ST_VALUE_MAP *value, char *acOutput)
+int process_value(ENUM_VALUE_TYPE enValueType, int iValueLen, void *pvValue, char *acOutput)
 {
-    if ( EN_VALUE_INT == value->enValueType )
+    int result = 1;
+
+    if ( EN_VALUE_INT == enValueType )
     {
-        sprintf(acOutput, "%d", *(int *)value->pvValue);
+        int iVal = *(int *)pvValue;
+        if ( iVal )
+        {
+            sprintf(acOutput, "%d", iVal);
+        }
     }
-    else if ( EN_VALUE_UINT == value->enValueType )
+    else if ( EN_VALUE_UINT == enValueType )
     {
-        sprintf(acOutput, "%u", *(unsigned int *)value->pvValue);
+        unsigned int uiVal = *(unsigned int *)pvValue;
+        if ( uiVal )
+        {
+            sprintf(acOutput, "%u", uiVal);
+        }
     }
-    else if ( EN_VALUE_SHORT == value->enValueType )
+    else if ( EN_VALUE_SHORT == enValueType )
     {
-        sprintf(acOutput, "%d", *(short *)value->pvValue);
+        short sVal = *(short *)pvValue;
+        if ( sVal )
+        {
+            sprintf(acOutput, "%d", sVal);
+        }
     }
-    else if ( EN_VALUE_USHORT == value->enValueType )
+    else if ( EN_VALUE_USHORT == enValueType )
     {
-        sprintf(acOutput, "%u", *(unsigned short *)value->pvValue);
+        unsigned short usVal = *(unsigned short *)pvValue;
+        if ( usVal )
+        {
+            sprintf(acOutput, "%u", usVal);
+        }
     }
-    else if ( EN_VALUE_CHAR == value->enValueType )
+    else if ( EN_VALUE_CHAR == enValueType )
     {
-        sprintf(acOutput, "%d", *(char *)value->pvValue);
+        char cVal = *(char *)pvValue;
+        if ( cVal )
+        {
+            sprintf(acOutput, "%d", cVal);
+        }
+
     }
-    else if ( EN_VALUE_UCHAR == value->enValueType )
+    else if ( EN_VALUE_UCHAR == enValueType )
     {
-        sprintf(acOutput, "%u", *(unsigned char *)value->pvValue);
+        unsigned char ucVal = *(unsigned char *)pvValue;
+        if ( ucVal )
+        {
+            sprintf(acOutput, "%u", ucVal);
+        }
     }
-    else if ( EN_VALUE_UINT_BIT == value->enValueType )
+    else if ( EN_VALUE_UINT_BIT == enValueType )
     {
-        sprintf(acOutput, "%d", ((*(unsigned int *)value->pvValue) & (1 << value->iValueLen)) != 0);
+        char bVal = ((*(unsigned int *)pvValue) & (1 << iValueLen)) != 0;
+        sprintf(acOutput, "%d", bVal);
     }
-    else if ( EN_VALUE_USHORT_BIT == value->enValueType )
+    else if ( EN_VALUE_USHORT_BIT == enValueType )
     {
-        sprintf(acOutput, "%d", ((*(unsigned short *)value->pvValue) & (1 << value->iValueLen)) != 0);
+        char bVal = ((*(unsigned short *)pvValue) & (1 << iValueLen)) != 0;
+        sprintf(acOutput, "%d", bVal);
     }
-    else if ( EN_VALUE_UCHAR_BIT == value->enValueType )
+    else if ( EN_VALUE_UCHAR_BIT == enValueType )
     {
-        sprintf(acOutput, "%d", ((*(unsigned char *)value->pvValue) & (1 << value->iValueLen)) != 0);
+        char bVal = ((*(unsigned char *)pvValue) & (1 << iValueLen)) != 0;
+        sprintf(acOutput, "%d", bVal);
     }
-    else if ( EN_VALUE_STRING == value->enValueType )
+    else if ( EN_VALUE_STRING == enValueType )
     {
-        strncpy(acOutput, value->pvValue, value->iValueLen);
+        strncpy(acOutput, pvValue, iValueLen);
+        result = -1;
     }
-    else if ( EN_VALUE_EOL == value->enValueType )
+    else if ( EN_VALUE_EOL == enValueType )
     {
         acOutput[0] = '0';
         acOutput[1] = 0;
@@ -256,195 +267,165 @@ int process_value(ST_VALUE_MAP *value, char *acOutput)
     else
     {
         char *pcResult = NULL;
-        if ( EN_VALUE_UINT_ITEMCODE == value->enValueType )
+
+        if ( EN_VALUE_UINT_ITEMCODE == enValueType )
         {
-            pcResult = ItemsCode_GetExpression(*(unsigned int *)value->pvValue);
+            pcResult = ItemsCode_GetExpression(*(unsigned int *)pvValue);
         }
-        else if ( EN_VALUE_UINT_MISSCODE == value->enValueType )
+        else if ( EN_VALUE_UINT_MISSCODE == enValueType )
         {
-            pcResult = MissCode_GetExpression(*(unsigned int *)value->pvValue);
+            pcResult = MissCode_GetExpression(*(unsigned int *)pvValue);
         }
-        else if ( EN_VALUE_UINT_SKILLCODE == value->enValueType )
+        else if ( EN_VALUE_UINT_SKILLCODE == enValueType )
         {
-            pcResult = SkillsCode_GetExpression(*(unsigned int *)value->pvValue);
+            pcResult = SkillsCode_GetExpression(*(unsigned int *)pvValue);
         }
-        else if ( EN_VALUE_UINT_DESCCODE == value->enValueType )
+        else if ( EN_VALUE_UINT_DESCCODE == enValueType )
         {
-            pcResult = SkillDescCode_GetExpression(*(unsigned int *)value->pvValue);
+            pcResult = SkillDescCode_GetExpression(*(unsigned int *)pvValue);
         }
-        if ( EN_VALUE_UINT_ITEM == value->enValueType )
+        if ( EN_VALUE_UINT_ITEM == enValueType )
         {
-            pcResult = Misc_GetItemUniqueCode(*(unsigned int *)value->pvValue);
+            pcResult = Misc_GetItemUniqueCode(*(unsigned int *)pvValue);
         }
-        else if ( EN_VALUE_USHORT_EVENT == value->enValueType )
+        else if ( EN_VALUE_USHORT_EVENT == enValueType )
         {
-            pcResult = Events_GetEventName(*(unsigned short *)value->pvValue);
+            pcResult = Events_GetEventName(*(unsigned short *)pvValue);
         }
-        else if ( EN_VALUE_USHORT_ITEMTYPE == value->enValueType )
+        else if ( EN_VALUE_USHORT_ITEMTYPE == enValueType )
         {
-            pcResult = ItemTypes_GetItemCode(*(unsigned short *)value->pvValue);
+            pcResult = ItemTypes_GetItemCode(*(unsigned short *)pvValue);
         }
-        else if ( EN_VALUE_USHORT_ITEMSTAT == value->enValueType )
+        else if ( EN_VALUE_USHORT_ITEMSTAT == enValueType )
         {
-            pcResult = ItemStatCost_GetStateName(*(unsigned short *)value->pvValue);
+            pcResult = ItemStatCost_GetStateName(*(unsigned short *)pvValue);
         }
-        else if ( EN_VALUE_USHORT_MISSILE == value->enValueType )
+        else if ( EN_VALUE_USHORT_MISSILE == enValueType )
         {
-            pcResult = Missiles_GetMissile(*(unsigned short *)value->pvValue);
+            pcResult = Missiles_GetMissile(*(unsigned short *)pvValue);
         }
-        else if ( EN_VALUE_USHORT_MONAI == value->enValueType )
+        else if ( EN_VALUE_USHORT_MONAI == enValueType )
         {
-            pcResult = MonAi_GetAiName(*(unsigned short *)value->pvValue);
+            pcResult = MonAi_GetAiName(*(unsigned short *)pvValue);
         }
-        else if ( EN_VALUE_USHORT_MONPROP == value->enValueType )
+        else if ( EN_VALUE_USHORT_MONPROP == enValueType )
         {
-            pcResult = MonProp_GetPropId(*(unsigned short *)value->pvValue);
+            pcResult = MonProp_GetPropId(*(unsigned short *)pvValue);
         }
-        else if ( EN_VALUE_USHORT_MONSEQ == value->enValueType )
+        else if ( EN_VALUE_USHORT_MONSEQ == enValueType )
         {
-            pcResult = MonSeq_GetSequence(*(unsigned short *)value->pvValue);
+            pcResult = MonSeq_GetSequence(*(unsigned short *)pvValue);
         }
-        else if ( EN_VALUE_USHORT_MONSOUND == value->enValueType )
+        else if ( EN_VALUE_USHORT_MONSOUND == enValueType )
         {
-            pcResult = MonSounds_GetItemSoundsCode(*(unsigned short *)value->pvValue);
+            pcResult = MonSounds_GetItemSoundsCode(*(unsigned short *)pvValue);
         }
-        else if ( EN_VALUE_USHORT_MONSTAT == value->enValueType )
+        else if ( EN_VALUE_USHORT_MONSTAT == enValueType )
         {
-            pcResult = MonStats_GetStatsName(*(unsigned short *)value->pvValue);
+            pcResult = MonStats_GetStatsName(*(unsigned short *)pvValue);
         }
-        else if ( EN_VALUE_USHORT_MONSTAT2 == value->enValueType )
+        else if ( EN_VALUE_USHORT_MONSTAT2 == enValueType )
         {
-            pcResult = MonStats2_GetStatsName(*(unsigned short *)value->pvValue);
+            pcResult = MonStats2_GetStatsName(*(unsigned short *)pvValue);
         }
-        else if ( EN_VALUE_USHORT_MONTYPE == value->enValueType )
+        else if ( EN_VALUE_USHORT_MONTYPE == enValueType )
         {
-            pcResult = MonType_GetType(*(unsigned short *)value->pvValue);
+            pcResult = MonType_GetType(*(unsigned short *)pvValue);
         }
-        else if ( EN_VALUE_USHORT_OVERLAY == value->enValueType )
+        else if ( EN_VALUE_USHORT_OVERLAY == enValueType )
         {
-            pcResult = Overlay_GetOverlay(*(unsigned short *)value->pvValue);
+            pcResult = Overlay_GetOverlay(*(unsigned short *)pvValue);
         }
-        else if ( EN_VALUE_USHORT_PROPERTY == value->enValueType )
+        else if ( EN_VALUE_USHORT_PROPERTY == enValueType )
         {
-            pcResult = Properties_GetProperty(*(unsigned short *)value->pvValue);
+            pcResult = Properties_GetProperty(*(unsigned short *)pvValue);
         }
-        else if ( EN_VALUE_USHORT_SET == value->enValueType )
+        else if ( EN_VALUE_USHORT_SET == enValueType )
         {
-            pcResult = Sets_GetSetName(*(unsigned short *)value->pvValue);
+            pcResult = Sets_GetSetName(*(unsigned short *)pvValue);
         }
-        else if ( EN_VALUE_USHORT_SKILLDESC == value->enValueType )
+        else if ( EN_VALUE_USHORT_SKILLDESC == enValueType )
         {
-            pcResult = SkillDesc_GetDesc(*(unsigned short *)value->pvValue);
+            pcResult = SkillDesc_GetDesc(*(unsigned short *)pvValue);
         }
-        else if ( EN_VALUE_USHORT_SKILL == value->enValueType )
+        else if ( EN_VALUE_USHORT_SKILL == enValueType )
         {
-            pcResult = Skills_GetSkillName(*(unsigned short *)value->pvValue);
+            pcResult = Skills_GetSkillName(*(unsigned short *)pvValue);
         }
-        else if ( EN_VALUE_USHORT_STRING == value->enValueType )
+        else if ( EN_VALUE_USHORT_STRING == enValueType )
         {
-            pcResult = (g_iPrintUnresolvedIds > 0 
-                ? String_FindString(*(unsigned short *)value->pvValue, NULL, NULL)
-                : String_FindString(*(unsigned short *)value->pvValue, "dummy", NULL));
+            pcResult = String_FindString(*(unsigned short *)pvValue, "dummy", NULL);
+            result = -1;
         }
-        else if ( EN_VALUE_USHORT_STRING2 == value->enValueType )
+        else if ( EN_VALUE_USHORT_STRING2 == enValueType )
         {
-            pcResult = (g_iPrintUnresolvedIds > 0 
-                ? String_FindString(*(unsigned short *)value->pvValue, NULL, NULL)
-                : String_FindString(*(unsigned short *)value->pvValue, "dummy", "x"));
+            pcResult = String_FindString(*(unsigned short *)pvValue, "dummy", "x");
+            result = -1;
         }
-        else if ( EN_VALUE_USHORT_UNIQ == value->enValueType )
+        else if ( EN_VALUE_USHORT_UNIQ == enValueType )
         {
-            pcResult = SuperUniques_GetItemUniqueCode(*(unsigned short *)value->pvValue);
+            pcResult = SuperUniques_GetItemUniqueCode(*(unsigned short *)pvValue);
         }
-        else if ( EN_VALUE_USHORT_TREASURE == value->enValueType )
+        else if ( EN_VALUE_USHORT_TREASURE == enValueType )
         {
-            pcResult = TreasureClassEx_GetItemTreasureClass(*(unsigned short *)value->pvValue);
+            pcResult = TreasureClassEx_GetItemTreasureClass(*(unsigned short *)pvValue);
         }
-        else if ( EN_VALUE_USHORT_SOUND == value->enValueType )
+        else if ( EN_VALUE_USHORT_SOUND == enValueType )
         {
-            pcResult = Sounds_GetSoundName(*(unsigned short *)value->pvValue);
+            pcResult = Sounds_GetSoundName(*(unsigned short *)pvValue);
         }
-        else if ( EN_VALUE_USHORT_STATE == value->enValueType )
+        else if ( EN_VALUE_USHORT_STATE == enValueType )
         {
-            pcResult = States_GetStateName(*(unsigned short *)value->pvValue);
+            pcResult = States_GetStateName(*(unsigned short *)pvValue);
         }
-        else if ( EN_VALUE_UCHAR_BODYLOC == value->enValueType )
+        else if ( EN_VALUE_UCHAR_BODYLOC == enValueType )
         {
-            pcResult = BodyLocs_GetLocStr(*(unsigned char *)value->pvValue);
+            pcResult = BodyLocs_GetLocStr(*(unsigned char *)pvValue);
         }
-        else if ( EN_VALUE_UCHAR_COLOR == value->enValueType )
+        else if ( EN_VALUE_UCHAR_COLOR == enValueType )
         {
-            pcResult = Colors_GetColorCode(*(unsigned char *)value->pvValue);
+            pcResult = Colors_GetColorCode(*(unsigned char *)pvValue);
         }
-        else if ( EN_VALUE_UCHAR_ELEM == value->enValueType )
+        else if ( EN_VALUE_UCHAR_ELEM == enValueType )
         {
-            pcResult = ElemTypes_GetElemStr(*(unsigned char *)value->pvValue);
+            pcResult = ElemTypes_GetElemStr(*(unsigned char *)pvValue);
         }
-        else if ( EN_VALUE_UCHAR_HIREDESC == value->enValueType )
+        else if ( EN_VALUE_UCHAR_HIREDESC == enValueType )
         {
-            pcResult = HireDesc_GetDesc(*(unsigned char *)value->pvValue);
+            pcResult = HireDesc_GetDesc(*(unsigned char *)pvValue);
         }
-        else if ( EN_VALUE_UCHAR_HITCLASS == value->enValueType )
+        else if ( EN_VALUE_UCHAR_HITCLASS == enValueType )
         {
-            pcResult = HitClass_GetClassStr(*(unsigned char *)value->pvValue);
+            pcResult = HitClass_GetClassStr(*(unsigned char *)pvValue);
         }
-        else if ( EN_VALUE_UCHAR_PLRCLASS == value->enValueType )
+        else if ( EN_VALUE_UCHAR_PLRCLASS == enValueType )
         {
-            pcResult = PlayerClass_GetClass(*(unsigned char *)value->pvValue);
+            pcResult = PlayerClass_GetClass(*(unsigned char *)pvValue);
         }
-        else if ( EN_VALUE_UCHAR_MONMODE == value->enValueType )
+        else if ( EN_VALUE_UCHAR_MONMODE == enValueType )
         {
-            pcResult = MonMode_GetCode(*(unsigned char *)value->pvValue);
+            pcResult = MonMode_GetCode(*(unsigned char *)pvValue);
         }
-        else if ( EN_VALUE_UCHAR_PLRMODE == value->enValueType )
+        else if ( EN_VALUE_UCHAR_PLRMODE == enValueType )
         {
-            pcResult = PlrMode_GetCode(*(unsigned char *)value->pvValue);
+            pcResult = PlrMode_GetCode(*(unsigned char *)pvValue);
         }
-        else if ( EN_VALUE_UCHAR_PET == value->enValueType )
+        else if ( EN_VALUE_UCHAR_PET == enValueType )
         {
-            pcResult = Pettype_GetPetType(*(unsigned char *)value->pvValue);
+            pcResult = Pettype_GetPetType(*(unsigned char *)pvValue);
         }
-        else if ( EN_VALUE_UCHAR_STORE == value->enValueType )
+        else if ( EN_VALUE_UCHAR_STORE == enValueType )
         {
-            pcResult = StorePage_GetCode(*(unsigned char *)value->pvValue);
+            pcResult = StorePage_GetCode(*(unsigned char *)pvValue);
         }
 
         if ( pcResult )
         {
             strcpy(acOutput, pcResult);
         }
-        else if ( g_iPrintUnresolvedIds > 0 )
-        {
-            unsigned int uiId = 0;
-            char uiMax = 0;
-            if ( EN_VALUE_UCHAR_BODYLOC <= value->enValueType )
-            {
-                uiId = *(unsigned char *)value->pvValue;
-                uiMax = (uiId == 0xFF);
-            }
-            else if ( EN_VALUE_USHORT_EVENT <= value->enValueType )
-            {
-                uiId = *(unsigned short *)value->pvValue;
-                uiMax = (uiId == 0xFFFF);
-            }
-            else if ( EN_VALUE_UINT_ITEM <= value->enValueType )
-            {
-                uiId = *(unsigned int *)value->pvValue;
-                uiMax = (uiId == 0xFFFFFFFF);
-            }
-
-            if ( uiMax )
-            {
-                sprintf(acOutput, "%d", -1);
-            }
-            else if ( uiId > 0 )
-            {
-                sprintf(acOutput, "%u", uiId);
-            }
-        }
     }
 
-    return 1;
+    return result;
 }
 
 /*
@@ -457,7 +438,7 @@ int process_value(ST_VALUE_MAP *value, char *acOutput)
 static char * TXTBUF_FILL(char *key, ST_VALUE_MAP *map, int count, char *start, char *from, 
     ST_CALLBACK *callback, void *pvLineInfo, int iLineNo, int iFieldNo)
 {
-    int i;
+    int i, iValResult;
     static char acTempKey[1024] = {0};
     static char acTempValue[1024] = {0};
 
@@ -479,27 +460,19 @@ static char * TXTBUF_FILL(char *key, ST_VALUE_MAP *map, int count, char *start, 
         }
         memset(acTempValue, 0, sizeof(acTempValue));
 
-        if ( !callback || !callback->pfnConvertValue || 0 == callback->pfnConvertValue(pvLineInfo, key, from, acTempValue) )
+        if ( !callback || !callback->pfnConvertValue || !(iValResult = callback->pfnConvertValue(pvLineInfo, key, from, acTempValue)))
         {
-            process_value(&map[i], acTempValue);
-
-            //4、清除值字段末尾的所有空格
-            if ( 0 != acTempValue[0] && !('0' == acTempValue[0] && 0 == acTempValue[1] && EN_VALUE_STRING > map[i].enValueType) )
-            {
-                String_Trim(acTempValue);
-                strcpy(start, acTempValue);
-                start += strlen(start);
-            }
+            iValResult = process_value(map[i].enValueType, map[i].iValueLen, map[i].pvValue, acTempValue);
         }
-        else
+
+        if ( iValResult && acTempValue[0] != 0 )
         {
-            //4、清除值字段末尾的所有空格
-            if ( 0 != acTempValue[0] )
+            if ( iValResult != -1 )
             {
                 String_Trim(acTempValue);
-                strcpy(start, acTempValue);
-                start += strlen(start);
             }
+            strcpy(start, acTempValue);
+            start += strlen(start);
         }
 
         break;

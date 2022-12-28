@@ -123,6 +123,7 @@ typedef struct
 } ST_EVENTS;
 
 static unsigned int m_iEventsCount = 0;
+static unsigned int m_iEventsHaveEmpty = 0;
 static ST_EVENTS *m_astEvents = NULL;
 
 MODULE_SETLINES_FUNC(m_astEvents, ST_EVENTS);
@@ -141,6 +142,8 @@ static int Events_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, 
 
         strncpy(m_astEvents[m_iEventsCount].vevent, acOutput, sizeof(m_astEvents[m_iEventsCount].vevent));
         String_Trim(m_astEvents[m_iEventsCount].vevent);
+        m_iEventsHaveEmpty |= !m_astEvents[m_iEventsCount].vevent[0];
+
         m_iEventsCount++;
         return 1;
     }
@@ -184,11 +187,16 @@ int process_events(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_
 
 char *Events_GetEventName(unsigned int id)
 {
-    if ( id >= m_iEventsCount )
+    if ( id < m_iEventsCount )
     {
-        return NULL;
+        return m_astEvents[id].vevent;
     }
 
-    return m_astEvents[id].vevent;
+    if ( id == 0xFFFF && m_iEventsHaveEmpty )
+    {
+        return g_pcFallbackID;
+    }
+
+    return NULL;
 }
 

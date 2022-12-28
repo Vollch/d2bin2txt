@@ -27,10 +27,9 @@ int ItemTypesExt_ExternProc(void *pvLineInfo, char *acKey, unsigned int iLineNo,
     {
         return 0;
     }
-    else if ( !stricmp(acKey, "NoShowILvl") && m_astLines[iLineNo].vNoShowILvl )
+    else if ( !stricmp(acKey, "NoShowILvl") )
     {
-        sprintf(acOutput, "%u", m_astLines[iLineNo].vNoShowILvl);
-        return 1;
+        return process_value(EN_VALUE_UCHAR, 1, &m_astLines[iLineNo].vNoShowILvl, acOutput);
     }
 
     return 0;

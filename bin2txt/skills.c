@@ -1714,7 +1714,7 @@ typedef struct
 #endif
 
     unsigned char vcharclass;   //playerclass
-    char iPadding3[3];
+    unsigned char pad0x0D[3];
 
     unsigned char vanim;    //plrmode
     unsigned char vmonanim;    //monmode
@@ -1747,7 +1747,7 @@ typedef struct
     unsigned short vsrvprgfunc2;
 
     unsigned short vsrvprgfunc3;
-    unsigned short iPadding13;
+    unsigned char pad0x37[2];
 
     unsigned int vprgcalc1;     //skillscode
     unsigned int vprgcalc2;
@@ -2037,6 +2037,7 @@ static char *m_apcInternalProcess[] =
 };
 
 static unsigned int m_iSkillsCount = 0;
+static unsigned int m_iSkillsHaveEmpty = 0;
 static ST_SKILLS *m_astSkills = NULL;
 
 MODULE_SETLINES_FUNC(m_astSkills, ST_SKILLS);
@@ -2061,6 +2062,8 @@ static int Skills_ConvertValue_Pre(void *pvLineInfo, char *acKey, char *pcTempla
 
         strncpy(m_astSkills[pstLineInfo->vskill].vskill, acOutput, sizeof(m_astSkills[pstLineInfo->vskill].vskill));
         String_Trim(m_astSkills[pstLineInfo->vskill].vskill);
+        m_iSkillsHaveEmpty |= !m_astSkills[pstLineInfo->vskill].vskill[0];
+
         m_iSkillsCount++;
         return 1;
     }
@@ -2507,12 +2510,17 @@ int process_skills(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_
 
 char *Skills_GetSkillName(unsigned int id)
 {
-    if ( id >= m_iSkillsCount )
+    if ( id < m_iSkillsCount )
     {
-        return NULL;
+        return m_astSkills[id].vskill;
     }
 
-    return m_astSkills[id].vskill;
+    if ( id == 0xFFFF && m_iSkillsHaveEmpty )
+    {
+        return g_pcFallbackID;
+    }
+
+    return NULL;
 }
 
 /*

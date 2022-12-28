@@ -22,6 +22,7 @@ static char *m_apcInternalProcess[] =
 };
 
 static unsigned int m_iMonModeCount = 0;
+static unsigned int m_iMonModeHaveEmpty = 0;
 static ST_MONMODE *m_astMonMode = NULL;
 
 MODULE_SETLINES_FUNC(m_astMonMode, ST_MONMODE);
@@ -41,8 +42,11 @@ static int MonMode_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo
             strncpy(acOutput, pstLineInfo->vtoken, sizeof(pstLineInfo->vtoken));
         }
 
-        strncpy(m_astMonMode[m_iMonModeCount].vcode, acOutput, sizeof(m_astMonMode[m_iMonModeCount].vcode));
         strncpy(m_astMonMode[m_iMonModeCount].vname, pstLineInfo->vname, sizeof(m_astMonMode[m_iMonModeCount].vname));
+        strncpy(m_astMonMode[m_iMonModeCount].vcode, acOutput, sizeof(m_astMonMode[m_iMonModeCount].vcode));
+        String_Trim(m_astMonMode[m_iMonModeCount].vcode);
+        m_iMonModeHaveEmpty |= !m_astMonMode[m_iMonModeCount].vcode[0];
+
         m_iMonModeCount++;
         return 1;
     }
@@ -108,11 +112,16 @@ char *MonMode_GetName(unsigned int id)
 
 char *MonMode_GetCode(unsigned int id)
 {
-    if ( id >= m_iMonModeCount )
+    if ( id < m_iMonModeCount )
     {
-        return NULL;
+        return m_astMonMode[id].vcode;
     }
 
-    return m_astMonMode[id].vcode;
+    if ( id == 0xFF && m_iMonModeHaveEmpty )
+    {
+        return g_pcFallbackID;
+    }
+
+    return NULL;
 }
 

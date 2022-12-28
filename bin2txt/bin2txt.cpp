@@ -180,8 +180,8 @@ static void usage(int argc, char* argv[])
 char *g_pcCustomTable1 = NULL;
 char *g_pcCustomTable2 = NULL;
 char *g_pcCustomTable3 = NULL;
-int g_iTrimSpace = 0;
-int g_iPrintUnresolvedIds = 0;
+char *g_pcFallbackID = NULL;
+char *g_pcFallbackCode = NULL;
 int g_iCompactOutput = 0;
 
 void Init_Settings(char* acTemplatePath, char* acBinPath, char* acTxtPath)
@@ -203,22 +203,15 @@ void Init_Settings(char* acTemplatePath, char* acBinPath, char* acTxtPath)
         m_pfLogHandle = fopen("output.txt", "wt");
     }
 
-    GetPrivateProfileString("GENERAL", "TrimSpace", "0", acIniBuff, sizeof(acIniBuff), pcIniFile);
-    g_iTrimSpace = atoi(acIniBuff);
-
-    GetPrivateProfileString("GENERAL", "PrintUnresolvedId", "0", acIniBuff, sizeof(acIniBuff), pcIniFile);
-    g_iPrintUnresolvedIds = atoi(acIniBuff);
-
     GetPrivateProfileString("GENERAL", "CompactOutput", "0", acIniBuff, sizeof(acIniBuff), pcIniFile);
     g_iCompactOutput = atoi(acIniBuff);
 
     GetPrivateProfileString("GENERAL", "CustomTbl1", 0, acIniBuff, sizeof(acIniBuff), pcIniFile);
     if ( strlen(acIniBuff) > 0 )
     {
-        char *cpDot = strchr(acIniBuff, '.');
-        if ( cpDot )
+        if ( pcAnchor = strchr(acIniBuff, '.') )
         {
-            memset(cpDot, 0, strlen(cpDot));
+            memset(pcAnchor, 0, strlen(pcAnchor));
         }
         g_pcCustomTable1 = strdup(acIniBuff);
     }
@@ -226,10 +219,9 @@ void Init_Settings(char* acTemplatePath, char* acBinPath, char* acTxtPath)
     GetPrivateProfileString("GENERAL", "CustomTbl2", 0, acIniBuff, sizeof(acIniBuff), pcIniFile);
     if ( strlen(acIniBuff) > 0 )
     {
-        char *cpDot = strchr(acIniBuff, '.');
-        if ( cpDot )
+        if ( pcAnchor = strchr(acIniBuff, '.') )
         {
-            memset(cpDot, 0, strlen(cpDot));
+            memset(pcAnchor, 0, strlen(pcAnchor));
         }
         g_pcCustomTable2 = strdup(acIniBuff);
     }
@@ -237,12 +229,24 @@ void Init_Settings(char* acTemplatePath, char* acBinPath, char* acTxtPath)
     GetPrivateProfileString("GENERAL", "CustomTbl3", 0, acIniBuff, sizeof(acIniBuff), pcIniFile);
     if ( strlen(acIniBuff) > 0 )
     {
-        char *cpDot = strchr(acIniBuff, '.');
-        if ( cpDot )
+        if ( pcAnchor = strchr(acIniBuff, '.') )
         {
-            memset(cpDot, 0, strlen(cpDot));
+            memset(pcAnchor, 0, strlen(pcAnchor));
         }
         g_pcCustomTable3 = strdup(acIniBuff);
+    }
+
+    GetPrivateProfileString("GENERAL", "FallbackID", "-1", acIniBuff, sizeof(acIniBuff), pcIniFile);
+    if ( strlen(acIniBuff) > 0 )
+    {
+        g_pcFallbackID = strdup(acIniBuff);
+    }
+
+    GetPrivateProfileString("GENERAL", "FallbackCode", "-1", acIniBuff, sizeof(acIniBuff), pcIniFile);
+    if ( strlen(acIniBuff) > 0 )
+    {
+        acIniBuff[4] = 0;
+        g_pcFallbackCode = strdup(acIniBuff);
     }
 
     memset(acIniBuff, 0, sizeof(acIniBuff));

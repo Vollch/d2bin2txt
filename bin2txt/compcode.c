@@ -30,6 +30,7 @@ static int Compcode_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineN
     if ( !stricmp(acKey, "component") )
     {
         strncpy(m_astCompcode[m_iCompcodeCount].vcomponent, pstLineInfo->vcode, sizeof(pstLineInfo->vcode));
+        String_Trim(m_astCompcode[m_iCompcodeCount].vcomponent);
 
         if ( !String_BuildName(FORMAT(compcode), 0xFFFF, pcTemplate, m_astCompcode[m_iCompcodeCount].vcomponent, m_iCompcodeCount, NULL, acOutput) )
         {

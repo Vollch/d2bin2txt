@@ -27,6 +27,7 @@ typedef struct
 } ST_MON_AI;
 
 static unsigned int m_iMonAiCount = 0;
+static unsigned int m_iMonAiHaveEmpty = 0;
 static ST_MON_AI *m_astMonAi = NULL;
 
 MODULE_SETLINES_FUNC(m_astMonAi, ST_MON_AI);
@@ -44,6 +45,9 @@ static int MonAI_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, c
         }
 
         strncpy(m_astMonAi[pstLineInfo->vAI].vAI, acOutput, sizeof(m_astMonAi[pstLineInfo->vAI].vAI));
+        String_Trim(m_astMonAi[pstLineInfo->vAI].vAI);
+        m_iMonAiHaveEmpty |= !m_astMonAi[pstLineInfo->vAI].vAI[0];
+
         m_iMonAiCount++;
         return 1;
     }
@@ -101,11 +105,16 @@ int process_monai(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_M
 
 char *MonAi_GetAiName(unsigned int id)
 {
-    if ( id >= m_iMonAiCount )
+    if ( id < m_iMonAiCount )
     {
-        return NULL;
+        return m_astMonAi[id].vAI;
     }
 
-    return m_astMonAi[id].vAI;
+    if ( id == 0xFFFF && m_iMonAiHaveEmpty )
+    {
+        return g_pcFallbackID;
+    }
+
+    return NULL;
 }
 

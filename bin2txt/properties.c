@@ -360,6 +360,7 @@ static char *m_apcNotUsed[] =
 };
 
 static unsigned int m_iPropertyCount = 0;
+static unsigned int m_iPropertyHaveEmpty = 0;
 static ST_PROPERTY *m_astProperty = NULL;
 
 MODULE_SETLINES_FUNC(m_astProperty, ST_PROPERTY);
@@ -367,12 +368,17 @@ MODULE_HAVENAME_FUNC(m_astProperty, vcode, m_iPropertyCount);
 
 char *Properties_GetProperty(unsigned int id)
 {
-    if ( id >= m_iPropertyCount )
+    if ( id < m_iPropertyCount )
     {
-        return NULL;
+        return m_astProperty[id].vcode;
     }
 
-    return m_astProperty[id].vcode;
+    if ( id == 0xFFFF && m_iPropertyHaveEmpty )
+    {
+        return g_pcFallbackID;
+    }
+
+    return NULL;
 }
 
 static int Properties_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
@@ -388,6 +394,8 @@ static int Properties_ConvertValue(void *pvLineInfo, char *acKey, char *pcTempla
 
         strncpy(m_astProperty[pstLineInfo->vcode].vcode, acOutput, sizeof(m_astProperty[pstLineInfo->vcode].vcode));
         String_Trim(m_astProperty[pstLineInfo->vcode].vcode);
+        m_iPropertyHaveEmpty |= !m_astProperty[pstLineInfo->vcode].vcode[0];
+
         m_iPropertyCount++;
         return 1;
     }

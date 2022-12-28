@@ -160,6 +160,7 @@ static char *m_apcNotUsed[] =
 };
 
 static unsigned int m_iOverlayCount = 0;
+static unsigned int m_iOverlayHaveEmpty = 0;
 static ST_OVERLAY *m_astOverlay = NULL;
 
 MODULE_SETLINES_FUNC(m_astOverlay, ST_OVERLAY);
@@ -180,6 +181,8 @@ static int Overlay_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate,
 
         strncpy(m_astOverlay[pstLineInfo->voverlay].voverlay, acOutput, sizeof(m_astOverlay[pstLineInfo->voverlay].voverlay));
         String_Trim(m_astOverlay[pstLineInfo->voverlay].voverlay);
+        m_iOverlayHaveEmpty |= !m_astOverlay[pstLineInfo->voverlay].voverlay[0];
+
         m_iOverlayCount++;
         return 1;
     }
@@ -189,12 +192,17 @@ static int Overlay_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate,
 
 char *Overlay_GetOverlay(unsigned int id)
 {
-    if ( id >= m_iOverlayCount )
+    if ( id < m_iOverlayCount )
     {
-        return NULL;
+        return m_astOverlay[id].voverlay;
     }
 
-    return m_astOverlay[id].voverlay;
+    if ( id == 0xFFFF && m_iOverlayHaveEmpty )
+    {
+        return g_pcFallbackID;
+    }
+
+    return NULL;
 }
 
 int process_overlay(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)

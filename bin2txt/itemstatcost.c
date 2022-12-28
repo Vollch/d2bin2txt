@@ -751,6 +751,7 @@ static char *m_apcInternalProcess[] =
 };
 
 static unsigned int m_iItemStatesCount = 0;
+static unsigned int m_iItemStatesHaveEmpty = 0;
 static ST_ITEM_STATES *m_astItemStates = NULL;
 
 MODULE_SETLINES_FUNC(m_astItemStates, ST_ITEM_STATES);
@@ -772,6 +773,8 @@ static int ItemStatCost_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemp
         m_astItemStates[pstLineInfo->vStat].vdgrpstrpos = pstLineInfo->vdgrpstrpos;
         strncpy(m_astItemStates[pstLineInfo->vStat].vStat, acOutput, sizeof(m_astItemStates[pstLineInfo->vStat].vStat));
         String_Trim(m_astItemStates[pstLineInfo->vStat].vStat);
+        m_iItemStatesHaveEmpty |= !m_astItemStates[pstLineInfo->vStat].vStat[0];
+
         m_iItemStatesCount++;
         return 1;
     }
@@ -935,12 +938,17 @@ int process_itemstatcost(char *acTemplatePath, char *acBinPath, char *acTxtPath,
 
 char *ItemStatCost_GetStateName(unsigned int id)
 {
-    if ( id >= m_iItemStatesCount )
+    if ( id < m_iItemStatesCount )
     {
-        return NULL;
+        return m_astItemStates[id].vStat;
     }
 
-    return m_astItemStates[id].vStat;
+    if ( id == 0xFFFF && m_iItemStatesHaveEmpty )
+    {
+        return g_pcFallbackID;
+    }
+
+    return NULL;
 }
 
 unsigned int ItemStatCost_GetString(unsigned int id)

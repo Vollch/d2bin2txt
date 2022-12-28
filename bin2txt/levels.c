@@ -824,6 +824,7 @@ static int Levels_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLin
         m_astLevels[pstLineInfo->vId].vAct = pstLineInfo->vAct;
         strncpy(m_astLevels[pstLineInfo->vId].vname, acOutput, sizeof(m_astLevels[pstLineInfo->vId].vname));
         String_Trim(m_astLevels[pstLineInfo->vId].vname);
+
         m_iLevelsCount++;
         return 1;
     }

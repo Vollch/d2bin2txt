@@ -45,6 +45,7 @@ static int CellFiles_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplat
 
         strncpy(m_astCellFile[pstLineInfo->vName].vName, acOutput, sizeof(m_astCellFile[pstLineInfo->vName].vName));
         String_Trim(m_astCellFile[pstLineInfo->vName].vName);
+
         m_iCellFileCount++;
         return 1;
     }

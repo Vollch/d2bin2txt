@@ -473,7 +473,7 @@ typedef struct
     unsigned int vminac;
     unsigned int vmaxac;
     unsigned int vgamblemyspcost;
-    unsigned int vspeed;
+    int vspeed;
 
     unsigned int vbitfield1;
     unsigned int vcost;
@@ -772,6 +772,7 @@ static int Weapons_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLi
         m_astWeapon[m_iWeaponCount].vString = pstLineInfo->vnamestr;
         strncpy(m_astWeapon[m_iWeaponCount].vcode, pstLineInfo->vcode, sizeof(pstLineInfo->vcode));
         String_Trim(m_astWeapon[m_iWeaponCount].vcode);
+
         m_iWeaponCount++;
         return 1;
     }
@@ -870,7 +871,7 @@ int process_weapons(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, minac, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, maxac, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, gamblemyspcost, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, speed, UINT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, speed, INT);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, bitfield1, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cost, UINT);

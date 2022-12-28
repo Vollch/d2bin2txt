@@ -228,7 +228,8 @@ static char *m_apcNotUsed[] =
 };
 
 static unsigned int m_uiTcOffset = 0;
-static unsigned int m_iTreasureClassEx = 0;
+static unsigned int m_iTreasureClassExCount = 0;
+static unsigned int m_iTreasureClassExHaveEmpty = 0;
 static ST_TREASURECLASSEX *m_astTreasureClassEx = NULL;
 
 MODULE_SETLINES_FUNC(m_astTreasureClassEx, ST_TREASURECLASSEX);
@@ -241,11 +242,16 @@ void TreasureClassEx_SetOffset(unsigned int uiOffset)
 
 char *TreasureClassEx_GetItemTreasureClass(unsigned int id)
 {
-    id -= m_uiTcOffset;
+    unsigned int uiOffset = id - m_uiTcOffset;
 
-    if ( id < m_iTreasureClassEx && (g_iPrintUnresolvedIds > 0 || strcmp("Gold", m_astTreasureClassEx[id].vTreasuremyspClass)) )
+    if ( uiOffset < m_iTreasureClassExCount && strcmp("Gold", m_astTreasureClassEx[uiOffset].vTreasuremyspClass) )
     {
-        return m_astTreasureClassEx[id].vTreasuremyspClass;
+        return m_astTreasureClassEx[uiOffset].vTreasuremyspClass;
+    }
+
+    if ( id == 0xFFFF && m_iTreasureClassExHaveEmpty )
+    {
+        return g_pcFallbackID;
     }
 
     return NULL;
@@ -267,9 +273,11 @@ static int TreasureClassEx_ConvertValue(void *pvLineInfo, char *acKey, char *pcT
 
     if ( !stricmp(acKey, "Treasure Class") )
     {
-        strncpy(m_astTreasureClassEx[m_iTreasureClassEx].vTreasuremyspClass, pstLineInfo->vTreasuremyspClass, sizeof(m_astTreasureClassEx[m_iTreasureClassEx].vTreasuremyspClass));
-        String_Trim(m_astTreasureClassEx[m_iTreasureClassEx].vTreasuremyspClass);
-        m_iTreasureClassEx++;
+        strncpy(m_astTreasureClassEx[m_iTreasureClassExCount].vTreasuremyspClass, pstLineInfo->vTreasuremyspClass, sizeof(m_astTreasureClassEx[m_iTreasureClassExCount].vTreasuremyspClass));
+        String_Trim(m_astTreasureClassEx[m_iTreasureClassExCount].vTreasuremyspClass);
+        m_iTreasureClassExHaveEmpty |= !m_astTreasureClassEx[m_iTreasureClassExCount].vTreasuremyspClass[0];
+
+        m_iTreasureClassExCount++;
         return 0;
     }
 
@@ -329,7 +337,7 @@ int process_treasureclassex(char *acTemplatePath, char *acBinPath, char *acTxtPa
             break;
 
         case EN_MODULE_SELF_DEPEND:
-            m_iTreasureClassEx = 0;
+            m_iTreasureClassExCount = 0;
 
             //m_stCallback.pfnGetKey = TreasureClassEx_GetKey;
             m_stCallback.pfnConvertValue = TreasureClassEx_ConvertValue;

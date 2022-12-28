@@ -27,10 +27,9 @@ int Missiles2_ExternProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, ch
     {
         return 0;
     }
-    else if ( !stricmp(acKey, "palshift") && m_astLines[iLineNo].vpalshift )
+    else if ( !stricmp(acKey, "palshift") )
     {
-        sprintf(acOutput, "%u", m_astLines[iLineNo].vpalshift);
-        return 1;
+        return process_value(EN_VALUE_UCHAR, 1, &m_astLines[iLineNo].vpalshift, acOutput);
     }
 
     return 0;

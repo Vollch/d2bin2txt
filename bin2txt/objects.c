@@ -692,6 +692,7 @@ static int Objects_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo
 
         strncpy(m_astObjects[m_iObjectsCount].vName, pstLineInfo->vName, sizeof(m_astObjects[m_iObjectsCount].vName));
         String_Trim(m_astObjects[m_iObjectsCount].vName);
+
         m_iObjectsCount++;
         return 1;
     }

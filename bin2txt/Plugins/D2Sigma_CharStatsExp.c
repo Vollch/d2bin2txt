@@ -30,18 +30,11 @@ int CharStatsExp_ExternProc(void *pvLineInfo, char *acKey, unsigned int iLineNo,
     }
     else if ( !stricmp(acKey, "StrSkillTabs") )
     {
-        char *pcResult = String_FindString(m_astLines[iLineNo].vStrSkillTabs, "dummy", NULL);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-
-        return 1;
+        return process_value(EN_VALUE_USHORT_STRING, 2, &m_astLines[iLineNo].vStrSkillTabs, acOutput);
     }
-    else if ( !stricmp(acKey, "SkillTabs") && m_astLines[iLineNo].vSkillTabs )
+    else if ( !stricmp(acKey, "SkillTabs") )
     {
-        sprintf(acOutput, "%u", m_astLines[iLineNo].vSkillTabs);
-        return 1;
+        return process_value(EN_VALUE_UINT, 4, &m_astLines[iLineNo].vSkillTabs, acOutput);
     }
 
     return 0;

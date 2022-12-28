@@ -413,7 +413,6 @@ typedef void (*fnFinished)();
 //Check if name already used in module
 typedef int (*fnHaveName) (char *pcTestName);
 
-
 typedef enum
 {
     EN_MODULE_CORE = 0,
@@ -453,8 +452,8 @@ extern unsigned int Global_GetValueMapCount();
 extern char *g_pcCustomTable1;
 extern char *g_pcCustomTable2;
 extern char *g_pcCustomTable3;
-extern int g_iTrimSpace;
-extern int g_iPrintUnresolvedIds;
+extern char *g_pcFallbackID;
+extern char *g_pcFallbackCode;
 extern int g_iCompactOutput;
 
 extern int File_GetFileSize(char *pcFileName);
@@ -518,7 +517,7 @@ extern int process_file(char *acTemplatePath, char *acBinPath, char *acTxtPath, 
 extern int process_file_special_bin(char *acTemplatePath, char *acBinPath, char *acTxtPath, char *pcFilename,
     void *pvLineInfo, int iLineLength, ST_VALUE_MAP *pstValueMap, int iValueCount,
     ST_CALLBACK *pstCallback);
-extern int process_value(ST_VALUE_MAP *value, char *acOutput);
+extern int process_value(ENUM_VALUE_TYPE enValueType, int iValueLen, void *pvValue, char *acOutput);
 extern int getBinStructSize(char *acBinPath, char *pcFilename);
 
 extern unsigned int my_printf( const char *pcFormat,... );

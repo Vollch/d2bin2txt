@@ -1169,6 +1169,7 @@ static char *m_apcInternalProcess[] =
 };
 
 static unsigned int m_iMonStatsCount = 0;
+static unsigned int m_iMonStatsHaveEmpty = 0;
 static ST_MONSTAT *m_astMonStats = NULL;
 
 MODULE_SETLINES_FUNC(m_astMonStats, ST_MONSTAT);
@@ -1220,12 +1221,17 @@ int MonStats_LinkMonProp(void *astMonProp, unsigned int iMonPropCount, unsigned 
 
 char *MonStats_GetStatsName(unsigned int id)
 {
-    if ( id >= m_iMonStatsCount )
+    if ( id < m_iMonStatsCount )
     {
-        return NULL;
+        return m_astMonStats[id].vId;
     }
 
-    return m_astMonStats[id].vId;
+    if ( id == 0xFFFF && m_iMonStatsHaveEmpty )
+    {
+        return g_pcFallbackID;
+    }
+
+    return NULL;
 }
 
 static int MonStats_ConvertValue_Pre(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
@@ -1247,6 +1253,8 @@ static int MonStats_ConvertValue_Pre(void *pvLineInfo, char *acKey, char *pcTemp
         m_astMonStats[pstLineInfo->vId].vMonProp = pstLineInfo->vMonProp;
         strncpy(m_astMonStats[pstLineInfo->vId].vId, acOutput, sizeof(m_astMonStats[pstLineInfo->vId].vId));
         String_Trim(m_astMonStats[pstLineInfo->vId].vId);
+        m_iMonStatsHaveEmpty |= !m_astMonStats[pstLineInfo->vId].vId[0];
+
         m_iMonStatsCount++;
         return 1;
     }
@@ -1285,18 +1293,29 @@ static int MonStats_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate
     }
     else if ( strlen("Sk1mode") == strlen(acKey) && 1 == sscanf(acKey, "Sk%dmode", &id) )
     {
-        unsigned char pbType = ((char *)&pstLineInfo->vSk1modeType)[id - 1];
-        unsigned short pwSkill = ((short *)&pstLineInfo->vSk1mode)[id - 1];
+        unsigned char ucType = ((char *)&pstLineInfo->vSk1modeType)[id - 1];
+        unsigned short usSkMode = ((short *)&pstLineInfo->vSk1mode)[id - 1];
+        unsigned short usSkill = ((short *)&pstLineInfo->vSkill1)[id - 1];
 
-        if ( 0xFFFF == pwSkill && 0 != pbType )
+        if ( usSkill != 0xFFFF )
         {
-            if ( pcResult = MonMode_GetCode(pbType) )
+            if ( ucType == 0x0E )
             {
-                strcpy(acOutput, pcResult);
+                if ( pcResult = MonSeq_GetSequence(usSkMode) )
+                {
+                    strcpy(acOutput, pcResult);
+                }
             }
-
-            return 1;
+            else
+            {
+                if ( pcResult = MonMode_GetCode(ucType) )
+                {
+                    strcpy(acOutput, pcResult);
+                }
+            }
         }
+
+        return 1;
     }
 
     return 0;

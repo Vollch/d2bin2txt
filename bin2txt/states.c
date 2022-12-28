@@ -316,6 +316,7 @@ static char *m_apcInternalProcess[] =
 };
 
 static unsigned int m_iItemStatesCount = 0;
+static unsigned int m_iItemStatesHaveEmpty = 0;
 static ST_ITEM_STATES *m_astItemStates = NULL;
 
 MODULE_SETLINES_FUNC(m_astItemStates, ST_ITEM_STATES);
@@ -345,6 +346,8 @@ static int States_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, 
 
         strncpy(m_astItemStates[pstLineInfo->vstate].vstate, acOutput, sizeof(m_astItemStates[pstLineInfo->vstate].vstate));
         String_Trim(m_astItemStates[pstLineInfo->vstate].vstate);
+        m_iItemStatesHaveEmpty |= !m_astItemStates[pstLineInfo->vstate].vstate[0];
+
         m_iItemStatesCount++;
         return 1;
     }
@@ -521,11 +524,16 @@ int process_states(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_
 
 char *States_GetStateName(unsigned int id)
 {
-    if ( id >= m_iItemStatesCount )
+    if ( id < m_iItemStatesCount )
     {
-        return NULL;
+        return m_astItemStates[id].vstate;
     }
 
-    return m_astItemStates[id].vstate;
+    if ( id == 0xFFFF && m_iItemStatesHaveEmpty )
+    {
+        return g_pcFallbackID;
+    }
+
+    return NULL;
 }
 

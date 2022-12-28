@@ -18,7 +18,8 @@ static char *m_apcInternalProcess[] =
     NULL,
 };
 
-static unsigned int m_iBodyLocs = 0;
+static unsigned int m_iBodyLocsCount = 0;
+static unsigned int m_iBodyLocsHaveEmpty = 0;
 static ST_BODY_LOCS *m_astBodyLocs = NULL;
 
 MODULE_SETLINES_FUNC(m_astBodyLocs, ST_BODY_LOCS);
@@ -29,15 +30,16 @@ static int BodyLocs_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineN
 
     if ( !stricmp(acKey, "Body Location") )
     {
-        strncpy(m_astBodyLocs[m_iBodyLocs].vCode, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
+        strncpy(m_astBodyLocs[m_iBodyLocsCount].vCode, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
+        String_Trim(m_astBodyLocs[m_iBodyLocsCount].vCode);
+        m_iBodyLocsHaveEmpty |= !m_astBodyLocs[m_iBodyLocsCount].vCode[0];
 
-        if ( !String_BuildName(FORMAT(bodylocs), 0xFFFF, pcTemplate, m_astBodyLocs[m_iBodyLocs].vCode, iLineNo, NULL, acOutput) )
+        if ( !String_BuildName(FORMAT(bodylocs), 0xFFFF, pcTemplate, m_astBodyLocs[m_iBodyLocsCount].vCode, iLineNo, NULL, acOutput) )
         {
             strncpy(acOutput, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
         }
 
-        String_Trim(m_astBodyLocs[m_iBodyLocs].vCode);
-        m_iBodyLocs++;
+        m_iBodyLocsCount++;
         return 1;
     }
 
@@ -70,7 +72,7 @@ int process_bodylocs(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
             break;
 
         case EN_MODULE_SELF_DEPEND:
-            m_iBodyLocs = 0;
+            m_iBodyLocsCount = 0;
 
             //m_stCallback.pfnGetKey = BodyLocs_GetKey;
             m_stCallback.pfnFieldProc = BodyLocs_FieldProc;
@@ -93,11 +95,16 @@ int process_bodylocs(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
 
 char *BodyLocs_GetLocStr(unsigned int id)
 {
-    if ( id >= m_iBodyLocs )
+    if ( id < m_iBodyLocsCount )
     {
-        return NULL;
+        return m_astBodyLocs[id].vCode;
     }
 
-    return m_astBodyLocs[id].vCode;
+    if ( id == 0xFF && m_iBodyLocsHaveEmpty )
+    {
+        return g_pcFallbackID;
+    }
+
+    return NULL;
 }
 

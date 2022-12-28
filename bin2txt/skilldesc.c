@@ -611,6 +611,7 @@ typedef struct
 } ST_SKILL_DESC;
 
 static unsigned int m_iSkillDescCount = 0;
+static unsigned int m_iSkillDescHaveEmpty = 0;
 static ST_SKILL_DESC *m_astSkillDesc = NULL;
 
 MODULE_SETLINES_FUNC(m_astSkillDesc, ST_SKILL_DESC);
@@ -630,6 +631,8 @@ static int SkillDesc_ConvertValue_Pre(void *pvLineInfo, char *acKey, char *pcTem
         m_astSkillDesc[pstLineInfo->vskilldesc].vstrmyspname = pstLineInfo->vstrmyspname;
         strncpy(m_astSkillDesc[pstLineInfo->vskilldesc].vskilldesc, acOutput, sizeof(m_astSkillDesc[pstLineInfo->vskilldesc].vskilldesc));
         String_Trim(m_astSkillDesc[pstLineInfo->vskilldesc].vskilldesc);
+        m_iSkillDescHaveEmpty |= !m_astSkillDesc[pstLineInfo->vskilldesc].vskilldesc[0];
+
         m_iSkillDescCount++;
         return 1;
     }
@@ -639,12 +642,17 @@ static int SkillDesc_ConvertValue_Pre(void *pvLineInfo, char *acKey, char *pcTem
 
 char *SkillDesc_GetDesc(unsigned int id)
 {
-    if ( id >= m_iSkillDescCount )
+    if ( id < m_iSkillDescCount )
     {
-        return NULL;
+        return m_astSkillDesc[id].vskilldesc;
     }
 
-    return m_astSkillDesc[id].vskilldesc;
+    if ( id == 0xFFFF && m_iSkillDescHaveEmpty )
+    {
+        return g_pcFallbackID;
+    }
+
+    return NULL;
 }
 
 unsigned int SkillDesc_GetString(unsigned int id)

@@ -115,6 +115,7 @@ static char *m_apcInternalProcess[] =
 };
 
 static unsigned int m_iPetTypeCount = 0;
+static unsigned int m_iPetTypeHaveEmpty = 0;
 static ST_PETTYPE *m_astPetTypes = NULL;
 
 MODULE_SETLINES_FUNC(m_astPetTypes, ST_PETTYPE);
@@ -122,12 +123,17 @@ MODULE_HAVENAME_FUNC(m_astPetTypes, vpetmysptype, m_iPetTypeCount);
 
 char *Pettype_GetPetType(unsigned int id)
 {
-    if ( id >= m_iPetTypeCount )
+    if ( id < m_iPetTypeCount )
     {
-        return NULL;
+        return m_astPetTypes[id].vpetmysptype;
     }
 
-    return m_astPetTypes[id].vpetmysptype;
+    if ( id == 0xFF && m_iPetTypeHaveEmpty )
+    {
+        return g_pcFallbackID;
+    }
+
+    return NULL;
 }
 
 static int PetType_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
@@ -146,6 +152,8 @@ static int PetType_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate,
 
         strncpy(m_astPetTypes[pstLineInfo->vpetmysptype].vpetmysptype, acOutput, sizeof(m_astPetTypes[pstLineInfo->vpetmysptype].vpetmysptype));
         String_Trim(m_astPetTypes[pstLineInfo->vpetmysptype].vpetmysptype);
+        m_iPetTypeHaveEmpty |= !m_astPetTypes[pstLineInfo->vpetmysptype].vpetmysptype[0];
+
         m_iPetTypeCount++;
         return 1;
     }

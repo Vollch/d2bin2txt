@@ -153,6 +153,7 @@ typedef struct
 } ST_MONSOUND;
 
 static unsigned int m_iMonSoundsCount = 0;
+static unsigned int m_iMonSoundsHaveEmpty = 0;
 static ST_MONSOUND *m_astMonSounds = NULL;
 
 MODULE_SETLINES_FUNC(m_astMonSounds, ST_MONSOUND);
@@ -163,6 +164,11 @@ char *MonSounds_GetItemSoundsCode(unsigned int id)
     if ( id < m_iMonSoundsCount )
     {
         return m_astMonSounds[id].vId;
+    }
+
+    if ( id == 0xFFFF && m_iMonSoundsHaveEmpty )
+    {
+        return g_pcFallbackID;
     }
 
     return NULL;
@@ -199,8 +205,9 @@ static int MonSounds_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplat
 
         strncpy(m_astMonSounds[pstLineInfo->vId].vId, acOutput, sizeof(m_astMonSounds[pstLineInfo->vId].vId));
         String_Trim(m_astMonSounds[pstLineInfo->vId].vId);
-        m_iMonSoundsCount++;
+        m_iMonSoundsHaveEmpty |= !m_astMonSounds[pstLineInfo->vId].vId[0];
 
+        m_iMonSoundsCount++;
         return 1;
     }
 

@@ -766,7 +766,8 @@ int Cubemain_ProcessInput(void *vInput, char *pcOutput)
 {
     ST_CUBE_INPUT *sInput = (ST_CUBE_INPUT*)vInput;
     unsigned char cOutGrade = sInput->cGrade;
-    char *pcResult;
+    char *pcResult = NULL;
+    char acBuffer[128] = {0};
 
     if ( sInput->bSpecific && ( sInput->cGrade == GRADE_SET || sInput->cGrade == GRADE_UNIQ ) )
     {
@@ -776,46 +777,43 @@ int Cubemain_ProcessInput(void *vInput, char *pcOutput)
 
     if ( sInput->bItemCode || sInput->bTypeCode )
     {
-        if ( (sInput->sFlags & 0xFFBC) || cOutGrade || sInput->cQuantity )
+        if ( (sInput->bItemCode && sInput->bSpecific) && sInput->cGrade == GRADE_UNIQ )
         {
-            // Add quotes if there's any qualifiers after ID
-            pcOutput[0] = '"';
-            pcOutput++;
+            pcResult = UniqueItems_GetItemUniqueCode(sInput->sSpecificID);
+        }
+        else if ( (sInput->bItemCode && sInput->bSpecific) && sInput->cGrade == GRADE_SET )
+        {
+            pcResult = SetItems_GetItemUniqueCode(sInput->sSpecificID);
+        }
+        else if ( sInput->bItemCode && sInput->sGenericID == 0xFFFF )
+        {
+            pcResult = "any";
+        }
+        else if ( sInput->bItemCode )
+        {
+            pcResult = Misc_GetItemUniqueCode(sInput->sGenericID);
+        }
+        else if ( sInput->bTypeCode )
+        {
+            pcResult = ItemTypes_GetItemCode(sInput->sGenericID);
         }
 
-        if ( (sInput->bItemCode && sInput->bSpecific) && sInput->cGrade == GRADE_UNIQ 
-            && (pcResult = UniqueItems_GetItemUniqueCode(sInput->sSpecificID)) )
+        if ( pcResult )
         {
-            strcpy(pcOutput, pcResult);
+            if ( pcResult[strlen(pcResult)-1] == ' ' || (sInput->sFlags & 0xFFBC) || cOutGrade || sInput->cQuantity )
+            {
+                pcOutput[0] = '"';
+                strcpy(&pcOutput[1], pcResult);
+                pcOutput += strlen(pcOutput);
+                pcOutput = Cubemain_GenerateInputProp(pcOutput, sInput, cOutGrade);
+                pcOutput[0] = '"';
+            }
+            else
+            {
+                strcpy(pcOutput, pcResult);
+            }
         }
-        else if ( (sInput->bItemCode && sInput->bSpecific) && sInput->cGrade == GRADE_SET 
-            && (pcResult = SetItems_GetItemUniqueCode(sInput->sSpecificID)) )
-        {
-            strcpy(pcOutput, pcResult);
-        }
-        else if ( sInput->bItemCode 
-            && (pcResult = Misc_GetItemUniqueCode(sInput->sGenericID)) )
-        {
-            strcpy(pcOutput, pcResult);
-        }
-        else if ( sInput->bTypeCode 
-            && (pcResult = ItemTypes_GetItemCode(sInput->sGenericID)) )
-        {
-            strcpy(pcOutput, pcResult);
-        }
-        else if ( sInput->sGenericID == 0xFFFF )
-        {
-            strcpy(pcOutput, "any");
-        }
-
-        if ( (sInput->sFlags & 0xFFBC) || cOutGrade || sInput->cQuantity )
-        {
-            pcOutput += strlen(pcOutput);
-            pcOutput = Cubemain_GenerateInputProp(pcOutput, sInput, cOutGrade);
-            pcOutput[0] = '"';
-            pcOutput++;
-        }
-   }
+    }
 
     return 1;
 }
@@ -824,7 +822,8 @@ int Cubemain_ProcessOutput(void *vOutput, char *pcOutput)
 {
     ST_CUBE_OUTPUT *sOutput = (ST_CUBE_OUTPUT*)vOutput;
     unsigned char cOutGrade = sOutput->cGrade;
-    char *pcResult;
+    char *pcResult = NULL;
+    char acBuffer[128] = {0};
 
     if ( sOutput->bSpecific && ( sOutput->cGrade == GRADE_SET || sOutput->cGrade == GRADE_UNIQ ) )
     {
@@ -834,100 +833,108 @@ int Cubemain_ProcessOutput(void *vOutput, char *pcOutput)
 
     if ( sOutput->bSpecific || sOutput->cType )
     {
-        if ( (sOutput->sFlags & 0xFFF7) || cOutGrade || sOutput->cQuantity || sOutput->sPrefix || sOutput->sSuffix )
+        if ( sOutput->bSpecific && sOutput->cGrade == GRADE_UNIQ )
         {
-            // Add quotes if there's any qualifiers after ID
-            pcOutput[0] = '"';
-            pcOutput++;
+            pcResult = UniqueItems_GetItemUniqueCode(sOutput->sSpecificID);
         }
-
-        if ( sOutput->bSpecific && sOutput->cGrade == GRADE_UNIQ 
-            && (pcResult = UniqueItems_GetItemUniqueCode(sOutput->sSpecificID)) )
+        else if ( sOutput->bSpecific && sOutput->cGrade == GRADE_SET )
         {
-            strcpy(pcOutput, pcResult);
+            pcResult = SetItems_GetItemUniqueCode(sOutput->sSpecificID);
         }
-        else if ( sOutput->bSpecific && sOutput->cGrade == GRADE_SET 
-            && (pcResult = SetItems_GetItemUniqueCode(sOutput->sSpecificID)) )
+        else if ( sOutput->cType == 0xFC )
         {
-            strcpy(pcOutput, pcResult);
+            pcResult = Misc_GetItemUniqueCode(sOutput->sGenericID);
         }
-        else if ( sOutput->cType == 0xFC 
-            && (pcResult = Misc_GetItemUniqueCode(sOutput->sGenericID)) )
+        else if ( sOutput->cType == 0xFD )
         {
-            strcpy(pcOutput, pcResult);
+            pcResult = ItemTypes_GetItemCode(sOutput->sGenericID);
         }
-        else if ( sOutput->cType == 0xFD 
-            && (pcResult = ItemTypes_GetItemCode(sOutput->sGenericID)) )
+        else if ( sOutput->cType == 0xFE )
         {
-            strcpy(pcOutput, pcResult);
-        }
-        else if ( sOutput->cType == 0xFE)
-        {
-            strcpy(pcOutput, "useitem");
+            pcResult = "useitem";
         }
         else if ( sOutput->cType == 0xFF )
         {
-            strcpy(pcOutput, "usetype");
+            pcResult = "usetype";
         }
-        else if ( isD2SigmaActive() && sOutput->cType == 0x01 
-            && (pcResult = Levels_GetLevelName(*(unsigned short*)&sOutput->cGrade)) )
+        else if ( isD2SigmaActive() && sOutput->cType == 0x01 )
         {
-            sprintf(pcOutput, "portal=%s", pcResult);
+            if ( pcResult = Levels_GetLevelName(*(unsigned short*)&sOutput->cGrade) )
+            {
+                sprintf(acBuffer, "portal=%s", pcResult);
+                pcResult = &acBuffer[0];
+            }
         }
         else if ( isD2SigmaActive() && sOutput->cType == 0x02 )
         {
-            sprintf(pcOutput, "skillpts=%u", *(unsigned short*)&sOutput->cGrade);
+            sprintf(acBuffer, "skillpts=%u", *(unsigned short*)&sOutput->cGrade);
+            pcResult = &acBuffer[0];
         }
         else if ( isD2SigmaActive() && sOutput->cType == 0x03 )
         {
-            sprintf(pcOutput, "statpts=%u", *(unsigned short*)&sOutput->cGrade);
+            sprintf(acBuffer, "statpts=%u", *(unsigned short*)&sOutput->cGrade);
+            pcResult = &acBuffer[0];
         }
-        else if ( isD2SigmaActive() && sOutput->cType == 0x04 
-            && (pcResult = MonStats_GetStatsName(*(unsigned short*)&sOutput->cGrade)) )
+        else if ( isD2SigmaActive() && sOutput->cType == 0x04 )
         {
-            sprintf(pcOutput, "mon=%s", pcResult);
+            if ( pcResult = MonStats_GetStatsName(*(unsigned short*)&sOutput->cGrade) )
+            {
+                sprintf(acBuffer, "mon=%s", pcResult);
+                pcResult = &acBuffer[0];
+            }
         }
-        else if ( isD2SigmaActive() && sOutput->cType == 0x05 
-            && (pcResult = SuperUniques_GetItemUniqueCode(*(unsigned short*)&sOutput->cGrade)) )
+        else if ( isD2SigmaActive() && sOutput->cType == 0x05 )
         {
-            sprintf(pcOutput, "boss=%s", pcResult);
+            if ( pcResult = SuperUniques_GetItemUniqueCode(*(unsigned short*)&sOutput->cGrade) )
+            {
+                sprintf(acBuffer, "boss=%s", pcResult);
+                pcResult = &acBuffer[0];
+            }
         }
         else if ( isD2SigmaActive() && sOutput->cType == 0x06 )
         {
-            sprintf(pcOutput, "goldcost=%u", *(unsigned short*)&sOutput->cGrade);
+            sprintf(acBuffer, "goldcost=%u", *(unsigned short*)&sOutput->cGrade);
+            pcResult = &acBuffer[0];
         }
         else if ( sOutput->cType == 0x01 )
         {
-            strcpy(pcOutput, "Cow Portal");
+            pcResult = "Cow Portal";
         }
         else if ( sOutput->cType == 0x02 )
         {
-            strcpy(pcOutput, "Pandemonium Portal");
+            pcResult = "Pandemonium Portal";
         }
         else if ( sOutput->cType == 0x03 )
         {
-            strcpy(pcOutput, "Pandemonium Finale Portal");
+            pcResult = "Pandemonium Finale Portal";
         }
-        else if ( sOutput->cType == 0x80 )
+        else if ( isRoSActive() && sOutput->cType == 0x80 )
         {
-            strcpy(pcOutput, "red portal");
+            pcResult = "red portal";
         }
         else if ( isRoSActive() && sOutput->cType == 0x81 )
         {
-            strcpy(pcOutput, "addstat");
+            pcResult = "addstat";
         }
-        else if ( isRoSActive() && sOutput->cType == 0x82 
-            && (pcResult = Sets_GetSetName(sOutput->sPrefix)) )
+        else if ( isRoSActive() && sOutput->cType == 0x82 )
         {
-            strcpy(pcOutput, pcResult);
+            pcResult = Sets_GetSetName(sOutput->sPrefix);
         }
 
-        if ( (sOutput->sFlags & 0xFFF7) || cOutGrade || sOutput->cQuantity || sOutput->sPrefix || sOutput->sSuffix )
+        if ( pcResult )
         {
-            pcOutput += strlen(pcOutput);
-            pcOutput = Cubemain_GenerateOutputProp(pcOutput, sOutput, cOutGrade);
-            pcOutput[0] = '"';
-            pcOutput++;
+            if ( pcResult[strlen(pcResult)-1] == ' ' || (sOutput->sFlags & 0xFFF7) || cOutGrade || sOutput->cQuantity || sOutput->sPrefix || sOutput->sSuffix )
+            {
+                pcOutput[0] = '"';
+                strcpy(&pcOutput[1], pcResult);
+                pcOutput += strlen(pcOutput);
+                pcOutput = Cubemain_GenerateOutputProp(pcOutput, sOutput, cOutGrade);
+                pcOutput[0] = '"';
+            }
+            else
+            {
+                strcpy(pcOutput, pcResult);
+            }
         }
     }
 
@@ -1061,7 +1068,7 @@ static int Cubemain_BuildDescription(void *pvLineInfo, char *acOutput, unsigned 
         if ( pcResult )
         {
             strncpy(&acOutput[strlen(acOutput)], pcResult, iOutputSize-strlen(acOutput));
-            if ( strlen(acOutput) < iOutputSize)
+            if ( strlen(acOutput) < iOutputSize )
             {
                 acOutput[strlen(acOutput)] = ' ';
             }

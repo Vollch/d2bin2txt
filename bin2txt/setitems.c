@@ -471,7 +471,7 @@ static int SetItems_ConvertValue_Pre(void *pvLineInfo, char *acKey, char *pcTemp
     if ( !stricmp(acKey, "index") )
     {
         strncpy(m_astSetItems[m_uiSetItemCount].vindex, pstLineInfo->vindex, sizeof(m_astSetItems[m_uiSetItemCount].vindex));
-        String_Trim(m_astSetItems[m_uiSetItemCount].vindex);
+
         m_uiSetItemCount++;
     }
 

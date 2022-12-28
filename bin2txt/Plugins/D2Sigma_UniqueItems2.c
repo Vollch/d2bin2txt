@@ -30,20 +30,17 @@ int UniqueItems2_ExternProc(void *pvLineInfo, char *acKey, unsigned int iLineNo,
     {
         return 0;
     }
-    else if ( !stricmp(acKey, "PickGroup") && m_astLines[iLineNo].vPickGroup )
+    else if ( !stricmp(acKey, "PickGroup") )
     {
-        sprintf(acOutput, "%u", m_astLines[iLineNo].vPickGroup);
-        return 1;
+        return process_value(EN_VALUE_USHORT, 2, &m_astLines[iLineNo].vPickGroup, acOutput);
     }
-    else if ( !stricmp(acKey, "MaxPick") && m_astLines[iLineNo].vMaxPick )
+    else if ( !stricmp(acKey, "MaxPick") )
     {
-        sprintf(acOutput, "%u", m_astLines[iLineNo].vMaxPick);
-        return 1;
+        return process_value(EN_VALUE_UCHAR, 1, &m_astLines[iLineNo].vMaxPick, acOutput);
     }
-    else if ( !stricmp(acKey, "PickDuplicates") && m_astLines[iLineNo].vPickDuplicates )
+    else if ( !stricmp(acKey, "PickDuplicates") )
     {
-        sprintf(acOutput, "%u", m_astLines[iLineNo].vPickDuplicates);
-        return 1;
+        return process_value(EN_VALUE_UCHAR, 1, &m_astLines[iLineNo].vPickDuplicates, acOutput);
     }
 
     return 0;

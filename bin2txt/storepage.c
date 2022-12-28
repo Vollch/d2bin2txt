@@ -12,7 +12,8 @@ typedef struct
     char vCode[5];
 } ST_STORE_PAGE;
 
-static unsigned int m_iStorePage = 0;
+static unsigned int m_iStorePageCount = 0;
+static unsigned int m_iStorePageHaveEmpty = 0;
 static ST_STORE_PAGE *m_astStorePage = NULL;
 
 static char *m_apcInternalProcess[] =
@@ -29,14 +30,16 @@ static int StorePage_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLine
 
     if ( !stricmp(acKey, "Store Page") )
     {
-        strncpy(m_astStorePage[m_iStorePage].vCode, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
+        strncpy(m_astStorePage[m_iStorePageCount].vCode, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
+        String_Trim(m_astStorePage[m_iStorePageCount].vCode);
+        m_iStorePageHaveEmpty |= !m_astStorePage[m_iStorePageCount].vCode[0];
 
-        if ( !String_BuildName(FORMAT(storepage), 0xFFFF, pcTemplate, m_astStorePage[m_iStorePage].vCode, iLineNo, NULL, acOutput) )
+        if ( !String_BuildName(FORMAT(storepage), 0xFFFF, pcTemplate, m_astStorePage[m_iStorePageCount].vCode, iLineNo, NULL, acOutput) )
         {
             strncpy(acOutput, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
         }
 
-        m_iStorePage++;
+        m_iStorePageCount++;
         return 1;
     }
 
@@ -67,7 +70,7 @@ int process_storepage(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
             break;
 
         case EN_MODULE_SELF_DEPEND:
-            m_iStorePage = 0;
+            m_iStorePageCount = 0;
 
             //m_stCallback.pfnGetKey = StorePage_GetKey;
             m_stCallback.pfnFieldProc = StorePage_FieldProc;
@@ -90,11 +93,16 @@ int process_storepage(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
 
 char *StorePage_GetCode(unsigned int id)
 {
-    if ( id >= m_iStorePage )
+    if ( id < m_iStorePageCount )
     {
-        return NULL;
+        return m_astStorePage[id].vCode;
     }
 
-    return m_astStorePage[id].vCode;
+    if ( id == 0xFF && m_iStorePageHaveEmpty )
+    {
+        return g_pcFallbackID;
+    }
+
+    return NULL;
 }
 

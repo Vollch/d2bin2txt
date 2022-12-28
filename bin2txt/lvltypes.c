@@ -82,6 +82,7 @@ static int LvlTypes_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineN
 
         strncpy(m_astLvlTypes[iNextId].acName, acOutput, sizeof(m_astLvlTypes[iNextId].acName));
         String_Trim(m_astLvlTypes[iNextId].acName);
+
         m_iLvlTypesCount++;
         return 1;
     }

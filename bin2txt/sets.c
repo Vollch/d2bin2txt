@@ -261,6 +261,7 @@ typedef struct
 } ST_SET_INDEX;
 
 static unsigned int m_iSetCount = 0;
+static unsigned int m_iSetHaveEmpty = 0;
 static ST_SET_INDEX *m_astSets = NULL;
 
 MODULE_SETLINES_FUNC(m_astSets, ST_SET_INDEX);
@@ -273,33 +274,30 @@ char *Sets_GetSetName(unsigned int id)
         return m_astSets[id].vindex;
     }
 
+    if ( id == 0xFFFF && m_iSetHaveEmpty )
+    {
+        return g_pcFallbackID;
+    }
+
     return NULL;
 }
 
 static int Sets_ConvertValue_Pre(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
-    char *pcResult;
 
     if ( !stricmp(acKey, "index") )
     {
         if ( !String_BuildName(FORMAT(sets), pstLineInfo->vname, pcTemplate, NAME_PREFIX, pstLineInfo->vindex, MODULE_HAVENAME, acOutput) )
         {
-            pcResult = String_FindString(pstLineInfo->vname, "dummy", NULL);
-            if ( pcResult )
-            {
-                strcpy(acOutput, pcResult);
-            }
-            else
-            {
-                sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vindex);
-            }
+            sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vindex);
         }
 
         strncpy(m_astSets[pstLineInfo->vindex].vindex, acOutput, sizeof(m_astSets[pstLineInfo->vindex].vindex));
         String_Trim(m_astSets[pstLineInfo->vindex].vindex);
-        m_iSetCount++;
+        m_iSetHaveEmpty |= !m_astSets[pstLineInfo->vindex].vindex[0];
 
+        m_iSetCount++;
         return 1;
     }
 

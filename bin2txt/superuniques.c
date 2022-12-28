@@ -237,6 +237,7 @@ typedef struct
 } ST_SUPER_UNIQUES;
 
 static unsigned int m_iSuperUniquesCount = 0;
+static unsigned int m_iSuperUniquesHaveEmpty = 0;
 static ST_SUPER_UNIQUES *m_astSuperUniques = NULL;
 
 MODULE_SETLINES_FUNC(m_astSuperUniques, ST_SUPER_UNIQUES);
@@ -247,6 +248,11 @@ char *SuperUniques_GetItemUniqueCode(unsigned int id)
     if ( id < m_iSuperUniquesCount )
     {
         return m_astSuperUniques[id].vSuperunique;
+    }
+
+    if ( id == 0xFFFF && m_iSuperUniquesHaveEmpty )
+    {
+        return g_pcFallbackID;
     }
 
     return NULL;
@@ -261,19 +267,13 @@ static int SuperUniques_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemp
     {
         if ( !String_BuildName(FORMAT(superuniques), pstLineInfo->vName, pcTemplate, NAME_PREFIX, pstLineInfo->vSuperunique, MODULE_HAVENAME, acOutput) )
         {
-            pcResult = String_FindString(pstLineInfo->vName, "dummy", NULL);
-            if ( pcResult )
-            {
-                strcpy(acOutput, pcResult);
-            }
-            else
-            {
-                sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vSuperunique);
-            }
+            sprintf(acOutput, "%s%u", NAME_PREFIX, pstLineInfo->vSuperunique);
         }
 
         strncpy(m_astSuperUniques[pstLineInfo->vSuperunique].vSuperunique, acOutput, sizeof(m_astSuperUniques[pstLineInfo->vSuperunique].vSuperunique));
         String_Trim(m_astSuperUniques[pstLineInfo->vSuperunique].vSuperunique);
+        m_iSuperUniquesHaveEmpty |= !m_astSuperUniques[pstLineInfo->vSuperunique].vSuperunique[0];
+
         m_iSuperUniquesCount++;
         return 1;
     }

@@ -18,7 +18,8 @@ static char *m_apcInternalProcess[] =
     NULL,
 };
 
-static unsigned int m_iPlayerClass = 0;
+static unsigned int m_iPlayerClassCount = 0;
+static unsigned int m_iPlayerClassHaveEmpty = 0;
 static ST_PLAYER_CLASS *m_astPlayerClass = NULL;
 
 MODULE_SETLINES_FUNC(m_astPlayerClass, ST_PLAYER_CLASS);
@@ -29,15 +30,16 @@ static int PlayerClass_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLi
 
     if ( !stricmp(acKey, "Player Class") )
     {
-        strncpy(m_astPlayerClass[m_iPlayerClass].vCode, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
+        strncpy(m_astPlayerClass[m_iPlayerClassCount].vCode, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
+        String_Trim(m_astPlayerClass[m_iPlayerClassCount].vCode);
+        m_iPlayerClassHaveEmpty |= !m_astPlayerClass[m_iPlayerClassCount].vCode[0];
 
-        if ( !String_BuildName(FORMAT(playerclass), 0xFFFF, pcTemplate, m_astPlayerClass[m_iPlayerClass].vCode, iLineNo, NULL, acOutput) )
+        if ( !String_BuildName(FORMAT(playerclass), 0xFFFF, pcTemplate, m_astPlayerClass[m_iPlayerClassCount].vCode, iLineNo, NULL, acOutput) )
         {
             strncpy(acOutput, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
         }
 
-        String_Trim(m_astPlayerClass[m_iPlayerClass].vCode);
-        m_iPlayerClass++;
+        m_iPlayerClassCount++;
         return 1;
     }
 
@@ -68,7 +70,7 @@ int process_playerclass(char *acTemplatePath, char *acBinPath, char *acTxtPath, 
             break;
 
         case EN_MODULE_SELF_DEPEND:
-            m_iPlayerClass = 0;
+            m_iPlayerClassCount = 0;
 
             //m_stCallback.pfnGetKey = PlayerClass_GetKey;
             m_stCallback.pfnFieldProc = PlayerClass_FieldProc;
@@ -91,11 +93,16 @@ int process_playerclass(char *acTemplatePath, char *acBinPath, char *acTxtPath, 
 
 char *PlayerClass_GetClass(unsigned int id)
 {
-    if ( id >= m_iPlayerClass )
+    if ( id < m_iPlayerClassCount )
     {
-        return NULL;
+        return m_astPlayerClass[id].vCode;
     }
 
-    return m_astPlayerClass[id].vCode;
+    if ( id == 0xFF && m_iPlayerClassHaveEmpty )
+    {
+        return g_pcFallbackID;
+    }
+
+    return NULL;
 }
 

@@ -685,7 +685,7 @@ typedef struct
     unsigned int vminac;
     unsigned int vmaxac;
     unsigned int vgamblemyspcost;
-    unsigned int vspeed;
+    int vspeed;
 
     unsigned int vbitfield1;
     unsigned int vcost;
@@ -923,9 +923,6 @@ typedef struct
 static unsigned int m_iArmorCount = 0;
 static ST_ARMOR *m_astArmor = NULL;
 
-static unsigned int m_iMinDamFlag = 0;
-static unsigned int m_iMaxDamFlag = 0;
-
 MODULE_SETLINES_FUNC(m_astArmor, ST_ARMOR);
 
 char *Armor_GetArmorCode(unsigned int id)
@@ -994,34 +991,6 @@ static int Armor_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, c
             result = 1;
         }
     }
-    else if ( !stricmp(acKey, "mindam") )
-    {
-        //第二组mindam无用，统一填0
-        if ( 0 == m_iMinDamFlag )
-        {
-            m_iMinDamFlag = 1;
-        }
-        else
-        {
-            m_iMinDamFlag = 0;
-            strcpy(acOutput, "0");
-            result = 1;
-        }
-    }
-    else if ( !stricmp(acKey, "maxdam") )
-    {
-        //第二组maxdam无用，统一填0
-        if ( 0 == m_iMaxDamFlag )
-        {
-            m_iMaxDamFlag = 1;
-        }
-        else
-        {
-            m_iMaxDamFlag = 0;
-            strcpy(acOutput, "0");
-            result = 1;
-        }
-    }
 
     return result;
 }
@@ -1037,6 +1006,7 @@ static int Armor_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLine
         m_astArmor[m_iArmorCount].vString = pstLineInfo->vnamestr;
         strncpy(m_astArmor[m_iArmorCount].vcode, pstLineInfo->vcode, sizeof(pstLineInfo->vcode));
         String_Trim(m_astArmor[m_iArmorCount].vcode);
+
         m_iArmorCount++;
         return 1;
     }
@@ -1114,7 +1084,7 @@ int process_armor(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_M
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, minac, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, maxac, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, gamblemyspcost, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, speed, UINT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, speed, INT);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, bitfield1, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cost, UINT);
@@ -1318,9 +1288,6 @@ int process_armor(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_M
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PermStoreItem, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, multibuy, UCHAR);
-
-    m_iMinDamFlag = 0;
-    m_iMaxDamFlag = 0;
 
     switch ( enPhase )
     {

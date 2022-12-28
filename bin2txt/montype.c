@@ -42,6 +42,7 @@ typedef struct
 } ST_MONTYPE;
 
 static unsigned int m_iMonTypeCount = 0;
+static unsigned int m_iMonTypeHaveEmpty = 0;
 static ST_MONTYPE *m_astMonType = NULL;
 
 MODULE_SETLINES_FUNC(m_astMonType, ST_MONTYPE);
@@ -52,6 +53,11 @@ char *MonType_GetType(unsigned int id)
     if ( id < m_iMonTypeCount )
     {
         return m_astMonType[id].vtype;
+    }
+
+    if ( id == 0xFFFF && m_iMonTypeHaveEmpty )
+    {
+        return g_pcFallbackID;
     }
 
     return NULL;
@@ -71,8 +77,9 @@ static int MonType_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate,
 
         strncpy(m_astMonType[pstLineInfo->vtype].vtype, acOutput, sizeof(m_astMonType[pstLineInfo->vtype].vtype));
         String_Trim(m_astMonType[pstLineInfo->vtype].vtype);
-        m_iMonTypeCount++;
+        m_iMonTypeHaveEmpty |= !m_astMonType[pstLineInfo->vtype].vtype[0];
 
+        m_iMonTypeCount++;
         return 1;
     }
 

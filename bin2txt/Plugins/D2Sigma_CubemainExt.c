@@ -27,10 +27,9 @@ int CubemainExt_ExternProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, 
     {
         return 0;
     }
-    else if ( !stricmp(acKey, "goldcost") && m_astLines[iLineNo].vgoldcost )
+    else if ( !stricmp(acKey, "goldcost") )
     {
-        sprintf(acOutput, "%d", m_astLines[iLineNo].vgoldcost);
-        return 1;
+        return process_value(EN_VALUE_INT, 4, &m_astLines[iLineNo].vgoldcost, acOutput);
     }
 
     return 0;

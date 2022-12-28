@@ -152,18 +152,24 @@ static char *m_apcInternalProcess[] =
 };
 
 static unsigned int m_iItemTypesCount = 0;
+static unsigned int m_iItemTypesHaveEmpty = 0;
 static ST_ITEM_TYPES *m_astItemTypes = NULL;
 
 MODULE_SETLINES_FUNC(m_astItemTypes, ST_ITEM_TYPES);
 
 char *ItemTypes_GetItemCode(unsigned int id)
 {
-    if ( id >= m_iItemTypesCount )
+    if ( id < m_iItemTypesCount )
     {
-        return NULL;
+        return m_astItemTypes[id].vCode;
     }
 
-    return m_astItemTypes[id].vCode;
+    if ( id == 0xFFFF && m_iItemTypesHaveEmpty )
+    {
+        return g_pcFallbackID;
+    }
+
+    return NULL;
 }
 
 static int ItemTypes_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
@@ -176,6 +182,8 @@ static int ItemTypes_FieldProc_Pre(void *pvLineInfo, char *acKey, unsigned int i
 
         strncpy(m_astItemTypes[m_iItemTypesCount].vCode, pstLineInfo->vCode, sizeof(pstLineInfo->vCode));
         String_Trim(m_astItemTypes[m_iItemTypesCount].vCode);
+        m_iItemTypesHaveEmpty |= !m_astItemTypes[m_iItemTypesCount].vCode[0];
+
         m_iItemTypesCount++;
         return 1;
     }
