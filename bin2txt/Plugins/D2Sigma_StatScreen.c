@@ -23,17 +23,16 @@ typedef struct
 int process_StatScreen(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
     ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
-
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, page, CHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, type, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, x, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, y, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, text, USHORT_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, text, TBL_STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, color, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, font, UCHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat, USHORT_ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat, ITEMSTAT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, layer, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, isBase, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, isPercent, UCHAR);

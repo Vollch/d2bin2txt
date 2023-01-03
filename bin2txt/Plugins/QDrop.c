@@ -53,7 +53,7 @@ typedef struct
     unsigned char vandariel14[4];
 } ST_LINE_INFO;
 
-static int QDrop_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
+static int QDrop_ConvertValue(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
@@ -81,7 +81,6 @@ static int QDrop_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, c
 int process_QDrop(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
     ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
-
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Difficulty, UINT);

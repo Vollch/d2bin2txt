@@ -16,7 +16,7 @@ typedef struct
 #pragma pack(pop)
 
 
-static int DebauchedItems_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
+static int DebauchedItems_ConvertValue(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
@@ -31,13 +31,12 @@ static int DebauchedItems_ConvertValue(void *pvLineInfo, char *acKey, char *pcTe
 int process_DebauchedItems(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
     ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
-
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, HcIdx, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Group, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Item, STRING);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ItemLoc, UCHAR_BODYLOC);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ItemLoc, BODYLOC);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ItemQuality, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ItemLevel, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ItemCount, UCHAR);

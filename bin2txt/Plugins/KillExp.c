@@ -69,7 +69,7 @@ static int KillExp_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo
 
     if ( !stricmp(acKey, "*Difference") )
     {
-        if ( !String_BuildName(FORMAT(KillExp), 0xFFFF, pcTemplate, NAME_PREFIX, iLineNo, NULL, acOutput) )
+        if ( !String_BuildName(FORMAT(KillExp), 0xFFFF, pcTemplate, NULL, iLineNo, NULL, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
         }
@@ -83,7 +83,6 @@ static int KillExp_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo
 int process_KillExp(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
     ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
-
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo,amaVsWeakMon, USHORT);

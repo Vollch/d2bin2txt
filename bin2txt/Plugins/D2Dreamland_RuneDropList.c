@@ -25,10 +25,18 @@ static int RuneDropList_FieldProc(void *pvLineInfo, char *acKey, unsigned int iL
     if ( !stricmp(acKey, "*desc") )
     {
         char acCode[5] = {0};
+        unsigned int uiString = 0xFFFF;
+        ST_BT_NODE *sItem;
+
         strncpy(acCode, pstLineInfo->vItemCode, sizeof(pstLineInfo->vItemCode));
         String_Trim(acCode);
 
-        if ( !String_BuildName(FORMAT(RuneDropList), Misc_GetItemString2(acCode), pcTemplate, acCode, iLineNo, NULL, acOutput) )
+        if ( sItem = Tree_Search(Map_Items, acCode) )
+        {
+            uiString = Lookup_ItemString(sItem->uiId);
+        }
+
+        if ( !String_BuildName(FORMAT(RuneDropList), uiString, pcTemplate, acCode, iLineNo, NULL, acOutput) )
         {
             strncpy(acOutput, pstLineInfo->vItemCode, sizeof(pstLineInfo->vItemCode));
         }
@@ -42,7 +50,6 @@ static int RuneDropList_FieldProc(void *pvLineInfo, char *acKey, unsigned int iL
 int process_RuneDropList(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
     ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
-
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, hcIdx, UINT);

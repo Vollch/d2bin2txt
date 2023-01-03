@@ -265,10 +265,12 @@ static int D2Vendors_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLine
 
     if ( !stricmp(acKey, "*desc") )
     {
-        char* pcResult = (pstLineInfo->vhcIDx > 0
-            ? MonStats_GetStatsName(pstLineInfo->vhcIDx)
-            : NULL);
-        if ( !String_BuildName(FORMAT(D2Vendors), 0xFFFF, pcTemplate, pcResult, iLineNo, NULL, acOutput) )
+        char* pcName = NULL;
+        if ( pstLineInfo->vhcIDx > 0 )
+        {
+            pcName = Lookup_MonStats(pstLineInfo->vhcIDx);
+        }
+        if ( !String_BuildName(FORMAT(D2Vendors), 0xFFFF, pcTemplate, pcName, iLineNo, NULL, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
         }
@@ -283,7 +285,6 @@ static int D2Vendors_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLine
 int process_D2Vendors(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
     ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
-
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, hcIDx, INT);

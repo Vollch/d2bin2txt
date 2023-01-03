@@ -11,11 +11,10 @@ typedef struct
 int process_NoSock(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
     ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
-
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mainmysptype, USHORT_ITEMTYPE);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, socketmysptype, USHORT_ITEMTYPE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mainmysptype, ITEMTYPE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, socketmysptype, ITEMTYPE);
 
     VALUE_MAP_DEFINE_VIRT(pstValueMap, pstLineInfo, eol, EOL);
 

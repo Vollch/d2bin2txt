@@ -16,12 +16,11 @@ typedef struct
 int process_SkillTabs(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
     ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
-
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, charClass, UCHAR_PLRCLASS);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, charClass, CLASS);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, tab, UCHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, caption, USHORT_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, caption, TBL_STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, captionPosX, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, captionPosY, USHORT);
 

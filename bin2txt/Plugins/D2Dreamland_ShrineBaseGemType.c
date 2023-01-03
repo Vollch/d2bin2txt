@@ -23,10 +23,18 @@ static int ShrineBaseGemTypes_FieldProc(void *pvLineInfo, char *acKey, unsigned 
     if ( !stricmp(acKey, "*desc") )
     {
         char acCode[5] = {0};
+        unsigned int uiString = 0xFFFF;
+        ST_BT_NODE *sItem;
+
         strncpy(acCode, pstLineInfo->vitemCode, sizeof(pstLineInfo->vitemCode));
         String_Trim(acCode);
 
-        if ( !String_BuildName(FORMAT(ShrineBaseGemTypes), Misc_GetItemString2(acCode), pcTemplate, acCode, iLineNo, NULL, acOutput) )
+        if ( sItem = Tree_Search(Map_Items, acCode) )
+        {
+            uiString = Lookup_ItemString(sItem->uiId);
+        }
+
+        if ( !String_BuildName(FORMAT(ShrineBaseGemTypes), uiString, pcTemplate, acCode, iLineNo, NULL, acOutput) )
         {
             strncpy(acOutput, pstLineInfo->vitemCode, sizeof(pstLineInfo->vitemCode));
         }
@@ -40,7 +48,6 @@ static int ShrineBaseGemTypes_FieldProc(void *pvLineInfo, char *acKey, unsigned 
 int process_ShrineBaseGemTypes(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
     ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
-
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, hcIdx, UINT);

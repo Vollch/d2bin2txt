@@ -20,7 +20,7 @@ static int D2LvlTown_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLine
 
     if ( !stricmp(acKey, "*desc") )
     {
-        if ( !String_BuildName(FORMAT(D2LvlTown), 0xFFFF, pcTemplate, Levels_GetLevelName(pstLineInfo->vLevelID), iLineNo, NULL, acOutput) )
+        if ( !String_BuildName(FORMAT(D2LvlTown), 0xFFFF, pcTemplate, Lookup_Level(pstLineInfo->vLevelID), iLineNo, NULL, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
         }
@@ -35,7 +35,6 @@ static int D2LvlTown_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLine
 int process_D2LvlTown(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
     ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
-
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, LevelID, INT);

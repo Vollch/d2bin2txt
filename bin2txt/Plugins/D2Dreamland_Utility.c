@@ -34,7 +34,6 @@ static unsigned int m_iBinStructSize = 0;
 int process_Utility_2900992(char *acTemplatePath, char *acBinPath, char *acTxtPath)
 {
     ST_LINE_INFO_2900992 *pstLineInfo = (ST_LINE_INFO_2900992 *)m_acLineInfoBuf;
-
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Id, UCHAR);
@@ -58,7 +57,6 @@ int process_Utility_2900992(char *acTemplatePath, char *acBinPath, char *acTxtPa
 int process_Utility_813568(char *acTemplatePath, char *acBinPath, char *acTxtPath)
 {
     ST_LINE_INFO_813568 *pstLineInfo = (ST_LINE_INFO_813568 *)m_acLineInfoBuf;
-
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, hcidx, UCHAR);

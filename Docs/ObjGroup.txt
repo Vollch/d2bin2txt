@@ -1,0 +1,22 @@
+/*
+Title 	ObjGroup.txt
+Description 	by Nefarius
+Sent by 	
+GroupName: A reference field for internal use, so you know what kind of objects this line will spawn.
+
+Offset: The unique ID number of this group, this is the number you would use in Levels.txt to assign this object group to a level.
+
+ID0 to ID7: This column contains the unique ID numbers of the objects assigned to this object group.
+
+DENSITY0 to DENSITY7: How densly will the level be filled with this object, this works similar to MonDen, however the density of objects is influenced by the objects PopulateFn in Objects.txt to a much higher degree. This column cannot exceed 125, 
+higher values make the game to crash.
+
+PROB0 to PROB7: The chance that this object will be picked, this does not use the regular rarity/total_rarity, no: this works on a direct basis, the value entered in this field is the actual chance this object will be spawned. As a result of this the 
+game will not spawn other objects from the group if one of them is set to 100, all in all, the total of these columns must not exceed 100 (it should actually equal 100 for best results, but no single object should have 100, it is best to divide 100 by 
+number of objects and use that value in this field).
+
+SHRINES: Whenever to use shrine-logic when spawning this object group in a level, note the object must not have DensityX assigned, it also needs to use the proper PopulateFn for this to work.
+
+WELLS: Whenever to use well-logic when spawning this object group in a level, note the object must not have DensityX assigned, it also needs to use the proper PopulateFn for this to work.
+
+*/

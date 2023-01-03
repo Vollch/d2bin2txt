@@ -33,7 +33,7 @@ static int Towns_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, 
 
     if ( !stricmp(acKey, "*desc") )
     {
-        if ( !String_BuildName(FORMAT(Towns), 0xFFFF, pcTemplate, Levels_GetLevelName(pstLineInfo->vLevelID), iLineNo, NULL, acOutput) )
+        if ( !String_BuildName(FORMAT(Towns), 0xFFFF, pcTemplate, Lookup_Level(pstLineInfo->vLevelID), iLineNo, NULL, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
         }
@@ -47,7 +47,6 @@ static int Towns_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, 
 int process_Towns(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
     ST_LINE_INFO_813568 *pstLineInfo = (ST_LINE_INFO_813568 *)m_acLineInfoBuf;
-
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Act, UCHAR);

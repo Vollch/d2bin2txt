@@ -71,7 +71,7 @@ static int D2RedPortal_FieldProc_V1(void *pvLineInfo, char *acKey, unsigned int 
 
     if ( !stricmp(acKey, "*desc") )
     {
-        if ( !String_BuildName(FORMAT(D2RedPortal), 0xFFFF, pcTemplate, Levels_GetLevelName(pstLineInfo->vSourceLvl), iLineNo, NULL, acOutput) )
+        if ( !String_BuildName(FORMAT(D2RedPortal), 0xFFFF, pcTemplate, Lookup_Level(pstLineInfo->vSourceLvl), iLineNo, NULL, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
         }
@@ -80,7 +80,7 @@ static int D2RedPortal_FieldProc_V1(void *pvLineInfo, char *acKey, unsigned int 
     }
     else if ( !stricmp(acKey, "*ID") )
     {
-        if ( !String_BuildName(FORMAT(D2RedPortal), 0xFFFF, pcTemplate, Levels_GetLevelName(pstLineInfo->vTargetLvl), iLineNo, NULL, acOutput) )
+        if ( !String_BuildName(FORMAT(D2RedPortal), 0xFFFF, pcTemplate, Lookup_Level(pstLineInfo->vTargetLvl), iLineNo, NULL, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
         }
@@ -94,32 +94,31 @@ static int D2RedPortal_FieldProc_V1(void *pvLineInfo, char *acKey, unsigned int 
 int process_D2RedPortal_V2(char *acTemplatePath, char *acBinPath, char *acTxtPath)
 {
     ST_LINE_INFO_V2 *pstLineInfo = (ST_LINE_INFO_V2 *)m_acLineInfoBuf;
-
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, srcLvl, UINT_ITEMCODE);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, destLvl, UINT_ITEMCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, srcLvl, ITEMCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, destLvl, ITEMCODE);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, object, UINT);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, op1, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat1, USHORT_ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat1, ITEMSTAT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, param1, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, value1, UINT_ITEMCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, value1, ITEMCODE);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, op2, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat2, USHORT_ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat2, ITEMSTAT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, param2, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, value2, UINT_ITEMCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, value2, ITEMCODE);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, op3, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat3, USHORT_ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat3, ITEMSTAT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, param3, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, value3, UINT_ITEMCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, value3, ITEMCODE);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, op4, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat4, USHORT_ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat4, ITEMSTAT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, param4, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, value4, UINT_ITEMCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, value4, ITEMCODE);
 
     VALUE_MAP_DEFINE_VIRT(pstValueMap, pstLineInfo, myasteol, EOL);
 
@@ -132,28 +131,27 @@ int process_D2RedPortal_V2(char *acTemplatePath, char *acBinPath, char *acTxtPat
 int process_D2RedPortal_V1(char *acTemplatePath, char *acBinPath, char *acTxtPath)
 {
     ST_LINE_INFO_V1 *pstLineInfo = (ST_LINE_INFO_V1 *)m_acLineInfoBuf;
-
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SourceLvl, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TargetLvl, USHORT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat1Item, USHORT_ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat1Item, ITEMSTAT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, val1Item, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat2Item, USHORT_ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat2Item, ITEMSTAT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, val2Item, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat3Item, USHORT_ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat3Item, ITEMSTAT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, val3Item, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat4Item, USHORT_ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat4Item, ITEMSTAT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, val4Item, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat1Char, USHORT_ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat1Char, ITEMSTAT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, val1Char, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat2Char, USHORT_ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat2Char, ITEMSTAT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, val2Char, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat3Char, USHORT_ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat3Char, ITEMSTAT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, val3Char, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat4Char, USHORT_ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stat4Char, ITEMSTAT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, val4Char, INT);
 
     VALUE_MAP_DEFINE_VIRT(pstValueMap, pstLineInfo, myasteol, EOL);
@@ -186,7 +184,7 @@ int process_D2RedPortal(char *acTemplatePath, char *acBinPath, char *acTxtPath, 
             else if ( m_iBinStructSize == sizeof(ST_LINE_INFO_V2) )
             {
                 MODULE_DEPEND_CALL(itemstatcost, acTemplatePath, acBinPath, acTxtPath);
-                return ItemsCode_ParseBin(acTemplatePath, acBinPath, acTxtPath);
+                MODULE_DEPEND_CALL(itemscode, acTemplatePath, acBinPath, acTxtPath);
             }
             break;
 

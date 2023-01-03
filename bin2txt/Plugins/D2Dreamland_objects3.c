@@ -43,7 +43,7 @@ static int objects3_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineN
 
     if ( !stricmp(acKey, "*desc") )
     {
-        if ( !String_BuildName(FORMAT(objects3), 0xFFFF, pcTemplate, Objects_GetObjectName(pstLineInfo->vObjectID), iLineNo, NULL, acOutput) )
+        if ( !String_BuildName(FORMAT(objects3), 0xFFFF, pcTemplate, Lookup_Object(pstLineInfo->vObjectID), iLineNo, NULL, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
         }
@@ -57,7 +57,6 @@ static int objects3_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineN
 int process_objects3(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
     ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
-
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, hcIdx, UINT);
@@ -67,7 +66,7 @@ int process_objects3(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MonID2, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MonID3, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MonSpawnChance, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TreasureClass, USHORT_TREASURE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TreasureClass, TREASURE);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, iLvl, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, picks, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, dropChance, INT);
@@ -81,7 +80,7 @@ int process_objects3(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENU
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itemCode3, STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, noDrop, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Sparkle, UCHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stringKey, USHORT_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stringKey, TBL_STRING);
 
     switch ( enPhase )
     {

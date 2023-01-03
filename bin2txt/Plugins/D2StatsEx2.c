@@ -43,7 +43,6 @@ typedef struct
 int process_D2StatsEx2(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
     ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
-
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, HcIDx, UINT);
@@ -51,17 +50,17 @@ int process_D2StatsEx2(char *acTemplatePath, char *acBinPath, char *acTxtPath, E
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Panel, STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MainFunc, STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SubFunc, STRING);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Condition, UINT_SKILLCODE);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Class, UCHAR_PLRCLASS);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Condition, SKILLCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Class, CLASS);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MouseLeft, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MouseRight, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MouseTop, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MouseBottom, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, StringID, USHORT_STRING);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, StatID, USHORT_ITEMSTAT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, StatCalc, UINT_ITEMCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, StringID, TBL_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, StatID, ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, StatCalc, ITEMCODE);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Font, UCHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, StringColor, UINT_ITEMCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, StringColor, ITEMCODE);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, StringLeft, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, StringRight, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, StringY, INT);
@@ -86,9 +85,8 @@ int process_D2StatsEx2(char *acTemplatePath, char *acBinPath, char *acTxtPath, E
             MODULE_DEPEND_CALL(playerclass, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(string, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(itemstatcost, acTemplatePath, acBinPath, acTxtPath);
-
-            return SkillsCode_ParseBin(acTemplatePath, acBinPath, acTxtPath) &&
-                   ItemsCode_ParseBin(acTemplatePath, acBinPath, acTxtPath);
+            MODULE_DEPEND_CALL(skillscode, acTemplatePath, acBinPath, acTxtPath);
+            MODULE_DEPEND_CALL(itemscode, acTemplatePath, acBinPath, acTxtPath);
             break;
 
         case EN_MODULE_INIT:

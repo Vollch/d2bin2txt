@@ -18,7 +18,6 @@ typedef struct
 int process_ItemEvent(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
     ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
-
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, hcIdx, UINT);
@@ -26,8 +25,8 @@ int process_ItemEvent(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Param1, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Param2, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Param3, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Calc1, UINT_SKILLCODE);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Calc2, UINT_SKILLCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Calc1, SKILLCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Calc2, SKILLCODE);
 
     switch ( enPhase )
     {
@@ -36,7 +35,7 @@ int process_ItemEvent(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
             break;
 
         case EN_MODULE_OTHER_DEPEND:
-            return SkillsCode_ParseBin(acTemplatePath, acBinPath, acTxtPath);
+            MODULE_DEPEND_CALL(skillscode, acTemplatePath, acBinPath, acTxtPath);
             break;
 
         case EN_MODULE_INIT:

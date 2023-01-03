@@ -21,18 +21,17 @@ typedef struct
 int process_npctalk(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
     ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
-
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, id, USHORT_MONSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, id, MONSTAT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, nomenu, CHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, varmsgnum, CHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, msg1, USHORT_STRING);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, msg2, USHORT_STRING);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, msg3, USHORT_STRING);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, msg4, USHORT_STRING);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, msg5, USHORT_STRING);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, msg6, USHORT_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, msg1, TBL_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, msg2, TBL_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, msg3, TBL_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, msg4, TBL_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, msg5, TBL_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, msg6, TBL_STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, chance, USHORT);
 
     switch ( enPhase )

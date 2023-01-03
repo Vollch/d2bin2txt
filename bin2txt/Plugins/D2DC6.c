@@ -26,8 +26,8 @@ static int D2DC6_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, 
     if ( !stricmp(acKey, "*desc") )
     {
         unsigned char *pcName = (pstLineInfo->vobjectALL
-            ? Objects_GetObjectName(pstLineInfo->vID)
-            : MonStats_GetStatsName(pstLineInfo->vID));
+            ? Lookup_Object(pstLineInfo->vID)
+            : Lookup_MonStats(pstLineInfo->vID));
         if ( !String_BuildName(FORMAT(D2DC6), 0xFFFF, pcTemplate, pcName, iLineNo, NULL, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
@@ -42,7 +42,6 @@ static int D2DC6_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, 
 int process_D2DC6(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
     ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
-
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ID, UINT);

@@ -17,15 +17,14 @@ typedef struct
 int process_Achievements(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
     ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
-
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Layer, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Bronze, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Silver, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Gold, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, StrBadgeTitle, USHORT_STRING);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, StrBadgeDesc, USHORT_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, StrBadgeTitle, TBL_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, StrBadgeDesc, TBL_STRING);
 
     switch ( enPhase )
     {

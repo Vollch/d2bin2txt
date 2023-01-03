@@ -23,12 +23,11 @@ static unsigned int m_iBinStructSize = 0;
 int process_Charstats2_2900992(char *acTemplatePath, char *acBinPath, char *acTxtPath)
 {
     ST_LINE_INFO_2900992 *pstLineInfo = (ST_LINE_INFO_2900992 *)m_acLineInfoBuf;
-
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, hcIdx, UCHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, classID, UCHAR_PLRCLASS);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SkillPerLevel, UINT_SKILLCODE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, classID, CLASS);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SkillPerLevel, SKILLCODE);
 
     m_stCallback.eModuleType = EN_MODULE_PLUGIN;
 
@@ -39,11 +38,10 @@ int process_Charstats2_2900992(char *acTemplatePath, char *acBinPath, char *acTx
 int process_Charstats2_813568(char *acTemplatePath, char *acBinPath, char *acTxtPath)
 {
     ST_LINE_INFO_813568 *pstLineInfo = (ST_LINE_INFO_813568 *)m_acLineInfoBuf;
-
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, hcIdx, UCHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, classID, UCHAR_PLRCLASS);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, classID, CLASS);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SkillPerLevel, UCHAR);
 
     m_stCallback.eModuleType = EN_MODULE_PLUGIN;
@@ -70,7 +68,7 @@ int process_Charstats2(char *acTemplatePath, char *acBinPath, char *acTxtPath, E
             }
             if ( m_iBinStructSize == sizeof(ST_LINE_INFO_2900992) )
             {
-                return SkillsCode_ParseBin(acTemplatePath, acBinPath, acTxtPath);
+                MODULE_DEPEND_CALL(skillscode, acTemplatePath, acBinPath, acTxtPath);
             }
             break;
 

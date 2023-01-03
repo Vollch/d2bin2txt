@@ -46,7 +46,7 @@ static int D2NewStats_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLin
         {
             iString = ItemStatCost_GetString(pstLineInfo->vStat);
         }
-        if ( !String_BuildName(FORMAT(D2NewStats), iString, pcTemplate, ItemStatCost_GetStateName(pstLineInfo->vStat), iLineNo, NULL, acOutput) )
+        if ( !String_BuildName(FORMAT(D2NewStats), iString, pcTemplate, Lookup_ItemStatCost(pstLineInfo->vStat), iLineNo, NULL, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
         }
@@ -60,13 +60,12 @@ static int D2NewStats_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLin
 int process_D2NewStats(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
     ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
-
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, StatOnly, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, StrOnly, UCHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, tblIDx, USHORT_STRING);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat, USHORT_ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, tblIDx, TBL_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat, ITEMSTAT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Xleft, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Xright, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Y, USHORT);

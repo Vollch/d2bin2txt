@@ -16,6 +16,8 @@ extern "C" {
 #include <io.h>
 #include <FCNTL.H>
 #include <assert.h>
+#include "lookup.h"
+#include "D2_109/structs109.h"
 
 #define ALL_MODULES(X) \
     X(BookOfLore) \
@@ -110,6 +112,8 @@ extern "C" {
     X(compcode) \
     X(composit) \
     X(cubemain) \
+    X(cubemod) \
+    X(cubetype) \
     X(difficultylevels) \
     X(elemtypes) \
     X(events) \
@@ -182,6 +186,10 @@ extern "C" {
     X(uniquesuffix) \
     X(uniquetitle) \
     X(weapons) \
+    X(skillscode) \
+    X(skilldesccode) \
+    X(itemscode) \
+    X(misscode) \
 
 #define FORMAT(module) Get_ModuleNameFormat( EN_MID_##module ), Get_ModuleNameSize( EN_MID_##module ), Get_ModuleNameSeparator( EN_MID_##module )
 
@@ -213,43 +221,44 @@ typedef enum
     EN_VALUE_UCHAR_BIT,
     EN_VALUE_STRING, // 0x09[4], 0x01[*]
     EN_VALUE_EOL, // 0x00
-    EN_VALUE_UINT_ITEMCODE, // 0x19
-    EN_VALUE_UINT_MISSCODE,
-    EN_VALUE_UINT_SKILLCODE,
-    EN_VALUE_UINT_DESCCODE,
-    EN_VALUE_UINT_ITEM,
-    EN_VALUE_USHORT_EVENT,
-    EN_VALUE_USHORT_ITEMTYPE,
-    EN_VALUE_USHORT_ITEMSTAT, // 0x14
-    EN_VALUE_USHORT_MISSILE,
-    EN_VALUE_USHORT_MONAI,
-    EN_VALUE_USHORT_MONPROP,
-    EN_VALUE_USHORT_MONSEQ,
-    EN_VALUE_USHORT_MONSOUND,
-    EN_VALUE_USHORT_MONSTAT,
-    EN_VALUE_USHORT_MONSTAT2,
-    EN_VALUE_USHORT_MONTYPE,
-    EN_VALUE_USHORT_OVERLAY,
-    EN_VALUE_USHORT_PROPERTY,
-    EN_VALUE_USHORT_SET,
-    EN_VALUE_USHORT_SKILLDESC,
-    EN_VALUE_USHORT_SKILL, // 0x11, 0x14
-    EN_VALUE_USHORT_STRING, // 0x16
-    EN_VALUE_USHORT_STRING2,
-    EN_VALUE_USHORT_UNIQ,
-    EN_VALUE_USHORT_TREASURE,
-    EN_VALUE_USHORT_SOUND,
-    EN_VALUE_USHORT_STATE,
-    EN_VALUE_UCHAR_BODYLOC,
-    EN_VALUE_UCHAR_COLOR,
-    EN_VALUE_UCHAR_ELEM,
-    EN_VALUE_UCHAR_HIREDESC,
-    EN_VALUE_UCHAR_HITCLASS,
-    EN_VALUE_UCHAR_PLRCLASS, // 0x0D
-    EN_VALUE_UCHAR_MONMODE,
-    EN_VALUE_UCHAR_PLRMODE,
-    EN_VALUE_UCHAR_PET,
-    EN_VALUE_UCHAR_STORE,
+    EN_VALUE_ITEMCODE, // 0x19
+    EN_VALUE_MISSCODE,
+    EN_VALUE_SKILLCODE,
+    EN_VALUE_DESCCODE,
+    EN_VALUE_ITEM,
+    EN_VALUE_EVENT,
+    EN_VALUE_ITEMSTAT, // 0x14
+    EN_VALUE_ITEMTYPE,
+    EN_VALUE_MISSILE,
+    EN_VALUE_MONAI,
+    EN_VALUE_MONPROP,
+    EN_VALUE_MONSEQ,
+    EN_VALUE_MONSOUND,
+    EN_VALUE_MONSTAT,
+    EN_VALUE_MONSTAT2,
+    EN_VALUE_MONTYPE,
+    EN_VALUE_OVERLAY,
+    EN_VALUE_PROPERTY,
+    EN_VALUE_SET,
+    EN_VALUE_SKILLDESC,
+    EN_VALUE_SKILL, // 0x11, 0x14
+    EN_VALUE_SOUND,
+    EN_VALUE_SUPERUNIQUE,
+    EN_VALUE_STATE,
+    EN_VALUE_TBL_STRING, // 0x16
+    EN_VALUE_TBL_STRING2,
+    EN_VALUE_TREASURE,
+    EN_VALUE_BODYLOC,
+    EN_VALUE_COLOR,
+    EN_VALUE_ELEMTYPE,
+    EN_VALUE_HIREDESC,
+    EN_VALUE_HITCLASS,
+    EN_VALUE_PET,
+    EN_VALUE_CLASS, // 0x0D
+    EN_VALUE_PLRMODE,
+    EN_VALUE_MONMODE,
+    EN_VALUE_STORE,
+    EN_VALUE_LEVEL,
 } ENUM_VALUE_TYPE;
 
 typedef enum
@@ -349,10 +358,9 @@ typedef struct
         m_iValueMapIndex++;\
     } while (0)
 
-#define SETLINES_FUNC_NAME module_SetLines
-#define FINISHED_FUNC_NAME module_Finished
+#define SETLINES_FUNC_NAME SetLines
 #define MODULE_SETLINES_FUNC(buffer, datastruct) \
-    static void module_SetLines(unsigned int uiLines)\
+    static void SetLines(unsigned int uiLines)\
     {\
         if ( NULL != buffer )\
         {\
@@ -367,20 +375,11 @@ typedef struct
         {\
             memset(buffer, 0, sizeof(datastruct) * uiLines);\
         }\
-    }\
-    static void module_Finished()\
-    {\
-        if ( NULL != buffer )\
-        {\
-            MemMgr_Free(buffer);\
-            buffer = NULL;\
-        }\
     }
 
-
-#define MODULE_HAVENAME module_HaveName
+#define MODULE_HAVENAME HaveName
 #define MODULE_HAVENAME_FUNC(buffer, key, counter) \
-    static int module_HaveName(char* pcTestName)\
+    static int HaveName(char* pcTestName)\
     {\
 	    unsigned int i;\
 	    for ( i = 0; i < counter; i++ )\
@@ -403,7 +402,7 @@ extern void MemMgr_FreeAll();
 //对于没有key的行，则传空指针，只能根据行号对应了
 typedef char * (*fnGetKey) (void *pvLineInfo, char *acKey, unsigned int *iKeyLen);
 //转换value的内容，比如根据索引值，到另一文件中查找对应的字符串
-typedef int (*fnConvertValue) (void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput);
+typedef int (*fnConvertValue) (void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput);
 //特殊字段处理接口，当bin文件中没有处理某个字段的时候，可以在这里生成值，否则就直接使用模板文件里的内容
 typedef int (*fnFieldProc) (void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput);
 //通知该模块，bin文件的行数，便于分配内存
@@ -455,9 +454,11 @@ extern char *g_pcCustomTable3;
 extern char *g_pcFallbackID;
 extern char *g_pcFallbackCode;
 extern int g_iCompactOutput;
+extern int g_iPrintZero;
 
 extern int File_GetFileSize(char *pcFileName);
 extern int File_CopyFile(char *pcFromPath, char *pcToPath, char *pcFileName, char *pcSuffix);
+extern int File_MergeFiles(char *acBinPath, char *pcFile1, int iSize1, char *pcFile2, int iSize2, char *pcOutFile);
 extern unsigned char *String_Trim(unsigned char *pcValue);
 extern void Set_ModulePhase(ENUM_MODULE_ID enMid, ENUM_MODULE_PHASE enPhase);
 extern ENUM_MODULE_PHASE Get_ModulePhase(ENUM_MODULE_ID enMid);
@@ -537,6 +538,36 @@ extern int Stack_GetIndex(void *pvStack);
 
 ALL_MODULES(MODULE_DECALRE_FUNC)
 
+extern int process_items109(char *pcFilename, char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
+extern int process_magic109(char *pcFilename, char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
+extern int process_rare109(char *pcFilename, char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
+extern int process_unique109(char *pcFilename, char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
+
+extern int process_books109(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
+extern int process_charstats109(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
+extern int process_cubemain109(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
+extern int process_difficultylevels109(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
+extern int process_experience109(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
+extern int process_hireling109(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
+extern int process_itemstatcost109(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
+extern int process_itemtypes109(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
+extern int process_lvlmaze109(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
+extern int process_levels109(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
+extern int process_missiles109(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
+extern int process_monstats109(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
+extern int process_montype109(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
+extern int process_objects109(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
+extern int process_overlay109(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
+extern int process_npc109(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
+extern int process_properties109(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
+extern int process_runes109(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
+extern int process_setitems109(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
+extern int process_skills109(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
+extern int process_states109(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
+extern int process_superuniques109(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
+extern int process_treasureclassex109(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
+extern int process_uniqueitems109(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase);
+
 extern int isRoSActive();
 extern int isD2DreamlandActive();
 extern int isD2SigmaActive();
@@ -569,118 +600,16 @@ extern char *String_GetString(unsigned int id, char* pcFilter, char* pcFilter2);
 extern int Cubemain_ProcessInput(void *vInput, char *pcOutput);
 extern int Cubemain_ProcessOutput(void *vOutput, char *pcOutput);
 
-extern char *Armor_GetArmorCode(unsigned int id);
-extern unsigned int Armor_GetArmorString(unsigned int id);
-extern unsigned int Armor_GetArmorString2(char *pcVcode);
-extern unsigned int Armor_GetArmorCount();
-
-extern char *Weapons_GetWeaponCode(unsigned int id);
-extern unsigned int Weapons_GetWeaponString(unsigned int id);
-extern unsigned int Weapons_GetWeaponString2(char *pcVcode);
-extern unsigned int Weapons_GetWeaponCount();
-
-extern char *Colors_GetColorCode(unsigned int id);
-
-extern char *Compcode_GetCode(unsigned int id);
-
-extern char *PlayerClass_GetClass(unsigned int id);
-
-extern char *StorePage_GetCode(unsigned int id);
-
-extern char *ElemTypes_GetElemStr(unsigned int id);
-
-extern char *BodyLocs_GetLocStr(unsigned int id);
-
-extern char *HitClass_GetClassStr(unsigned int id);
-
-extern char *SkillDesc_GetDesc(unsigned int id);
-extern unsigned int SkillDesc_GetString(unsigned int id);
-
-extern char *Overlay_GetOverlay(unsigned int id);
-
-extern char *Missiles_GetMissile(unsigned int id);
-
-extern char *PlrMode_GetCode(unsigned int id);
-
-extern char *MonMode_GetName(unsigned int id);
-extern char *MonMode_GetCode(unsigned int id);
-
-extern char *Events_GetEventName(unsigned int id);
-
-extern int SkillsCode_ParseBin(char *acTemplatePath, char *acBinPath, char*acTxtPath);
 extern char *SkillsCode_GetExpression(unsigned int id);
-
-extern int SkillDescCode_ParseBin(char *acTemplatePath, char *acBinPath, char*acTxtPath);
 extern char *SkillDescCode_GetExpression(unsigned int id);
+extern char *ItemsCode_GetExpression(unsigned int id);
+extern char *MissCode_GetExpression(unsigned int id);
 
-extern char *Skills_GetSkillName(unsigned int id);
-
-extern char *Sounds_GetSoundName(unsigned int id);
-extern char *Sounds_GetSoundName2(unsigned int id);
-
-extern char *ItemTypes_GetItemCode(unsigned int id);
-
-extern char *States_GetStateName(unsigned int id);
-
-extern char *ItemStatCost_GetStateName(unsigned int id);
 extern unsigned int ItemStatCost_GetString(unsigned int id);
 extern unsigned int ItemStatCost_GetPropertyString(unsigned short asStats[]);
 
-extern char *Properties_GetProperty(unsigned int id);
-
-extern char *Misc_GetItemUniqueCode(unsigned int id);
-extern unsigned int Misc_GetItemString2(char *pcVcode);
-extern unsigned int Misc_GetItemString(unsigned int id);
-
-extern char *MonStats_GetStatsName(unsigned int id);
 extern int MonStats_LinkSkills(void *astSkills, unsigned int iSkillsCount, unsigned int iStructSize, unsigned int iMemberOffset);
 extern int MonStats_LinkMonProp(void *astMonProp, unsigned int iMonPropCount, unsigned int iStructSize, unsigned int iMemberOffset);
-
-extern char *Pettype_GetPetType(unsigned int id);
-
-extern char *HireDesc_GetDesc(unsigned int id);
-
-extern char *Levels_GetLevelName(unsigned int id);
-extern unsigned char Levels_GetAct(unsigned int id);
-
-extern char *LvlTypes_GetName(unsigned int id);
-
-extern char *MissCalc_GetCalcCode(unsigned int id);
-
-extern char *MonAi_GetAiName(unsigned int id);
-
-extern char *MonPlace_GetPlaceName(unsigned int id);
-
-extern char *SuperUniques_GetItemUniqueCode(unsigned int id);
-
-extern char *MonSounds_GetItemSoundsCode(unsigned int id);
-
-extern char *TreasureClassEx_GetItemTreasureClass(unsigned int id);
-extern void TreasureClassEx_SetOffset(unsigned int uiOffset);
-
-extern char *MonProp_GetPropId(unsigned int id);
-
-extern char *MonSeq_GetSequence(unsigned int id);
-
-extern char *MonStats2_GetStatsName(unsigned int id);
-
-extern char *MonType_GetType(unsigned int id);
-
-extern char *Objects_GetObjectName(unsigned int id);
-
-extern char *SetItems_GetItemUniqueCode(unsigned int id);
-
-extern char *Sets_GetSetName(unsigned int id);
-
-extern char *SkillCalc_GetCalc(unsigned int id);
-
-extern char *UniqueItems_GetItemUniqueCode(unsigned int id);
-
-extern int ItemsCode_ParseBin(char *acTemplatePath, char *acBinPath, char*acTxtPath);
-extern char *ItemsCode_GetExpression(unsigned int id);
-
-extern int MissCode_ParseBin(char *acTemplatePath, char *acBinPath, char*acTxtPath);
-extern char *MissCode_GetExpression(unsigned int id);
 
 #ifdef __cplusplus
 }

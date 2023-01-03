@@ -75,7 +75,6 @@ static unsigned int m_iBinStructSize = 0;
 int process_UIPanel(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
     ST_LINE_INFO_813568 *pstLineInfo = (ST_LINE_INFO_813568 *)m_acLineInfoBuf;
-
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, hcIdx, UINT);
@@ -96,17 +95,17 @@ int process_UIPanel(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, OverlayXpos, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, OverlayYpos, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, UIFrame, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itemType1, USHORT_ITEMTYPE);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itemType2, USHORT_ITEMTYPE);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itemType3, USHORT_ITEMTYPE);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itemType4, USHORT_ITEMTYPE);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itemType5, USHORT_ITEMTYPE);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itemType6, USHORT_ITEMTYPE);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itemType7, USHORT_ITEMTYPE);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itemType8, USHORT_ITEMTYPE);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itemType9, USHORT_ITEMTYPE);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itemType10, USHORT_ITEMTYPE);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stringKey, USHORT_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itemType1, ITEMTYPE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itemType2, ITEMTYPE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itemType3, ITEMTYPE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itemType4, ITEMTYPE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itemType5, ITEMTYPE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itemType6, ITEMTYPE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itemType7, ITEMTYPE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itemType8, ITEMTYPE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itemType9, ITEMTYPE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, itemType10, ITEMTYPE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, stringKey, TBL_STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, gamma, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, drawMode, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, textColor, INT);
@@ -132,13 +131,13 @@ int process_UIPanel(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM
     {
         ST_LINE_INFO_2900992 *pstLineInfoExt = (ST_LINE_INFO_2900992 *)m_acLineInfoBuf;
 
-        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoExt, charclass1, UCHAR_PLRCLASS);
-        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoExt, charclass2, UCHAR_PLRCLASS);
-        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoExt, charclass3, UCHAR_PLRCLASS);
-        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoExt, charclass4, UCHAR_PLRCLASS);
-        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoExt, charclass5, UCHAR_PLRCLASS);
-        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoExt, charclass6, UCHAR_PLRCLASS);
-        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoExt, charclass7, UCHAR_PLRCLASS);
+        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoExt, charclass1, CLASS);
+        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoExt, charclass2, CLASS);
+        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoExt, charclass3, CLASS);
+        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoExt, charclass4, CLASS);
+        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoExt, charclass5, CLASS);
+        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoExt, charclass6, CLASS);
+        VALUE_MAP_DEFINE(pstValueMap, pstLineInfoExt, charclass7, CLASS);
     }
 
     switch ( enPhase )

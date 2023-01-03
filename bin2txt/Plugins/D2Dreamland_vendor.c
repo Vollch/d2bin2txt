@@ -19,10 +19,9 @@ typedef struct
 int process_vendor(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
     ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
-
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, vendor, USHORT_MONSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, vendor, MONSTAT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, vendormin, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, vendormax, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, vendormagicmin, UCHAR);

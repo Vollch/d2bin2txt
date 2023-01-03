@@ -26,7 +26,6 @@ typedef struct
 int process_pSpawn(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
     ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
-
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, hcIdx, USHORT);
@@ -34,16 +33,16 @@ int process_pSpawn(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Class, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, cLvl, CHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Difficulty, CHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SuperUniqueMin, USHORT_UNIQ);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SuperUniqueMax, USHORT_UNIQ);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MonMin, USHORT_MONSTAT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MonMax, USHORT_MONSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SuperUniqueMin, SUPERUNIQUE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SuperUniqueMax, SUPERUNIQUE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MonMin, MONSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MonMax, MONSTAT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, QtyMin, CHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, QtyMax, CHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, RadiusMin, CHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, RadiusMax, CHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Leash, CHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Overlay, USHORT_OVERLAY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Overlay, OVERLAY);
 
     switch ( enPhase )
     {

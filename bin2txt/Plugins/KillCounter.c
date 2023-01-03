@@ -179,7 +179,7 @@ static char *m_apcNotUsed[] =
 
 static unsigned int m_iBinStructSize = 0;
 
-static int KillCounter_ConvertValue_12(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
+static int KillCounter_ConvertValue_12(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO_12 *pstLineInfo = pvLineInfo;
     int id;
@@ -234,7 +234,7 @@ static int KillCounter_ConvertValue_12(void *pvLineInfo, char *acKey, char *pcTe
         {
             if ( pstLineInfo->vClass & i )
             {
-                sprintf(&acOutput[strlen(acOutput)], "%s,", PlayerClass_GetClass(i));
+                sprintf(&acOutput[strlen(acOutput)], "%s,", Lookup_Class(i));
             }
         }
         if ( *acOutput )
@@ -333,17 +333,16 @@ static int KillCounter_ConvertValue_12(void *pvLineInfo, char *acKey, char *pcTe
 int process_KillCounter_Dreamland(char *acTemplatePath, char *acBinPath, char *acTxtPath)
 {
     ST_LINE_INFO_DREAMLAND *pstLineInfo = (ST_LINE_INFO_DREAMLAND *)m_acLineInfoBuf;
-
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MainFunc, STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SubFunc, STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Enabled, CHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, KilledMon, USHORT_MONSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, KilledMon, MONSTAT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MonLvLIsLower, CHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MonLvLIsHigher, CHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, KilledPlayer, UCHAR_PLRCLASS);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FuncStat, USHORT_ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, KilledPlayer, CLASS);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FuncStat, ITEMSTAT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FuncVal, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Softcore, CHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Hardcore, CHAR);
@@ -353,55 +352,55 @@ int process_KillCounter_Dreamland(char *acTemplatePath, char *acBinPath, char *a
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Chance, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Chancemybr1Nmybr2, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Chancemybr1Hmybr2, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat1, USHORT_ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat1, ITEMSTAT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Val1, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat2, USHORT_ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat2, ITEMSTAT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Val2, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat3, USHORT_ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat3, ITEMSTAT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Val3, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat1mybr1Nmybr2, USHORT_ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat1mybr1Nmybr2, ITEMSTAT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Val1mybr1Nmybr2, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat2mybr1Nmybr2, USHORT_ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat2mybr1Nmybr2, ITEMSTAT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Val2mybr1Nmybr2, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat3mybr1Nmybr2, USHORT_ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat3mybr1Nmybr2, ITEMSTAT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Val3mybr1Nmybr2, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat1mybr1Hmybr2, USHORT_ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat1mybr1Hmybr2, ITEMSTAT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Val1mybr1Hmybr2, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat2mybr1Hmybr2, USHORT_ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat2mybr1Hmybr2, ITEMSTAT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Val2mybr1Hmybr2, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat3mybr1Hmybr2, USHORT_ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat3mybr1Hmybr2, ITEMSTAT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Val3mybr1Hmybr2, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, CastState, USHORT_STATE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, CastState, STATE);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, StateLen, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SkillEffect, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SkillLvl, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SkillLvlmybr1Nmybr2, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SkillLvlmybr1Hmybr2, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, CastSkill, USHORT_SKILL);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, CastSkillmybr1Nmybr2, USHORT_SKILL);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, CastSkillmybr1Hmybr2, USHORT_SKILL);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TreasureClass, USHORT_TREASURE);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TreasureClassmybr1Nmybr2, USHORT_TREASURE);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TreasureClassmybr1Hmybr2, USHORT_TREASURE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, CastSkill, SKILL);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, CastSkillmybr1Nmybr2, SKILL);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, CastSkillmybr1Hmybr2, SKILL);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TreasureClass, TREASURE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TreasureClassmybr1Nmybr2, TREASURE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TreasureClassmybr1Hmybr2, TREASURE);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, RedPortal, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Tile, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Warp, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Monster, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Monstermybr1Nmybr2, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Monstermybr1Hmybr2, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Spawn, USHORT_MONSTAT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Spawnmybr1Nmybr2, USHORT_MONSTAT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Spawnmybr1Hmybr2, USHORT_MONSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Spawn, MONSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Spawnmybr1Nmybr2, MONSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Spawnmybr1Hmybr2, MONSTAT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SuperUniques, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SuperUniquesmybr1Nmybr2, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SuperUniquesmybr1Hmybr2, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SpawnSU, USHORT_UNIQ);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SpawnSUmybr1Nmybr2, USHORT_UNIQ);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SpawnSUmybr1Hmybr2, USHORT_UNIQ);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SpawnSU, SUPERUNIQUE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SpawnSUmybr1Nmybr2, SUPERUNIQUE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SpawnSUmybr1Hmybr2, SUPERUNIQUE);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Sound, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ScrollMsg, USHORT_STRING);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ScrollMsgmybr1Nmybr2, USHORT_STRING);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ScrollMsgmybr1Hmybr2, USHORT_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ScrollMsg, TBL_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ScrollMsgmybr1Nmybr2, TBL_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ScrollMsgmybr1Hmybr2, TBL_STRING);
 
     m_stCallback.eModuleType = EN_MODULE_PLUGIN;
     m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
@@ -413,7 +412,6 @@ int process_KillCounter_Dreamland(char *acTemplatePath, char *acBinPath, char *a
 int process_KillCounter_10(char *acTemplatePath, char *acBinPath, char *acTxtPath)
 {
     ST_LINE_INFO_10 *pstLineInfo = (ST_LINE_INFO_10 *)m_acLineInfoBuf;
-
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Func, STRING);
@@ -447,14 +445,13 @@ int process_KillCounter_10(char *acTemplatePath, char *acBinPath, char *acTxtPat
 int process_KillCounter_12(char *acTemplatePath, char *acBinPath, char *acTxtPath)
 {
     ST_LINE_INFO_12 *pstLineInfo = (ST_LINE_INFO_12 *)m_acLineInfoBuf;
-
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MainFunc, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SubFunc, UCHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, KilledMon, USHORT_MONSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, KilledMon, MONSTAT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, KilledPlayer, UCHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FuncStat, USHORT_ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FuncStat, ITEMSTAT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FuncVal, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Class, UCHAR);
 
@@ -467,19 +464,19 @@ int process_KillCounter_12(char *acTemplatePath, char *acBinPath, char *acTxtPat
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Chance, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Chancemybr1Nmybr2, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Chancemybr1Hmybr2, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TreasureClass, USHORT_TREASURE);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TreasureClassmybr1Nmybr2, USHORT_TREASURE);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TreasureClassmybr1Hmybr2, USHORT_TREASURE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TreasureClass, TREASURE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TreasureClassmybr1Nmybr2, TREASURE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TreasureClassmybr1Hmybr2, TREASURE);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat1, USHORT_ITEMSTAT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat2, USHORT_ITEMSTAT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat3, USHORT_ITEMSTAT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat1mybr1Nmybr2, USHORT_ITEMSTAT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat2mybr1Nmybr2, USHORT_ITEMSTAT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat3mybr1Nmybr2, USHORT_ITEMSTAT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat1mybr1Hmybr2, USHORT_ITEMSTAT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat2mybr1Hmybr2, USHORT_ITEMSTAT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat3mybr1Hmybr2, USHORT_ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat1, ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat2, ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat3, ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat1mybr1Nmybr2, ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat2mybr1Nmybr2, ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat3mybr1Nmybr2, ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat1mybr1Hmybr2, ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat2mybr1Hmybr2, ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat3mybr1Hmybr2, ITEMSTAT);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Val1, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Val2, INT);
@@ -491,9 +488,9 @@ int process_KillCounter_12(char *acTemplatePath, char *acBinPath, char *acTxtPat
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Val2mybr1Hmybr2, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Val3mybr1Hmybr2, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MainMsgStr, USHORT_STRING);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MainMsgStrmybr1Nmybr2, USHORT_STRING);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MainMsgStrmybr1Hmybr2, USHORT_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MainMsgStr, TBL_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MainMsgStrmybr1Nmybr2, TBL_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MainMsgStrmybr1Hmybr2, TBL_STRING);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MsgParam1, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MsgParam2, USHORT);

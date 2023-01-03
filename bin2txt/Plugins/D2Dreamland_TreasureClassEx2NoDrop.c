@@ -11,7 +11,7 @@ typedef struct
 } ST_LINE_INFO;
 #pragma pack(pop)
 
-static int TreasureClassEx2NoDrop_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
+static int TreasureClassEx2NoDrop_ConvertValue(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
@@ -19,11 +19,11 @@ static int TreasureClassEx2NoDrop_ConvertValue(void *pvLineInfo, char *acKey, ch
     {
         char *pcResult = NULL;
 
-        if ( 1 == pstLineInfo->bMonType && (pcResult = MonStats_GetStatsName(pstLineInfo->vMonsterId)))
+        if ( 1 == pstLineInfo->bMonType && (pcResult = Lookup_MonStats(pstLineInfo->vMonsterId)))
         {
             strcpy(acOutput, pcResult);
         }
-        else if ( 2 == pstLineInfo->bMonType && (pcResult = SuperUniques_GetItemUniqueCode(pstLineInfo->vMonsterId)))
+        else if ( 2 == pstLineInfo->bMonType && (pcResult = Lookup_SuperUnique(pstLineInfo->vMonsterId)))
         {
             strcpy(acOutput, pcResult);
         }
@@ -37,7 +37,6 @@ static int TreasureClassEx2NoDrop_ConvertValue(void *pvLineInfo, char *acKey, ch
 int process_TreasureClassEx2NoDrop(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
     ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
-
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MonsterId, USHORT);

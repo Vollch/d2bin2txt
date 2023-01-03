@@ -144,7 +144,7 @@ static int Waypoints_FieldProc_131(void *pvLineInfo, char *acKey, unsigned int i
 
     if ( !stricmp(acKey, "*LevelName") )
     {
-        if ( !String_BuildName(FORMAT(Waypoints), 0xFFFF, pcTemplate, Levels_GetLevelName(pstLineInfo->vLevelID), iLineNo, NULL, acOutput) )
+        if ( !String_BuildName(FORMAT(Waypoints), 0xFFFF, pcTemplate, Lookup_Level(pstLineInfo->vLevelID), iLineNo, NULL, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
         }
@@ -153,7 +153,7 @@ static int Waypoints_FieldProc_131(void *pvLineInfo, char *acKey, unsigned int i
     }
     else if ( !stricmp(acKey, "*Act") )
     {
-        sprintf(acOutput, "%u", Levels_GetAct(pstLineInfo->vLevelID));
+        sprintf(acOutput, "%u", Lookup_LevelAct(pstLineInfo->vLevelID));
 
         return 1;
     }
@@ -164,7 +164,6 @@ static int Waypoints_FieldProc_131(void *pvLineInfo, char *acKey, unsigned int i
 int process_Waypoints_131(char *acTemplatePath, char *acBinPath, char *acTxtPath)
 {
     ST_LINE_INFO_131 *pstLineInfo = (ST_LINE_INFO_131 *)m_acLineInfoBuf;
-
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, LevelID, USHORT);
@@ -172,7 +171,7 @@ int process_Waypoints_131(char *acTemplatePath, char *acBinPath, char *acTxtPath
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Page, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Tab, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Row, UCHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Header, USHORT_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Header, TBL_STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Normal, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Nightmare, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Hell, UCHAR);
@@ -215,9 +214,9 @@ int process_Waypoints_131(char *acTemplatePath, char *acBinPath, char *acTxtPath
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, DestroyKeyItemmybr1Nmybr2, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, DestroyKeyItemmybr1Hmybr2, UCHAR);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PenaltyStat, USHORT_ITEMSTAT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PenaltyStatmybr1Nmybr2, USHORT_ITEMSTAT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PenaltyStatmybr1Hmybr2, USHORT_ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PenaltyStat, ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PenaltyStatmybr1Nmybr2, ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PenaltyStatmybr1Hmybr2, ITEMSTAT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PenaltyVal, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PenaltyValmybr1Nmybr2, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PenaltyValmybr1Hmybr2, INT);
@@ -226,15 +225,15 @@ int process_Waypoints_131(char *acTemplatePath, char *acBinPath, char *acTxtPath
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, LevelReqmybr1Nmybr2, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, LevelReqmybr1Hmybr2, INT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat1, USHORT_ITEMSTAT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat2, USHORT_ITEMSTAT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat3, USHORT_ITEMSTAT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat1mybr1Nmybr2, USHORT_ITEMSTAT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat2mybr1Nmybr2, USHORT_ITEMSTAT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat3mybr1Nmybr2, USHORT_ITEMSTAT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat1mybr1Hmybr2, USHORT_ITEMSTAT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat2mybr1Hmybr2, USHORT_ITEMSTAT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat3mybr1Hmybr2, USHORT_ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat1, ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat2, ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat3, ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat1mybr1Nmybr2, ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat2mybr1Nmybr2, ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat3mybr1Nmybr2, ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat1mybr1Hmybr2, ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat2mybr1Hmybr2, ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat3mybr1Hmybr2, ITEMSTAT);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Val1, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Val2, INT);
@@ -272,7 +271,6 @@ int process_Waypoints_131(char *acTemplatePath, char *acBinPath, char *acTxtPath
 int process_Waypoints_010(char *acTemplatePath, char *acBinPath, char *acTxtPath)
 {
     ST_LINE_INFO_010 *pstLineInfo = (ST_LINE_INFO_010 *)m_acLineInfoBuf;
-
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, LevelID, USHORT);

@@ -1,0 +1,154 @@
+/*
+Automagic.txt - v1.10 (and presumably 1.11x)
+Composed by Quatl
+(This information was already availible here, I didn't discover any of this. I only typed and formated it.)
+
+OVERVIEW
+
+This file controls auto-affix mods for item drops. Auto mods add magical properties to items without changeing their magic type. This file is very versitile, and gives you fairly fine control over when, and on what, various properties will appear. You 
+can create groups of auto mods, and control mods by level. You can also set probibilities of various mods in a group appearing.
+
+RELATED .TXT FILES
+
+This file is useing:
+* Properties.txt
+* Itemtypes.txt
+
+This file is used by:
+* Weapons.txt ("auto prefix" column)
+* Armor.txt ("auto prefix" column)
+
+COLUMN DESCRIPTIONS :
+______________________________________________________________________________
+
+Name: String Comment
+Blizzard lists the equivelent prefix/affix here. You can use what ever you wish here though. Handy for keeping track of groups.
+
+______________________________________________________________________________
+
+version: 100=LOD Only, 0=Classic & LOD
+Which game versions allow this autoprefix spawn.
+
+______________________________________________________________________________
+
+spawnable: Boolean Value
+Does this autoprefix spawn in the game. You can dissable this line by setting this to 0, or enable it with 1
+
+______________________________________________________________________________
+
+rare: Boolean Value
+Does this autoprefix spawn on rare (that is yellow colored) items in the game. You can dissable this modifier on rares by setting this to 0, or enable it with 1 This allows some fine control if combinations of effects that stack would make a rare too 
+powerful.
+
+______________________________________________________________________________
+
+level: Numeric Value
+The minimum level this autoprefix can be chosen. Also used to control by level grouping of mods. You can use this to combine multiple rows so that autoprefixes are assigned based on the level of the treasure drop. See group column description below. 
+Additional information can be found in the 1.09 version file guide
+
+______________________________________________________________________________
+
+maxlevel: Numeric Value
+The maximum level this autoprefix can be chosen.
+
+______________________________________________________________________________
+
+levelreq: Numeric Value
+Level requirement push for this autoprefix. This value is added to the levelreq stat of the item generated with this mod.
+
+______________________________________________________________________________
+
+class: Class Code
+If this is a modifier for a specific class, the class code should be entered here. This should be used by the drop calculations of class specific items (I'm not certain of this.) Can be used to make modifiers like "+ skill (class only)", or "+ skill tab
+". It also enables the next column. [Class codes are: ama, nec, sor, pal, bar, dru, ass]
+
+______________________________________________________________________________
+
+classlevelreq: Numeric Value
+If class is set, this should allow a seperate level req push for this class. This is a polite thing to do, as other classes gain no advantage from class specific modifiers. I am uncertain that this actualy works.
+
+______________________________________________________________________________
+
+frequency: Numeric Value
+For autoprefix groups, what is the reletive probibility of this autoprefix, vs other valid choices. Higher numbers are more common than lower ones. The 1.09 version file guide has some formuae relateing to this.
+
+______________________________________________________________________________
+
+group: Numeric Value
+Lines containing the same value in this column are treated as a group. Only one auto prefix from a group is chosen. levelreq, classlevelreq, and frequency modify the behavior of groups. The 1.09 version file guide has a very nice tutorial about how to 
+set up groups.
+
+The group number must also be entered in the "auto prefix" column of each entry in Weapons.txt or Armor.txt in order for the property to appear.
+______________________________________________________________________________
+
+mod1code - mod3code: Property Code from Properties.txt
+These determine the actual properties which make up this autoprefix. Each autoprefix can include up to three modifiers.
+
+modXparam, modXmin, modXmax Numeric Value
+For each modXcode, these set the quantities for each property. See Properties.txt for details on how to set values for various modifiers. Note: modXparam fields do suport calcs ( see Farmulae Guide.) Seems of limited utility to me, but is an opretunity 
+for funkiness.
+
+______________________________________________________________________________
+
+
+transform: Boolean Value
+Enables colorization of items with this autoprefix. If set to 1, the item will be palet shifted useing the color code in transformcolor, set to 0 (or leave empty) to dissable.
+
+transformcolor: Color Code
+If transform = 1, this sets the color code for the transformation.
+Transform Color -> Code (from colors.txt)
+White -> whit
+Light Grey -> gry
+Dark Grey -> dgry
+Black -> blac
+Light Blue -> blu
+Dark Blue -> dblu
+Crystal Blue -> cblu
+Light Red -> lred
+Dark Red -> dred
+Crystal Red -> cred
+Light Green -> lgrn
+Dark Green -> dgrn
+Crystal Green -> cgrn
+Light Yellow -> lyel
+Dark Yellow -> dyel
+Light Gold -> lgld
+Dark Gold -> dgld
+Light Purple -> lpur
+Dark Purple -> dpur
+Orange -> oran
+Bright White -> bwht
+
+______________________________________________________________________________
+
+itype1 - itype7: Type Code from Itemtypes.txt
+"Include type", place an item type code in any of these columns to allow that item type to recieve mods from this line. See Note Below.
+
+etype1 - etype3: Type Code from Itemtypes.txt
+"Exclude type", place an item type code in any of these columns to prevent that item type recieve recieve mods from this line. See Note Below.
+
+Note: These fields are redundant, but can cause problems if set wrong. Since you must set a group number in the relevent text files for auto prefixes to function (and those rows are typed items already.) Set itype1 = weap, itype2 = armo, and itype3 = 
+misc and use groups. See group column in this file.
+
+(This is different from 1.09, I supose because of the way class specific items work. It is more versitile this way, but more work and more prone to error.)
+
+______________________________________________________________________________
+
+divide: Numeric Value
+The items price is devided by this value.
+
+multiply: Numeric Value
+The items price is multiplied by this value.
+
+add: Numeric Value
+This value is added to the items price.
+
+______________________________________________________________________________
+
+
+-------------------------------
+Another one. It's nice to have easy to read refrence materials around. I'll do more as I have time. If anyone has corrections, sugestions, or additional information that should be here please let me know.
+
+-Quatl
+
+*/

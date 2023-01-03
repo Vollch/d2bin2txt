@@ -77,7 +77,7 @@ static int Npc2_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, c
 
     if ( !stricmp(acKey, "*desc") )
     {
-        if ( !String_BuildName(FORMAT(Npc2), 0xFFFF, pcTemplate, MonStats_GetStatsName(pstLineInfo->vNpcID), iLineNo, NULL, acOutput) )
+        if ( !String_BuildName(FORMAT(Npc2), 0xFFFF, pcTemplate, Lookup_MonStats(pstLineInfo->vNpcID), iLineNo, NULL, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
         }
@@ -91,7 +91,6 @@ static int Npc2_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, c
 int process_Npc2(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
     ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
-
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, hcIdx, UINT);
@@ -104,39 +103,39 @@ int process_Npc2(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MO
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, VendoriLvl, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Menu, CHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, NbrMenuItems, CHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MenuItemTxt1, USHORT_STRING);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MenuItemTxt2, USHORT_STRING);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MenuItemTxt3, USHORT_STRING);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MenuItemTxt4, USHORT_STRING);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MenuItemTxt5, USHORT_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MenuItemTxt1, TBL_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MenuItemTxt2, TBL_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MenuItemTxt3, TBL_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MenuItemTxt4, TBL_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MenuItemTxt5, TBL_STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MenuItemFunc1, CHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MenuItemFunc2, CHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MenuItemFunc3, CHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MenuItemFunc4, CHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, MenuItemFunc5, CHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, NbrSubMenu, CHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SubMenu1, USHORT_STRING);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SubMenu2, USHORT_STRING);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SubMenu3, USHORT_STRING);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SubMenu4, USHORT_STRING);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SubMenu5, USHORT_STRING);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SubMenu6, USHORT_STRING);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SubMenuStringKey1, USHORT_STRING);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SubMenuStringKey2, USHORT_STRING);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SubMenuStringKey3, USHORT_STRING);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SubMenuStringKey4, USHORT_STRING);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SubMenuStringKey5, USHORT_STRING);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SubMenuStringKey6, USHORT_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SubMenu1, TBL_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SubMenu2, TBL_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SubMenu3, TBL_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SubMenu4, TBL_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SubMenu5, TBL_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SubMenu6, TBL_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SubMenuStringKey1, TBL_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SubMenuStringKey2, TBL_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SubMenuStringKey3, TBL_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SubMenuStringKey4, TBL_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SubMenuStringKey5, TBL_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SubMenuStringKey6, TBL_STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, TravelOption, CHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, DestLvl, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Heal, CHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, NbrSubMenuItems, CHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SubMenuItemTxt1, USHORT_STRING);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SubMenuItemTxt2, USHORT_STRING);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SubMenuItemTxt3, USHORT_STRING);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SubMenuItemTxt4, USHORT_STRING);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SubMenuItemTxt5, USHORT_STRING);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SubMenuItemTxt6, USHORT_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SubMenuItemTxt1, TBL_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SubMenuItemTxt2, TBL_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SubMenuItemTxt3, TBL_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SubMenuItemTxt4, TBL_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SubMenuItemTxt5, TBL_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SubMenuItemTxt6, TBL_STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SubMenuItemFunc1, CHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SubMenuItemFunc2, CHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SubMenuItemFunc3, CHAR);

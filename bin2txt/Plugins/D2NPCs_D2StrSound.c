@@ -21,7 +21,7 @@ static int D2StrSound_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLin
 
     if ( !stricmp(acKey, "*Desc") )
     {
-        if ( !String_BuildName(FORMAT(D2StrSound), pstLineInfo->vString, pcTemplate, Sounds_GetSoundName(pstLineInfo->vSoundID), iLineNo, NULL, acOutput) )
+        if ( !String_BuildName(FORMAT(D2StrSound), pstLineInfo->vString, pcTemplate, Lookup_Sound(pstLineInfo->vSoundID), iLineNo, NULL, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
         }
@@ -36,11 +36,10 @@ static int D2StrSound_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLin
 int process_D2StrSound(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
     ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
-
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SoundID, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, String, USHORT_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, String, TBL_STRING);
 
     VALUE_MAP_DEFINE_VIRT(pstValueMap, pstLineInfo, myasteol, EOL);
 

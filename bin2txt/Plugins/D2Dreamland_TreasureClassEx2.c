@@ -83,7 +83,7 @@ typedef struct
 } ST_LINE_INFO;
 #pragma pack(pop)
 
-static int TreasureClassEx2_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
+static int TreasureClassEx2_ConvertValue(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
@@ -91,11 +91,11 @@ static int TreasureClassEx2_ConvertValue(void *pvLineInfo, char *acKey, char *pc
     {
         char *pcResult = NULL;
 
-        if ( 1 == pstLineInfo->bMonType && (pcResult = MonStats_GetStatsName(pstLineInfo->vmonster)))
+        if ( 1 == pstLineInfo->bMonType && (pcResult = Lookup_MonStats(pstLineInfo->vmonster)))
         {
             strcpy(acOutput, pcResult);
         }
-        else if ( 2 == pstLineInfo->bMonType && (pcResult = SuperUniques_GetItemUniqueCode(pstLineInfo->vmonster)))
+        else if ( 2 == pstLineInfo->bMonType && (pcResult = Lookup_SuperUnique(pstLineInfo->vmonster)))
         {
             strcpy(acOutput, pcResult);
         }
@@ -109,7 +109,6 @@ static int TreasureClassEx2_ConvertValue(void *pvLineInfo, char *acKey, char *pc
 int process_TreasureClassEx2(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
     ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
-
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, monster, USHORT);
@@ -155,9 +154,9 @@ int process_TreasureClassEx2(char *acTemplatePath, char *acBinPath, char *acTxtP
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Enabled, CHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, maxlevel, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, globalprob, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod1, USHORT_PROPERTY);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod2, USHORT_PROPERTY);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod3, USHORT_PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod1, PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod2, PROPERTY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, mod3, PROPERTY);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, modchance1, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, modchance2, INT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, modchance3, INT);

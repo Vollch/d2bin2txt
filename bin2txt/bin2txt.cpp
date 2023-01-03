@@ -183,6 +183,7 @@ char *g_pcCustomTable3 = NULL;
 char *g_pcFallbackID = NULL;
 char *g_pcFallbackCode = NULL;
 int g_iCompactOutput = 0;
+int g_iPrintZero = 0;
 
 void Init_Settings(char* acTemplatePath, char* acBinPath, char* acTxtPath)
 {
@@ -195,7 +196,7 @@ void Init_Settings(char* acTemplatePath, char* acBinPath, char* acTxtPath)
     GetPrivateProfileString("GENERAL", "Output", ".\\txt", acTxtPath, 256, pcIniFile);
 
     GetPrivateProfileString("GENERAL", "TreasureClassOffset", "0", acIniBuff, sizeof(acIniBuff), pcIniFile);
-    TreasureClassEx_SetOffset(atoi(acIniBuff));
+    g_iTreasureClassOffset = atoi(acIniBuff);
 
     GetPrivateProfileString("GENERAL", "LogEnabled", "0", acIniBuff, sizeof(acIniBuff), pcIniFile);
     if ( atoi(acIniBuff) )
@@ -205,6 +206,9 @@ void Init_Settings(char* acTemplatePath, char* acBinPath, char* acTxtPath)
 
     GetPrivateProfileString("GENERAL", "CompactOutput", "0", acIniBuff, sizeof(acIniBuff), pcIniFile);
     g_iCompactOutput = atoi(acIniBuff);
+
+    GetPrivateProfileString("GENERAL", "PrintZero", "0", acIniBuff, sizeof(acIniBuff), pcIniFile);
+    g_iPrintZero = atoi(acIniBuff);
 
     GetPrivateProfileString("GENERAL", "CustomTbl1", 0, acIniBuff, sizeof(acIniBuff), pcIniFile);
     if ( strlen(acIniBuff) > 0 )
@@ -269,6 +273,10 @@ void Init_Settings(char* acTemplatePath, char* acBinPath, char* acTxtPath)
 
         if ( (eModule = Get_ModuleId(pcAnchor)) != EN_MID_MAX )
         {
+            if ( m_astProcessModule[eModule].pcNameFormat != NULL )
+            {
+                free(m_astProcessModule[eModule].pcNameFormat);
+            }
             m_astProcessModule[eModule].pcNameFormat = strdup(pcAnchor2);
         }
         pcAnchor = pcAnchor2 + strlen(pcAnchor2) + 1;
@@ -365,8 +373,7 @@ int main(int argc, char* argv[])
             //161 原版
             //321 魔电v15
             //193 宝日8.4
-            sscanf(argv[i + 1], "%d", &j);
-            TreasureClassEx_SetOffset(j);
+            sscanf(argv[i + 1], "%d", &g_iTreasureClassOffset);
             i += 2;
         }
         else if ( !strcmp("-template", argv[i]) && argc > i+1 )
@@ -426,7 +433,7 @@ int main(int argc, char* argv[])
         goto out;
     }
 
-    if ( _access(acTxtPath, 0) ) 
+    if ( _access(acTxtPath, 0) )
     {
         sprintf(m_acGlobalBuffer, "md %s", acTxtPath);
         system(m_acGlobalBuffer);
@@ -502,174 +509,4 @@ out:
 
     return 0;
 }
-
-#if 0
-typedef struct
-{
-    unsigned int iPadding0;
-    unsigned int iPadding1;
-    unsigned int iPadding2;
-    unsigned int iPadding3;
-    unsigned int iPadding4;
-    unsigned int iPadding5;
-    unsigned int iPadding6;
-    unsigned int iPadding7;
-    unsigned int iPadding8;
-    unsigned int iPadding9;
-
-    unsigned int iPadding10;
-    unsigned int iPadding11;
-    unsigned int iPadding12;
-    unsigned int iPadding13;
-    unsigned int iPadding14;
-    unsigned int iPadding15;
-    unsigned int iPadding16;
-    unsigned int iPadding17;
-    unsigned int iPadding18;
-    unsigned int iPadding19;
-
-    unsigned int iPadding20;
-    unsigned int iPadding21;
-    unsigned int iPadding22;
-    unsigned int iPadding23;
-    unsigned int iPadding24;
-    unsigned int iPadding25;
-    unsigned int iPadding26;
-    unsigned int iPadding27;
-    unsigned int iPadding28;
-    unsigned int iPadding29;
-
-    unsigned int iPadding30;
-    unsigned int iPadding31;
-    unsigned int iPadding32;
-    unsigned int iPadding33;
-    unsigned int iPadding34;
-    unsigned int iPadding35;
-    unsigned int iPadding36;
-    unsigned int iPadding37;
-    unsigned int iPadding38;
-    unsigned int iPadding39;
-
-    unsigned int iPadding40;
-    unsigned int iPadding41;
-    unsigned int iPadding42;
-    unsigned int iPadding43;
-    unsigned int iPadding44;
-    unsigned int iPadding45;
-    unsigned int iPadding46;
-    unsigned int iPadding47;
-    unsigned int iPadding48;
-    unsigned int iPadding49;
-
-    unsigned int iPadding50;
-    unsigned int iPadding51;
-    unsigned int iPadding52;
-    unsigned int iPadding53;
-    unsigned int iPadding54;
-    unsigned int iPadding55;
-    unsigned int iPadding56;
-    unsigned int iPadding57;
-    unsigned int iPadding58;
-    unsigned int iPadding59;
-
-    unsigned int iPadding60;
-    unsigned int iPadding61;
-    unsigned int iPadding62;
-    unsigned int iPadding63;
-    unsigned int iPadding64;
-    unsigned int iPadding65;
-    unsigned int iPadding66;
-    unsigned int iPadding67;
-    unsigned int iPadding68;
-    unsigned int iPadding69;
-
-    unsigned int iPadding70;
-    unsigned int iPadding71;
-    unsigned int iPadding72;
-    unsigned int iPadding73;
-    unsigned int iPadding74;
-    unsigned int iPadding75;
-    unsigned int iPadding76;
-    unsigned int iPadding77;
-    unsigned int iPadding78;
-    unsigned int iPadding79;
-
-    unsigned int iPadding80;
-    unsigned int iPadding81;
-    unsigned int iPadding82;
-    unsigned int iPadding83;
-    unsigned int iPadding84;
-    unsigned int iPadding85;
-    unsigned int iPadding86;
-    unsigned int iPadding87;
-    unsigned int iPadding88;
-    unsigned int iPadding89;
-
-    unsigned int iPadding90;
-    unsigned int iPadding91;
-    unsigned int iPadding92;
-    unsigned int iPadding93;
-    unsigned int iPadding94;
-    unsigned int iPadding95;
-    unsigned int iPadding96;
-    unsigned int iPadding97;
-    unsigned int iPadding98;
-    unsigned int iPadding99;
-
-    unsigned int iPadding100;
-    unsigned int iPadding101;
-    unsigned int iPadding102;
-    unsigned int iPadding103;
-    unsigned int iPadding104;
-    unsigned int iPadding105;
-    unsigned int iPadding106;
-    unsigned int iPadding107;
-    unsigned int iPadding108;
-    unsigned int iPadding109;
-
-    unsigned int iPadding110;
-    unsigned int iPadding111;
-    unsigned int iPadding112;
-    unsigned int iPadding113;
-    unsigned int iPadding114;
-    unsigned int iPadding115;
-    unsigned int iPadding116;
-    unsigned int iPadding117;
-    unsigned int iPadding118;
-    unsigned int iPadding119;
-
-    unsigned int iPadding120;
-    unsigned int iPadding121;
-    unsigned int iPadding122;
-    unsigned int iPadding123;
-    unsigned int iPadding124;
-    unsigned int iPadding125;
-    unsigned int iPadding126;
-    unsigned int iPadding127;
-    unsigned int iPadding128;
-    unsigned int iPadding129;
-
-    unsigned int iPadding130;
-    unsigned int iPadding131;
-    unsigned int iPadding132;
-    unsigned int iPadding133;
-    unsigned int iPadding134;
-    unsigned int iPadding135;
-    unsigned int iPadding136;
-    unsigned int iPadding137;
-    unsigned int iPadding138;
-    unsigned int iPadding139;
-
-    unsigned int iPadding140;
-    unsigned int iPadding141;
-    unsigned int iPadding142;
-    unsigned int iPadding143;
-    unsigned int iPadding144;
-    unsigned int iPadding145;
-    unsigned int iPadding146;
-    unsigned int iPadding147;
-    unsigned int iPadding148;
-    unsigned int iPadding149;
-} ST_LINE_INFO;
-#endif
 

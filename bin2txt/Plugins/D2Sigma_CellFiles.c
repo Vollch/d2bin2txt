@@ -29,7 +29,7 @@ int isD2SigmaActive()
     return m_iModuleActive;
 }
 
-static int CellFiles_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
+static int CellFiles_ConvertValue(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
 
@@ -56,7 +56,6 @@ static int CellFiles_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplat
 int process_CellFiles(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
     ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
-
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Name, USHORT);
@@ -75,7 +74,6 @@ int process_CellFiles(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
             m_stCallback.eModuleType = EN_MODULE_PLUGIN;
             m_stCallback.pfnConvertValue = CellFiles_ConvertValue;
             m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
-            m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
 
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);

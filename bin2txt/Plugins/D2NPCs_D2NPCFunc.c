@@ -194,7 +194,7 @@ static int D2NPCFunc_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLine
 
     if ( !stricmp(acKey, "*Name") )
     {
-        if ( !String_BuildName(FORMAT(D2NPCFunc), pstLineInfo->vsStr0, pcTemplate, MonStats_GetStatsName(pstLineInfo->vhcIDx), iLineNo, NULL, acOutput) )
+        if ( !String_BuildName(FORMAT(D2NPCFunc), pstLineInfo->vsStr0, pcTemplate, Lookup_MonStats(pstLineInfo->vhcIDx), iLineNo, NULL, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
         }
@@ -215,19 +215,19 @@ int process_D2NPCFunc(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, hcIDx, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, count, UINT);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Str1, USHORT_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Str1, TBL_STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, DLL1, STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FuncAddr1, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Str2, USHORT_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Str2, TBL_STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, DLL2, STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FuncAddr2, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Str3, USHORT_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Str3, TBL_STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, DLL3, STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FuncAddr3, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Str4, USHORT_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Str4, TBL_STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, DLL4, STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FuncAddr4, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Str5, USHORT_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Str5, TBL_STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, DLL5, STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, FuncAddr5, UINT);
 
@@ -243,7 +243,7 @@ int process_D2NPCFunc(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, notSet, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, qPlace, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, qNewC, UCHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, qStr, USHORT_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, qStr, TBL_STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, qDLL, STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, qFuncAddr, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, act, UCHAR);
@@ -255,128 +255,128 @@ int process_D2NPCFunc(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, NoInto, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ukn5, UCHAR);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sStr0, USHORT_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sStr0, TBL_STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, checkq0, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sFlag0, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, questNo0, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, class0, UCHAR_PLRCLASS);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, class0, CLASS);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sStr1, USHORT_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sStr1, TBL_STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, checkq1, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sFlag1, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, questNo1, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, class1, UCHAR_PLRCLASS);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, class1, CLASS);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sStr2, USHORT_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sStr2, TBL_STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, checkq2, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sFlag2, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, questNo2, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, class2, UCHAR_PLRCLASS);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, class2, CLASS);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sStr3, USHORT_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sStr3, TBL_STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, checkq3, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sFlag3, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, questNo3, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, class3, UCHAR_PLRCLASS);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, class3, CLASS);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sStr4, USHORT_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sStr4, TBL_STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, checkq4, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sFlag4, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, questNo4, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, class4, UCHAR_PLRCLASS);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, class4, CLASS);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sStr5, USHORT_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sStr5, TBL_STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, checkq5, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sFlag5, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, questNo5, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, class5, UCHAR_PLRCLASS);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, class5, CLASS);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sStr6, USHORT_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sStr6, TBL_STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, checkq6, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sFlag6, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, questNo6, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, class6, UCHAR_PLRCLASS);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, class6, CLASS);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sStr7, USHORT_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sStr7, TBL_STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, checkq7, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sFlag7, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, questNo7, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, class7, UCHAR_PLRCLASS);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, class7, CLASS);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sStr8, USHORT_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sStr8, TBL_STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, checkq8, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sFlag8, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, questNo8, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, class8, UCHAR_PLRCLASS);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, class8, CLASS);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sStr9, USHORT_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sStr9, TBL_STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, checkq9, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sFlag9, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, questNo9, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, class9, UCHAR_PLRCLASS);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, class9, CLASS);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sStr10, USHORT_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sStr10, TBL_STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, checkq10, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sFlag10, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, questNo10, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, class10, UCHAR_PLRCLASS);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, class10, CLASS);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sStr11, USHORT_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sStr11, TBL_STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, checkq11, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sFlag11, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, questNo11, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, class11, UCHAR_PLRCLASS);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, class11, CLASS);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sStr12, USHORT_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sStr12, TBL_STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, checkq12, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sFlag12, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, questNo12, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, class12, UCHAR_PLRCLASS);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, class12, CLASS);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sStr13, USHORT_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sStr13, TBL_STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, checkq13, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sFlag13, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, questNo13, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, class13, UCHAR_PLRCLASS);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, class13, CLASS);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sStr14, USHORT_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sStr14, TBL_STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, checkq14, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sFlag14, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, questNo14, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, class14, UCHAR_PLRCLASS);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, class14, CLASS);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sStr15, USHORT_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sStr15, TBL_STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, checkq15, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sFlag15, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, questNo15, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, class15, UCHAR_PLRCLASS);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, class15, CLASS);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sStr16, USHORT_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sStr16, TBL_STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, checkq16, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sFlag16, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, questNo16, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, class16, UCHAR_PLRCLASS);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, class16, CLASS);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sStr17, USHORT_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sStr17, TBL_STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, checkq17, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sFlag17, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, questNo17, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, class17, UCHAR_PLRCLASS);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, class17, CLASS);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sStr18, USHORT_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sStr18, TBL_STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, checkq18, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sFlag18, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, questNo18, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, class18, UCHAR_PLRCLASS);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, class18, CLASS);
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sStr19, USHORT_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sStr19, TBL_STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, checkq19, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, sFlag19, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, questNo19, UINT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, class19, UCHAR_PLRCLASS);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, class19, CLASS);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SpecX, UCHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ResStr, USHORT_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ResStr, TBL_STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ResFunc, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ResDLL, STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Page, UCHAR);

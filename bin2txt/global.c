@@ -42,7 +42,78 @@ int File_CopyFile(char *pcFromPath, char *pcToPath, char *pcFileName, char *pcSu
 {
     memset(m_acTempBuffer, 0, sizeof(m_acTempBuffer));
     sprintf(m_acTempBuffer, "copy /y %s\\%s%s %s\\%s%s >NUL", pcFromPath, pcFileName, pcSuffix, pcToPath, pcFileName, pcSuffix);
-    return system(m_acTempBuffer);
+    return 0 == system(m_acTempBuffer);
+}
+
+
+int File_MergeFiles(char *acBinPath, char *pcFile1, int iSize1, char *pcFile2, int iSize2, char *pcOutFile)
+{
+    int result = 1;
+    unsigned int iLineCount;
+    FILE *pfBinHandle = NULL;
+    FILE *pfBin2Handle = NULL;
+    FILE *pfOutputHandle = NULL;
+    char *pcTemp;
+
+    sprintf(m_acGlobalBuffer, "%s\\%s.bin", acBinPath, pcFile1);
+    pfBinHandle = fopen(m_acGlobalBuffer, "rb");
+
+    sprintf(m_acGlobalBuffer, "%s\\%s.bin", acBinPath, pcFile2);
+    pfBin2Handle = fopen(m_acGlobalBuffer, "rb");
+
+    sprintf(m_acGlobalBuffer, "%s\\%s.bin", acBinPath, pcOutFile);
+    pfOutputHandle = fopen(m_acGlobalBuffer, "wb");
+
+    if ( NULL == pfBinHandle || NULL == pfBin2Handle || NULL == pfOutputHandle )
+    {
+        my_printf("failed to merge %s and %s to %s\r\n", pcFile1, pcFile2, pcOutFile);
+        goto error;
+    }
+
+    memset(m_acGlobalBuffer, 0, m_iGlobaBufLength);
+
+    //读取bin文件的文件头
+    fread(&iLineCount, 1, sizeof(iLineCount), pfBinHandle);
+    fread(m_acGlobalBuffer, 1, sizeof(iLineCount), pfBin2Handle);
+
+    pcTemp = &m_acGlobalBuffer[sizeof(iLineCount)];
+    while ( 0 < iLineCount )
+    {
+        fread(pcTemp, 1, iSize1, pfBinHandle);
+        pcTemp += iSize1;
+
+        fread(pcTemp, 1, iSize2, pfBin2Handle);
+        pcTemp += iSize2;
+
+        iLineCount--;
+    }
+
+    //写回bin文件
+    fwrite(m_acGlobalBuffer, 1, pcTemp - m_acGlobalBuffer, pfOutputHandle);
+
+    goto out;
+
+error:
+    result = 0;
+
+out:
+    if ( NULL != pfBinHandle )
+    {
+        fclose(pfBinHandle);
+        pfBinHandle = NULL;
+    }
+    if ( NULL != pfBin2Handle )
+    {
+        fclose(pfBin2Handle);
+        pfBin2Handle = NULL;
+    }
+    if ( NULL != pfOutputHandle )
+    {
+        fclose(pfOutputHandle);
+        pfOutputHandle = NULL;
+    }
+
+    return result;
 }
 
 unsigned char *String_Trim(unsigned char *pcValue)
@@ -193,7 +264,7 @@ int process_value(ENUM_VALUE_TYPE enValueType, int iValueLen, void *pvValue, cha
     if ( EN_VALUE_INT == enValueType )
     {
         int iVal = *(int *)pvValue;
-        if ( iVal )
+        if ( iVal || g_iPrintZero )
         {
             sprintf(acOutput, "%d", iVal);
         }
@@ -201,7 +272,7 @@ int process_value(ENUM_VALUE_TYPE enValueType, int iValueLen, void *pvValue, cha
     else if ( EN_VALUE_UINT == enValueType )
     {
         unsigned int uiVal = *(unsigned int *)pvValue;
-        if ( uiVal )
+        if ( uiVal || g_iPrintZero )
         {
             sprintf(acOutput, "%u", uiVal);
         }
@@ -209,7 +280,7 @@ int process_value(ENUM_VALUE_TYPE enValueType, int iValueLen, void *pvValue, cha
     else if ( EN_VALUE_SHORT == enValueType )
     {
         short sVal = *(short *)pvValue;
-        if ( sVal )
+        if ( sVal || g_iPrintZero )
         {
             sprintf(acOutput, "%d", sVal);
         }
@@ -217,7 +288,7 @@ int process_value(ENUM_VALUE_TYPE enValueType, int iValueLen, void *pvValue, cha
     else if ( EN_VALUE_USHORT == enValueType )
     {
         unsigned short usVal = *(unsigned short *)pvValue;
-        if ( usVal )
+        if ( usVal || g_iPrintZero )
         {
             sprintf(acOutput, "%u", usVal);
         }
@@ -225,16 +296,15 @@ int process_value(ENUM_VALUE_TYPE enValueType, int iValueLen, void *pvValue, cha
     else if ( EN_VALUE_CHAR == enValueType )
     {
         char cVal = *(char *)pvValue;
-        if ( cVal )
+        if ( cVal || g_iPrintZero )
         {
             sprintf(acOutput, "%d", cVal);
         }
-
     }
     else if ( EN_VALUE_UCHAR == enValueType )
     {
         unsigned char ucVal = *(unsigned char *)pvValue;
-        if ( ucVal )
+        if ( ucVal || g_iPrintZero )
         {
             sprintf(acOutput, "%u", ucVal);
         }
@@ -242,17 +312,26 @@ int process_value(ENUM_VALUE_TYPE enValueType, int iValueLen, void *pvValue, cha
     else if ( EN_VALUE_UINT_BIT == enValueType )
     {
         char bVal = ((*(unsigned int *)pvValue) & (1 << iValueLen)) != 0;
-        sprintf(acOutput, "%d", bVal);
+        if ( bVal || g_iPrintZero )
+        {
+            sprintf(acOutput, "%d", bVal);
+        }
     }
     else if ( EN_VALUE_USHORT_BIT == enValueType )
     {
         char bVal = ((*(unsigned short *)pvValue) & (1 << iValueLen)) != 0;
-        sprintf(acOutput, "%d", bVal);
+        if ( bVal || g_iPrintZero )
+        {
+            sprintf(acOutput, "%d", bVal);
+        }
     }
     else if ( EN_VALUE_UCHAR_BIT == enValueType )
     {
         char bVal = ((*(unsigned char *)pvValue) & (1 << iValueLen)) != 0;
-        sprintf(acOutput, "%d", bVal);
+        if ( bVal || g_iPrintZero )
+        {
+            sprintf(acOutput, "%d", bVal);
+        }
     }
     else if ( EN_VALUE_STRING == enValueType )
     {
@@ -267,156 +346,176 @@ int process_value(ENUM_VALUE_TYPE enValueType, int iValueLen, void *pvValue, cha
     else
     {
         char *pcResult = NULL;
+        unsigned int uiValue = 0;
+        if ( iValueLen == 1 )
+        {
+            uiValue = *(unsigned char *)pvValue;
+            uiValue = uiValue == 0xFF ? -1 : uiValue;
+        }
+        else if ( iValueLen == 2 )
+        {
+            uiValue = *(unsigned short *)pvValue;
+            uiValue = uiValue == 0xFFFF ? -1 : uiValue;
+        }
+        else if ( iValueLen == 4 )
+        {
+            uiValue = *(unsigned int *)pvValue;
+            uiValue = uiValue == 0xFFFFFFFF ? -1 : uiValue;
+        }
 
-        if ( EN_VALUE_UINT_ITEMCODE == enValueType )
+        if ( EN_VALUE_ITEMCODE == enValueType )
         {
-            pcResult = ItemsCode_GetExpression(*(unsigned int *)pvValue);
+            pcResult = ItemsCode_GetExpression(uiValue);
         }
-        else if ( EN_VALUE_UINT_MISSCODE == enValueType )
+        else if ( EN_VALUE_MISSCODE == enValueType )
         {
-            pcResult = MissCode_GetExpression(*(unsigned int *)pvValue);
+            pcResult = MissCode_GetExpression(uiValue);
         }
-        else if ( EN_VALUE_UINT_SKILLCODE == enValueType )
+        else if ( EN_VALUE_SKILLCODE == enValueType )
         {
-            pcResult = SkillsCode_GetExpression(*(unsigned int *)pvValue);
+            pcResult = SkillsCode_GetExpression(uiValue);
         }
-        else if ( EN_VALUE_UINT_DESCCODE == enValueType )
+        else if ( EN_VALUE_DESCCODE == enValueType )
         {
-            pcResult = SkillDescCode_GetExpression(*(unsigned int *)pvValue);
+            pcResult = SkillDescCode_GetExpression(uiValue);
         }
-        if ( EN_VALUE_UINT_ITEM == enValueType )
+        else if ( EN_VALUE_ITEM == enValueType )
         {
-            pcResult = Misc_GetItemUniqueCode(*(unsigned int *)pvValue);
+            pcResult = Lookup_Item(uiValue);
         }
-        else if ( EN_VALUE_USHORT_EVENT == enValueType )
+        else if ( EN_VALUE_EVENT == enValueType )
         {
-            pcResult = Events_GetEventName(*(unsigned short *)pvValue);
+            pcResult = Lookup_Event(uiValue);
         }
-        else if ( EN_VALUE_USHORT_ITEMTYPE == enValueType )
+        else if ( EN_VALUE_ITEMSTAT == enValueType )
         {
-            pcResult = ItemTypes_GetItemCode(*(unsigned short *)pvValue);
+            pcResult = Lookup_ItemStatCost(uiValue);
         }
-        else if ( EN_VALUE_USHORT_ITEMSTAT == enValueType )
+        else if ( EN_VALUE_ITEMTYPE == enValueType )
         {
-            pcResult = ItemStatCost_GetStateName(*(unsigned short *)pvValue);
+            pcResult = Lookup_ItemType(uiValue);
         }
-        else if ( EN_VALUE_USHORT_MISSILE == enValueType )
+        else if ( EN_VALUE_MISSILE == enValueType )
         {
-            pcResult = Missiles_GetMissile(*(unsigned short *)pvValue);
+            pcResult = Lookup_Missile(uiValue);
         }
-        else if ( EN_VALUE_USHORT_MONAI == enValueType )
+        else if ( EN_VALUE_MONAI == enValueType )
         {
-            pcResult = MonAi_GetAiName(*(unsigned short *)pvValue);
+            pcResult = Lookup_MonAI(uiValue);
         }
-        else if ( EN_VALUE_USHORT_MONPROP == enValueType )
+        else if ( EN_VALUE_MONPROP == enValueType )
         {
-            pcResult = MonProp_GetPropId(*(unsigned short *)pvValue);
+            pcResult = Lookup_MonProp(uiValue);
         }
-        else if ( EN_VALUE_USHORT_MONSEQ == enValueType )
+        else if ( EN_VALUE_MONSEQ == enValueType )
         {
-            pcResult = MonSeq_GetSequence(*(unsigned short *)pvValue);
+            pcResult = Lookup_MonSeq(uiValue);
         }
-        else if ( EN_VALUE_USHORT_MONSOUND == enValueType )
+        else if ( EN_VALUE_MONSOUND == enValueType )
         {
-            pcResult = MonSounds_GetItemSoundsCode(*(unsigned short *)pvValue);
+            pcResult = Lookup_MonSounds(uiValue);
         }
-        else if ( EN_VALUE_USHORT_MONSTAT == enValueType )
+        else if ( EN_VALUE_MONSTAT == enValueType )
         {
-            pcResult = MonStats_GetStatsName(*(unsigned short *)pvValue);
+            pcResult = Lookup_MonStats(uiValue);
         }
-        else if ( EN_VALUE_USHORT_MONSTAT2 == enValueType )
+        else if ( EN_VALUE_MONSTAT2 == enValueType )
         {
-            pcResult = MonStats2_GetStatsName(*(unsigned short *)pvValue);
+            pcResult = Lookup_MonStats2(uiValue);
         }
-        else if ( EN_VALUE_USHORT_MONTYPE == enValueType )
+        else if ( EN_VALUE_MONTYPE == enValueType )
         {
-            pcResult = MonType_GetType(*(unsigned short *)pvValue);
+            pcResult = Lookup_MonType(uiValue);
         }
-        else if ( EN_VALUE_USHORT_OVERLAY == enValueType )
+        else if ( EN_VALUE_OVERLAY == enValueType )
         {
-            pcResult = Overlay_GetOverlay(*(unsigned short *)pvValue);
+            pcResult = Lookup_Overlay(uiValue);
         }
-        else if ( EN_VALUE_USHORT_PROPERTY == enValueType )
+        else if ( EN_VALUE_PROPERTY == enValueType )
         {
-            pcResult = Properties_GetProperty(*(unsigned short *)pvValue);
+            pcResult = Lookup_Property(uiValue);
         }
-        else if ( EN_VALUE_USHORT_SET == enValueType )
+        else if ( EN_VALUE_SET == enValueType )
         {
-            pcResult = Sets_GetSetName(*(unsigned short *)pvValue);
+            pcResult = Lookup_Set(uiValue);
         }
-        else if ( EN_VALUE_USHORT_SKILLDESC == enValueType )
+        else if ( EN_VALUE_SKILLDESC == enValueType )
         {
-            pcResult = SkillDesc_GetDesc(*(unsigned short *)pvValue);
+            pcResult = Lookup_SkillDesc(uiValue);
         }
-        else if ( EN_VALUE_USHORT_SKILL == enValueType )
+        else if ( EN_VALUE_SKILL == enValueType )
         {
-            pcResult = Skills_GetSkillName(*(unsigned short *)pvValue);
+            pcResult = Lookup_Skill(uiValue);
         }
-        else if ( EN_VALUE_USHORT_STRING == enValueType )
+        else if ( EN_VALUE_SOUND == enValueType )
         {
-            pcResult = String_FindString(*(unsigned short *)pvValue, "dummy", NULL);
+            pcResult = Lookup_Sound(uiValue);
+        }
+        else if ( EN_VALUE_SUPERUNIQUE == enValueType )
+        {
+            pcResult = Lookup_SuperUnique(uiValue);
+        }
+        else if ( EN_VALUE_STATE == enValueType )
+        {
+            pcResult = Lookup_State(uiValue);
+        }
+        else if ( EN_VALUE_TBL_STRING == enValueType )
+        {
+            pcResult = String_FindString(uiValue, "dummy", NULL);
             result = -1;
         }
-        else if ( EN_VALUE_USHORT_STRING2 == enValueType )
+        else if ( EN_VALUE_TBL_STRING2 == enValueType )
         {
-            pcResult = String_FindString(*(unsigned short *)pvValue, "dummy", "x");
+            pcResult = String_FindString(uiValue, "dummy", "x");
             result = -1;
         }
-        else if ( EN_VALUE_USHORT_UNIQ == enValueType )
+        else if ( EN_VALUE_TREASURE == enValueType )
         {
-            pcResult = SuperUniques_GetItemUniqueCode(*(unsigned short *)pvValue);
+            pcResult = Lookup_TreasureClass(uiValue);
         }
-        else if ( EN_VALUE_USHORT_TREASURE == enValueType )
+        else if ( EN_VALUE_BODYLOC == enValueType )
         {
-            pcResult = TreasureClassEx_GetItemTreasureClass(*(unsigned short *)pvValue);
+            pcResult = Lookup_BodyLoc(uiValue);
         }
-        else if ( EN_VALUE_USHORT_SOUND == enValueType )
+        else if ( EN_VALUE_COLOR == enValueType )
         {
-            pcResult = Sounds_GetSoundName(*(unsigned short *)pvValue);
+            pcResult = Lookup_Color(uiValue);
         }
-        else if ( EN_VALUE_USHORT_STATE == enValueType )
+        else if ( EN_VALUE_ELEMTYPE == enValueType )
         {
-            pcResult = States_GetStateName(*(unsigned short *)pvValue);
+            pcResult = Lookup_ElemType(uiValue);
         }
-        else if ( EN_VALUE_UCHAR_BODYLOC == enValueType )
+        else if ( EN_VALUE_HIREDESC == enValueType )
         {
-            pcResult = BodyLocs_GetLocStr(*(unsigned char *)pvValue);
+            pcResult = Lookup_HireDesc(uiValue);
         }
-        else if ( EN_VALUE_UCHAR_COLOR == enValueType )
+        else if ( EN_VALUE_HITCLASS == enValueType )
         {
-            pcResult = Colors_GetColorCode(*(unsigned char *)pvValue);
+            pcResult = Lookup_HitClass(uiValue);
         }
-        else if ( EN_VALUE_UCHAR_ELEM == enValueType )
+        else if ( EN_VALUE_PET == enValueType )
         {
-            pcResult = ElemTypes_GetElemStr(*(unsigned char *)pvValue);
+            pcResult = Lookup_Pet(uiValue);
         }
-        else if ( EN_VALUE_UCHAR_HIREDESC == enValueType )
+        else if ( EN_VALUE_CLASS == enValueType )
         {
-            pcResult = HireDesc_GetDesc(*(unsigned char *)pvValue);
+            pcResult = Lookup_Class(uiValue);
         }
-        else if ( EN_VALUE_UCHAR_HITCLASS == enValueType )
+        else if ( EN_VALUE_PLRMODE == enValueType )
         {
-            pcResult = HitClass_GetClassStr(*(unsigned char *)pvValue);
+            pcResult = Lookup_PlrMode(uiValue);
         }
-        else if ( EN_VALUE_UCHAR_PLRCLASS == enValueType )
+        else if ( EN_VALUE_MONMODE == enValueType )
         {
-            pcResult = PlayerClass_GetClass(*(unsigned char *)pvValue);
+            pcResult = Lookup_MonMode(uiValue);
         }
-        else if ( EN_VALUE_UCHAR_MONMODE == enValueType )
+        else if ( EN_VALUE_STORE == enValueType )
         {
-            pcResult = MonMode_GetCode(*(unsigned char *)pvValue);
+            pcResult = Lookup_Store(uiValue);
         }
-        else if ( EN_VALUE_UCHAR_PLRMODE == enValueType )
+        else if ( EN_VALUE_LEVEL == enValueType )
         {
-            pcResult = PlrMode_GetCode(*(unsigned char *)pvValue);
-        }
-        else if ( EN_VALUE_UCHAR_PET == enValueType )
-        {
-            pcResult = Pettype_GetPetType(*(unsigned char *)pvValue);
-        }
-        else if ( EN_VALUE_UCHAR_STORE == enValueType )
-        {
-            pcResult = StorePage_GetCode(*(unsigned char *)pvValue);
+            pcResult = Lookup_Level(uiValue);
         }
 
         if ( pcResult )
@@ -435,7 +534,7 @@ int process_value(ENUM_VALUE_TYPE enValueType, int iValueLen, void *pvValue, cha
 3、否则用模板里的内容
 4、清除值字段末尾的所有空格
 */
-static char * TXTBUF_FILL(char *key, ST_VALUE_MAP *map, int count, char *start, char *from, 
+static char * TXTBUF_FILL(char *key, ST_VALUE_MAP *map, int count, char *start, char *from,
     ST_CALLBACK *callback, void *pvLineInfo, int iLineNo, int iFieldNo)
 {
     int i, iValResult;
@@ -460,7 +559,7 @@ static char * TXTBUF_FILL(char *key, ST_VALUE_MAP *map, int count, char *start, 
         }
         memset(acTempValue, 0, sizeof(acTempValue));
 
-        if ( !callback || !callback->pfnConvertValue || !(iValResult = callback->pfnConvertValue(pvLineInfo, key, from, acTempValue)))
+        if ( !callback || !callback->pfnConvertValue || !(iValResult = callback->pfnConvertValue(pvLineInfo, key, iLineNo, from, acTempValue)))
         {
             iValResult = process_value(map[i].enValueType, map[i].iValueLen, map[i].pvValue, acTempValue);
         }
@@ -496,7 +595,7 @@ static char * TXTBUF_FILL(char *key, ST_VALUE_MAP *map, int count, char *start, 
     return start;
 }
 
-static int process_line_x(char *pcHeader, char *pcLineEnd, char *pcLineStart, char *pcTxt, char *acClass, 
+static int process_line_x(char *pcHeader, char *pcLineEnd, char *pcLineStart, char *pcTxt, char *acClass,
     void *pvLineInfo, ST_VALUE_MAP *astValueMap, int iCount, ST_CALLBACK *pstCallback, int iLineNo)
 {
     char *pcAnchor, *pcAnchor2, *pcAnchorTemp;
@@ -623,7 +722,7 @@ static int check_template(char *pcHeader, char *pcLineEnd, ST_VALUE_MAP *astValu
     char *pcAnchor, *pcAnchorTemp;
     char bAnchor;
     int result = 1;
-    int i;
+    int i, j;
     char acTempKey[256] = {0};
     int iIntKeys = 0;
 
@@ -676,10 +775,10 @@ static int check_template(char *pcHeader, char *pcLineEnd, ST_VALUE_MAP *astValu
         }
         if ( i >= iCount )
         {
-            int iResult;
-            if ( pstCallback && (iResult = Find_StringInList(pstCallback->ppcKeyInternalProcess, pcHeader)) != -1 )
+            int iColumn;
+            if ( pstCallback && (iColumn = Find_StringInList(pstCallback->ppcKeyInternalProcess, pcHeader)) != -1 )
             {
-                iIntKeys |= (1 << iResult);
+                iIntKeys |= (1 << iColumn);
                 //已被内部处理
             }
             else if ( pstCallback && Find_StringInList(pstCallback->ppcKeyNotUsed, pcHeader) != -1 )
@@ -716,9 +815,24 @@ static int check_template(char *pcHeader, char *pcLineEnd, ST_VALUE_MAP *astValu
     {
         if ( astValueMap[i].iActiveColumn )
         {
-            char acField[128] = {0};
-            String_RestoreSpecialChar(astValueMap[i].acKeyName, acField);
-            sprintf(&m_acTempBuffer[strlen(m_acTempBuffer)], "  Missing Field: %s\r\n", acField);
+            int iAliasColumn = 0;
+            for ( j = 0; j < iCount; j++ ) {
+                if ( j == i )
+                {
+                    continue;
+                }
+                if ( astValueMap[i].pvValue == astValueMap[j].pvValue && astValueMap[i].iValueLen == astValueMap[j].iValueLen && !astValueMap[j].iActiveColumn )
+                {
+                    iAliasColumn = 1;
+                    break;
+                }
+            }
+            if ( !iAliasColumn )
+            {
+                char acField[128] = {0};
+                String_RestoreSpecialChar(astValueMap[i].acKeyName, acField);
+                sprintf(&m_acTempBuffer[strlen(m_acTempBuffer)], "  Missing Field: %s\r\n", acField);
+            }
         }
     }
 
@@ -730,7 +844,7 @@ static int check_template(char *pcHeader, char *pcLineEnd, ST_VALUE_MAP *astValu
     return result;
 }
 
-static int process_line_withkey(char *acTplBuf, char *acTxtBuf, void *pvLineInfo, int iLineLength, 
+static int process_line_withkey(char *acTplBuf, char *acTxtBuf, void *pvLineInfo, int iLineLength,
     char *acClass, int iKeyLen, ST_VALUE_MAP *astValueMap, int iCount, ST_CALLBACK *pstCallback, int iLineNo)
 {
     char acKey[256] = {0};
@@ -809,7 +923,7 @@ static int process_line_withkey(char *acTplBuf, char *acTxtBuf, void *pvLineInfo
     return process_line_x(pcHeader, pcLineEnd, pcLineStart, pcTxt, acClass, pvLineInfo, astValueMap, iCount, pstCallback, iLineNo);
 }
 
-static int process_line_withoutkey(char *acTplBuf, char *acTxtBuf, void *pvLineInfo, int iLineLength, int iLineNo, 
+static int process_line_withoutkey(char *acTplBuf, char *acTxtBuf, void *pvLineInfo, int iLineLength, int iLineNo,
     ST_VALUE_MAP *astValueMap, int iCount, ST_CALLBACK *pstCallback,
     char *pcFilename, char **ppcIterator)
 {
@@ -912,7 +1026,7 @@ static int check_bin(void *pvLineInfo, int iLineLength, ST_VALUE_MAP *pstValueMa
         }
     }
 
-    if ( fgetc(pfBinHandle) != EOF )
+    if ( ((int)fgetc(pfBinHandle)) != EOF )
     {
         return 0;
     }
@@ -1086,21 +1200,11 @@ static int process_file_x(char *acTemplatePath, char *acBinPath, char *acTxtPath
     {
         strncpy(acTxtBuf, acTplBuf, (strchr(acTplBuf, '\n') - acTplBuf + 1));
     }
-    else 
+    else
     {
         strcpy(acTxtBuf, acTplBuf);
         sprintf(&acTxtBuf[strlen(acTxtBuf)], "\r\n");
         sprintf(&acTplBuf[strlen(acTplBuf)], "\r\n");
-    }
-
-    if ( acTxtPath )
-    {
-        pfTxtHandle = fopen(acTxtFile, "wb");
-        if ( NULL == pfTxtHandle )
-        {
-            my_error("create %s txt file fail\r\n", pcFilename);
-            goto error;
-        }
     }
 
     //找到Expansion行，bin文件里不存在，直接写回txt
@@ -1132,17 +1236,24 @@ static int process_file_x(char *acTemplatePath, char *acBinPath, char *acTxtPath
         goto error;
     }
 
+    if ( !check_bin(pvLineInfo, iLineLength, pstValueMap, iValueCount, pfBinHandle, stFileHeader) )
+    {
+        my_error("%s bin struct check failed\r\n", pcFilename);
+        goto error;
+    }
+
     if ( acTxtPath )
     {
-        if ( !check_bin(pvLineInfo, iLineLength, pstValueMap, iValueCount, pfBinHandle, stFileHeader) )
-        {
-            my_error("%s bin struct check failed\r\n", pcFilename);
-            goto error;
-        }
-
         //检查有哪些字段没有处理
         if ( !check_template(acTxtBuf, strchr(acTxtBuf, '\r'), pstValueMap, iValueCount, pcFilename, pstCallback) )
         {
+            goto error;
+        }
+
+        pfTxtHandle = fopen(acTxtFile, "wb");
+        if ( NULL == pfTxtHandle )
+        {
+            my_error("create %s txt file fail\r\n", pcFilename);
             goto error;
         }
     }
@@ -1184,7 +1295,7 @@ static int process_file_x(char *acTemplatePath, char *acBinPath, char *acTxtPath
             //如果有getkey函数，就表示该文件是有key的，bin文件的这一行内容，直接与模板文件里的每一行进行key匹配，匹配上就合并
             pcKey = pstCallback->pfnGetKey(pvLineInfo, acBinFile, &iKeyLen);
             String_Trim(pcKey);
-            if ( 1 != process_line_withkey(acTplBuf, acTxtBuf, pvLineInfo, iLineLength, pcKey, iKeyLen, 
+            if ( 1 != process_line_withkey(acTplBuf, acTxtBuf, pvLineInfo, iLineLength, pcKey, iKeyLen,
                 pstValueMap, iValueCount, pstCallback, i) )
             {
                 my_error("\r\nprocess %s failed at %s line\r\n", pcFilename, pcKey);
@@ -1198,7 +1309,7 @@ static int process_file_x(char *acTemplatePath, char *acBinPath, char *acTxtPath
         else
         {
             //没有getkey函数，就表示该文件没有key，bin文件和模板文件只能逐行合并
-            if ( 1 != process_line_withoutkey(acTplBuf, acTxtBuf, pvLineInfo, iLineLength, i, pstValueMap, iValueCount, 
+            if ( 1 != process_line_withoutkey(acTplBuf, acTxtBuf, pvLineInfo, iLineLength, i, pstValueMap, iValueCount,
                 pstCallback, pcFilename, &pcIterator) )
             {
                 my_error("\r\nprocess %s failed at %d line\r\n", pcFilename, i);
@@ -1247,13 +1358,12 @@ out:
     }
 
     //通知该模块释放内存
-#if 0
     //暂时不能释放，因为其他模块还需要查询
     if ( pstCallback && pstCallback->pfnFinished )
     {
         pstCallback->pfnFinished();
     }
-#endif
+
 
     return result;
 }
@@ -1262,7 +1372,7 @@ int process_file(char *acTemplatePath, char *acBinPath, char *acTxtPath, char *p
     void *pvLineInfo, int iLineLength, ST_VALUE_MAP *pstValueMap, int iValueCount,
     ST_CALLBACK *pstCallback)
 {
-    return process_file_x(acTemplatePath, acBinPath, acTxtPath, pcFilename, pvLineInfo, 
+    return process_file_x(acTemplatePath, acBinPath, acTxtPath, pcFilename, pvLineInfo,
         iLineLength, pstValueMap, iValueCount, pstCallback, "\\");
 }
 
@@ -1271,7 +1381,7 @@ int process_file_special_bin(char *acTemplatePath, char *acBinPath, char *acTxtP
     void *pvLineInfo, int iLineLength, ST_VALUE_MAP *pstValueMap, int iValueCount,
     ST_CALLBACK *pstCallback)
 {
-    return process_file_x(acTemplatePath, acBinPath, acTxtPath, pcFilename, pvLineInfo, 
+    return process_file_x(acTemplatePath, acBinPath, acTxtPath, pcFilename, pvLineInfo,
         iLineLength, pstValueMap, iValueCount, pstCallback, NULL);
 }
 

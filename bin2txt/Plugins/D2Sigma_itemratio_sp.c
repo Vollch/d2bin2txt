@@ -38,7 +38,7 @@ static int ItemRatio_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLine
 {
     if ( !stricmp(acKey, "Function") )
     {
-        if ( !String_BuildName(FORMAT(itemratio), 0xFFFF, pcTemplate, NAME_PREFIX, iLineNo, NULL, acOutput) )
+        if ( !String_BuildName(FORMAT(itemratio), 0xFFFF, pcTemplate, NULL, iLineNo, NULL, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
         }
@@ -52,7 +52,6 @@ static int ItemRatio_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLine
 int process_itemratio_sp(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
     ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
-
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Unique, UINT);

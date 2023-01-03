@@ -30,7 +30,7 @@ int CharStatsExp_ExternProc(void *pvLineInfo, char *acKey, unsigned int iLineNo,
     }
     else if ( !stricmp(acKey, "StrSkillTabs") )
     {
-        return process_value(EN_VALUE_USHORT_STRING, 2, &m_astLines[iLineNo].vStrSkillTabs, acOutput);
+        return process_value(EN_VALUE_TBL_STRING, 2, &m_astLines[iLineNo].vStrSkillTabs, acOutput);
     }
     else if ( !stricmp(acKey, "SkillTabs") )
     {
@@ -40,7 +40,7 @@ int CharStatsExp_ExternProc(void *pvLineInfo, char *acKey, unsigned int iLineNo,
     return 0;
 }
 
-static int CharStatsExp_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
+static int CharStatsExp_ConvertValue(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
     if ( !stricmp(acKey, "StrSkillTabs") )
     {
@@ -53,7 +53,6 @@ static int CharStatsExp_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemp
 int process_CharStatsExp(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
     ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
-
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, StrSkillTabs, USHORT);
@@ -70,7 +69,6 @@ int process_CharStatsExp(char *acTemplatePath, char *acBinPath, char *acTxtPath,
             m_stCallback.eModuleType = EN_MODULE_EXTENSION;
             m_stCallback.pfnConvertValue = CharStatsExp_ConvertValue;
             m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
-            m_stCallback.pfnFinished = FINISHED_FUNC_NAME;
 
             return process_file(acTemplatePath, acBinPath, NULL, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo), 
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);

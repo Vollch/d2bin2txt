@@ -24,7 +24,7 @@ static int D2KillCounter_FieldProc(void *pvLineInfo, char *acKey, unsigned int i
 
     if ( !stricmp(acKey, "*desc") )
     {
-        if ( !String_BuildName(FORMAT(D2KillCounter), ItemStatCost_GetString(pstLineInfo->vStat), pcTemplate, ItemStatCost_GetStateName(pstLineInfo->vStat), iLineNo, NULL, acOutput) )
+        if ( !String_BuildName(FORMAT(D2KillCounter), ItemStatCost_GetString(pstLineInfo->vStat), pcTemplate, Lookup_ItemStatCost(pstLineInfo->vStat), iLineNo, NULL, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
         }
@@ -38,10 +38,9 @@ static int D2KillCounter_FieldProc(void *pvLineInfo, char *acKey, unsigned int i
 int process_D2KillCounter(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
     ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
-
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat, USHORT_ITEMSTAT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Stat, ITEMSTAT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Value, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, LevelsUnderYou, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, LevelsAboveYou, USHORT);

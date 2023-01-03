@@ -33,15 +33,11 @@ static int BuffIcons_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLine
     }
     if ( !stricmp(acKey, "*State") )
     {
-        pcResult = States_GetStateName(pstLineInfo->vStateId);
-        if ( pcResult )
+        if ( pcResult = Lookup_State(pstLineInfo->vStateId) )
         {
             strcpy(acOutput, pcResult);
         }
-        else
-        {
-            acOutput[0] = 0;
-        }
+
         return 1;
     }
 
@@ -51,7 +47,6 @@ static int BuffIcons_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLine
 int process_bufficons(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
     ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
-
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, StateId, UINT);

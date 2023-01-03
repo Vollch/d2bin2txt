@@ -34,55 +34,19 @@ static char *m_apcInternalProcess[] =
     NULL,
 };
 
-static int Monstats3_ConvertValue(void *pvLineInfo, char *acKey, char *pcTemplate, char *acOutput)
-{
-    ST_LINE_INFO *pstLineInfo = pvLineInfo;
-
-    if ( !stricmp(acKey, "GoblinLevelRestrict") )
-    {
-        char *pcResult = Levels_GetLevelName(pstLineInfo->vGoblinLevelRestrict);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        return 1;
-    }
-    else if ( !stricmp(acKey, "BossEventMode") )
-    {
-        char *pcResult = Events_GetEventName(pstLineInfo->vBossEventMode);
-        if ( pcResult )
-        {
-            strcpy(acOutput, pcResult);
-        }
-        else
-        {
-            acOutput[0] = 0;
-        }
-        return 1;
-    }
-
-    return 0;
-}
 
 static int Monstats3_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
 {
     ST_LINE_INFO *pstLineInfo = pvLineInfo;
+    char *pcResult;
 
     if ( !stricmp(acKey, "*Name") )
     {
-        char *pcResult = MonStats_GetStatsName(iLineNo);
-        if ( pcResult )
+        if ( pcResult = Lookup_MonStats(iLineNo) )
         {
             strcpy(acOutput, pcResult);
         }
-        else
-        {
-            acOutput[0] = 0;
-        }
+
         return 1;
     }
 
@@ -92,7 +56,6 @@ static int Monstats3_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLine
 int process_Monstats3(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
     ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
-
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
     VALUE_MAP_DEFINE_SIZED(pstValueMap, pstLineInfo, GoblinRealmOnly, BitCombined, 12, USHORT_BIT);
@@ -113,19 +76,19 @@ int process_Monstats3(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, AutomapNameColor, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, AutomapVectorColor, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, DrawModeType, UCHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Overlay1, USHORT_OVERLAY);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Overlay2, USHORT_OVERLAY);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, BossOverlay1, USHORT_OVERLAY);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, BossOverlay2, USHORT_OVERLAY);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, BossEventMode, UCHAR);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, BossEventMissile1, USHORT_MISSILE);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, BossEventMissile2, USHORT_MISSILE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Overlay1, OVERLAY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Overlay2, OVERLAY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, BossOverlay1, OVERLAY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, BossOverlay2, OVERLAY);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, BossEventMode, EVENT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, BossEventMissile1, MISSILE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, BossEventMissile2, MISSILE);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PortraitGfx, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Achievement, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, GoblinRarity, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, GoblinMinLevel, USHORT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, GoblinMaxLevel, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, GoblinLevelRestrict, USHORT);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, GoblinLevelRestrict, LEVEL);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, OverlayType, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, NoKillTimestampUpdate, UCHAR);
 
@@ -145,7 +108,6 @@ int process_Monstats3(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
 
         case EN_MODULE_INIT:
             m_stCallback.eModuleType = EN_MODULE_PLUGIN;
-            m_stCallback.pfnConvertValue = Monstats3_ConvertValue;
             m_stCallback.pfnFieldProc = Monstats3_FieldProc;
             m_stCallback.ppcKeyInternalProcess = m_apcInternalProcess;
 

@@ -24,7 +24,7 @@ static int ItemDesc_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineN
 
     if ( !stricmp(acKey, "*Name") )
     {
-        if ( !String_BuildName(FORMAT(ItemDesc), pstLineInfo->vItemDesc, pcTemplate, ItemTypes_GetItemCode(pstLineInfo->vItemType), iLineNo, NULL, acOutput) )
+        if ( !String_BuildName(FORMAT(ItemDesc), pstLineInfo->vItemDesc, pcTemplate, Lookup_ItemType(pstLineInfo->vItemType), iLineNo, NULL, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
         }
@@ -38,11 +38,10 @@ static int ItemDesc_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLineN
 int process_ItemDesc(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
     ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
-
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ItemType, USHORT_ITEMTYPE);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ItemDesc, USHORT_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ItemType, ITEMTYPE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ItemDesc, TBL_STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, WeaponLine, UCHAR);
 
     VALUE_MAP_DEFINE_VIRT(pstValueMap, pstLineInfo, myasteol, EOL);

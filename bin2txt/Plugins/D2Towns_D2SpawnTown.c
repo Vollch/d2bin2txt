@@ -24,7 +24,7 @@ static int D2SpawnTown_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLi
 
     if ( !stricmp(acKey, "*desc") )
     {
-        if ( !String_BuildName(FORMAT(D2SpawnTown), 0xFFFF, pcTemplate, Levels_GetLevelName(pstLineInfo->vSourceLvl), iLineNo, NULL, acOutput) )
+        if ( !String_BuildName(FORMAT(D2SpawnTown), 0xFFFF, pcTemplate, Lookup_Level(pstLineInfo->vSourceLvl), iLineNo, NULL, acOutput) )
         {
             sprintf(acOutput, "%s%u", NAME_PREFIX, iLineNo);
         }
@@ -39,7 +39,6 @@ static int D2SpawnTown_FieldProc(void *pvLineInfo, char *acKey, unsigned int iLi
 int process_D2SpawnTown(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
     ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
-
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SourceLvl, INT);

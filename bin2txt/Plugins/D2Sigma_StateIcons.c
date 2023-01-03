@@ -15,15 +15,14 @@ typedef struct
 int process_StateIcons(char *acTemplatePath, char *acBinPath, char *acTxtPath, ENUM_MODULE_PHASE enPhase)
 {
     ST_LINE_INFO *pstLineInfo = (ST_LINE_INFO *)m_acLineInfoBuf;
-
     ST_VALUE_MAP *pstValueMap = (ST_VALUE_MAP *)m_acValueMapBuf;
 
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, State, USHORT_STATE);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, State, STATE);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Type, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Palshift, UCHAR);
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Frame, USHORT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, NameStr, USHORT_STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, NameStr, TBL_STRING);
 
     switch ( enPhase )
     {
