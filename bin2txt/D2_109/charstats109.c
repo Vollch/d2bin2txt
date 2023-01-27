@@ -2,6 +2,11 @@
 
 #define FILE_PREFIX "CharStats"
 
+typedef struct
+{
+    char vclass[17];
+} ST_CHAR_STATS;
+
 static char *m_apcNotUsed[] =
 {
     "tot",
@@ -14,6 +19,42 @@ static char *m_apcNotUsed[] =
     "#bow",
     NULL,
 };
+
+static unsigned int m_iCharStatsCount = 0;
+static unsigned int m_iCharStatsHaveEmpty = 0;
+static ST_CHAR_STATS *m_astCharStats = NULL;
+
+MODULE_SETLINES_FUNC(m_astCharStats, ST_CHAR_STATS);
+
+static char *CharStats_GetName(unsigned int id)
+{
+    if ( id < m_iCharStatsCount )
+    {
+        return m_astCharStats[id].vclass;
+    }
+
+    if ( id == -1 && m_iCharStatsHaveEmpty )
+    {
+        return g_pcFallbackID;
+    }
+
+    return NULL;
+}
+
+static int CharStats_ConvertValue(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
+{
+    ST_CHARSTATS_109 *pstLineInfo = pvLineInfo;
+
+    if ( !stricmp(acKey, "class") )
+    {
+        strncpy(m_astCharStats[m_iCharStatsCount].vclass, pstLineInfo->vclass, sizeof(pstLineInfo->vclass));
+        String_Trim(m_astCharStats[m_iCharStatsCount].vclass);
+
+        m_iCharStatsCount++;
+    }
+
+    return 0;
+}
 
 static void CharStats_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_CHARSTATS_109 *pstLineInfo)
 {
@@ -98,21 +139,22 @@ int process_charstats109(char *acTemplatePath, char *acBinPath, char *acTxtPath,
             break;
 
         case EN_MODULE_SELF_DEPEND:
-            break;
-
-        case EN_MODULE_OTHER_DEPEND:
             MODULE_DEPEND_CALL(bodylocs, acTemplatePath, acBinPath, acTxtPath);
-            break;
-
-        case EN_MODULE_INIT:
             CharStats_InitValueMap(pstValueMap, pstLineInfo);
 
+            m_iCharStatsCount = 0;
+            Lookup_ClassName = CharStats_GetName;
+
+            m_stCallback.pfnConvertValue = CharStats_ConvertValue;
+            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
 
             return process_file(acTemplatePath, acBinPath, acTxtPath, FILE_PREFIX, pstLineInfo, sizeof(*pstLineInfo),
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);
             break;
 
+        case EN_MODULE_OTHER_DEPEND:
+        case EN_MODULE_INIT:
         default:
             break;
     }

@@ -17,6 +17,7 @@ static char *m_apcNotUsed[] =
     "namco",
     "Source Art",
     "Game Art",
+    "",
     NULL,
 };
 

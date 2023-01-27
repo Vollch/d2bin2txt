@@ -65,7 +65,6 @@ fnGetName Lookup_ItemStatCost = getNameStub;
 fnGetName Lookup_ItemType = getNameStub;
 fnGetName Lookup_Item = getNameStub;
 fnGetName Lookup_ItemName = getNameStub;
-fnGetName Lookup_Level = getNameStub;
 fnGetName Lookup_LvlType = getNameStub;
 fnGetName Lookup_MissCalc = getNameStub;
 fnGetName Lookup_Missile = getNameStub;
@@ -94,6 +93,9 @@ fnGetName Lookup_State = getNameStub;
 fnGetName Lookup_Store = getNameStub;
 fnGetName Lookup_TreasureClass = getNameStub;
 fnGetName Lookup_UniqueItem = getNameStub;
+
+fnGetName Lookup_Level = getNameStub;
+fnGetName Lookup_ClassName = getNameStub;
 
 fnGetId Lookup_SkillDescString = getIdStub;
 fnGetId Lookup_ItemString = getIdStub;

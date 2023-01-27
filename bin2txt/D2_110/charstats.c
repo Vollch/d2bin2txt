@@ -4,54 +4,43 @@
 
 typedef struct
 {
-    char vitem[4]; //每个职业的第1-10个初始道具。
-    unsigned char vitemloc; //每个职业的第1-10个初始道具的位置。index，对应bodylocs.txt
-    unsigned char vitemcount; //每个职业的第1-10个初始道具的数量。
-    unsigned char pad0x06[2]; //填充字节，无意义
-} ST_ITEM_INFO;
+    char acHead[32];
+    char vclass[16];
 
-typedef struct
-{
-    char acHead[32];    //填充字节，无意义
+    unsigned char vstr;
+    unsigned char vdex;
+    unsigned char vint;
+    unsigned char vvit;
 
-    char vclass[16];   //职业名称。
+    unsigned char vstamina;
+    unsigned char vhpadd;
+    unsigned char vPercentStr;
+    unsigned char vPercentInt;
 
-    unsigned char vstr;          //每个职业的初始力量值。
-    unsigned char vdex;          //每个职业的初始敏捷值。
-    unsigned char vint;          //每个职业的初始精力值。
-    unsigned char vvit;          //每个职业的初始体力值。
-
-    //tot：每个职业的初始属性值的总和。实际上没有用处，可以删除。
-    unsigned char vstamina;      //每个职业的初始耐力值。
-    unsigned char vhpadd;        //每个职业的初始生命值基数。
-    //角色的最终初始生命值为hpadd + vit。
-    unsigned char vPercentStr;   //无用参数。
-    unsigned char vPercentInt;   //无用参数。
-
-    unsigned char vPercentDex;   //无用参数。
-    unsigned char vPercentVit;   //无用参数。
-    unsigned char vManaRegen;   //每个职业的初始魔法值回复速度，含义为从魔法值为0到回复满需要多少秒。所以此列的值越小魔法回复速度越快。
+    unsigned char vPercentDex;
+    unsigned char vPercentVit;
+    unsigned char vManaRegen;
     unsigned char pad0x3B;
 
-    int vToHitFactor;   //每个职业的初始攻击准确率基数。
+    int vToHitFactor;
 
-    unsigned char vWalkVelocity; //每个职业的初始走路速度。
-    unsigned char vRunVelocity;  //每个职业的初始跑步速度。
-    unsigned char vRunDrain;     //每个职业跑步时耐力的下降速度。数值越小表示跑步时耐力减少的越慢。
-    unsigned char vLifePerLevel; //每个职业升级时增加的生命值因子，除以4后为每级实际增加的生命值。
+    unsigned char vWalkVelocity;
+    unsigned char vRunVelocity;
+    unsigned char vRunDrain;
+    unsigned char vLifePerLevel;
 
-    unsigned char vStaminaPerLevel;  //每个职业升级时增加的耐力值因子，除以4后为每级实际增加的耐力值。
-    unsigned char vManaPerLevel; //每个职业升级时增加的法力值因子，除以4后为每级实际增加的法力值。
-    unsigned char vLifePerVitality;  //每个职业每加一点体力增加的生命值因子，除以4后为每点体力实际增加的生命值。
-    unsigned char vStaminaPerVitality;   //每个职业每加一点体力值增加的耐力值因子，除以4后为每点体力实际增加的耐力值。
+    unsigned char vStaminaPerLevel;
+    unsigned char vManaPerLevel;
+    unsigned char vLifePerVitality;
+    unsigned char vStaminaPerVitality;
 
-    unsigned char vManaPerMagic; //每个职业每个一点精力增加的法力值因子，除以4后为每点精力值实际增加的法力值。
-    unsigned char vBlockFactor;  //每个职业使用盾牌时的基础格挡概率。此值会加到盾牌格挡率的显示中。
-    unsigned char pad0x4A[2];  //填充字节，无意义
+    unsigned char vManaPerMagic;
+    unsigned char vBlockFactor;
+    unsigned char pad0x4A[2];
 
-    char vbaseWClass[4];   //空手时默认使用的武器类型。都默认为空手类型（这也算是一种武器类型），与WeaponClass.txt关联。
+    char vbaseWClass[4];
 
-    unsigned char vStatPerLevel; //
+    unsigned char vStatPerLevel;
     unsigned char pad0x51;
     unsigned short vStrAllSkills;
 
@@ -61,58 +50,58 @@ typedef struct
     unsigned short vStrSkillTab3;
     unsigned short vStrClassOnly;
 
-    char vitem1[4]; //每个职业的第1-10个初始道具。
-    unsigned char vitem1loc;      //每个职业的第1-10个初始道具的位置。index，对应bodylocs.txt
-    unsigned char vitem1count;    //每个职业的第1-10个初始道具的数量。
-    unsigned char pad0x62[2];  //填充字节，无意义
+    char vitem1[4];
+    unsigned char vitem1loc;
+    unsigned char vitem1count;
+    unsigned char pad0x62[2];
 
-    char vitem2[4]; //每个职业的第1-10个初始道具。
-    unsigned char vitem2loc;      //每个职业的第1-10个初始道具的位置。index，对应bodylocs.txt
-    unsigned char vitem2count;    //每个职业的第1-10个初始道具的数量。
-    unsigned char pad0x6A[2];  //填充字节，无意义
+    char vitem2[4];
+    unsigned char vitem2loc;
+    unsigned char vitem2count;
+    unsigned char pad0x6A[2];
 
-    char vitem3[4]; //每个职业的第1-10个初始道具。
-    unsigned char vitem3loc;      //每个职业的第1-10个初始道具的位置。index，对应bodylocs.txt
-    unsigned char vitem3count;    //每个职业的第1-10个初始道具的数量。
-    unsigned char pad0x72[2];  //填充字节，无意义
+    char vitem3[4];
+    unsigned char vitem3loc;
+    unsigned char vitem3count;
+    unsigned char pad0x72[2];
 
-    char vitem4[4]; //每个职业的第1-10个初始道具。
-    unsigned char vitem4loc;      //每个职业的第1-10个初始道具的位置。index，对应bodylocs.txt
-    unsigned char vitem4count;    //每个职业的第1-10个初始道具的数量。
-    unsigned char pad0x7A[2];  //填充字节，无意义
+    char vitem4[4];
+    unsigned char vitem4loc;
+    unsigned char vitem4count;
+    unsigned char pad0x7A[2];
 
-    char vitem5[4]; //每个职业的第1-10个初始道具。
-    unsigned char vitem5loc;      //每个职业的第1-10个初始道具的位置。index，对应bodylocs.txt
-    unsigned char vitem5count;    //每个职业的第1-10个初始道具的数量。
-    unsigned char pad0x82[2];  //填充字节，无意义
+    char vitem5[4];
+    unsigned char vitem5loc;
+    unsigned char vitem5count;
+    unsigned char pad0x82[2];
 
-    char vitem6[4]; //每个职业的第1-10个初始道具。
-    unsigned char vitem6loc;      //每个职业的第1-10个初始道具的位置。index，对应bodylocs.txt
-    unsigned char vitem6count;    //每个职业的第1-10个初始道具的数量。
-    unsigned char pad0x8A[2];  //填充字节，无意义
+    char vitem6[4];
+    unsigned char vitem6loc;
+    unsigned char vitem6count;
+    unsigned char pad0x8A[2];
 
-    char vitem7[4]; //每个职业的第1-10个初始道具。
-    unsigned char vitem7loc;      //每个职业的第1-10个初始道具的位置。index，对应bodylocs.txt
-    unsigned char vitem7count;    //每个职业的第1-10个初始道具的数量。
-    unsigned char pad0x92[2];  //填充字节，无意义
+    char vitem7[4];
+    unsigned char vitem7loc;
+    unsigned char vitem7count;
+    unsigned char pad0x92[2];
 
-    char vitem8[4]; //每个职业的第1-10个初始道具。
-    unsigned char vitem8loc;      //每个职业的第1-10个初始道具的位置。index，对应bodylocs.txt
-    unsigned char vitem8count;    //每个职业的第1-10个初始道具的数量。
-    unsigned char pad0x9A[2];  //填充字节，无意义
+    char vitem8[4];
+    unsigned char vitem8loc;
+    unsigned char vitem8count;
+    unsigned char pad0x9A[2];
 
-    char vitem9[4]; //每个职业的第1-10个初始道具。
-    unsigned char vitem9loc;      //每个职业的第1-10个初始道具的位置。index，对应bodylocs.txt
-    unsigned char vitem9count;    //每个职业的第1-10个初始道具的数量。
-    unsigned char pad0xA2[2];  //填充字节，无意义
+    char vitem9[4];
+    unsigned char vitem9loc;
+    unsigned char vitem9count;
+    unsigned char pad0xA2[2];
 
-    char vitem10[4]; //每个职业的第1-10个初始道具。
-    unsigned char vitem10loc;      //每个职业的第1-10个初始道具的位置。index，对应bodylocs.txt
-    unsigned char vitem10count;    //每个职业的第1-10个初始道具的数量。
-    unsigned char pad0xAA[2];  //填充字节，无意义
+    char vitem10[4];
+    unsigned char vitem10loc;
+    unsigned char vitem10count;
+    unsigned char pad0xAA[2];
 
-    unsigned short vStartSkill;  //每个职业的初始武器上所附加的技能。与Skills.txt关联。index FF无效，对应skills.txt
-    unsigned short vSkillmysp1;  //每个职业的基础技能，包括投掷、踢击、回城、辨识、解除召唤等。index FF无效，对应skills.txt
+    unsigned short vStartSkill;
+    unsigned short vSkillmysp1;
     unsigned short vSkillmysp2;
     unsigned short vSkillmysp3;
     unsigned short vSkillmysp4;
@@ -123,8 +112,13 @@ typedef struct
     unsigned short vSkillmysp9;
     unsigned short vSkillmysp10;
 
-    unsigned char pad0xC2[2];  //填充字节，无意义
+    unsigned char pad0xC2[2];
 } ST_LINE_INFO;
+
+typedef struct
+{
+    char vclass[17];
+} ST_CHAR_STATS;
 
 static char *m_apcNotUsed[] =
 {
@@ -140,6 +134,26 @@ static char *m_apcNotUsed[] =
 };
 
 static unsigned int m_iBinStructSize = 0;
+static unsigned int m_iCharStatsCount = 0;
+static unsigned int m_iCharStatsHaveEmpty = 0;
+static ST_CHAR_STATS *m_astCharStats = NULL;
+
+MODULE_SETLINES_FUNC(m_astCharStats, ST_CHAR_STATS);
+
+static char *CharStats_GetName(unsigned int id)
+{
+    if ( id < m_iCharStatsCount )
+    {
+        return m_astCharStats[id].vclass;
+    }
+
+    if ( id == -1 && m_iCharStatsHaveEmpty )
+    {
+        return g_pcFallbackID;
+    }
+
+    return NULL;
+}
 
 static char *CharStats_GetKey(void *pvLineInfo, char *pcKey, unsigned int *iKeyLen)
 {
@@ -149,6 +163,21 @@ static char *CharStats_GetKey(void *pvLineInfo, char *pcKey, unsigned int *iKeyL
     *iKeyLen = (unsigned int)strlen(pcKey);
 
     return pcKey;
+}
+
+static int CharStats_ConvertValue(void *pvLineInfo, char *acKey, unsigned int iLineNo, char *pcTemplate, char *acOutput)
+{
+    ST_LINE_INFO *pstLineInfo = pvLineInfo;
+
+    if ( !stricmp(acKey, "class") )
+    {
+        strncpy(m_astCharStats[m_iCharStatsCount].vclass, pstLineInfo->vclass, sizeof(pstLineInfo->vclass));
+        String_Trim(m_astCharStats[m_iCharStatsCount].vclass);
+
+        m_iCharStatsCount++;
+    }
+
+    return 0;
 }
 
 static void CharStats_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLineInfo)
@@ -249,18 +278,17 @@ int process_charstats(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
             break;
 
         case EN_MODULE_SELF_DEPEND:
-            break;
-
-        case EN_MODULE_OTHER_DEPEND:
             MODULE_DEPEND_CALL(CharStatsExp, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(bodylocs, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(string, acTemplatePath, acBinPath, acTxtPath);
             MODULE_DEPEND_CALL(skills, acTemplatePath, acBinPath, acTxtPath);
-            break;
-
-        case EN_MODULE_INIT:
             CharStats_InitValueMap(pstValueMap, pstLineInfo);
 
+            m_iCharStatsCount = 0;
+            Lookup_ClassName = CharStats_GetName;
+
+            m_stCallback.pfnConvertValue = CharStats_ConvertValue;
+            m_stCallback.pfnSetLines = SETLINES_FUNC_NAME;
             //m_stCallback.pfnGetKey = CharStats_GetKey;
             m_stCallback.ppcKeyNotUsed = m_apcNotUsed;
 
@@ -274,6 +302,8 @@ int process_charstats(char *acTemplatePath, char *acBinPath, char *acTxtPath, EN
                 pstValueMap, Global_GetValueMapCount(), &m_stCallback);
             break;
 
+        case EN_MODULE_OTHER_DEPEND:
+        case EN_MODULE_INIT:
         default:
             break;
     }

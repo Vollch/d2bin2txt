@@ -22,6 +22,8 @@ int process_DebauchedSkills(char *acTemplatePath, char *acBinPath, char *acTxtPa
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Skill, SKILL);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SkillLevel, CHAR);
 
+    VALUE_MAP_DEFINE_VIRT(pstValueMap, pstLineInfo, eol, EOL);
+
     switch ( enPhase )
     {
         case EN_MODULE_PREPARE:

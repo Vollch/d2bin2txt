@@ -283,6 +283,7 @@ int process_uniqueitems(char *acTemplatePath, char *acBinPath, char *acTxtPath, 
         case EN_MODULE_SELF_DEPEND:
             MODULE_DEPEND_CALL(UniqueItems2, acTemplatePath, acBinPath, acTxtPath);
             UniqueItems_InitValueMap(pstValueMap, pstLineInfo);
+
             m_uiUniqueItemCount = 0;
             Lookup_UniqueItem = UniqueItems_GetItemUniqueCode;
 

@@ -233,6 +233,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\bin2txt\Plugins\BetterUtility.c"
+				>
+			</File>
+			<File
 				RelativePath=".\bin2txt\bin2txt.cpp"
 				>
 			</File>

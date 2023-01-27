@@ -53,25 +53,25 @@ static int process_HavModEx_x(char *acTemplatePath, char *acBinPath, char *acTxt
     }
 
     fprintf(pfOutputHandle, "[%s]\n", FILE_PREFIX);
-    fprintf(pfOutputHandle, "InfiniteImbue = %i\n", stConfig.iInfiniteImbue);
-    fprintf(pfOutputHandle, "ForceEnableImbue = %i\n", stConfig.iForceEnableImbue);
-    fprintf(pfOutputHandle, "Cost = %i\n", stConfig.iCost);
-    fprintf(pfOutputHandle, "ItemQuality = %i\n", stConfig.iItemQuality);
-    fprintf(pfOutputHandle, "ItemLevel = %i\n", stConfig.iItemLevel);
-    fprintf(pfOutputHandle, "UseRandomQuality = %i\n", stConfig.iUseRandomQuality);
-    fprintf(pfOutputHandle, "ChanceCrude = %i\n", stConfig.iChanceCrude);
-    fprintf(pfOutputHandle, "ChanceMagic = %i\n", stConfig.iChanceMagic);
-    fprintf(pfOutputHandle, "ChanceRare = %i\n", stConfig.iChanceRare);
-    fprintf(pfOutputHandle, "ChanceSet = %i\n", stConfig.iChanceSet);
-    fprintf(pfOutputHandle, "ChanceUnique = %i\n", stConfig.iChanceUnique);
-    fprintf(pfOutputHandle, "UseRandomItemlevel = %i\n", stConfig.iUseRandomItemlevel);
-    fprintf(pfOutputHandle, "MinRandomItemlevel = %i\n", stConfig.iMinRandomItemlevel);
-    fprintf(pfOutputHandle, "MaxRandomItemlevel = %i\n", stConfig.iMaxRandomItemlevel);
-    fprintf(pfOutputHandle, "StringColorSuccess = %i\n", stConfig.iStringColorSuccess);
-    fprintf(pfOutputHandle, "StringColorFail = %i\n", stConfig.iStringColorFail);
-    fprintf(pfOutputHandle, "FirstStringSuccess = %S\n", stConfig.wFirstStringSuccess);
-    fprintf(pfOutputHandle, "FirstStringFail = %S\n", stConfig.wFirstStringFail);
-    fprintf(pfOutputHandle, "LastString = %S\n", stConfig.wLastString);
+    fprintf(pfOutputHandle, "InfiniteImbue=%i\n", stConfig.iInfiniteImbue);
+    fprintf(pfOutputHandle, "ForceEnableImbue=%i\n", stConfig.iForceEnableImbue);
+    fprintf(pfOutputHandle, "Cost=%i\n", stConfig.iCost);
+    fprintf(pfOutputHandle, "ItemQuality=%i\n", stConfig.iItemQuality);
+    fprintf(pfOutputHandle, "ItemLevel=%i\n", stConfig.iItemLevel);
+    fprintf(pfOutputHandle, "UseRandomQuality=%i\n", stConfig.iUseRandomQuality);
+    fprintf(pfOutputHandle, "ChanceCrude=%i\n", stConfig.iChanceCrude);
+    fprintf(pfOutputHandle, "ChanceMagic=%i\n", stConfig.iChanceMagic);
+    fprintf(pfOutputHandle, "ChanceRare=%i\n", stConfig.iChanceRare);
+    fprintf(pfOutputHandle, "ChanceSet=%i\n", stConfig.iChanceSet);
+    fprintf(pfOutputHandle, "ChanceUnique=%i\n", stConfig.iChanceUnique);
+    fprintf(pfOutputHandle, "UseRandomItemlevel=%i\n", stConfig.iUseRandomItemlevel);
+    fprintf(pfOutputHandle, "MinRandomItemlevel=%i\n", stConfig.iMinRandomItemlevel);
+    fprintf(pfOutputHandle, "MaxRandomItemlevel=%i\n", stConfig.iMaxRandomItemlevel);
+    fprintf(pfOutputHandle, "StringColorSuccess=%i\n", stConfig.iStringColorSuccess);
+    fprintf(pfOutputHandle, "StringColorFail=%i\n", stConfig.iStringColorFail);
+    fprintf(pfOutputHandle, "FirstStringSuccess=\"%S\"\n", stConfig.wFirstStringSuccess);
+    fprintf(pfOutputHandle, "FirstStringFail=\"%S\"\n", stConfig.wFirstStringFail);
+    fprintf(pfOutputHandle, "LastString=\"%S\"\n", stConfig.wLastString);
 
     my_printf("processed %s.ini\r\n", FILE_PREFIX);
 

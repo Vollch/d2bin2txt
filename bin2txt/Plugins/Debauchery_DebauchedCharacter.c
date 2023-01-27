@@ -22,11 +22,13 @@ int process_DebauchedCharacter(char *acTemplatePath, char *acBinPath, char *acTx
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, HcIdx, UINT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Function, STRING);
+    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Name, STRING);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Class, CLASS);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, StatID, ITEMSTAT);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, SkillName, SKILL);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Value, INT);
-    VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Name, STRING);
+
+    VALUE_MAP_DEFINE_VIRT(pstValueMap, pstLineInfo, eol, EOL);
 
     switch ( enPhase )
     {

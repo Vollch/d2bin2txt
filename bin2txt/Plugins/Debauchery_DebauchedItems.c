@@ -41,6 +41,8 @@ int process_DebauchedItems(char *acTemplatePath, char *acBinPath, char *acTxtPat
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ItemLevel, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, ItemCount, UCHAR);
 
+    VALUE_MAP_DEFINE_VIRT(pstValueMap, pstLineInfo, eol, EOL);
+
     switch ( enPhase )
     {
         case EN_MODULE_PREPARE:

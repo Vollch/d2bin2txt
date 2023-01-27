@@ -30,6 +30,8 @@ int process_DebauchedQuests(char *acTemplatePath, char *acBinPath, char *acTxtPa
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Completed, CHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, Difficulty, CHAR);
 
+    VALUE_MAP_DEFINE_VIRT(pstValueMap, pstLineInfo, eol, EOL);
+
     switch ( enPhase )
     {
         case EN_MODULE_PREPARE:

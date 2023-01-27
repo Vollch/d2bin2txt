@@ -20,6 +20,7 @@ extern "C" {
 #include "D2_109/structs109.h"
 
 #define ALL_MODULES(X) \
+    X(BetterUtility) \
     X(BookOfLore) \
     X(bufficons) \
     X(CharStart) \

@@ -27,7 +27,6 @@ extern fnGetName Lookup_ItemStatCost;
 extern fnGetName Lookup_ItemType;
 extern fnGetName Lookup_Item;
 extern fnGetName Lookup_ItemName;
-extern fnGetName Lookup_Level;
 extern fnGetName Lookup_LvlType;
 extern fnGetName Lookup_MissCalc;
 extern fnGetName Lookup_Missile;
@@ -56,6 +55,9 @@ extern fnGetName Lookup_State;
 extern fnGetName Lookup_Store;
 extern fnGetName Lookup_TreasureClass;
 extern fnGetName Lookup_UniqueItem;
+
+extern fnGetName Lookup_Level;
+extern fnGetName Lookup_ClassName;
 
 extern fnGetId Lookup_SkillDescString;
 extern fnGetId Lookup_ItemString;

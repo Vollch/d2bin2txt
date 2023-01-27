@@ -7,27 +7,27 @@
 typedef struct
 {
     unsigned short vID;
-    unsigned short vSkill; // 0x11
-    unsigned char vcharclass; // 0x0D
+    unsigned short vSkill;
+    unsigned char vcharclass;
     short vminslvl;
     short vmaxslvl;
     short vminclvl;
     short vmaxclvl;
-    unsigned short vstat1; // 0x14
+    unsigned short vstat1;
     unsigned int vval1;
-    unsigned short vstat2; // 0x14
+    unsigned short vstat2;
     unsigned int vval2;
-    unsigned short vstat3; // 0x14
+    unsigned short vstat3;
     unsigned int vval3;
-    unsigned short vstat4; // 0x14
+    unsigned short vstat4;
     unsigned int vval4;
-    unsigned short vreqskill1; // 0x11
+    unsigned short vreqskill1;
     unsigned short vslvl1;
-    unsigned short vreqskill2; // 0x11
+    unsigned short vreqskill2;
     unsigned short vslvl2;
-    unsigned short vreqskill3; // 0x11
+    unsigned short vreqskill3;
     unsigned short vslvl3;
-    unsigned short vreqskill4; // 0x11
+    unsigned short vreqskill4;
     unsigned short vslvl4;
 } ST_LINE_INFO;
 #pragma pack(pop)

@@ -279,7 +279,6 @@ static char *m_apcNotUsed[] =
     "Source Art",
     "Game Art",
     "*name",
-    "*eol",
     "",
     NULL,
 };
@@ -627,6 +626,8 @@ static void Items_InitValueMap(ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLineI
 
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, PermStoreItem, UCHAR);
     VALUE_MAP_DEFINE(pstValueMap, pstLineInfo, multibuy, UCHAR);
+
+    VALUE_MAP_DEFINE_VIRT(pstValueMap, pstLineInfo, myastEOL, EOL);
 }
 
 static void Items_InitDepend(char *acTemplatePath, char *acBinPath, char *acTxtPath, ST_VALUE_MAP *pstValueMap, ST_LINE_INFO *pstLineInfo)
